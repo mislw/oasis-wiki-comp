@@ -1,0 +1,75 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Oasis Companion",
+  "version": "0.1.0",
+  "identifier": "com.oasiswiki.companion",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "ball",
+        "url": "index.html",
+        "title": "Oasis",
+        "width": 64,
+        "height": 64,
+        "decorations": false,
+        "transparent": true,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "resizable": false,
+        "shadow": false,
+        "visible": false,
+        "center": false,
+        "x": 1820,
+        "y": 480
+      },
+      {
+        "label": "settings",
+        "url": "index.html",
+        "title": "Oasis Companion 设置",
+        "width": 420,
+        "height": 560,
+        "minWidth": 420,
+        "minHeight": 560,
+        "resizable": false,
+        "visible": false,
+        "center": true,
+        "decorations": false,
+        "transparent": true,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "shadow": false
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "msi",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+      "resources": ["resources/skill"],
+      "windows": {
+      "wix": {
+        "language": "zh-CN"
+      },
+      "nsis": {
+        "installMode": "currentUser",
+        "languages": ["SimpChinese", "English"],
+        "displayLanguageSelector": false
+      }
+    }
+  }
+}
