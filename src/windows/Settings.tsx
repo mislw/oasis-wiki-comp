@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
+import { LogicalSize } from "@tauri-apps/api/dpi";
 import { listen } from "@tauri-apps/api/event";
 import { openUrl } from "@tauri-apps/plugin-opener";
+import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import type {
   BallState,
   DiscoveredEndpoint,
@@ -27,6 +29,10 @@ const AGENT_TARGETS = [
 type TabId = "overview" | "mcp" | "skill" | "updates";
 type PopoverSide = "left" | "right" | "floating";
 
+type SettingsWindowProps = {
+  agentId?: string | null;
+};
+
 const TABS: Array<{ id: TabId; label: string }> = [
   { id: "overview", label: "总览" },
   { id: "mcp", label: "MCP" },
@@ -34,10 +40,16 @@ const TABS: Array<{ id: TabId; label: string }> = [
   { id: "updates", label: "更新" },
 ];
 
-export default function SettingsWindow() {
-  const [activeTab, setActiveTab] = useState<TabId>("mcp");
+export default function SettingsWindow({ agentId = null }: SettingsWindowProps) {
+  const isAgentPage = Boolean(agentId);
+  const currentAgent = useMemo(
+    () => AGENT_TARGETS.find((target) => target.id === agentId) ?? null,
+    [agentId],
+  );
+  const [activeTab, setActiveTab] = useState<TabId>(() => (isAgentPage ? "skill" : "mcp"));
   const [settings, setSettings] = useState<Settings | null>(null);
   const [skill, setSkill] = useState<MultiTargetStatus | null>(null);
+  const [activeTargets, setActiveTargets] = useState<string[]>([]);
   const [ballState, setBallState] = useState<BallState>("hidden");
   const [agentPresent, setAgentPresent] = useState(false);
   const [update, setUpdate] = useState<UpdateStatus | null>(null);
@@ -47,12 +59,14 @@ export default function SettingsWindow() {
   const [busy, setBusy] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [popoverSide, setPopoverSide] = useState<PopoverSide>("floating");
+  const [showCompactHome, setShowCompactHome] = useState(true);
 
   async function reload() {
     const s = await invoke<Settings>("get_settings");
     setSettings(s);
     setNamesText(s.agent_detection.process_names.join(", "));
     setSkill(await invoke<MultiTargetStatus>("get_skill_status"));
+    setActiveTargets(await invoke<string[]>("get_active_targets"));
     setBallState(await invoke<BallState>("get_ball_state"));
     setAgentPresent(await invoke<boolean>("get_agent_present"));
     setUpdate({
@@ -90,17 +104,29 @@ export default function SettingsWindow() {
     reload();
     const unlistenBall = listen<BallState>("ball://state", (event) => setBallState(event.payload));
     const unlistenAgent = listen<boolean>("agent://presence", (event) => setAgentPresent(event.payload));
+    const unlistenActiveTargets = listen<string[]>("agent://active-targets", (event) =>
+      setActiveTargets(event.payload),
+    );
     const unlistenMcp = listen<McpStatus>("mcp-status-changed", (event) => setMcpStatus(event.payload));
     const unlistenPopover = listen<PopoverSide>("settings://popover-side", (event) =>
       setPopoverSide(event.payload),
     );
+    const unlistenShowHome = listen("settings://show-home", () => setShowCompactHome(true));
     return () => {
       unlistenBall.then((fn) => fn());
       unlistenAgent.then((fn) => fn());
+      unlistenActiveTargets.then((fn) => fn());
       unlistenMcp.then((fn) => fn());
       unlistenPopover.then((fn) => fn());
+      unlistenShowHome.then((fn) => fn());
     };
   }, []);
+
+  useEffect(() => {
+    const window = getCurrentWebviewWindow();
+    const compact = !isAgentPage && showCompactHome;
+    window.setSize(new LogicalSize(compact ? 380 : 560, compact ? 390 : 680)).catch(() => undefined);
+  }, [isAgentPage, showCompactHome]);
 
   useEffect(() => {
     if (
@@ -117,6 +143,22 @@ export default function SettingsWindow() {
   function flash(message: string) {
     setToast(message);
     window.setTimeout(() => setToast(null), 2500);
+  }
+
+  async function closeSettings() {
+    try {
+      await invoke("close_settings");
+    } catch (error) {
+      flash("关闭设置失败: " + error);
+    }
+  }
+
+  async function openAgentSettings(targetId: string) {
+    try {
+      await invoke("open_agent_settings", { target_id: targetId });
+    } catch (error) {
+      flash("打开专页失败: " + error);
+    }
   }
 
   async function save(next: Settings) {
@@ -203,6 +245,22 @@ export default function SettingsWindow() {
       const status = await invoke<MultiTargetStatus>("reinstall_skill");
       setSkill(status);
       flash("Skill 已重新安装到选中的 Agent");
+    } catch (error) {
+      flash("安装失败: " + error);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function reinstallCurrentTarget() {
+    if (!currentAgent) return;
+    setBusy(true);
+    try {
+      const status = await invoke<MultiTargetStatus>("reinstall_skill_for_target", {
+        target_id: currentAgent.id,
+      });
+      setSkill(status);
+      flash(`已重装到 ${currentAgent.display_name}`);
     } catch (error) {
       flash("安装失败: " + error);
     } finally {
@@ -381,8 +439,78 @@ export default function SettingsWindow() {
     return `${installed}/${total} 已安装`;
   }, [skill]);
 
+  const currentTargetStatus = useMemo(() => {
+    if (!currentAgent || !skill) return null;
+    return skill.targets.find((t) => t.target_id === currentAgent.id) ?? null;
+  }, [currentAgent, skill]);
+
   if (!settings) {
     return <div className="settings"><p>加载中...</p></div>;
+  }
+
+  if (isAgentPage && currentAgent) {
+    const currentEnabled = settings.skill.targets.includes(currentAgent.id);
+    const currentDetected = activeTargets.includes(currentAgent.id);
+    const currentStatusText = !currentTargetStatus
+      ? "未检测"
+      : currentTargetStatus.status.kind === "installed"
+        ? "已安装"
+        : currentTargetStatus.status.kind === "not_installed"
+          ? "未安装"
+          : "版本不一致";
+
+    return (
+      <div className={`settings settings-wide settings-popover settings-agent-page settings-popover-${popoverSide}`}>
+        <header className="settings-header">
+          <span className="settings-logo" aria-hidden="true" />
+          <div className="settings-title">
+            <h1>{currentAgent.display_name}</h1>
+            <p>只管理这个 agent 的 oasis-wiki Skill</p>
+          </div>
+          <span className={`ball-pill ball-pill-${ballState}`}>状态: {ballStateLabel(ballState)}</span>
+          <button className="window-close" type="button" onClick={closeSettings} aria-label="关闭设置">
+            ×
+          </button>
+        </header>
+
+        <section>
+          <h2>Skill</h2>
+          <div className="row">
+            <span>当前状态</span>
+            <strong>{currentStatusText}</strong>
+          </div>
+          <div className="row">
+            <span>检测结果</span>
+            <strong>{currentDetected ? "正在运行" : "未检测到"}</strong>
+          </div>
+          <label className="row">
+            <span>启用这个 agent 的 Skill</span>
+            <input
+              type="checkbox"
+              checked={currentEnabled}
+              onChange={(event) => {
+                const next = event.target.checked
+                  ? [...settings.skill.targets, currentAgent.id]
+                  : settings.skill.targets.filter((id) => id !== currentAgent.id);
+                patch({ skill: { ...settings.skill, targets: next } });
+              }}
+            />
+          </label>
+          <div className="col">
+            <span>Skill 路径</span>
+            <code>{currentAgent.skill_dir}</code>
+          </div>
+          <div className="actions action-wrap">
+            <button onClick={refreshSkill} disabled={busy}>刷新状态</button>
+            <button onClick={reinstallCurrentTarget} disabled={busy}>重装当前 agent Skill</button>
+            <button className="btn-secondary" onClick={() => invoke("open_settings")}>打开总览</button>
+          </div>
+        </section>
+
+        {toast && <div className="toast">{toast}</div>}
+        {busy && <div className="busy">处理中..</div>}
+      </div>
+    );
   }
 
   const currentMcpUrl = mcpUrl(settings);
@@ -395,15 +523,92 @@ export default function SettingsWindow() {
   const coreTools = new Set(mcpStatus?.tools.map((tool) => tool.name) ?? []);
   const updateText = updateSummary(update);
 
+  if (showCompactHome) {
+    return (
+      <div className={`settings compact-home settings-popover settings-popover-${popoverSide}`}>
+        <header className="compact-home-header">
+          <span className="settings-logo" aria-hidden="true" />
+          <div className="settings-title">
+            <h1>Oasis Companion</h1>
+            <p>随 Agent 自动出现的桌面控制器</p>
+          </div>
+          <span className={`ball-pill ball-pill-${ballState}`}>{agentPresent ? "Agent 在线" : "待机"}</span>
+          <button className="compact-icon-button" type="button" onClick={() => setShowCompactHome(false)} aria-label="打开设置" title="打开设置">
+            ⚙
+          </button>
+          <button className="window-close" type="button" onClick={closeSettings} aria-label="关闭窗口">
+            ×
+          </button>
+        </header>
+
+        <section className="compact-card compact-mode-card">
+          <h2>工作模式</h2>
+          <div className="segmented" role="group" aria-label="Skill runtime mode">
+            <button
+              type="button"
+              className={settings.skill_runtime.mode === "normal" ? "active" : ""}
+              onClick={() => setRuntimeMode("normal")}
+              disabled={busy}
+            >
+              正常模式
+            </button>
+            <button
+              type="button"
+              className={settings.skill_runtime.mode === "teaching" ? "active" : ""}
+              onClick={() => setRuntimeMode("teaching")}
+              disabled={busy}
+            >
+              教学模式
+            </button>
+          </div>
+        </section>
+
+        <section className={`compact-card compact-mcp-card mcp-status-${mcpState}`}>
+          <div className="compact-status-line">
+            <div>
+              <h2>编辑器 MCP</h2>
+              <strong>{mcpLabel}</strong>
+            </div>
+            <span className={`status-dot status-${mcpState}`} aria-hidden="true" />
+          </div>
+          <button className="btn-primary compact-primary-action" onClick={connectMcpAuto} disabled={busy || mcpState === "connected"}>
+            {mcpState === "connected" ? "编辑器已连接" : "连接编辑器 MCP"}
+          </button>
+          <button className="compact-text-action" type="button" onClick={() => { setShowCompactHome(false); setActiveTab("mcp"); }}>
+            查看 MCP 详情
+          </button>
+        </section>
+
+        <footer className="compact-footer">
+          <button type="button" onClick={() => { setShowCompactHome(false); setActiveTab("skill"); }}>
+            <span>Skill</span><strong>{skillText}</strong>
+          </button>
+          <button type="button" onClick={() => { setShowCompactHome(false); setActiveTab("updates"); }}>
+            <span>更新</span><strong>{update?.update_available ? "有新版本" : "已是最新"}</strong>
+          </button>
+        </footer>
+
+        {toast && <div className="toast">{toast}</div>}
+        {busy && <div className="busy">处理中...</div>}
+      </div>
+    );
+  }
+
   return (
-    <div className={`settings settings-wide settings-popover settings-popover-${popoverSide}`}>
+    <div className={`settings settings-wide settings-popover settings-main-page settings-popover-${popoverSide}`}>
       <header className="settings-header">
         <span className="settings-logo" aria-hidden="true" />
         <div className="settings-title">
           <h1>Oasis Companion</h1>
           <p>随 Agent 自动出现的 oasis-wiki 桌面控制器</p>
         </div>
-        <span className={`ball-pill ball-pill-${ballState}`}>小球: {ballState}</span>
+        <span className={`ball-pill ball-pill-${ballState}`}>状态: {ballStateLabel(ballState)}</span>
+        <button className="compact-text-action settings-home-link" type="button" onClick={() => setShowCompactHome(true)}>
+          首页
+        </button>
+        <button className="window-close" type="button" onClick={closeSettings} aria-label="关闭设置">
+          ×
+        </button>
       </header>
 
       <nav className="tabs" aria-label="设置分类">
@@ -741,22 +946,27 @@ export default function SettingsWindow() {
                     ? "未安装"
                     : "版本不一致";
               return (
-                <label key={target.id} className="row target-row">
+                <div key={target.id} className="row target-row">
                   <span>
                     {target.display_name}
                     <small>{target.skill_dir} / {statusText}</small>
                   </span>
-                  <input
-                    type="checkbox"
-                    checked={enabled}
-                    onChange={(event) => {
-                      const next = event.target.checked
-                        ? [...settings.skill.targets, target.id]
-                        : settings.skill.targets.filter((id) => id !== target.id);
-                      patch({ skill: { ...settings.skill, targets: next } });
-                    }}
-                  />
-                </label>
+                  <div className="target-actions">
+                    <button className="btn-secondary" onClick={() => openAgentSettings(target.id)}>
+                      打开专页
+                    </button>
+                    <input
+                      type="checkbox"
+                      checked={enabled}
+                      onChange={(event) => {
+                        const next = event.target.checked
+                          ? [...settings.skill.targets, target.id]
+                          : settings.skill.targets.filter((id) => id !== target.id);
+                        patch({ skill: { ...settings.skill, targets: next } });
+                      }}
+                    />
+                  </div>
+                </div>
               );
             })}
           </div>
@@ -813,6 +1023,17 @@ function mcpUrl(settings: Settings) {
     ? settings.skill_runtime.mcp.sse_path
     : `/${settings.skill_runtime.mcp.sse_path}`;
   return `http://${settings.skill_runtime.mcp.host}:${settings.skill_runtime.mcp.port}${path}`;
+}
+
+function ballStateLabel(state: BallState) {
+  switch (state) {
+    case "idle":
+      return "待机";
+    case "error":
+      return "异常";
+    default:
+      return "已隐藏";
+  }
 }
 
 function mcpStateLabel(state: McpState) {

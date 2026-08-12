@@ -34,22 +34,41 @@ pub fn spawn_loop(app: AppHandle) {
             };
 
             // --- detect (no locks held) ---
+            let detected_targets = crate::detection::process::active_target_ids(&crate::agent_registry::all_targets());
             let present = if !enabled || paused {
                 false
             } else {
-                process::any_agent_running(&names, &paths) || window::any_window_matches(&titles)
+                process::any_agent_running(&names, &paths)
+                    || window::any_window_matches(&titles)
+                    || !detected_targets.is_empty()
             };
 
-            let prev = app
-                .state::<AppState>()
+            let st = app.state::<AppState>();
+            let prev_present = st
                 .agent_present
                 .swap(present, std::sync::atomic::Ordering::Relaxed);
-            if prev != present {
-                log::info!("agent presence changed: {} -> {}", prev, present);
+            let prev_targets = {
+                let mut lock = st.active_targets.lock().unwrap();
+                let prev = lock.clone();
+                *lock = detected_targets.clone();
+                prev
+            };
+            if prev_present != present {
+                log::info!("agent presence changed: {} -> {}", prev_present, present);
                 let _ = app.emit("agent://presence", present);
-                if follow_lifecycle && !present {
-                    crate::tray::hide_settings(&app);
-                }
+            }
+            if prev_targets != detected_targets {
+                log::info!("active agent targets changed: {:?} -> {:?}", prev_targets, detected_targets);
+                let _ = app.emit("agent://active-targets", detected_targets.clone());
+            }
+            if follow_lifecycle && !present {
+                crate::tray::hide_settings(&app);
+            }
+            for target_id in detected_targets
+                .iter()
+                .filter(|target_id| !prev_targets.contains(target_id))
+            {
+                crate::tray::show_agent_settings(&app, target_id);
             }
 
             // --- recompute + apply ball state (brief lock) ---

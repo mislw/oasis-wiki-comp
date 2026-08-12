@@ -99,6 +99,11 @@ pub fn apply_pause(app: &AppHandle, paused: bool) -> Result<(), String> {
         app.state::<state::AppState>()
             .agent_present
             .store(false, Ordering::Relaxed);
+        app.state::<state::AppState>()
+            .active_targets
+            .lock()
+            .unwrap()
+            .clear();
         *app.state::<state::AppState>().ball_state.lock().unwrap() = state::BallState::Hidden;
         ball::apply_state(app, state::BallState::Hidden);
     }
@@ -197,10 +202,14 @@ pub fn run() {
             commands::save_settings,
             commands::get_ball_state,
             commands::get_agent_present,
+            commands::get_active_targets,
             commands::open_settings,
+            commands::open_agent_settings,
+            commands::close_settings,
             commands::get_skill_status,
             commands::refresh_skill_status_cmd,
             commands::reinstall_skill,
+            commands::reinstall_skill_for_target,
             commands::set_pause_detection,
             commands::get_autostart_enabled,
             commands::set_autostart_enabled,

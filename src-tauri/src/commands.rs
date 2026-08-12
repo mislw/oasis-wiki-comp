@@ -1,7 +1,7 @@
 //! IPC commands exposed to the frontend.
 
 use std::sync::atomic::Ordering;
-use tauri::{AppHandle, Manager};
+use tauri::{AppHandle, Manager, WebviewWindow};
 
 use crate::config::{self, Settings};
 use crate::skill::MultiTargetStatus;
@@ -42,10 +42,30 @@ pub fn get_agent_present(app: AppHandle) -> bool {
         .load(Ordering::Relaxed)
 }
 
+#[tauri::command]
+pub fn get_active_targets(app: AppHandle) -> Vec<String> {
+    app.state::<AppState>()
+        .active_targets
+        .lock()
+        .unwrap()
+        .clone()
+}
+
 /// Toggle the settings popover (used by the floating ball click).
 #[tauri::command]
 pub fn open_settings(app: AppHandle) {
     crate::tray::toggle_settings(&app);
+}
+
+#[tauri::command]
+pub fn open_agent_settings(app: AppHandle, target_id: String) {
+    crate::tray::show_agent_settings(&app, &target_id);
+}
+
+/// Hide the current settings page without stopping the background companion.
+#[tauri::command]
+pub fn close_settings(window: WebviewWindow) -> Result<(), String> {
+    window.hide().map_err(|error| error.to_string())
 }
 
 #[tauri::command]
@@ -71,10 +91,26 @@ pub fn reinstall_skill(app: AppHandle) -> Result<MultiTargetStatus, String> {
         .skill
         .targets
         .clone();
-    let status = crate::skill::install_skill(&app, &targets)?;
+    let status = reinstall_skill_targets(&app, targets)?;
+
+    Ok(status)
+}
+
+#[tauri::command]
+pub fn reinstall_skill_for_target(
+    app: AppHandle,
+    target_id: String,
+) -> Result<MultiTargetStatus, String> {
+    reinstall_skill_targets(&app, vec![target_id])
+}
+
+fn reinstall_skill_targets(app: &AppHandle, targets: Vec<String>) -> Result<MultiTargetStatus, String> {
+    let _installed = crate::skill::install_skill(&app, &targets)?;
 
     {
         let st = app.state::<AppState>();
+        let full_targets = st.settings.lock().unwrap().skill.targets.clone();
+        let status = crate::skill::detect_status(&full_targets);
         *st.skill_status.lock().unwrap() = status.clone();
         {
             let mut s = st.settings.lock().unwrap();
@@ -94,7 +130,7 @@ pub fn reinstall_skill(app: AppHandle) -> Result<MultiTargetStatus, String> {
     if changed {
         crate::ball::apply_state(&app, ns);
     }
-    Ok(status)
+    Ok(app.state::<AppState>().skill_status.lock().unwrap().clone())
 }
 
 #[tauri::command]
