@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { getVersion } from "@tauri-apps/api/app";
 import { invoke } from "@tauri-apps/api/core";
 import { LogicalSize } from "@tauri-apps/api/dpi";
 import { listen } from "@tauri-apps/api/event";
@@ -60,6 +61,7 @@ export default function SettingsWindow({ agentId = null }: SettingsWindowProps) 
   const [toast, setToast] = useState<string | null>(null);
   const [popoverSide, setPopoverSide] = useState<PopoverSide>("floating");
   const [showCompactHome, setShowCompactHome] = useState(true);
+  const [companionVersion, setCompanionVersion] = useState("");
 
   async function reload() {
     const s = await invoke<Settings>("get_settings");
@@ -103,6 +105,7 @@ export default function SettingsWindow({ agentId = null }: SettingsWindowProps) 
 
   useEffect(() => {
     reload();
+    getVersion().then(setCompanionVersion).catch(() => undefined);
     const unlistenBall = listen<BallState>("ball://state", (event) => setBallState(event.payload));
     const unlistenAgent = listen<boolean>("agent://presence", (event) => setAgentPresent(event.payload));
     const unlistenActiveTargets = listen<string[]>("agent://active-targets", (event) =>
@@ -435,7 +438,7 @@ export default function SettingsWindow({ agentId = null }: SettingsWindowProps) 
     if (!skill || skill.targets.length === 0) return "检测中";
     const installed = skill.targets.filter((t) => t.status.kind === "installed").length;
     const total = skill.targets.length;
-    if (installed === total) return `全部已安装 (v${EXPECTED_VERSION})`;
+    if (installed === total) return `v${EXPECTED_VERSION} · 已安装`;
     if (installed === 0) return "全部未安装";
     return `${installed}/${total} 已安装`;
   }, [skill]);
@@ -530,7 +533,10 @@ export default function SettingsWindow({ agentId = null }: SettingsWindowProps) 
         <header className="compact-home-header">
           <span className="settings-logo" aria-hidden="true" />
           <div className="settings-title">
-            <h1>Oasis Companion</h1>
+            <div className="settings-title-line">
+              <h1>Oasis Companion</h1>
+              {companionVersion && <span className="app-version">v{companionVersion}</span>}
+            </div>
             <p>随 Agent 自动出现的桌面控制器</p>
           </div>
           <span className={`ball-pill ball-pill-${ballState}`}>{agentPresent ? "Agent 在线" : "待机"}</span>
@@ -582,7 +588,7 @@ export default function SettingsWindow({ agentId = null }: SettingsWindowProps) 
 
         <footer className="compact-footer">
           <button type="button" onClick={() => { setShowCompactHome(false); setActiveTab("skill"); }}>
-            <span>Skill</span><strong>{skillText}</strong>
+            <span>Skill 版本</span><strong>{skillText}</strong>
           </button>
           <button type="button" onClick={() => { setShowCompactHome(false); setActiveTab("updates"); }}>
             <span>更新</span><strong>{update?.update_available ? "有新版本" : "已是最新"}</strong>
@@ -600,7 +606,10 @@ export default function SettingsWindow({ agentId = null }: SettingsWindowProps) 
       <header className="settings-header">
         <span className="settings-logo" aria-hidden="true" />
         <div className="settings-title">
-          <h1>Oasis Companion</h1>
+          <div className="settings-title-line">
+            <h1>Oasis Companion</h1>
+            {companionVersion && <span className="app-version">v{companionVersion}</span>}
+          </div>
           <p>随 Agent 自动出现的 oasis-wiki 桌面控制器</p>
         </div>
         <span className={`ball-pill ball-pill-${ballState}`}>状态: {ballStateLabel(ballState)}</span>
