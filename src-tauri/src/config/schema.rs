@@ -214,6 +214,8 @@ pub struct UpdatesConfig {
     #[serde(default)]
     pub latest_revision: Option<String>,
     #[serde(default)]
+    pub latest_revision_date: Option<String>,
+    #[serde(default)]
     pub installed_revision: Option<String>,
     #[serde(default)]
     pub latest_url: Option<String>,
@@ -328,6 +330,7 @@ impl Default for UpdatesConfig {
             last_check_at: None,
             latest_version: None,
             latest_revision: None,
+            latest_revision_date: None,
             installed_revision: None,
             latest_url: None,
             update_available: false,

@@ -27,6 +27,7 @@ pub struct UpdateStatus {
     pub current_version: String,
     pub latest_version: Option<String>,
     pub latest_revision: Option<String>,
+    pub latest_revision_date: Option<String>,
     pub installed_revision: Option<String>,
     pub latest_url: Option<String>,
     pub error: Option<String>,
@@ -54,6 +55,17 @@ struct GithubRepo {
 struct GithubCommit {
     sha: String,
     html_url: String,
+    commit: GithubCommitDetails,
+}
+
+#[derive(Debug, Deserialize)]
+struct GithubCommitDetails {
+    author: GithubCommitAuthor,
+}
+
+#[derive(Debug, Deserialize)]
+struct GithubCommitAuthor {
+    date: String,
 }
 
 struct GithubUpdateCandidate {
@@ -81,6 +93,7 @@ pub async fn check(app: &AppHandle) -> UpdateStatus {
             current_version: CURRENT_SKILL_VERSION.to_string(),
             latest_version: None,
             latest_revision: None,
+            latest_revision_date: None,
             installed_revision,
             latest_url: None,
             error: Some(error),
@@ -98,6 +111,7 @@ pub async fn check(app: &AppHandle) -> UpdateStatus {
         settings.updates.last_check_at = Some(now_epoch_seconds());
         settings.updates.latest_version = status.latest_version.clone();
         settings.updates.latest_revision = status.latest_revision.clone();
+        settings.updates.latest_revision_date = status.latest_revision_date.clone();
         settings.updates.installed_revision = status.installed_revision.clone();
         settings.updates.latest_url = status.latest_url.clone();
         settings.updates.update_available = status.update_available;
@@ -149,6 +163,7 @@ pub async fn install_latest(app: &AppHandle) -> Result<UpdateInstallResult, Stri
         settings.updates.last_check_at = Some(now_epoch_seconds());
         settings.updates.latest_version = candidate.status.latest_version.clone();
         settings.updates.latest_revision = candidate.status.latest_revision.clone();
+        settings.updates.latest_revision_date = candidate.status.latest_revision_date.clone();
         settings.updates.installed_revision = installed_revision.clone();
         settings.updates.latest_url = candidate.status.latest_url.clone();
         settings.updates.update_available = false;
@@ -225,6 +240,7 @@ async fn check_github_candidate(
                 current_version: CURRENT_SKILL_VERSION.to_string(),
                 latest_version: Some(tag),
                 latest_revision: None,
+                latest_revision_date: None,
                 installed_revision: installed_revision.map(String::from),
                 latest_url: Some(release.html_url),
                 error: None,
@@ -262,6 +278,7 @@ async fn check_github_candidate(
             current_version: CURRENT_SKILL_VERSION.to_string(),
             latest_version: None,
             latest_revision: Some(short_sha),
+            latest_revision_date: Some(commit.commit.author.date),
             installed_revision: installed_revision.map(String::from),
             latest_url: Some(commit.html_url),
             error: None,
@@ -440,5 +457,15 @@ mod tests {
         assert!(revision_is_newer("abc123", Some("def456")));
         assert!(!revision_is_newer("abc123", Some("abc123")));
         assert!(!revision_is_newer("", Some("abc123")));
+    }
+
+    #[test]
+    fn reads_latest_commit_author_date() {
+        let commit: GithubCommit = serde_json::from_str(
+            r#"{"sha":"b3a5997","html_url":"https://github.com/mislw/oasis-wiki/commit/b3a5997","commit":{"author":{"date":"2026-08-11T06:30:00Z"}}}"#,
+        )
+        .unwrap();
+
+        assert_eq!(commit.commit.author.date, "2026-08-11T06:30:00Z");
     }
 }

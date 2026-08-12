@@ -60,6 +60,7 @@ export interface Settings {
     last_check_at: string | null;
     latest_version: string | null;
     latest_revision: string | null;
+    latest_revision_date: string | null;
     installed_revision: string | null;
     latest_url: string | null;
     update_available: boolean;
@@ -98,6 +99,7 @@ export interface UpdateStatus {
   current_version: string;
   latest_version: string | null;
   latest_revision: string | null;
+  latest_revision_date: string | null;
   installed_revision: string | null;
   latest_url: string | null;
   error: string | null;

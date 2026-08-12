@@ -62,6 +62,7 @@ export default function SettingsWindow() {
       current_version: EXPECTED_VERSION,
       latest_version: s.updates.latest_version,
       latest_revision: s.updates.latest_revision,
+      latest_revision_date: s.updates.latest_revision_date,
       installed_revision: s.updates.installed_revision,
       latest_url: s.updates.latest_url,
       error: s.updates.last_error,
@@ -831,8 +832,17 @@ function mcpStateLabel(state: McpState) {
 function updateSummary(update: UpdateStatus | null) {
   if (update?.error) return update.error;
   if (update?.latest_version) return `最新 Release: v${update.latest_version}`;
+  if (update?.latest_revision_date) return `最新提交: ${formatCommitDate(update.latest_revision_date)}`;
   if (update?.latest_revision) return `最新提交: ${update.latest_revision}`;
   return "尚未检查";
+}
+
+function formatCommitDate(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${date.getFullYear()}-${month}-${day}`;
 }
 
 function formatEpochSeconds(value: string) {
