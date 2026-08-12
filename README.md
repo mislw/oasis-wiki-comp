@@ -43,9 +43,10 @@ src-tauri\target\release\bundle\msi\
 
 ## Bundled Skill
 
-The complete upstream Skill lives in `src-tauri/resources/skill/` and is copied
-from `mislw/oasis-wiki`. It includes `SKILL.md`, Agent metadata, references, wiki
-content, and MCP helper scripts.
+The canonical Skill source lives in `mislw/oasis-wiki`. Companion mirrors its
+`oasis-wiki/` directory into `src-tauri/resources/skill/`, then adds only the
+plugin-specific `VERSION` marker used to detect bundled Skill upgrades. Run
+`scripts/sync-bundled-skill.ps1` after updating the sibling Skill checkout.
 
 ## Repository Layout
 
