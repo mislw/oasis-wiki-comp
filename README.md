@@ -6,8 +6,9 @@ MCP discovery and calls, multi-Agent Skill installation, and GitHub-backed updat
 
 ## Install
 
-Download the MSI from the GitHub Releases page and run it. The installer uses the
-per-user `currentUser` mode and does not require administrator elevation.
+Download the MSI from the GitHub Releases page and run it. The installer uses a
+machine-wide location under `C:\\Program Files` and may request administrator
+approval when installing or upgrading.
 
 The bundled Skill is installed to:
 
