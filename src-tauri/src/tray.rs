@@ -7,8 +7,8 @@ use tauri::{
     WebviewWindowBuilder,
 };
 
-const SETTINGS_WIDTH: f64 = 420.0;
-const SETTINGS_HEIGHT: f64 = 560.0;
+const SETTINGS_WIDTH: f64 = 560.0;
+const SETTINGS_HEIGHT: f64 = 680.0;
 const BALL_WINDOW_SIZE: f64 = 64.0;
 const BALL_CORE_SIZE: f64 = 52.0;
 const POPOVER_GAP: f64 = 0.0;
@@ -99,6 +99,7 @@ pub fn show_settings(app: &AppHandle) {
     if let Some(w) = app.get_webview_window("settings") {
         let placement = position_settings_near_ball(app, &w);
         emit_popover_side(&w, placement.map(|p| p.side));
+        let _ = w.emit("settings://show-home", ());
         let _ = w.show();
         let _ = w.unminimize();
         let _ = w.set_focus();
@@ -129,6 +130,44 @@ pub fn show_settings(app: &AppHandle) {
     }
 }
 
+pub fn show_agent_settings(app: &AppHandle, target_id: &str) {
+    let label = agent_settings_label(target_id);
+    let title = format!("Oasis Companion - {}", agent_settings_title(target_id));
+    if let Some(w) = app.get_webview_window(&label) {
+        let placement = position_settings_near_ball(app, &w);
+        emit_popover_side(&w, placement.map(|p| p.side));
+        let _ = w.show();
+        let _ = w.unminimize();
+        let _ = w.set_focus();
+        return;
+    }
+
+    match WebviewWindowBuilder::new(app, label, WebviewUrl::App("index.html".into()))
+        .title(&title)
+        .inner_size(SETTINGS_WIDTH, SETTINGS_HEIGHT)
+        .min_inner_size(420.0, 560.0)
+        .resizable(false)
+        .decorations(false)
+        .transparent(true)
+        .shadow(false)
+        .skip_taskbar(true)
+        .always_on_top(true)
+        .build()
+    {
+        Ok(w) => {
+            let placement = position_settings_near_ball(app, &w);
+            emit_popover_side(&w, placement.map(|p| p.side));
+            if let Err(err) = w.show() {
+                log::warn!("agent settings window could not be shown: {}", err);
+            }
+            if let Err(err) = w.set_focus() {
+                log::warn!("agent settings window could not be focused: {}", err);
+            }
+        }
+        Err(err) => log::warn!("agent settings window could not be created: {}", err),
+    }
+}
+
 pub fn toggle_settings(app: &AppHandle) {
     if let Some(w) = app.get_webview_window("settings") {
         if w.is_visible().unwrap_or(false) {
@@ -140,8 +179,10 @@ pub fn toggle_settings(app: &AppHandle) {
 }
 
 pub fn hide_settings(app: &AppHandle) {
-    if let Some(w) = app.get_webview_window("settings") {
-        let _ = w.hide();
+    for (label, w) in app.webview_windows() {
+        if label == "settings" || label.starts_with("settings-") {
+            let _ = w.hide();
+        }
     }
 }
 
@@ -173,6 +214,19 @@ fn sync_settings_popover(app: &AppHandle, last_side: &mut Option<&'static str>) 
 
 fn emit_popover_side(settings: &WebviewWindow, side: Option<&'static str>) {
     let _ = settings.emit("settings://popover-side", side.unwrap_or("floating"));
+}
+
+fn agent_settings_label(target_id: &str) -> String {
+    format!("settings-{}", target_id)
+}
+
+fn agent_settings_title(target_id: &str) -> &'static str {
+    match target_id {
+        "codex" => "Codex",
+        "claude-code" => "Claude Code",
+        "workbuddy" => "WorkBuddy",
+        _ => "Agent",
+    }
 }
 
 fn position_settings_near_ball(

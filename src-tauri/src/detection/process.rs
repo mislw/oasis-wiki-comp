@@ -41,3 +41,28 @@ pub fn any_agent_running(process_names: &[String], install_paths: &[String]) -> 
     }
     false
 }
+
+/// Return target ids whose configured process names are currently running.
+///
+/// This is the per-agent signal used to decide which dedicated settings pages
+/// should be opened or refreshed.
+pub fn active_target_ids(targets: &[crate::agent_registry::AgentTarget]) -> Vec<String> {
+    let sys = System::new_all();
+    let running_names: std::collections::HashSet<String> = sys
+        .processes()
+        .values()
+        .map(|proc| proc.name().to_ascii_lowercase())
+        .collect();
+
+    targets
+        .iter()
+        .filter(|target| {
+            target
+                .process_names
+                .iter()
+                .map(|s| s.trim().to_ascii_lowercase())
+                .any(|name| !name.is_empty() && running_names.contains(&name))
+        })
+        .map(|target| target.id.clone())
+        .collect()
+}

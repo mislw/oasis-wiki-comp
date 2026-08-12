@@ -37,6 +37,7 @@ pub struct AppState {
     pub settings: Mutex<Settings>,
     pub ball_state: Mutex<BallState>,
     pub agent_present: AtomicBool,
+    pub active_targets: Mutex<Vec<String>>,
     pub update_available: AtomicBool,
     pub skill_status: Mutex<MultiTargetStatus>,
     /// True if settings.json had to be recovered from corruption this session.
@@ -49,6 +50,7 @@ impl AppState {
             settings: Mutex::new(settings),
             ball_state: Mutex::new(BallState::Hidden),
             agent_present: AtomicBool::new(false),
+            active_targets: Mutex::new(Vec::new()),
             update_available: AtomicBool::new(false),
             skill_status: Mutex::new(skill_status),
             config_error: AtomicBool::new(config_error),

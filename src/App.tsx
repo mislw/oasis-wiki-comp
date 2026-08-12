@@ -6,5 +6,8 @@ import Settings from "./windows/Settings";
 export default function App() {
   const label = getCurrentWebviewWindow().label;
   if (label === "ball") return <Ball />;
+  if (label.startsWith("settings-")) {
+    return <Settings agentId={label.slice("settings-".length)} />;
+  }
   return <Settings />;
 }
