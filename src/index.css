@@ -263,6 +263,13 @@ body:has(.settings) {
   gap: 8px;
 }
 
+.compact-footer .compact-tool-launch {
+  grid-column: 1 / -1;
+  border-color: rgba(31, 143, 90, 0.28);
+  background: #f1fbf6;
+  color: var(--oasis-dark);
+}
+
 .compact-footer button {
   display: flex;
   align-items: center;

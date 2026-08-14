@@ -2,7 +2,7 @@
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
   "description": "Oasis Companion default capabilities",
-  "windows": ["ball", "settings", "settings-codex", "settings-claude-code", "settings-workbuddy"],
+  "windows": ["ball", "settings", "settings-codex", "settings-claude-code", "settings-workbuddy", "ui-workbench"],
   "permissions": [
     "core:default",
     "core:window:allow-show",

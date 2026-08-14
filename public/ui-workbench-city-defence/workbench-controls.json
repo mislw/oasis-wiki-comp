@@ -1,0 +1,3982 @@
+{
+  "schema_version": 3,
+  "controls": [
+    {
+      "element_id": "header.title",
+      "component_id": "header.title",
+      "target_component_id": "text.header.title",
+      "category": "text",
+      "parent_id": "header.main",
+      "bounds": {
+        "x": 649,
+        "y": 17,
+        "width": 132,
+        "height": 52
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Page title remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "text.header.title"
+      }
+    },
+    {
+      "element_id": "button.close",
+      "component_id": "button.close",
+      "target_component_id": "button.close.gold",
+      "category": "button",
+      "parent_id": "header.main",
+      "bounds": {
+        "x": 1326,
+        "y": 18,
+        "width": 68,
+        "height": 59
+      },
+      "layer": 60,
+      "z_index": 60.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Standalone close button artwork.",
+      "asset_policy": "layer",
+      "node_kind": "artwork",
+      "render_mode": "bitmap",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/button.close.gold.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "extract_artwork",
+        "target_component_id": "button.close.gold"
+      }
+    },
+    {
+      "element_id": "header.main",
+      "component_id": "header.main",
+      "target_component_id": "header.brown.gold",
+      "category": "panel",
+      "parent_id": "window.city_defence",
+      "bounds": {
+        "x": 8,
+        "y": 10,
+        "width": 1397,
+        "height": 70
+      },
+      "layer": 20,
+      "z_index": 20.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.98,
+      "reason": "Header skin without title or close control.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/header.brown.gold.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "header.brown.gold"
+      }
+    },
+    {
+      "element_id": "text.tab.defence_tower",
+      "component_id": "text.tab.defence_tower",
+      "target_component_id": "text.tab.defence_tower",
+      "category": "text",
+      "parent_id": "tab.defence_tower",
+      "bounds": {
+        "x": 70,
+        "y": 128,
+        "width": 99,
+        "height": 38
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Tab label remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "text.tab.defence_tower"
+      }
+    },
+    {
+      "element_id": "badge.tab.notice",
+      "component_id": "badge.tab.notice",
+      "target_component_id": "badge.notice.red_diamond",
+      "category": "badge",
+      "parent_id": "tab.defence_tower",
+      "bounds": {
+        "x": 184,
+        "y": 108,
+        "width": 25,
+        "height": 47
+      },
+      "layer": 70,
+      "z_index": 70.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.98,
+      "reason": "Notification dot and diamond marker.",
+      "asset_policy": "layer",
+      "node_kind": "artwork",
+      "render_mode": "bitmap",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/badge.notice.red_diamond.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "extract_artwork",
+        "target_component_id": "badge.notice.red_diamond"
+      }
+    },
+    {
+      "element_id": "tab.defence_tower",
+      "component_id": "tab.defence_tower",
+      "target_component_id": "tab.navigation.selected.gold",
+      "category": "button",
+      "parent_id": "navigation.sidebar",
+      "bounds": {
+        "x": 25,
+        "y": 104,
+        "width": 186,
+        "height": 82
+      },
+      "layer": 60,
+      "z_index": 60.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Selected navigation tab skin.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/tab.navigation.selected.gold.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "tab.navigation.selected.gold"
+      }
+    },
+    {
+      "element_id": "text.tab.wall",
+      "component_id": "text.tab.wall",
+      "target_component_id": "text.tab.wall",
+      "category": "text",
+      "parent_id": "tab.wall",
+      "bounds": {
+        "x": 84,
+        "y": 219,
+        "width": 72,
+        "height": 35
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Tab label remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "text.tab.wall"
+      }
+    },
+    {
+      "element_id": "icon.tab.wall_marker",
+      "component_id": "icon.tab.wall_marker",
+      "target_component_id": "icon.tab.diamond",
+      "category": "icon",
+      "parent_id": "tab.wall",
+      "bounds": {
+        "x": 188,
+        "y": 224,
+        "width": 20,
+        "height": 22
+      },
+      "layer": 40,
+      "z_index": 40.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.98,
+      "reason": "Tab marker artwork.",
+      "asset_policy": "layer",
+      "node_kind": "artwork",
+      "render_mode": "bitmap",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/icon.tab.diamond.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "extract_artwork",
+        "target_component_id": "icon.tab.diamond"
+      }
+    },
+    {
+      "element_id": "tab.wall",
+      "component_id": "tab.wall",
+      "target_component_id": "tab.navigation.default.brown",
+      "category": "button",
+      "parent_id": "navigation.sidebar",
+      "bounds": {
+        "x": 25,
+        "y": 196,
+        "width": 186,
+        "height": 77
+      },
+      "layer": 60,
+      "z_index": 60.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Unselected navigation tab skin.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/tab.navigation.default.brown.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "tab.navigation.default.brown"
+      }
+    },
+    {
+      "element_id": "navigation.sidebar",
+      "component_id": "navigation.sidebar",
+      "target_component_id": "panel.navigation.cream",
+      "category": "panel",
+      "parent_id": "body.main",
+      "bounds": {
+        "x": 25,
+        "y": 101,
+        "width": 185,
+        "height": 668
+      },
+      "layer": 30,
+      "z_index": 30.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.97,
+      "reason": "Left navigation rail.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/panel.navigation.cream.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "panel.navigation.cream"
+      }
+    },
+    {
+      "element_id": "text.plan_label",
+      "component_id": "text.plan_label",
+      "target_component_id": "text.plan_label",
+      "category": "text",
+      "parent_id": "tabs.plan",
+      "bounds": {
+        "x": 256,
+        "y": 126,
+        "width": 62,
+        "height": 35
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Plan label remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "text.plan_label"
+      }
+    },
+    {
+      "element_id": "text.plan.1",
+      "component_id": "text.plan.1",
+      "target_component_id": "text.plan.number",
+      "category": "text",
+      "parent_id": "button.plan.1",
+      "bounds": {
+        "x": 345,
+        "y": 126,
+        "width": 24,
+        "height": 34
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Plan number remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "text.plan.number"
+      }
+    },
+    {
+      "element_id": "text.plan.2",
+      "component_id": "text.plan.2",
+      "target_component_id": "text.plan.number",
+      "category": "text",
+      "parent_id": "button.plan.2",
+      "bounds": {
+        "x": 422,
+        "y": 127,
+        "width": 24,
+        "height": 33
+      },
+      "layer": 50,
+      "z_index": 50.001,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Plan number remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "text.plan.number"
+      }
+    },
+    {
+      "element_id": "text.plan.3",
+      "component_id": "text.plan.3",
+      "target_component_id": "text.plan.number",
+      "category": "text",
+      "parent_id": "button.plan.3",
+      "bounds": {
+        "x": 497,
+        "y": 127,
+        "width": 24,
+        "height": 33
+      },
+      "layer": 50,
+      "z_index": 50.002,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Plan number remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "text.plan.number"
+      }
+    },
+    {
+      "element_id": "button.plan.1",
+      "component_id": "button.plan.1",
+      "target_component_id": "button.plan.selected.gold",
+      "category": "button",
+      "parent_id": "tabs.plan",
+      "bounds": {
+        "x": 326,
+        "y": 119,
+        "width": 65,
+        "height": 51
+      },
+      "layer": 60,
+      "z_index": 60.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Selected plan button skin.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/button.plan.selected.gold.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "button.plan.selected.gold"
+      }
+    },
+    {
+      "element_id": "button.plan.2",
+      "component_id": "button.plan.2",
+      "target_component_id": "button.plan.default.brown",
+      "category": "button",
+      "parent_id": "tabs.plan",
+      "bounds": {
+        "x": 402,
+        "y": 119,
+        "width": 64,
+        "height": 50
+      },
+      "layer": 60,
+      "z_index": 60.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Default plan button skin.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/button.plan.default.brown.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "button.plan.default.brown"
+      }
+    },
+    {
+      "element_id": "button.plan.3",
+      "component_id": "button.plan.3",
+      "target_component_id": "button.plan.default.brown",
+      "category": "button",
+      "parent_id": "tabs.plan",
+      "bounds": {
+        "x": 477,
+        "y": 119,
+        "width": 63,
+        "height": 50
+      },
+      "layer": 60,
+      "z_index": 60.001,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Default plan button skin.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/button.plan.default.brown.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "button.plan.default.brown"
+      }
+    },
+    {
+      "element_id": "tabs.plan",
+      "component_id": "tabs.plan",
+      "target_component_id": "tabs.plan",
+      "category": "tabs",
+      "parent_id": "panel.plan",
+      "bounds": {
+        "x": 244,
+        "y": 111,
+        "width": 303,
+        "height": 63
+      },
+      "layer": 30,
+      "z_index": 30.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Plan label plus three numbered tabs.",
+      "asset_policy": "group",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "composite",
+        "target_component_id": "tabs.plan"
+      }
+    },
+    {
+      "element_id": "badge.stage.1",
+      "component_id": "badge.stage.1",
+      "target_component_id": "badge.stage.number",
+      "category": "badge",
+      "parent_id": "stage.tower.1",
+      "bounds": {
+        "x": 332,
+        "y": 648,
+        "width": 31,
+        "height": 28
+      },
+      "layer": 70,
+      "z_index": 70.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Stage number remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "badge.stage.number"
+      }
+    },
+    {
+      "element_id": "badge.stage.2",
+      "component_id": "badge.stage.2",
+      "target_component_id": "badge.stage.number",
+      "category": "badge",
+      "parent_id": "stage.tower.2",
+      "bounds": {
+        "x": 424,
+        "y": 552,
+        "width": 31,
+        "height": 28
+      },
+      "layer": 70,
+      "z_index": 70.001,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Stage number remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "badge.stage.number"
+      }
+    },
+    {
+      "element_id": "badge.stage.3",
+      "component_id": "badge.stage.3",
+      "target_component_id": "badge.stage.number",
+      "category": "badge",
+      "parent_id": "stage.tower.3",
+      "bounds": {
+        "x": 522,
+        "y": 457,
+        "width": 31,
+        "height": 29
+      },
+      "layer": 70,
+      "z_index": 70.002,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Stage number remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "badge.stage.number"
+      }
+    },
+    {
+      "element_id": "badge.stage.4",
+      "component_id": "badge.stage.4",
+      "target_component_id": "badge.stage.number",
+      "category": "badge",
+      "parent_id": "stage.tower.4",
+      "bounds": {
+        "x": 620,
+        "y": 360,
+        "width": 31,
+        "height": 29
+      },
+      "layer": 70,
+      "z_index": 70.003,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Stage number remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "badge.stage.number"
+      }
+    },
+    {
+      "element_id": "badge.stage.5",
+      "component_id": "badge.stage.5",
+      "target_component_id": "badge.stage.number",
+      "category": "badge",
+      "parent_id": "stage.tower.5",
+      "bounds": {
+        "x": 695,
+        "y": 250,
+        "width": 30,
+        "height": 28
+      },
+      "layer": 70,
+      "z_index": 70.004,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Stage number remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "badge.stage.number"
+      }
+    },
+    {
+      "element_id": "stage.tower.1",
+      "component_id": "stage.tower.1",
+      "target_component_id": "artwork.tower.stage.1",
+      "category": "card",
+      "parent_id": "artwork.upgrade_path",
+      "bounds": {
+        "x": 258,
+        "y": 558,
+        "width": 108,
+        "height": 119
+      },
+      "layer": 40,
+      "z_index": 40.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.98,
+      "reason": "Tower stage artwork and selected glow.",
+      "asset_policy": "layer",
+      "node_kind": "artwork",
+      "render_mode": "bitmap",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/artwork.tower.stage.1.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "extract_artwork",
+        "target_component_id": "artwork.tower.stage.1"
+      }
+    },
+    {
+      "element_id": "stage.tower.2",
+      "component_id": "stage.tower.2",
+      "target_component_id": "artwork.tower.stage.2",
+      "category": "artwork",
+      "parent_id": "artwork.upgrade_path",
+      "bounds": {
+        "x": 344,
+        "y": 452,
+        "width": 111,
+        "height": 128
+      },
+      "layer": 40,
+      "z_index": 40.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.98,
+      "reason": "Tower stage artwork.",
+      "asset_policy": "layer",
+      "node_kind": "artwork",
+      "render_mode": "bitmap",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/artwork.tower.stage.2.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "extract_artwork",
+        "target_component_id": "artwork.tower.stage.2"
+      }
+    },
+    {
+      "element_id": "stage.tower.3",
+      "component_id": "stage.tower.3",
+      "target_component_id": "artwork.tower.stage.3",
+      "category": "artwork",
+      "parent_id": "artwork.upgrade_path",
+      "bounds": {
+        "x": 441,
+        "y": 354,
+        "width": 112,
+        "height": 133
+      },
+      "layer": 40,
+      "z_index": 40.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.98,
+      "reason": "Tower stage artwork.",
+      "asset_policy": "layer",
+      "node_kind": "artwork",
+      "render_mode": "bitmap",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/artwork.tower.stage.3.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "extract_artwork",
+        "target_component_id": "artwork.tower.stage.3"
+      }
+    },
+    {
+      "element_id": "stage.tower.4",
+      "component_id": "stage.tower.4",
+      "target_component_id": "artwork.tower.stage.4",
+      "category": "artwork",
+      "parent_id": "artwork.upgrade_path",
+      "bounds": {
+        "x": 539,
+        "y": 253,
+        "width": 112,
+        "height": 139
+      },
+      "layer": 40,
+      "z_index": 40.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.98,
+      "reason": "Tower stage artwork.",
+      "asset_policy": "layer",
+      "node_kind": "artwork",
+      "render_mode": "bitmap",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/artwork.tower.stage.4.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "extract_artwork",
+        "target_component_id": "artwork.tower.stage.4"
+      }
+    },
+    {
+      "element_id": "stage.tower.5",
+      "component_id": "stage.tower.5",
+      "target_component_id": "artwork.tower.stage.5",
+      "category": "artwork",
+      "parent_id": "artwork.upgrade_path",
+      "bounds": {
+        "x": 617,
+        "y": 137,
+        "width": 108,
+        "height": 143
+      },
+      "layer": 40,
+      "z_index": 40.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.98,
+      "reason": "Tower stage artwork.",
+      "asset_policy": "layer",
+      "node_kind": "artwork",
+      "render_mode": "bitmap",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/artwork.tower.stage.5.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "extract_artwork",
+        "target_component_id": "artwork.tower.stage.5"
+      }
+    },
+    {
+      "element_id": "artwork.upgrade_path",
+      "component_id": "artwork.upgrade_path",
+      "target_component_id": "artwork.upgrade_path",
+      "category": "artwork",
+      "parent_id": "panel.plan",
+      "bounds": {
+        "x": 257,
+        "y": 194,
+        "width": 470,
+        "height": 483
+      },
+      "layer": 40,
+      "z_index": 40.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.96,
+      "reason": "Upgrade path owns five independently movable tower stages.",
+      "asset_policy": "group",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "composite",
+        "target_component_id": "artwork.upgrade_path"
+      }
+    },
+    {
+      "element_id": "text.manage_building",
+      "component_id": "text.manage_building",
+      "target_component_id": "text.manage_building",
+      "category": "text",
+      "parent_id": "button.manage_building",
+      "bounds": {
+        "x": 548,
+        "y": 689,
+        "width": 126,
+        "height": 37
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Button label remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "text.manage_building"
+      }
+    },
+    {
+      "element_id": "button.manage_building",
+      "component_id": "button.manage_building",
+      "target_component_id": "button.primary.gold",
+      "category": "button",
+      "parent_id": "panel.plan",
+      "bounds": {
+        "x": 499,
+        "y": 669,
+        "width": 224,
+        "height": 67
+      },
+      "layer": 60,
+      "z_index": 60.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Reusable primary button skin.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/button.primary.gold.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "button.primary.gold"
+      }
+    },
+    {
+      "element_id": "panel.plan",
+      "component_id": "panel.plan",
+      "target_component_id": "panel.plan.cream",
+      "category": "panel",
+      "parent_id": "body.main",
+      "bounds": {
+        "x": 228,
+        "y": 100,
+        "width": 529,
+        "height": 667
+      },
+      "layer": 30,
+      "z_index": 30.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Plan panel background.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/panel.plan.cream.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "panel.plan.cream"
+      }
+    },
+    {
+      "element_id": "artwork.tower_portrait",
+      "component_id": "artwork.tower_portrait",
+      "target_component_id": "artwork.tower.portrait",
+      "category": "artwork",
+      "parent_id": "card.tower_portrait",
+      "bounds": {
+        "x": 810,
+        "y": 118,
+        "width": 132,
+        "height": 205
+      },
+      "layer": 40,
+      "z_index": 40.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Standalone tower artwork.",
+      "asset_policy": "layer",
+      "node_kind": "artwork",
+      "render_mode": "bitmap",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/artwork.tower.portrait.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "extract_artwork",
+        "target_component_id": "artwork.tower.portrait"
+      }
+    },
+    {
+      "element_id": "card.tower_portrait",
+      "component_id": "card.tower_portrait",
+      "target_component_id": "card.tower.gold",
+      "category": "card",
+      "parent_id": "panel.detail",
+      "bounds": {
+        "x": 784,
+        "y": 102,
+        "width": 168,
+        "height": 239
+      },
+      "layer": 30,
+      "z_index": 30.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.98,
+      "reason": "Portrait card frame.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/card.tower.gold.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "card.tower.gold"
+      }
+    },
+    {
+      "element_id": "text.tower_name",
+      "component_id": "text.tower_name",
+      "target_component_id": "text.tower_name",
+      "category": "text",
+      "parent_id": "detail.info",
+      "bounds": {
+        "x": 967,
+        "y": 123,
+        "width": 92,
+        "height": 41
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Tower name remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "text.tower_name"
+      }
+    },
+    {
+      "element_id": "badge.tag.ranged",
+      "component_id": "badge.tag.ranged",
+      "target_component_id": "badge.tag.ranged",
+      "category": "badge",
+      "parent_id": "detail.info",
+      "bounds": {
+        "x": 1127,
+        "y": 129,
+        "width": 62,
+        "height": 28
+      },
+      "layer": 70,
+      "z_index": 70.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Semantic tag remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "badge.tag.ranged"
+      }
+    },
+    {
+      "element_id": "badge.tag.single",
+      "component_id": "badge.tag.single",
+      "target_component_id": "badge.tag.single",
+      "category": "badge",
+      "parent_id": "detail.info",
+      "bounds": {
+        "x": 1194,
+        "y": 129,
+        "width": 64,
+        "height": 28
+      },
+      "layer": 70,
+      "z_index": 70.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Semantic tag remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "badge.tag.single"
+      }
+    },
+    {
+      "element_id": "badge.tag.physical",
+      "component_id": "badge.tag.physical",
+      "target_component_id": "badge.tag.physical",
+      "category": "badge",
+      "parent_id": "detail.info",
+      "bounds": {
+        "x": 1262,
+        "y": 129,
+        "width": 64,
+        "height": 28
+      },
+      "layer": 70,
+      "z_index": 70.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Semantic tag remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "badge.tag.physical"
+      }
+    },
+    {
+      "element_id": "text.tower_level",
+      "component_id": "text.tower_level",
+      "target_component_id": "text.tower_level",
+      "category": "text",
+      "parent_id": "detail.info",
+      "bounds": {
+        "x": 968,
+        "y": 172,
+        "width": 115,
+        "height": 31
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Dynamic level remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "text.tower_level"
+      }
+    },
+    {
+      "element_id": "progress.tower_exp",
+      "component_id": "progress.tower_exp",
+      "target_component_id": "progress.tower_exp",
+      "category": "progress",
+      "parent_id": "detail.info",
+      "bounds": {
+        "x": 969,
+        "y": 208,
+        "width": 399,
+        "height": 23
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Dynamic progress remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "progress.tower_exp"
+      }
+    },
+    {
+      "element_id": "text.tower_exp",
+      "component_id": "text.tower_exp",
+      "target_component_id": "counter.tower_exp",
+      "category": "counter",
+      "parent_id": "detail.info",
+      "bounds": {
+        "x": 1308,
+        "y": 183,
+        "width": 61,
+        "height": 24
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Dynamic experience value remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "counter.tower_exp"
+      }
+    },
+    {
+      "element_id": "stat.attack",
+      "component_id": "stat.attack",
+      "target_component_id": "stat.attack",
+      "category": "text",
+      "parent_id": "stats.tower",
+      "bounds": {
+        "x": 970,
+        "y": 242,
+        "width": 190,
+        "height": 27
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Dynamic stat remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "stat.attack"
+      }
+    },
+    {
+      "element_id": "stat.health",
+      "component_id": "stat.health",
+      "target_component_id": "stat.health",
+      "category": "text",
+      "parent_id": "stats.tower",
+      "bounds": {
+        "x": 1177,
+        "y": 242,
+        "width": 190,
+        "height": 27
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Dynamic stat remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "stat.health"
+      }
+    },
+    {
+      "element_id": "stat.attack_speed",
+      "component_id": "stat.attack_speed",
+      "target_component_id": "stat.attack_speed",
+      "category": "text",
+      "parent_id": "stats.tower",
+      "bounds": {
+        "x": 970,
+        "y": 275,
+        "width": 190,
+        "height": 27
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Dynamic stat remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "stat.attack_speed"
+      }
+    },
+    {
+      "element_id": "stat.critical",
+      "component_id": "stat.critical",
+      "target_component_id": "stat.critical",
+      "category": "text",
+      "parent_id": "stats.tower",
+      "bounds": {
+        "x": 1177,
+        "y": 275,
+        "width": 190,
+        "height": 27
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Dynamic stat remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "stat.critical"
+      }
+    },
+    {
+      "element_id": "stat.range",
+      "component_id": "stat.range",
+      "target_component_id": "stat.range",
+      "category": "text",
+      "parent_id": "stats.tower",
+      "bounds": {
+        "x": 970,
+        "y": 307,
+        "width": 190,
+        "height": 27
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Dynamic stat remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "stat.range"
+      }
+    },
+    {
+      "element_id": "stat.damage",
+      "component_id": "stat.damage",
+      "target_component_id": "stat.damage",
+      "category": "text",
+      "parent_id": "stats.tower",
+      "bounds": {
+        "x": 1177,
+        "y": 307,
+        "width": 190,
+        "height": 27
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Dynamic stat remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "stat.damage"
+      }
+    },
+    {
+      "element_id": "stats.tower",
+      "component_id": "stats.tower",
+      "target_component_id": "stats.tower",
+      "category": "grid",
+      "parent_id": "detail.info",
+      "bounds": {
+        "x": 968,
+        "y": 238,
+        "width": 400,
+        "height": 97
+      },
+      "layer": 30,
+      "z_index": 30.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Eight native stat cells.",
+      "asset_policy": "group",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "composite",
+        "target_component_id": "stats.tower"
+      }
+    },
+    {
+      "element_id": "detail.info",
+      "component_id": "detail.info",
+      "target_component_id": "detail.info",
+      "category": "panel",
+      "parent_id": "panel.detail",
+      "bounds": {
+        "x": 963,
+        "y": 111,
+        "width": 407,
+        "height": 228
+      },
+      "layer": 30,
+      "z_index": 30.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Native tower information group.",
+      "asset_policy": "group",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "composite",
+        "target_component_id": "detail.info"
+      }
+    },
+    {
+      "element_id": "panel.detail",
+      "component_id": "panel.detail",
+      "target_component_id": "panel.detail.cream",
+      "category": "panel",
+      "parent_id": "body.main",
+      "bounds": {
+        "x": 770,
+        "y": 99,
+        "width": 616,
+        "height": 253
+      },
+      "layer": 30,
+      "z_index": 30.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Tower detail panel background.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/panel.detail.cream.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "panel.detail.cream"
+      }
+    },
+    {
+      "element_id": "text.effects_title",
+      "component_id": "text.effects_title",
+      "target_component_id": "text.effects_title",
+      "category": "text",
+      "parent_id": "panel.effects",
+      "bounds": {
+        "x": 793,
+        "y": 365,
+        "width": 132,
+        "height": 34
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Section title remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "text.effects_title"
+      }
+    },
+    {
+      "element_id": "badge.effect.1",
+      "component_id": "badge.effect.1",
+      "target_component_id": "badge.effect.level",
+      "category": "badge",
+      "parent_id": "row.effect.1",
+      "bounds": {
+        "x": 805,
+        "y": 412,
+        "width": 43,
+        "height": 42
+      },
+      "layer": 70,
+      "z_index": 70.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Effect level remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "badge.effect.level"
+      }
+    },
+    {
+      "element_id": "badge.effect.2",
+      "component_id": "badge.effect.2",
+      "target_component_id": "badge.effect.level",
+      "category": "badge",
+      "parent_id": "row.effect.2",
+      "bounds": {
+        "x": 805,
+        "y": 465,
+        "width": 43,
+        "height": 42
+      },
+      "layer": 70,
+      "z_index": 70.001,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Effect level remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "badge.effect.level"
+      }
+    },
+    {
+      "element_id": "badge.effect.3",
+      "component_id": "badge.effect.3",
+      "target_component_id": "badge.effect.level",
+      "category": "badge",
+      "parent_id": "row.effect.3",
+      "bounds": {
+        "x": 805,
+        "y": 519,
+        "width": 43,
+        "height": 42
+      },
+      "layer": 70,
+      "z_index": 70.002,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Effect level remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "badge.effect.level"
+      }
+    },
+    {
+      "element_id": "badge.effect.4",
+      "component_id": "badge.effect.4",
+      "target_component_id": "badge.effect.level",
+      "category": "badge",
+      "parent_id": "row.effect.4",
+      "bounds": {
+        "x": 805,
+        "y": 573,
+        "width": 43,
+        "height": 42
+      },
+      "layer": 70,
+      "z_index": 70.003,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Effect level remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "badge.effect.level"
+      }
+    },
+    {
+      "element_id": "text.effect.1",
+      "component_id": "text.effect.1",
+      "target_component_id": "text.effect_name",
+      "category": "text",
+      "parent_id": "row.effect.1",
+      "bounds": {
+        "x": 859,
+        "y": 419,
+        "width": 131,
+        "height": 27
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Effect name remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "text.effect_name"
+      }
+    },
+    {
+      "element_id": "text.effect.2",
+      "component_id": "text.effect.2",
+      "target_component_id": "text.effect_name",
+      "category": "text",
+      "parent_id": "row.effect.2",
+      "bounds": {
+        "x": 859,
+        "y": 472,
+        "width": 131,
+        "height": 27
+      },
+      "layer": 50,
+      "z_index": 50.001,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Effect name remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "text.effect_name"
+      }
+    },
+    {
+      "element_id": "text.effect.3",
+      "component_id": "text.effect.3",
+      "target_component_id": "text.effect_name",
+      "category": "text",
+      "parent_id": "row.effect.3",
+      "bounds": {
+        "x": 859,
+        "y": 526,
+        "width": 131,
+        "height": 27
+      },
+      "layer": 50,
+      "z_index": 50.002,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Effect name remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "text.effect_name"
+      }
+    },
+    {
+      "element_id": "text.effect.4",
+      "component_id": "text.effect.4",
+      "target_component_id": "text.effect_name",
+      "category": "text",
+      "parent_id": "row.effect.4",
+      "bounds": {
+        "x": 859,
+        "y": 580,
+        "width": 131,
+        "height": 27
+      },
+      "layer": 50,
+      "z_index": 50.003,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Effect name remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "text.effect_name"
+      }
+    },
+    {
+      "element_id": "value.effect.1",
+      "component_id": "value.effect.1",
+      "target_component_id": "counter.effect_value",
+      "category": "counter",
+      "parent_id": "row.effect.1",
+      "bounds": {
+        "x": 1048,
+        "y": 419,
+        "width": 65,
+        "height": 27
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Effect value remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "counter.effect_value"
+      }
+    },
+    {
+      "element_id": "value.effect.2",
+      "component_id": "value.effect.2",
+      "target_component_id": "counter.effect_value",
+      "category": "counter",
+      "parent_id": "row.effect.2",
+      "bounds": {
+        "x": 1048,
+        "y": 472,
+        "width": 65,
+        "height": 27
+      },
+      "layer": 50,
+      "z_index": 50.001,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Effect value remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "counter.effect_value"
+      }
+    },
+    {
+      "element_id": "value.effect.3",
+      "component_id": "value.effect.3",
+      "target_component_id": "counter.effect_value",
+      "category": "counter",
+      "parent_id": "row.effect.3",
+      "bounds": {
+        "x": 1048,
+        "y": 526,
+        "width": 65,
+        "height": 27
+      },
+      "layer": 50,
+      "z_index": 50.002,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Effect value remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "counter.effect_value"
+      }
+    },
+    {
+      "element_id": "value.effect.4",
+      "component_id": "value.effect.4",
+      "target_component_id": "counter.effect_value",
+      "category": "counter",
+      "parent_id": "row.effect.4",
+      "bounds": {
+        "x": 1048,
+        "y": 580,
+        "width": 65,
+        "height": 27
+      },
+      "layer": 50,
+      "z_index": 50.003,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Effect value remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "counter.effect_value"
+      }
+    },
+    {
+      "element_id": "status.effect.1",
+      "component_id": "status.effect.1",
+      "target_component_id": "text.effect_status",
+      "category": "text",
+      "parent_id": "row.effect.1",
+      "bounds": {
+        "x": 1200,
+        "y": 419,
+        "width": 64,
+        "height": 27
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Unlock status remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "text.effect_status"
+      }
+    },
+    {
+      "element_id": "status.effect.2",
+      "component_id": "status.effect.2",
+      "target_component_id": "text.effect_status",
+      "category": "text",
+      "parent_id": "row.effect.2",
+      "bounds": {
+        "x": 1200,
+        "y": 472,
+        "width": 64,
+        "height": 27
+      },
+      "layer": 50,
+      "z_index": 50.001,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Unlock status remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "text.effect_status"
+      }
+    },
+    {
+      "element_id": "status.effect.3",
+      "component_id": "status.effect.3",
+      "target_component_id": "text.effect_status",
+      "category": "text",
+      "parent_id": "row.effect.3",
+      "bounds": {
+        "x": 1200,
+        "y": 526,
+        "width": 64,
+        "height": 27
+      },
+      "layer": 50,
+      "z_index": 50.002,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Unlock status remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "text.effect_status"
+      }
+    },
+    {
+      "element_id": "status.effect.4",
+      "component_id": "status.effect.4",
+      "target_component_id": "text.effect_status",
+      "category": "text",
+      "parent_id": "row.effect.4",
+      "bounds": {
+        "x": 1200,
+        "y": 580,
+        "width": 64,
+        "height": 27
+      },
+      "layer": 50,
+      "z_index": 50.003,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Unlock status remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "text.effect_status"
+      }
+    },
+    {
+      "element_id": "icon.effect.1",
+      "component_id": "icon.effect.1",
+      "target_component_id": "icon.effect_locked",
+      "category": "icon",
+      "parent_id": "row.effect.1",
+      "bounds": {
+        "x": 1286,
+        "y": 412,
+        "width": 45,
+        "height": 40
+      },
+      "layer": 40,
+      "z_index": 40.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.98,
+      "reason": "Effect status icon.",
+      "asset_policy": "layer",
+      "node_kind": "artwork",
+      "render_mode": "bitmap",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/icon.effect_locked.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "extract_artwork",
+        "target_component_id": "icon.effect_locked"
+      }
+    },
+    {
+      "element_id": "icon.effect.2",
+      "component_id": "icon.effect.2",
+      "target_component_id": "icon.effect_locked",
+      "category": "icon",
+      "parent_id": "row.effect.2",
+      "bounds": {
+        "x": 1286,
+        "y": 466,
+        "width": 45,
+        "height": 40
+      },
+      "layer": 40,
+      "z_index": 40.001,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.98,
+      "reason": "Effect status icon.",
+      "asset_policy": "layer",
+      "node_kind": "artwork",
+      "render_mode": "bitmap",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/icon.effect_locked.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "extract_artwork",
+        "target_component_id": "icon.effect_locked"
+      }
+    },
+    {
+      "element_id": "icon.effect.3",
+      "component_id": "icon.effect.3",
+      "target_component_id": "icon.effect_locked",
+      "category": "icon",
+      "parent_id": "row.effect.3",
+      "bounds": {
+        "x": 1286,
+        "y": 520,
+        "width": 45,
+        "height": 40
+      },
+      "layer": 40,
+      "z_index": 40.002,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.98,
+      "reason": "Effect status icon.",
+      "asset_policy": "layer",
+      "node_kind": "artwork",
+      "render_mode": "bitmap",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/icon.effect_locked.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "extract_artwork",
+        "target_component_id": "icon.effect_locked"
+      }
+    },
+    {
+      "element_id": "icon.effect.4",
+      "component_id": "icon.effect.4",
+      "target_component_id": "icon.effect_locked",
+      "category": "icon",
+      "parent_id": "row.effect.4",
+      "bounds": {
+        "x": 1286,
+        "y": 574,
+        "width": 45,
+        "height": 40
+      },
+      "layer": 40,
+      "z_index": 40.003,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.98,
+      "reason": "Effect status icon.",
+      "asset_policy": "layer",
+      "node_kind": "artwork",
+      "render_mode": "bitmap",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/icon.effect_locked.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "extract_artwork",
+        "target_component_id": "icon.effect_locked"
+      }
+    },
+    {
+      "element_id": "row.effect.1",
+      "component_id": "row.effect.1",
+      "target_component_id": "row.effect.alternate",
+      "category": "row",
+      "parent_id": "list.effects",
+      "bounds": {
+        "x": 794,
+        "y": 409,
+        "width": 555,
+        "height": 46
+      },
+      "layer": 30,
+      "z_index": 30.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.98,
+      "reason": "Effect row background.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/row.effect.alternate.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "row.effect.alternate"
+      }
+    },
+    {
+      "element_id": "row.effect.2",
+      "component_id": "row.effect.2",
+      "target_component_id": "row.effect.alternate",
+      "category": "row",
+      "parent_id": "list.effects",
+      "bounds": {
+        "x": 794,
+        "y": 463,
+        "width": 555,
+        "height": 46
+      },
+      "layer": 30,
+      "z_index": 30.001,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.98,
+      "reason": "Effect row background.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/row.effect.alternate.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "row.effect.alternate"
+      }
+    },
+    {
+      "element_id": "row.effect.3",
+      "component_id": "row.effect.3",
+      "target_component_id": "row.effect.alternate",
+      "category": "row",
+      "parent_id": "list.effects",
+      "bounds": {
+        "x": 794,
+        "y": 517,
+        "width": 555,
+        "height": 46
+      },
+      "layer": 30,
+      "z_index": 30.002,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.98,
+      "reason": "Effect row background.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/row.effect.alternate.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "row.effect.alternate"
+      }
+    },
+    {
+      "element_id": "row.effect.4",
+      "component_id": "row.effect.4",
+      "target_component_id": "row.effect.alternate",
+      "category": "row",
+      "parent_id": "list.effects",
+      "bounds": {
+        "x": 794,
+        "y": 571,
+        "width": 555,
+        "height": 46
+      },
+      "layer": 30,
+      "z_index": 30.003,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.98,
+      "reason": "Effect row background.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/row.effect.alternate.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "row.effect.alternate"
+      }
+    },
+    {
+      "element_id": "list.effects",
+      "component_id": "list.effects",
+      "target_component_id": "list.effects",
+      "category": "grid",
+      "parent_id": "panel.effects",
+      "bounds": {
+        "x": 793,
+        "y": 408,
+        "width": 556,
+        "height": 208
+      },
+      "layer": 30,
+      "z_index": 30.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Scrollable effect rows.",
+      "asset_policy": "group",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "composite",
+        "target_component_id": "list.effects"
+      }
+    },
+    {
+      "element_id": "button.effects_prev",
+      "component_id": "button.effects_prev",
+      "target_component_id": "button.page.prev.gold",
+      "category": "button",
+      "parent_id": "panel.effects",
+      "bounds": {
+        "x": 762,
+        "y": 480,
+        "width": 31,
+        "height": 47
+      },
+      "layer": 60,
+      "z_index": 60.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Previous-page arrow artwork.",
+      "asset_policy": "layer",
+      "node_kind": "artwork",
+      "render_mode": "bitmap",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/button.page.prev.gold.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "extract_artwork",
+        "target_component_id": "button.page.prev.gold"
+      }
+    },
+    {
+      "element_id": "button.effects_next",
+      "component_id": "button.effects_next",
+      "target_component_id": "button.page.next.gold",
+      "category": "button",
+      "parent_id": "panel.effects",
+      "bounds": {
+        "x": 1375,
+        "y": 480,
+        "width": 31,
+        "height": 47
+      },
+      "layer": 60,
+      "z_index": 60.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Next-page arrow artwork.",
+      "asset_policy": "layer",
+      "node_kind": "artwork",
+      "render_mode": "bitmap",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/button.page.next.gold.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "extract_artwork",
+        "target_component_id": "button.page.next.gold"
+      }
+    },
+    {
+      "element_id": "panel.effects",
+      "component_id": "panel.effects",
+      "target_component_id": "panel.effects.cream",
+      "category": "panel",
+      "parent_id": "body.main",
+      "bounds": {
+        "x": 770,
+        "y": 357,
+        "width": 616,
+        "height": 281
+      },
+      "layer": 30,
+      "z_index": 30.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Effects panel background.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/panel.effects.cream.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "panel.effects.cream"
+      }
+    },
+    {
+      "element_id": "icon.resource.attack",
+      "component_id": "icon.resource.attack",
+      "target_component_id": "icon.resource.attack",
+      "category": "icon",
+      "parent_id": "resource.attack",
+      "bounds": {
+        "x": 800,
+        "y": 657,
+        "width": 80,
+        "height": 78
+      },
+      "layer": 40,
+      "z_index": 40.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Attack material icon.",
+      "asset_policy": "layer",
+      "node_kind": "artwork",
+      "render_mode": "bitmap",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/icon.resource.attack.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "extract_artwork",
+        "target_component_id": "icon.resource.attack"
+      }
+    },
+    {
+      "element_id": "counter.resource.attack",
+      "component_id": "counter.resource.attack",
+      "target_component_id": "counter.resource.cost",
+      "category": "counter",
+      "parent_id": "resource.attack",
+      "bounds": {
+        "x": 845,
+        "y": 716,
+        "width": 41,
+        "height": 24
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Required count remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "counter.resource.cost"
+      }
+    },
+    {
+      "element_id": "counter.resource.range",
+      "component_id": "counter.resource.range",
+      "target_component_id": "counter.resource.cost",
+      "category": "counter",
+      "parent_id": "resource.range",
+      "bounds": {
+        "x": 959,
+        "y": 716,
+        "width": 41,
+        "height": 24
+      },
+      "layer": 50,
+      "z_index": 50.001,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Required count remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "counter.resource.cost"
+      }
+    },
+    {
+      "element_id": "counter.resource.gold",
+      "component_id": "counter.resource.gold",
+      "target_component_id": "counter.resource.cost",
+      "category": "counter",
+      "parent_id": "resource.gold",
+      "bounds": {
+        "x": 1072,
+        "y": 716,
+        "width": 41,
+        "height": 24
+      },
+      "layer": 50,
+      "z_index": 50.002,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Required count remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "counter.resource.cost"
+      }
+    },
+    {
+      "element_id": "owned.resource.attack",
+      "component_id": "owned.resource.attack",
+      "target_component_id": "counter.resource.owned",
+      "category": "counter",
+      "parent_id": "resource.attack",
+      "bounds": {
+        "x": 789,
+        "y": 741,
+        "width": 102,
+        "height": 20
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Owned count remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "counter.resource.owned"
+      }
+    },
+    {
+      "element_id": "owned.resource.range",
+      "component_id": "owned.resource.range",
+      "target_component_id": "counter.resource.owned",
+      "category": "counter",
+      "parent_id": "resource.range",
+      "bounds": {
+        "x": 904,
+        "y": 741,
+        "width": 102,
+        "height": 20
+      },
+      "layer": 50,
+      "z_index": 50.001,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Owned count remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "counter.resource.owned"
+      }
+    },
+    {
+      "element_id": "owned.resource.gold",
+      "component_id": "owned.resource.gold",
+      "target_component_id": "counter.resource.owned",
+      "category": "counter",
+      "parent_id": "resource.gold",
+      "bounds": {
+        "x": 1018,
+        "y": 741,
+        "width": 102,
+        "height": 20
+      },
+      "layer": 50,
+      "z_index": 50.002,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Owned count remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "counter.resource.owned"
+      }
+    },
+    {
+      "element_id": "resource.attack",
+      "component_id": "resource.attack",
+      "target_component_id": "resource.attack",
+      "category": "card",
+      "parent_id": "panel.resources",
+      "bounds": {
+        "x": 793,
+        "y": 653,
+        "width": 99,
+        "height": 108
+      },
+      "layer": 30,
+      "z_index": 30.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Attack material icon and counters.",
+      "asset_policy": "group",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "composite",
+        "target_component_id": "resource.attack"
+      }
+    },
+    {
+      "element_id": "icon.resource.range",
+      "component_id": "icon.resource.range",
+      "target_component_id": "icon.resource.range",
+      "category": "icon",
+      "parent_id": "resource.range",
+      "bounds": {
+        "x": 914,
+        "y": 657,
+        "width": 81,
+        "height": 78
+      },
+      "layer": 40,
+      "z_index": 40.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Range material icon.",
+      "asset_policy": "layer",
+      "node_kind": "artwork",
+      "render_mode": "bitmap",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/icon.resource.range.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "extract_artwork",
+        "target_component_id": "icon.resource.range"
+      }
+    },
+    {
+      "element_id": "resource.range",
+      "component_id": "resource.range",
+      "target_component_id": "resource.range",
+      "category": "card",
+      "parent_id": "panel.resources",
+      "bounds": {
+        "x": 906,
+        "y": 653,
+        "width": 101,
+        "height": 108
+      },
+      "layer": 30,
+      "z_index": 30.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Range material icon and counters.",
+      "asset_policy": "group",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "composite",
+        "target_component_id": "resource.range"
+      }
+    },
+    {
+      "element_id": "icon.resource.gold",
+      "component_id": "icon.resource.gold",
+      "target_component_id": "icon.resource.gold",
+      "category": "icon",
+      "parent_id": "resource.gold",
+      "bounds": {
+        "x": 1028,
+        "y": 657,
+        "width": 81,
+        "height": 78
+      },
+      "layer": 40,
+      "z_index": 40.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Gold material icon.",
+      "asset_policy": "layer",
+      "node_kind": "artwork",
+      "render_mode": "bitmap",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/icon.resource.gold.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "extract_artwork",
+        "target_component_id": "icon.resource.gold"
+      }
+    },
+    {
+      "element_id": "resource.gold",
+      "component_id": "resource.gold",
+      "target_component_id": "resource.gold",
+      "category": "card",
+      "parent_id": "panel.resources",
+      "bounds": {
+        "x": 1020,
+        "y": 653,
+        "width": 101,
+        "height": 108
+      },
+      "layer": 30,
+      "z_index": 30.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Gold material icon and counters.",
+      "asset_policy": "group",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "composite",
+        "target_component_id": "resource.gold"
+      }
+    },
+    {
+      "element_id": "text.upgrade",
+      "component_id": "text.upgrade",
+      "target_component_id": "text.upgrade",
+      "category": "text",
+      "parent_id": "button.upgrade",
+      "bounds": {
+        "x": 1212,
+        "y": 683,
+        "width": 103,
+        "height": 47
+      },
+      "layer": 50,
+      "z_index": 50.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1.0,
+      "reason": "Upgrade label remains native.",
+      "asset_policy": "native",
+      "node_kind": "native",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "native",
+        "target_component_id": "text.upgrade"
+      }
+    },
+    {
+      "element_id": "button.upgrade",
+      "component_id": "button.upgrade",
+      "target_component_id": "button.primary.gold.large",
+      "category": "button",
+      "parent_id": "panel.resources",
+      "bounds": {
+        "x": 1157,
+        "y": 662,
+        "width": 211,
+        "height": 82
+      },
+      "layer": 60,
+      "z_index": 60.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Large upgrade button skin.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/button.primary.gold.large.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "button.primary.gold.large"
+      }
+    },
+    {
+      "element_id": "panel.resources",
+      "component_id": "panel.resources",
+      "target_component_id": "panel.resources.cream",
+      "category": "panel",
+      "parent_id": "body.main",
+      "bounds": {
+        "x": 770,
+        "y": 646,
+        "width": 616,
+        "height": 120
+      },
+      "layer": 30,
+      "z_index": 30.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Bottom resource and action panel.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/panel.resources.cream.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "panel.resources.cream"
+      }
+    },
+    {
+      "element_id": "body.main",
+      "component_id": "body.main",
+      "target_component_id": "panel.body.parchment",
+      "category": "panel",
+      "parent_id": "window.city_defence",
+      "bounds": {
+        "x": 18,
+        "y": 92,
+        "width": 1371,
+        "height": 681
+      },
+      "layer": 20,
+      "z_index": 20.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.98,
+      "reason": "Body background behind all foreground panels.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/panel.body.parchment.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "panel.body.parchment"
+      }
+    },
+    {
+      "element_id": "window.city_defence",
+      "component_id": "window.city_defence",
+      "target_component_id": "window.city_defence",
+      "category": "panel",
+      "parent_id": "root",
+      "bounds": {
+        "x": 5,
+        "y": 7,
+        "width": 1404,
+        "height": 780
+      },
+      "layer": 10,
+      "z_index": 10.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.99,
+      "reason": "Main parchment window requires a clean frame and background.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/window.city_defence.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "window.city_defence"
+      }
+    },
+    {
+      "element_id": "background.root",
+      "component_id": "background.root",
+      "target_component_id": "background.root",
+      "category": "background",
+      "parent_id": "root",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 1415,
+        "height": 794
+      },
+      "layer": -100000,
+      "z_index": -100000.0,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 0.0,
+      "reason": "Clean root background.",
+      "asset_policy": "layer",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": "layers/background.root.png",
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "ready",
+        "method": "image_reconstruction",
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "ready"
+      },
+      "reusable_bitmap": true,
+      "extraction": {
+        "mode": "reconstruct_skin",
+        "target_component_id": "background.root"
+      }
+    }
+  ]
+}

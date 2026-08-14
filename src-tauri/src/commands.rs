@@ -1,7 +1,7 @@
 //! IPC commands exposed to the frontend.
 
 use std::sync::atomic::Ordering;
-use tauri::{AppHandle, Manager};
+use tauri::{AppHandle, Manager, WebviewWindow};
 
 use crate::config::{self, Settings};
 use crate::skill::MultiTargetStatus;
@@ -62,10 +62,10 @@ pub fn open_agent_settings(app: AppHandle, target_id: String) {
     crate::tray::show_agent_settings(&app, &target_id);
 }
 
-/// Exit the companion from the settings window close button.
+/// Hide the current settings page without stopping the background companion.
 #[tauri::command]
-pub fn close_settings(app: AppHandle) {
-    app.exit(0);
+pub fn close_settings(window: WebviewWindow) -> Result<(), String> {
+    window.hide().map_err(|error| error.to_string())
 }
 
 #[tauri::command]

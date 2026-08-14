@@ -4,7 +4,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { LogicalSize } from "@tauri-apps/api/dpi";
 import { listen } from "@tauri-apps/api/event";
 import { openUrl } from "@tauri-apps/plugin-opener";
-import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
+import { getCurrentWebviewWindow, WebviewWindow } from "@tauri-apps/api/webviewWindow";
 import type {
   BallState,
   DiscoveredEndpoint,
@@ -17,7 +17,7 @@ import type {
   UpdateStatus,
 } from "../types";
 
-const EXPECTED_VERSION = "0.1.1";
+const EXPECTED_VERSION = "0.1.9";
 const CORE_MCP_TOOLS = ["ue_read", "ue_py", "ue_plan_submit"];
 const MCP_AUTO_CHECK_INTERVAL_MS = 5 * 60 * 1000;
 
@@ -162,6 +162,28 @@ export default function SettingsWindow({ agentId = null }: SettingsWindowProps) 
       await invoke("open_agent_settings", { target_id: targetId });
     } catch (error) {
       flash("打开专页失败: " + error);
+    }
+  }
+
+  async function openUIWorkbench() {
+    try {
+      let workbench = await WebviewWindow.getByLabel("ui-workbench");
+      if (!workbench) {
+        workbench = new WebviewWindow("ui-workbench", {
+          url: "index.html",
+          title: "Oasis UI 工作台",
+          width: 1440,
+          height: 880,
+          minWidth: 1080,
+          minHeight: 700,
+          resizable: true,
+          center: true,
+        });
+      }
+      await workbench.show();
+      await workbench.setFocus();
+    } catch (error) {
+      flash("打开 UI 工作台失败: " + error);
     }
   }
 
@@ -587,6 +609,9 @@ export default function SettingsWindow({ agentId = null }: SettingsWindowProps) 
         </section>
 
         <footer className="compact-footer">
+          <button className="compact-tool-launch" type="button" onClick={openUIWorkbench}>
+            <span>UI 工作台</span><strong>切图与控件编辑</strong>
+          </button>
           <button type="button" onClick={() => { setShowCompactHome(false); setActiveTab("skill"); }}>
             <span>Skill 版本</span><strong>{skillText}</strong>
           </button>
@@ -636,6 +661,14 @@ export default function SettingsWindow({ agentId = null }: SettingsWindowProps) 
 
       {activeTab === "overview" && (
         <>
+          <section>
+            <h2>UI 工具</h2>
+            <div className="row">
+              <span>导入 UI 图与 UI Tree，编辑控件范围并查看切图候选</span>
+              <button type="button" onClick={openUIWorkbench}>打开 UI 工作台</button>
+            </div>
+          </section>
+
           <section>
             <h2>模式</h2>
             <div className="segmented" role="group" aria-label="Skill runtime mode">
