@@ -138,6 +138,7 @@ body:has(.ui-workbench) {
 .canvas-node.kind-skin { border-color: #f1ae2c; background: rgba(231, 163, 26, 0.055); }
 .canvas-node.kind-composite { border-color: #aa7ad8; border-style: dashed; background: rgba(156, 92, 218, 0.035); }
 .canvas-node.kind-artwork { border-color: #62c28c; background: rgba(76, 183, 123, 0.055); }
+.canvas-node.kind-interaction { border: 2px solid #ff5b61; background: rgba(255, 70, 78, 0.035); }
 .canvas-node.render-ghost { background: rgba(173, 181, 190, 0.13); }
 .canvas-node.render-outline { background-color: transparent; }
 .canvas-node.selected { outline: 1px solid #fff; outline-offset: 1px; }

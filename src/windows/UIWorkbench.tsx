@@ -1,10 +1,11 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { analyzeUIImage } from "./uiImageAnalyzer";
+import { canOwnChildren } from "./uiHierarchy";
 import "./UIWorkbench.css";
 
 type ExtractionMode = "native" | "extract_artwork" | "reconstruct_skin" | "composite";
-type NodeKind = "composite" | "skin" | "artwork" | "native";
+type NodeKind = "composite" | "skin" | "artwork" | "native" | "interaction";
 type RenderMode = "bitmap" | "outline" | "ghost" | "assembly" | "hidden";
 type VisualMode = "source" | "clean" | "assembly";
 type GalleryTab = "assets" | "structure";
@@ -35,6 +36,7 @@ type UINode = {
   node_kind?: NodeKind;
   render_mode?: RenderMode;
   visual_assets?: { source_crop: string | null; clean_layer?: string | null; clean_asset?: string | null; assembly_preview: string | null };
+  interaction?: { role: "button"; target_widget: string };
   review?: { status: "candidate" | "pending_review"; cleanup_status: "not_applicable" | "needs_cleanup" | "requested" | "in_progress" | "clean" | "ready" | "failed" };
   reusable_bitmap?: boolean;
   derived_from?: string;
@@ -70,7 +72,7 @@ const MODE_LABELS: Record<ExtractionMode, string> = {
   reconstruct_skin: "重建皮肤",
   composite: "组合控件",
 };
-const NODE_KIND_LABELS: Record<NodeKind, string> = { composite: "Composite", skin: "Skin", artwork: "Artwork", native: "Native" };
+const NODE_KIND_LABELS: Record<NodeKind, string> = { composite: "Composite", skin: "Skin", artwork: "Artwork", native: "Native", interaction: "Interaction" };
 const RENDER_MODE_LABELS: Record<RenderMode, string> = { bitmap: "Bitmap", outline: "Outline", ghost: "Ghost", assembly: "Assembly", hidden: "Hidden" };
 const GALLERY_FILTER_LABELS: Record<GalleryFilter, string> = {
   all: "全部",
@@ -78,6 +80,7 @@ const GALLERY_FILTER_LABELS: Record<GalleryFilter, string> = {
   artwork: "Artwork",
   composite: "Composite",
   native: "Native",
+  interaction: "Interaction",
   needs_cleanup: "待净化",
   ready: "Ready",
 };
@@ -207,7 +210,7 @@ function inferParentIds(nodes: UINode[]) {
 }
 
 function nodeKindFor(node: UINode, hasChildren: boolean): NodeKind {
-  if (node.node_kind && ["composite", "skin", "artwork", "native"].includes(node.node_kind)) return node.node_kind;
+  if (node.node_kind && ["composite", "skin", "artwork", "native", "interaction"].includes(node.node_kind)) return node.node_kind;
   if (node.extraction.mode === "native") return "native";
   if (node.extraction.mode === "extract_artwork") return "artwork";
   if (node.extraction.mode === "composite") return "composite";
@@ -215,7 +218,7 @@ function nodeKindFor(node: UINode, hasChildren: boolean): NodeKind {
 }
 
 function defaultRenderMode(nodeKind: NodeKind): RenderMode {
-  return nodeKind === "composite" || nodeKind === "native" ? "outline" : "bitmap";
+  return nodeKind === "composite" || nodeKind === "native" || nodeKind === "interaction" ? "outline" : "bitmap";
 }
 
 function normalizeTree(input: UITree): UITree {
@@ -230,7 +233,7 @@ function normalizeTree(input: UITree): UITree {
       clean_layer: node.visual_assets?.clean_layer ?? node.visual_assets?.clean_asset ?? null,
       assembly_preview: node.visual_assets?.assembly_preview ?? null,
     };
-    const cleanupStatus = nodeKind === "composite" || nodeKind === "native" ? "not_applicable"
+    const cleanupStatus = nodeKind === "composite" || nodeKind === "native" || nodeKind === "interaction" ? "not_applicable"
       : assets.clean_layer ? "clean" : node.review?.cleanup_status && node.review.cleanup_status !== "not_applicable" ? node.review.cleanup_status : "needs_cleanup";
     const parentNode: UINode = {
       ...node,
@@ -273,7 +276,7 @@ function coerceTree(raw: unknown): UITree {
     const id = item.id ?? item.component_id ?? `control.imported.${index + 1}`;
     const nodeKind = item.node_kind;
     const mode: ExtractionMode = item.extraction?.mode
-      ?? (nodeKind === "native" ? "native" : nodeKind === "artwork" ? "extract_artwork" : nodeKind === "composite" ? "composite" : "reconstruct_skin");
+      ?? (nodeKind === "native" || nodeKind === "interaction" ? "native" : nodeKind === "artwork" ? "extract_artwork" : nodeKind === "composite" ? "composite" : "reconstruct_skin");
     if (!item.bounds) throw new Error(`${id} 缺少 bounds`);
     return {
       ...item,
@@ -446,7 +449,7 @@ export default function UIWorkbench() {
   }, [nodeById, tree.nodes]);
   const galleryNodes = useMemo(() => tree.nodes.filter((node) => {
     const nodeKind = node.node_kind ?? "artwork";
-    const inTab = galleryTab === "assets" ? nodeKind === "skin" || nodeKind === "artwork" : nodeKind === "composite" || nodeKind === "native";
+    const inTab = galleryTab === "assets" ? nodeKind === "skin" || nodeKind === "artwork" : nodeKind === "composite" || nodeKind === "native" || nodeKind === "interaction";
     if (!inTab) return false;
     if (galleryFilter === "all") return true;
     if (galleryFilter === "needs_cleanup") return node.review?.cleanup_status === "needs_cleanup" || node.review?.cleanup_status === "requested";
@@ -582,28 +585,46 @@ export default function UIWorkbench() {
       reusable_bitmap: (nodeKind === "skin" || nodeKind === "artwork") && Boolean(cleanLayerPath(selected)),
       review: {
         status: cleanLayerPath(selected) ? "pending_review" : "candidate",
-        cleanup_status: nodeKind === "composite" || nodeKind === "native"
+        cleanup_status: nodeKind === "composite" || nodeKind === "native" || nodeKind === "interaction"
           ? "not_applicable"
           : cleanLayerPath(selected) ? "clean" : "needs_cleanup",
       },
     });
   }
 
-  function addNode() {
+  function addNode(parent: UINode | null) {
     const next = tree.nodes.length + 1;
+    const width = parent ? Math.max(8, Math.min(180, parent.bounds.width * 0.72)) : 180;
+    const height = parent ? Math.max(8, Math.min(90, parent.bounds.height * 0.72)) : 90;
     const node: UINode = {
       id: `control.new.${next}`,
-      category: "panel",
-      parent_id: selected && ["panel", "composite", "tabs"].includes(selected.category) ? selected.id : selected?.parent_id,
-      bounds: { x: 40 + next * 4, y: 40 + next * 4, width: 180, height: 90 },
-      extraction: { mode: "extract_artwork", target_component_id: `artwork.new.${next}`, confidence: 0.5, reason: "Manual candidate." },
+      category: parent ? "group" : "panel",
+      parent_id: parent?.id,
+      bounds: parent ? {
+        x: parent.bounds.x + (parent.bounds.width - width) / 2,
+        y: parent.bounds.y + (parent.bounds.height - height) / 2,
+        width,
+        height,
+      } : { x: 40 + next * 4, y: 40 + next * 4, width, height },
+      extraction: parent
+        ? { mode: "composite", target_component_id: `group.new.${next}`, confidence: 0.5, reason: "Manual child group." }
+        : { mode: "extract_artwork", target_component_id: `artwork.new.${next}`, confidence: 0.5, reason: "Manual candidate." },
+      node_kind: parent ? "composite" : undefined,
+      render_mode: parent ? "outline" : undefined,
       visible: true,
       opacity: 1,
       z_index: next,
     };
     setTree((current) => ({ ...current, nodes: [...current.nodes, node] }));
+    if (parent) {
+      setCollapsedLayers((current) => {
+        const expanded = new Set(current);
+        expanded.delete(parent.id);
+        return expanded;
+      });
+    }
     setSelectedId(node.id);
-    flash("已新建控件范围");
+    flash(parent ? `已在 ${parent.id} 下新建子项` : "已新建根范围");
   }
 
   function duplicateSelected() {
@@ -1018,7 +1039,7 @@ export default function UIWorkbench() {
           <button type="button" onClick={exportTree} className="accent">导出 UI Tree</button>
         </div>
         <div className="toolbar-group compact">
-          <button type="button" onClick={addNode} title="新建控件范围">＋</button>
+          <button type="button" onClick={() => addNode(null)} title="新建根控件范围">＋</button>
           <button type="button" onClick={duplicateSelected} disabled={!selected} title="复制所选控件">复制</button>
           <button type="button" onClick={resetSelectedLayout} disabled={!selected?.source_bounds} title="恢复控件原始布局">归位</button>
           <button type="button" onClick={deleteSelected} disabled={!selected} title="删除所选控件">删除</button>
@@ -1049,7 +1070,7 @@ export default function UIWorkbench() {
               </div>
             ))}
           </div>
-          <div className="panel-footer"><button type="button" onClick={addNode}>＋ 新建范围</button><button type="button" onClick={duplicateSelected} disabled={!selected}>复制</button></div>
+          <div className="panel-footer"><button type="button" onClick={() => addNode(null)} title="在 CanvasRoot 下新建范围">＋ 根项</button><button type="button" onClick={() => selected && addNode(selected)} disabled={!canOwnChildren(selected)} title="在当前控件下添加子项">＋ 子项</button><button type="button" onClick={duplicateSelected} disabled={!selected}>复制</button></div>
         </aside>
 
         <section className="canvas-column">

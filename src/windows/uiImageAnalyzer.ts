@@ -266,13 +266,52 @@ function dedupe(regions: PixelRegion[], limit: number) {
   return selected;
 }
 
-function assignParents(nodes: AnalyzedNode[]) {
-  const parents = nodes.filter((node) => node.category === "panel" || node.category === "button");
+function centerInside(parent: AnalyzerBounds, child: AnalyzerBounds, padding = 0) {
+  const centerX = child.x + child.width / 2;
+  const centerY = child.y + child.height / 2;
+  return centerX >= parent.x - padding
+    && centerX <= parent.x + parent.width + padding
+    && centerY >= parent.y - padding
+    && centerY <= parent.y + parent.height + padding;
+}
+
+function acceptsChild(parent: AnalyzedNode, child: AnalyzedNode) {
+  if (parent.category === "background" || parent.id === child.id) return false;
+  if (child.category === "panel" || child.category === "button") return parent.category === "panel";
+  return parent.category === "panel" || parent.category === "button" || parent.category === "artwork";
+}
+
+function semanticParentPenalty(parent: AnalyzedNode, child: AnalyzedNode) {
+  if (child.category === "text") {
+    if (parent.category === "button") return 0;
+    if (parent.category === "artwork") return 0.16;
+    return 0.32;
+  }
+  if (child.category === "artwork") {
+    if (parent.category === "button") return 0;
+    if (parent.category === "artwork") return 0.12;
+    return 0.24;
+  }
+  return 0;
+}
+
+function parentScore(parent: AnalyzedNode, child: AnalyzedNode) {
+  if (!acceptsChild(parent, child) || area(parent.bounds) <= area(child.bounds) * 1.05) return Number.POSITIVE_INFINITY;
+  const coverage = intersectionArea(parent.bounds, child.bounds) / Math.max(1, area(child.bounds));
+  const strictlyContained = contains(parent.bounds, child.bounds, -2);
+  if (!strictlyContained && (coverage < 0.72 || !centerInside(parent.bounds, child.bounds, 4))) return Number.POSITIVE_INFINITY;
+  const areaRatio = area(parent.bounds) / Math.max(1, area(child.bounds));
+  return Math.log(areaRatio) + semanticParentPenalty(parent, child) + (1 - coverage) * 4;
+}
+
+export function assignParents(nodes: AnalyzedNode[]) {
+  const parents = nodes.filter((node) => node.category === "panel" || node.category === "button" || node.category === "artwork");
   return nodes.map((node) => {
     if (node.category === "background") return node;
     const parent = parents
-      .filter((candidate) => candidate.id !== node.id && area(candidate.bounds) > area(node.bounds) * 1.08 && contains(candidate.bounds, node.bounds, -2))
-      .sort((left, right) => area(left.bounds) - area(right.bounds))[0];
+      .map((candidate) => ({ candidate, score: parentScore(candidate, node) }))
+      .filter((entry) => Number.isFinite(entry.score))
+      .sort((left, right) => left.score - right.score)[0]?.candidate;
     return parent ? { ...node, parent_id: parent.id } : node;
   });
 }

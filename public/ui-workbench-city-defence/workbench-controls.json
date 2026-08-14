@@ -580,7 +580,7 @@
       "component_id": "button.plan.1",
       "target_component_id": "button.plan.selected.gold",
       "category": "button",
-      "parent_id": "tabs.plan",
+      "parent_id": "plan.state.1",
       "bounds": {
         "x": 326,
         "y": 119,
@@ -621,7 +621,7 @@
       "component_id": "button.plan.2",
       "target_component_id": "button.plan.default.brown",
       "category": "button",
-      "parent_id": "tabs.plan",
+      "parent_id": "plan.state.2",
       "bounds": {
         "x": 402,
         "y": 119,
@@ -662,7 +662,7 @@
       "component_id": "button.plan.3",
       "target_component_id": "button.plan.default.brown",
       "category": "button",
-      "parent_id": "tabs.plan",
+      "parent_id": "plan.state.3",
       "bounds": {
         "x": 477,
         "y": 119,
@@ -1277,7 +1277,7 @@
       "component_id": "panel.plan",
       "target_component_id": "panel.plan.cream",
       "category": "panel",
-      "parent_id": "body.main",
+      "parent_id": "content.main",
       "bounds": {
         "x": 228,
         "y": 100,
@@ -1400,7 +1400,7 @@
       "component_id": "text.tower_name",
       "target_component_id": "text.tower_name",
       "category": "text",
-      "parent_id": "detail.info",
+      "parent_id": "detail.header",
       "bounds": {
         "x": 967,
         "y": 123,
@@ -1441,7 +1441,7 @@
       "component_id": "badge.tag.ranged",
       "target_component_id": "badge.tag.ranged",
       "category": "badge",
-      "parent_id": "detail.info",
+      "parent_id": "detail.header",
       "bounds": {
         "x": 1127,
         "y": 129,
@@ -1482,7 +1482,7 @@
       "component_id": "badge.tag.single",
       "target_component_id": "badge.tag.single",
       "category": "badge",
-      "parent_id": "detail.info",
+      "parent_id": "detail.header",
       "bounds": {
         "x": 1194,
         "y": 129,
@@ -1523,7 +1523,7 @@
       "component_id": "badge.tag.physical",
       "target_component_id": "badge.tag.physical",
       "category": "badge",
-      "parent_id": "detail.info",
+      "parent_id": "detail.header",
       "bounds": {
         "x": 1262,
         "y": 129,
@@ -1564,7 +1564,7 @@
       "component_id": "text.tower_level",
       "target_component_id": "text.tower_level",
       "category": "text",
-      "parent_id": "detail.info",
+      "parent_id": "detail.progress",
       "bounds": {
         "x": 968,
         "y": 172,
@@ -1605,7 +1605,7 @@
       "component_id": "progress.tower_exp",
       "target_component_id": "progress.tower_exp",
       "category": "progress",
-      "parent_id": "detail.info",
+      "parent_id": "detail.progress",
       "bounds": {
         "x": 969,
         "y": 208,
@@ -1646,7 +1646,7 @@
       "component_id": "text.tower_exp",
       "target_component_id": "counter.tower_exp",
       "category": "counter",
-      "parent_id": "detail.info",
+      "parent_id": "detail.progress",
       "bounds": {
         "x": 1308,
         "y": 183,
@@ -2015,7 +2015,7 @@
       "component_id": "panel.detail",
       "target_component_id": "panel.detail.cream",
       "category": "panel",
-      "parent_id": "body.main",
+      "parent_id": "detail.column",
       "bounds": {
         "x": 770,
         "y": 99,
@@ -3204,7 +3204,7 @@
       "component_id": "panel.effects",
       "target_component_id": "panel.effects.cream",
       "category": "panel",
-      "parent_id": "body.main",
+      "parent_id": "detail.column",
       "bounds": {
         "x": 770,
         "y": 357,
@@ -3532,7 +3532,7 @@
       "component_id": "resource.attack",
       "target_component_id": "resource.attack",
       "category": "card",
-      "parent_id": "panel.resources",
+      "parent_id": "resources.list",
       "bounds": {
         "x": 793,
         "y": 653,
@@ -3614,7 +3614,7 @@
       "component_id": "resource.range",
       "target_component_id": "resource.range",
       "category": "card",
-      "parent_id": "panel.resources",
+      "parent_id": "resources.list",
       "bounds": {
         "x": 906,
         "y": 653,
@@ -3696,7 +3696,7 @@
       "component_id": "resource.gold",
       "target_component_id": "resource.gold",
       "category": "card",
-      "parent_id": "panel.resources",
+      "parent_id": "resources.list",
       "bounds": {
         "x": 1020,
         "y": 653,
@@ -3778,7 +3778,7 @@
       "component_id": "button.upgrade",
       "target_component_id": "button.primary.gold.large",
       "category": "button",
-      "parent_id": "panel.resources",
+      "parent_id": "detail.column",
       "bounds": {
         "x": 1157,
         "y": 662,
@@ -3819,7 +3819,7 @@
       "component_id": "panel.resources",
       "target_component_id": "panel.resources.cream",
       "category": "panel",
-      "parent_id": "body.main",
+      "parent_id": "detail.column",
       "bounds": {
         "x": 770,
         "y": 646,
@@ -3977,6 +3977,658 @@
         "mode": "reconstruct_skin",
         "target_component_id": "background.root"
       }
+    },
+    {
+      "element_id": "content.main",
+      "component_id": "content.main",
+      "target_component_id": "content.main",
+      "category": "layout",
+      "parent_id": "body.main",
+      "bounds": {
+        "x": 228,
+        "y": 99,
+        "width": 1158,
+        "height": 668
+      },
+      "layer": 25,
+      "z_index": 25,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1,
+      "reason": "Structural content row matching the CityDefence main HorizontalBox.",
+      "asset_policy": "group",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "composite",
+        "target_component_id": "content.main"
+      }
+    },
+    {
+      "element_id": "detail.column",
+      "component_id": "detail.column",
+      "target_component_id": "detail.column",
+      "category": "layout",
+      "parent_id": "content.main",
+      "bounds": {
+        "x": 770,
+        "y": 99,
+        "width": 616,
+        "height": 667
+      },
+      "layer": 26,
+      "z_index": 26,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1,
+      "reason": "Right-side detail column containing detail, effects, and resources.",
+      "asset_policy": "group",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "composite",
+        "target_component_id": "detail.column"
+      }
+    },
+    {
+      "element_id": "detail.header",
+      "component_id": "detail.header",
+      "target_component_id": "detail.header",
+      "category": "group",
+      "parent_id": "detail.info",
+      "bounds": {
+        "x": 967,
+        "y": 123,
+        "width": 359,
+        "height": 41
+      },
+      "layer": 31,
+      "z_index": 31,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1,
+      "reason": "Tower name and semantic tags move as one header group.",
+      "asset_policy": "group",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "composite",
+        "target_component_id": "detail.header"
+      }
+    },
+    {
+      "element_id": "detail.progress",
+      "component_id": "detail.progress",
+      "target_component_id": "detail.progress",
+      "category": "group",
+      "parent_id": "detail.info",
+      "bounds": {
+        "x": 968,
+        "y": 172,
+        "width": 401,
+        "height": 59
+      },
+      "layer": 32,
+      "z_index": 32,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1,
+      "reason": "Tower level, experience value, and progress bar move together.",
+      "asset_policy": "group",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "composite",
+        "target_component_id": "detail.progress"
+      }
+    },
+    {
+      "element_id": "resources.list",
+      "component_id": "resources.list",
+      "target_component_id": "resources.list",
+      "category": "grid",
+      "parent_id": "panel.resources",
+      "bounds": {
+        "x": 793,
+        "y": 653,
+        "width": 328,
+        "height": 108
+      },
+      "layer": 31,
+      "z_index": 31,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1,
+      "reason": "Three resource cards share one horizontal resource list.",
+      "asset_policy": "group",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {
+        "source_crop": "__source__",
+        "clean_layer": null,
+        "assembly_preview": null
+      },
+      "layer_reconstruction": {
+        "status": "not_applicable",
+        "method": null,
+        "error": null
+      },
+      "review": {
+        "status": "pending_review",
+        "cleanup_status": "not_applicable"
+      },
+      "reusable_bitmap": false,
+      "extraction": {
+        "mode": "composite",
+        "target_component_id": "resources.list"
+      }
+    },
+    {
+      "element_id": "plan.slot.1",
+      "component_id": "plan.slot.1",
+      "target_component_id": "plan.slot.1",
+      "category": "container",
+      "parent_id": "tabs.plan",
+      "bounds": {"x": 326, "y": 119, "width": 65, "height": 51},
+      "layer": 31,
+      "z_index": 31,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1,
+      "reason": "Mirrors CityDefence CanvasPanel_41, the layout slot owning plan tab 1.",
+      "asset_policy": "group",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {"source_crop": "__source__", "clean_layer": null, "assembly_preview": null},
+      "layer_reconstruction": {"status": "not_applicable", "method": null, "error": null},
+      "review": {"status": "pending_review", "cleanup_status": "not_applicable"},
+      "reusable_bitmap": false,
+      "extraction": {"mode": "composite", "target_component_id": "plan.slot.1"}
+    },
+    {
+      "element_id": "plan.state.1",
+      "component_id": "plan.state.1",
+      "target_component_id": "plan.state.1",
+      "category": "switcher",
+      "parent_id": "plan.slot.1",
+      "bounds": {"x": 326, "y": 119, "width": 65, "height": 51},
+      "layer": 32,
+      "z_index": 32,
+      "state": "selected",
+      "status": "pending_review",
+      "confidence": 1,
+      "reason": "Mirrors WidgetSwitcher_Tab_01 and owns the selected/default visual state.",
+      "asset_policy": "group",
+      "node_kind": "composite",
+      "render_mode": "hidden",
+      "visual_assets": {"source_crop": "__source__", "clean_layer": null, "assembly_preview": null},
+      "layer_reconstruction": {"status": "not_applicable", "method": null, "error": null},
+      "review": {"status": "pending_review", "cleanup_status": "not_applicable"},
+      "reusable_bitmap": false,
+      "extraction": {"mode": "composite", "target_component_id": "plan.state.1"}
+    },
+    {
+      "element_id": "plan.slot.2",
+      "component_id": "plan.slot.2",
+      "target_component_id": "plan.slot.2",
+      "category": "container",
+      "parent_id": "tabs.plan",
+      "bounds": {"x": 402, "y": 119, "width": 64, "height": 50},
+      "layer": 31,
+      "z_index": 31.001,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1,
+      "reason": "Mirrors CityDefence CanvasPanel_42, the layout slot owning plan tab 2.",
+      "asset_policy": "group",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {"source_crop": "__source__", "clean_layer": null, "assembly_preview": null},
+      "layer_reconstruction": {"status": "not_applicable", "method": null, "error": null},
+      "review": {"status": "pending_review", "cleanup_status": "not_applicable"},
+      "reusable_bitmap": false,
+      "extraction": {"mode": "composite", "target_component_id": "plan.slot.2"}
+    },
+    {
+      "element_id": "plan.state.2",
+      "component_id": "plan.state.2",
+      "target_component_id": "plan.state.2",
+      "category": "switcher",
+      "parent_id": "plan.slot.2",
+      "bounds": {"x": 402, "y": 119, "width": 64, "height": 50},
+      "layer": 32,
+      "z_index": 32.001,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1,
+      "reason": "Mirrors WidgetSwitcher_Tab_02 and owns the selected/default visual state.",
+      "asset_policy": "group",
+      "node_kind": "composite",
+      "render_mode": "hidden",
+      "visual_assets": {"source_crop": "__source__", "clean_layer": null, "assembly_preview": null},
+      "layer_reconstruction": {"status": "not_applicable", "method": null, "error": null},
+      "review": {"status": "pending_review", "cleanup_status": "not_applicable"},
+      "reusable_bitmap": false,
+      "extraction": {"mode": "composite", "target_component_id": "plan.state.2"}
+    },
+    {
+      "element_id": "plan.slot.3",
+      "component_id": "plan.slot.3",
+      "target_component_id": "plan.slot.3",
+      "category": "container",
+      "parent_id": "tabs.plan",
+      "bounds": {"x": 477, "y": 119, "width": 63, "height": 50},
+      "layer": 31,
+      "z_index": 31.002,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1,
+      "reason": "Mirrors CityDefence CanvasPanel_43, the layout slot owning plan tab 3.",
+      "asset_policy": "group",
+      "node_kind": "composite",
+      "render_mode": "outline",
+      "visual_assets": {"source_crop": "__source__", "clean_layer": null, "assembly_preview": null},
+      "layer_reconstruction": {"status": "not_applicable", "method": null, "error": null},
+      "review": {"status": "pending_review", "cleanup_status": "not_applicable"},
+      "reusable_bitmap": false,
+      "extraction": {"mode": "composite", "target_component_id": "plan.slot.3"}
+    },
+    {
+      "element_id": "plan.state.3",
+      "component_id": "plan.state.3",
+      "target_component_id": "plan.state.3",
+      "category": "switcher",
+      "parent_id": "plan.slot.3",
+      "bounds": {"x": 477, "y": 119, "width": 63, "height": 50},
+      "layer": 32,
+      "z_index": 32.002,
+      "state": "default",
+      "status": "pending_review",
+      "confidence": 1,
+      "reason": "Mirrors WidgetSwitcher_Tab_03 and owns the selected/default visual state.",
+      "asset_policy": "group",
+      "node_kind": "composite",
+      "render_mode": "hidden",
+      "visual_assets": {"source_crop": "__source__", "clean_layer": null, "assembly_preview": null},
+      "layer_reconstruction": {"status": "not_applicable", "method": null, "error": null},
+      "review": {"status": "pending_review", "cleanup_status": "not_applicable"},
+      "reusable_bitmap": false,
+      "extraction": {"mode": "composite", "target_component_id": "plan.state.3"}
+    },
+    {
+        "element_id":  "button_layer.tab.defence_tower",
+        "component_id":  "button_layer.tab.defence_tower",
+        "target_component_id":  "Button_SelectType1",
+        "category":  "button_layer",
+        "parent_id":  "tab.defence_tower",
+        "bounds":  {
+                       "x":  25,
+                       "y":  104,
+                       "width":  186,
+                       "height":  82
+                   },
+        "layer":  100,
+        "z_index":  1000,
+        "state":  "default",
+        "status":  "pending_review",
+        "confidence":  1,
+        "reason":  "Native UMG button interaction overlay mapped to Button_SelectType1.",
+        "asset_policy":  "interaction",
+        "node_kind":  "interaction",
+        "render_mode":  "outline",
+        "visual_assets":  {
+                              "source_crop":  null,
+                              "clean_layer":  null,
+                              "assembly_preview":  null
+                          },
+        "layer_reconstruction":  {
+                                     "status":  "not_applicable",
+                                     "method":  null,
+                                     "error":  null
+                                 },
+        "review":  {
+                       "status":  "pending_review",
+                       "cleanup_status":  "not_applicable"
+                   },
+        "reusable_bitmap":  false,
+        "interaction":  {
+                            "role":  "button",
+                            "target_widget":  "Button_SelectType1"
+                        },
+        "extraction":  {
+                           "mode":  "native",
+                           "target_component_id":  "Button_SelectType1"
+                       }
+    },
+    {
+        "element_id":  "button_layer.tab.wall",
+        "component_id":  "button_layer.tab.wall",
+        "target_component_id":  "Button_SelectType2",
+        "category":  "button_layer",
+        "parent_id":  "tab.wall",
+        "bounds":  {
+                       "x":  25,
+                       "y":  196,
+                       "width":  186,
+                       "height":  77
+                   },
+        "layer":  100,
+        "z_index":  1001,
+        "state":  "default",
+        "status":  "pending_review",
+        "confidence":  1,
+        "reason":  "Native UMG button interaction overlay mapped to Button_SelectType2.",
+        "asset_policy":  "interaction",
+        "node_kind":  "interaction",
+        "render_mode":  "outline",
+        "visual_assets":  {
+                              "source_crop":  null,
+                              "clean_layer":  null,
+                              "assembly_preview":  null
+                          },
+        "layer_reconstruction":  {
+                                     "status":  "not_applicable",
+                                     "method":  null,
+                                     "error":  null
+                                 },
+        "review":  {
+                       "status":  "pending_review",
+                       "cleanup_status":  "not_applicable"
+                   },
+        "reusable_bitmap":  false,
+        "interaction":  {
+                            "role":  "button",
+                            "target_widget":  "Button_SelectType2"
+                        },
+        "extraction":  {
+                           "mode":  "native",
+                           "target_component_id":  "Button_SelectType2"
+                       }
+    },
+    {
+        "element_id":  "button_layer.plan.1",
+        "component_id":  "button_layer.plan.1",
+        "target_component_id":  "Button_Plan1",
+        "category":  "button_layer",
+        "parent_id":  "button.plan.1",
+        "bounds":  {
+                       "x":  326,
+                       "y":  119,
+                       "width":  65,
+                       "height":  51
+                   },
+        "layer":  100,
+        "z_index":  1002,
+        "state":  "default",
+        "status":  "pending_review",
+        "confidence":  1,
+        "reason":  "Native UMG button interaction overlay mapped to Button_Plan1.",
+        "asset_policy":  "interaction",
+        "node_kind":  "interaction",
+        "render_mode":  "outline",
+        "visual_assets":  {
+                              "source_crop":  null,
+                              "clean_layer":  null,
+                              "assembly_preview":  null
+                          },
+        "layer_reconstruction":  {
+                                     "status":  "not_applicable",
+                                     "method":  null,
+                                     "error":  null
+                                 },
+        "review":  {
+                       "status":  "pending_review",
+                       "cleanup_status":  "not_applicable"
+                   },
+        "reusable_bitmap":  false,
+        "interaction":  {
+                            "role":  "button",
+                            "target_widget":  "Button_Plan1"
+                        },
+        "extraction":  {
+                           "mode":  "native",
+                           "target_component_id":  "Button_Plan1"
+                       }
+    },
+    {
+        "element_id":  "button_layer.plan.2",
+        "component_id":  "button_layer.plan.2",
+        "target_component_id":  "Button_Plan2",
+        "category":  "button_layer",
+        "parent_id":  "button.plan.2",
+        "bounds":  {
+                       "x":  402,
+                       "y":  119,
+                       "width":  64,
+                       "height":  50
+                   },
+        "layer":  100,
+        "z_index":  1003,
+        "state":  "default",
+        "status":  "pending_review",
+        "confidence":  1,
+        "reason":  "Native UMG button interaction overlay mapped to Button_Plan2.",
+        "asset_policy":  "interaction",
+        "node_kind":  "interaction",
+        "render_mode":  "outline",
+        "visual_assets":  {
+                              "source_crop":  null,
+                              "clean_layer":  null,
+                              "assembly_preview":  null
+                          },
+        "layer_reconstruction":  {
+                                     "status":  "not_applicable",
+                                     "method":  null,
+                                     "error":  null
+                                 },
+        "review":  {
+                       "status":  "pending_review",
+                       "cleanup_status":  "not_applicable"
+                   },
+        "reusable_bitmap":  false,
+        "interaction":  {
+                            "role":  "button",
+                            "target_widget":  "Button_Plan2"
+                        },
+        "extraction":  {
+                           "mode":  "native",
+                           "target_component_id":  "Button_Plan2"
+                       }
+    },
+    {
+        "element_id":  "button_layer.plan.3",
+        "component_id":  "button_layer.plan.3",
+        "target_component_id":  "Button_Plan3",
+        "category":  "button_layer",
+        "parent_id":  "button.plan.3",
+        "bounds":  {
+                       "x":  477,
+                       "y":  119,
+                       "width":  63,
+                       "height":  50
+                   },
+        "layer":  100,
+        "z_index":  1004,
+        "state":  "default",
+        "status":  "pending_review",
+        "confidence":  1,
+        "reason":  "Native UMG button interaction overlay mapped to Button_Plan3.",
+        "asset_policy":  "interaction",
+        "node_kind":  "interaction",
+        "render_mode":  "outline",
+        "visual_assets":  {
+                              "source_crop":  null,
+                              "clean_layer":  null,
+                              "assembly_preview":  null
+                          },
+        "layer_reconstruction":  {
+                                     "status":  "not_applicable",
+                                     "method":  null,
+                                     "error":  null
+                                 },
+        "review":  {
+                       "status":  "pending_review",
+                       "cleanup_status":  "not_applicable"
+                   },
+        "reusable_bitmap":  false,
+        "interaction":  {
+                            "role":  "button",
+                            "target_widget":  "Button_Plan3"
+                        },
+        "extraction":  {
+                           "mode":  "native",
+                           "target_component_id":  "Button_Plan3"
+                       }
+    },
+    {
+        "element_id":  "button_layer.manage_building",
+        "component_id":  "button_layer.manage_building",
+        "target_component_id":  "Button_BuildingManager",
+        "category":  "button_layer",
+        "parent_id":  "button.manage_building",
+        "bounds":  {
+                       "x":  499,
+                       "y":  669,
+                       "width":  224,
+                       "height":  67
+                   },
+        "layer":  100,
+        "z_index":  1005,
+        "state":  "default",
+        "status":  "pending_review",
+        "confidence":  1,
+        "reason":  "Native UMG button interaction overlay mapped to Button_BuildingManager.",
+        "asset_policy":  "interaction",
+        "node_kind":  "interaction",
+        "render_mode":  "outline",
+        "visual_assets":  {
+                              "source_crop":  null,
+                              "clean_layer":  null,
+                              "assembly_preview":  null
+                          },
+        "layer_reconstruction":  {
+                                     "status":  "not_applicable",
+                                     "method":  null,
+                                     "error":  null
+                                 },
+        "review":  {
+                       "status":  "pending_review",
+                       "cleanup_status":  "not_applicable"
+                   },
+        "reusable_bitmap":  false,
+        "interaction":  {
+                            "role":  "button",
+                            "target_widget":  "Button_BuildingManager"
+                        },
+        "extraction":  {
+                           "mode":  "native",
+                           "target_component_id":  "Button_BuildingManager"
+                       }
+    },
+    {
+        "element_id":  "button_layer.upgrade",
+        "component_id":  "button_layer.upgrade",
+        "target_component_id":  "Button_UpgradeBuilding",
+        "category":  "button_layer",
+        "parent_id":  "button.upgrade",
+        "bounds":  {
+                       "x":  1157,
+                       "y":  662,
+                       "width":  211,
+                       "height":  82
+                   },
+        "layer":  100,
+        "z_index":  1006,
+        "state":  "default",
+        "status":  "pending_review",
+        "confidence":  1,
+        "reason":  "Native UMG button interaction overlay mapped to Button_UpgradeBuilding.",
+        "asset_policy":  "interaction",
+        "node_kind":  "interaction",
+        "render_mode":  "outline",
+        "visual_assets":  {
+                              "source_crop":  null,
+                              "clean_layer":  null,
+                              "assembly_preview":  null
+                          },
+        "layer_reconstruction":  {
+                                     "status":  "not_applicable",
+                                     "method":  null,
+                                     "error":  null
+                                 },
+        "review":  {
+                       "status":  "pending_review",
+                       "cleanup_status":  "not_applicable"
+                   },
+        "reusable_bitmap":  false,
+        "interaction":  {
+                            "role":  "button",
+                            "target_widget":  "Button_UpgradeBuilding"
+                        },
+        "extraction":  {
+                           "mode":  "native",
+                           "target_component_id":  "Button_UpgradeBuilding"
+                       }
     }
   ]
 }

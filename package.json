@@ -1,11 +1,13 @@
 {
   "name": "oasis-companion",
   "private": true,
-  "version": "0.1.12",
+  "version": "1.260814.4",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "test:hierarchy": "node --test tests/ui-image-analyzer-hierarchy.test.mjs tests/city-defence-workbench-hierarchy.test.mjs",
+    "test:version": "node --test tests/companion-versioning.test.mjs",
     "preview": "vite preview",
     "tauri": "tauri"
   },
