@@ -81,6 +81,57 @@ const GALLERY_FILTER_LABELS: Record<GalleryFilter, string> = {
   needs_cleanup: "待净化",
   ready: "Ready",
 };
+const NATIVE_DISPLAY_TEXT: Record<string, string> = {
+  "header.title": "城防",
+  "text.tab.defence_tower": "防御塔",
+  "text.tab.wall": "城墙",
+  "text.plan_label": "方案",
+  "text.plan.1": "1",
+  "text.plan.2": "2",
+  "text.plan.3": "3",
+  "badge.stage.1": "1",
+  "badge.stage.2": "2",
+  "badge.stage.3": "3",
+  "badge.stage.4": "4",
+  "badge.stage.5": "5",
+  "text.manage_building": "管理建筑",
+  "text.tower_name": "箭塔",
+  "badge.tag.ranged": "远程",
+  "badge.tag.single": "单体",
+  "badge.tag.physical": "物理",
+  "text.tower_level": "等级 1",
+  "text.tower_exp": "0/100",
+  "stat.attack": "攻击 120",
+  "stat.health": "生命 1200",
+  "stat.attack_speed": "攻速 1.0",
+  "stat.critical": "暴击 5%",
+  "stat.range": "范围 4",
+  "stat.damage": "伤害 120",
+  "text.effects_title": "升级效果",
+  "badge.effect.1": "1",
+  "badge.effect.2": "2",
+  "badge.effect.3": "3",
+  "badge.effect.4": "4",
+  "text.effect.1": "攻击提升",
+  "text.effect.2": "射程提升",
+  "text.effect.3": "攻速提升",
+  "text.effect.4": "解锁强化",
+  "value.effect.1": "+10%",
+  "value.effect.2": "+1",
+  "value.effect.3": "+5%",
+  "value.effect.4": "可用",
+  "status.effect.1": "已解锁",
+  "status.effect.2": "已解锁",
+  "status.effect.3": "未解锁",
+  "status.effect.4": "未解锁",
+  "counter.resource.attack": "20",
+  "counter.resource.range": "15",
+  "counter.resource.gold": "300",
+  "owned.resource.attack": "拥有 120",
+  "owned.resource.range": "拥有 80",
+  "owned.resource.gold": "拥有 1800",
+  "text.upgrade": "升级",
+};
 const DEFAULT_TREE: UITree = {
   artifact_type: "ui_tree",
   schema_version: 1,
@@ -111,6 +162,26 @@ function clamp(value: number, min: number, max: number) {
 
 function sameBounds(left: Bounds, right: Bounds) {
   return left.x === right.x && left.y === right.y && left.width === right.width && left.height === right.height;
+}
+
+function nativeDisplayText(node: UINode) {
+  return NATIVE_DISPLAY_TEXT[node.id]
+    ?? NATIVE_DISPLAY_TEXT[node.extraction?.target_component_id]
+    ?? (node.category === "counter" ? "0" : "");
+}
+
+function nativeDisplayClass(node: UINode) {
+  if (node.id.includes("tab") || node.id.includes("upgrade") || node.id.includes("manage_building")) return "native-strong";
+  if (node.id.includes("badge")) return "native-badge";
+  if (node.category === "counter" || node.id.startsWith("stat.") || node.id.includes("value.") || node.id.includes("owned.")) return "native-small";
+  return "native-default";
+}
+
+function nativeFontSize(node: UINode, scale: number) {
+  const height = node.bounds.height * scale;
+  const width = node.bounds.width * scale;
+  const cap = node.id.includes("tab") || node.id.includes("upgrade") || node.id.includes("manage_building") ? 28 : 18;
+  return Math.round(clamp(Math.min(height * 0.58, width * 0.22), 9, cap));
 }
 
 function containsBounds(parent: Bounds, child: Bounds) {
@@ -1043,6 +1114,8 @@ export default function UIWorkbench() {
                     onPointerDown={(event) => beginInteraction(event, node, "drag")}
                   >
                     {sourcePreview && <span className="moved-source-preview" style={sourceCropCanvasStyle(imageUrl, tree.page_size, node.source_bounds!, node.bounds, scale)} />}
+                    {node.node_kind === "native" && node.id === "progress.tower_exp" && <span className="native-progress"><i /></span>}
+                    {node.node_kind === "native" && nativeDisplayText(node) && <span className={`native-text-content ${nativeDisplayClass(node)}`} style={{ fontSize: nativeFontSize(node, scale) }}>{nativeDisplayText(node)}</span>}
                     <span className="canvas-node-label">{node.node_kind} · {node.id}{moved ? " · 已移动" : ""}</span>
                     {node.id === selectedId && !node.locked && ["nw", "ne", "sw", "se"].map((handle) => <span key={handle} className={`resize-handle handle-${handle}`} onPointerDown={(event) => beginInteraction(event, node, "resize", handle)} />)}
                   </div>
