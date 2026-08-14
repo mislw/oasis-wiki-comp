@@ -98,11 +98,55 @@ class PrecisionComponentReconstructionTests(unittest.TestCase):
             self.run_script("build_extraction_plan.py", "--ui-tree", ui_tree, "--visual-review", review, "--image", image, "--output", output)
 
             plan = json.loads(output.read_text(encoding="utf-8"))
-            self.assertEqual(2, len(plan["components"]))
+            self.assertEqual(3, len(plan["components"]))
             button = next(component for component in plan["components"] if component["target_component_id"] == "button.purchase.gold")
             native = next(component for component in plan["components"] if component["target_component_id"] == "text.offer.price")
+            background = next(component for component in plan["components"] if component["target_component_id"] == "background.root")
             self.assertEqual(3, len(button["instances"]))
             self.assertIsNone(native["output"])
+            self.assertIn("button.offer.01", background["layer_reconstruction"]["remove_nodes"])
+
+    def test_accepts_visual_review_package_created_by_current_workflow(self):
+        with tempfile.TemporaryDirectory() as temp:
+            directory = Path(temp)
+            image = directory / "visual-final.png"
+            image.write_bytes(b"approved image")
+            digest = hashlib.sha256(image.read_bytes()).hexdigest()
+            ui_tree = self.write_json(directory, "ui-tree.json", {
+                "artifact_type": "ui_tree",
+                "page_size": {"width": 320, "height": 180},
+                "nodes": [{
+                    "id": "artwork.icon",
+                    "category": "artwork",
+                    "bounds": {"x": 10, "y": 10, "width": 32, "height": 32},
+                    "extraction": {
+                        "mode": "extract_artwork",
+                        "target_component_id": "artwork.icon",
+                        "transparent": True,
+                        "confidence": 0.99,
+                        "reason": "Standalone icon.",
+                    },
+                }],
+            })
+            review = self.write_json(directory, "visual-review.json", {
+                "schema_version": 1,
+                "workflow_stage": "visual_review",
+                "status": "approved",
+                "approved_image": {"file": "visual-final.png", "sha256": digest},
+            })
+            output = directory / "extraction-plan.json"
+
+            result = self.run_script(
+                "build_extraction_plan.py",
+                "--ui-tree", ui_tree,
+                "--visual-review", review,
+                "--image", image,
+                "--output", output,
+                check=False,
+            )
+
+            self.assertEqual(0, result.returncode, result.stderr)
+            self.assertTrue(output.is_file())
 
     def test_rejects_skin_without_content_removal_or_clean_source(self):
         with tempfile.TemporaryDirectory() as temp:
