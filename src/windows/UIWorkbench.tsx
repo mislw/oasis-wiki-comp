@@ -1097,7 +1097,7 @@ export default function UIWorkbench() {
                 const moved = Boolean(node.source_bounds && !sameBounds(node.bounds, node.source_bounds));
                 const parent = node.parent_id ? nodeById.get(node.parent_id) : null;
                 const parentMoved = Boolean(parent?.source_bounds && !sameBounds(parent.bounds, parent.source_bounds));
-                const sourcePreview = moved && !parentMoved && node.source_bounds && !visualUrl(node, "clean");
+                const sourcePreview = node.node_kind !== "native" && moved && !parentMoved && node.source_bounds && !visualUrl(node, "clean");
                 return (
                   <div
                     key={node.id}
