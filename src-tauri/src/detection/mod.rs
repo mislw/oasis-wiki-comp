@@ -34,7 +34,8 @@ pub fn spawn_loop(app: AppHandle) {
             };
 
             // --- detect (no locks held) ---
-            let detected_targets = crate::detection::process::active_target_ids(&crate::agent_registry::all_targets());
+            let detected_targets =
+                crate::detection::process::active_target_ids(&crate::agent_registry::all_targets());
             let present = if !enabled || paused {
                 false
             } else {
@@ -58,17 +59,15 @@ pub fn spawn_loop(app: AppHandle) {
                 let _ = app.emit("agent://presence", present);
             }
             if prev_targets != detected_targets {
-                log::info!("active agent targets changed: {:?} -> {:?}", prev_targets, detected_targets);
+                log::info!(
+                    "active agent targets changed: {:?} -> {:?}",
+                    prev_targets,
+                    detected_targets
+                );
                 let _ = app.emit("agent://active-targets", detected_targets.clone());
             }
             if follow_lifecycle && !present {
                 crate::tray::hide_settings(&app);
-            }
-            for target_id in detected_targets
-                .iter()
-                .filter(|target_id| !prev_targets.contains(target_id))
-            {
-                crate::tray::show_agent_settings(&app, target_id);
             }
 
             // --- recompute + apply ball state (brief lock) ---

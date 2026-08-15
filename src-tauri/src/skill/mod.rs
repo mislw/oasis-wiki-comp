@@ -14,7 +14,7 @@ use tauri::{AppHandle, Manager};
 /// The version shipped in the bundled Skill resource. Bump when the bundle
 /// changes. If an installed Skill includes `VERSION`, status detection compares
 /// it against this value.
-pub const CURRENT_SKILL_VERSION: &str = "1.260814.4";
+pub const CURRENT_SKILL_VERSION: &str = "1.260815.1";
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(tag = "kind", rename_all = "snake_case")]

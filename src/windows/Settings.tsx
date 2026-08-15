@@ -17,7 +17,7 @@ import type {
   UpdateStatus,
 } from "../types";
 
-const EXPECTED_VERSION = "1.260814.4";
+const EXPECTED_VERSION = "1.260815.1";
 const CORE_MCP_TOOLS = ["ue_read", "ue_py", "ue_plan_submit"];
 const MCP_AUTO_CHECK_INTERVAL_MS = 5 * 60 * 1000;
 
