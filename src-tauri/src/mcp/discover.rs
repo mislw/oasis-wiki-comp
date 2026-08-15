@@ -7,6 +7,9 @@
 
 use std::time::Duration;
 
+#[cfg(windows)]
+use std::os::windows::process::CommandExt;
+
 use serde_json::Value;
 use sysinfo::System;
 
@@ -21,6 +24,8 @@ pub struct DiscoveredEndpoint {
 }
 
 const EDITOR_PROCESS_NAMES: &[&str] = &["ShadowTrackerExtraUGCEditor", "UGCEditor"];
+#[cfg(windows)]
+const CREATE_NO_WINDOW: u32 = 0x08000000;
 
 /// Scan the editor process's listening ports; probe each for an SSE endpoint.
 /// Returns the first port that serves a real SSE stream.
@@ -42,7 +47,7 @@ fn editor_listening_ports() -> Vec<u16> {
     if editor_pids.is_empty() {
         return Vec::new();
     }
-    let out = std::process::Command::new("netstat").arg("-ano").output();
+    let out = netstat_output();
     let out = match out {
         Ok(o) => o,
         Err(e) => {
@@ -77,6 +82,14 @@ fn editor_listening_ports() -> Vec<u16> {
         }
     }
     ports
+}
+
+fn netstat_output() -> std::io::Result<std::process::Output> {
+    let mut command = std::process::Command::new("netstat");
+    command.arg("-ano");
+    #[cfg(windows)]
+    command.creation_flags(CREATE_NO_WINDOW);
+    command.output()
 }
 
 /// PIDs of running editor processes, as strings (for netstat matching).
