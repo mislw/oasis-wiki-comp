@@ -148,6 +148,7 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_log::Builder::new().build())
+        .on_window_event(tray::handle_window_event)
         .setup(move |app| {
             if created_default {
                 log::info!("created default settings.json");

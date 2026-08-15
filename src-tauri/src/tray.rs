@@ -4,7 +4,7 @@ use tauri::menu::{Menu, MenuItem, PredefinedMenuItem};
 use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
 use tauri::{
     AppHandle, Emitter, Manager, PhysicalPosition, Position, WebviewUrl, WebviewWindow,
-    WebviewWindowBuilder,
+    WebviewWindowBuilder, Window, WindowEvent,
 };
 
 const SETTINGS_WIDTH: f64 = 560.0;
@@ -186,6 +186,24 @@ pub fn hide_settings(app: &AppHandle) {
     }
 }
 
+pub fn handle_window_event(window: &Window, event: &WindowEvent) {
+    if !should_hide_settings_window(window.label(), event) {
+        return;
+    }
+    if let Err(error) = window.hide() {
+        log::warn!(
+            "settings window {} could not be hidden after losing focus: {}",
+            window.label(),
+            error
+        );
+    }
+}
+
+fn should_hide_settings_window(label: &str, event: &WindowEvent) -> bool {
+    (label == "settings" || label.starts_with("settings-"))
+        && matches!(event, WindowEvent::Focused(false))
+}
+
 pub fn spawn_settings_popover_follow_loop(app: AppHandle) {
     tauri::async_runtime::spawn(async move {
         let mut last_side: Option<&'static str> = None;
@@ -311,4 +329,34 @@ fn clamp_i32(value: i32, min: i32, max: i32) -> i32 {
         return min;
     }
     value.max(min).min(max)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use tauri::WindowEvent;
+
+    #[test]
+    fn settings_windows_hide_only_when_they_lose_focus() {
+        assert!(should_hide_settings_window(
+            "settings",
+            &WindowEvent::Focused(false)
+        ));
+        assert!(should_hide_settings_window(
+            "settings-codex",
+            &WindowEvent::Focused(false)
+        ));
+        assert!(!should_hide_settings_window(
+            "settings",
+            &WindowEvent::Focused(true)
+        ));
+        assert!(!should_hide_settings_window(
+            "ball",
+            &WindowEvent::Focused(false)
+        ));
+        assert!(!should_hide_settings_window(
+            "ui-workbench",
+            &WindowEvent::Focused(false)
+        ));
+    }
 }
