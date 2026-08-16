@@ -14,7 +14,7 @@ use tauri::{AppHandle, Manager};
 /// The version shipped in the bundled Skill resource. Bump when the bundle
 /// changes. If an installed Skill includes `VERSION`, status detection compares
 /// it against this value.
-pub const CURRENT_SKILL_VERSION: &str = "1.260816.1";
+pub const CURRENT_SKILL_VERSION: &str = "1.260816.2";
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(tag = "kind", rename_all = "snake_case")]
@@ -120,6 +120,10 @@ pub fn detect_status(targets: &[String]) -> MultiTargetStatus {
 /// false error states for GitHub-installed Skills that do not ship `VERSION`.
 fn detect_single(skill_dir: &str) -> SkillStatus {
     let target = crate::config::expand_user_profile(skill_dir);
+    detect_path(&target)
+}
+
+fn detect_path(target: &Path) -> SkillStatus {
     if !target.join("SKILL.md").exists() {
         return SkillStatus::NotInstalled;
     }
@@ -147,9 +151,10 @@ fn detect_single(skill_dir: &str) -> SkillStatus {
 
 /// (Re)install the Skill from the bundled resource into all enabled targets.
 ///
-/// For each target:
-/// - Backs up an existing target to `oasis-wiki.bak.<ts>` (keeps last 3).
-/// - Copies the resource bundle via a temp dir + atomic rename.
+/// For each target, the resource bundle is staged and validated before an
+/// atomic replacement. A failed activation restores the previous target.
+/// Successful installation removes obsolete copies of the same Skill and
+/// installer-owned backup or temporary directories.
 ///
 /// Returns the post-install status for all targets.
 pub fn install_skill(app: &AppHandle, targets: &[String]) -> Result<MultiTargetStatus, String> {
@@ -190,13 +195,17 @@ pub fn install_skill_from_dir(
 
     for id in targets {
         let target = registry.iter().find(|t| &t.id == id);
-        let (display_name, skill_dir) = match target {
-            Some(t) => (t.display_name.clone(), t.skill_dir.clone()),
-            None => (id.clone(), id.clone()),
+        let (display_name, skill_dir, skill_roots) = match target {
+            Some(t) => (
+                t.display_name.clone(),
+                t.skill_dir.clone(),
+                t.skill_roots.clone(),
+            ),
+            None => (id.clone(), id.clone(), Vec::new()),
         };
 
         log::info!("installing skill to target: {} ({})", id, skill_dir);
-        let status = install_single(source_root, &skill_dir)?;
+        let status = install_single(source_root, &skill_dir, &skill_roots)?;
         results.push(TargetStatus {
             target_id: id.clone(),
             display_name,
@@ -208,53 +217,196 @@ pub fn install_skill_from_dir(
 }
 
 /// Install to a single target directory.
-fn install_single(resource_root: &Path, skill_dir: &str) -> Result<SkillStatus, String> {
+fn install_single(
+    resource_root: &Path,
+    skill_dir: &str,
+    skill_roots: &[String],
+) -> Result<SkillStatus, String> {
     let target = crate::config::expand_user_profile(skill_dir);
-    let parent = target
-        .parent()
-        .ok_or_else(|| format!("invalid skill_dir: {}", skill_dir))?;
-    fs::create_dir_all(parent).map_err(|e| e.to_string())?;
-
-    // Back up existing target.
-    if target.exists() {
-        let ts = std::time::SystemTime::now()
-            .duration_since(std::time::UNIX_EPOCH)
-            .map(|d| d.as_secs())
-            .unwrap_or(0);
-        let bak = target.with_file_name(format!("oasis-wiki.bak.{}", ts));
-        let _ = fs::rename(&target, &bak);
-        log::info!("backed up existing skill to {:?}", bak);
-        prune_backups(parent);
-    }
-
-    // Copy into a temp sibling, then rename atomically.
-    let tmp = parent.join(format!(".oasis-wiki.tmp.{}", std::process::id()));
-    if tmp.exists() {
-        let _ = fs::remove_dir_all(&tmp);
-    }
-    copy_dir(resource_root, &tmp).map_err(|e| e.to_string())?;
-    fs::rename(&tmp, &target).map_err(|e| e.to_string())?;
-
-    Ok(detect_single(skill_dir))
+    let roots = skill_roots
+        .iter()
+        .map(|root| crate::config::expand_user_profile(root))
+        .collect::<Vec<_>>();
+    install_single_with_roots(resource_root, &target, &roots)
 }
 
-fn prune_backups(parent: &Path) {
-    let mut backups: Vec<(PathBuf, u64)> = Vec::new();
-    if let Ok(entries) = fs::read_dir(parent) {
-        for entry in entries.flatten() {
+fn install_single_with_roots(
+    resource_root: &Path,
+    target: &Path,
+    skill_roots: &[PathBuf],
+) -> Result<SkillStatus, String> {
+    let parent = target
+        .parent()
+        .ok_or_else(|| format!("invalid Skill target: {:?}", target))?;
+    fs::create_dir_all(parent).map_err(|e| e.to_string())?;
+
+    let nonce = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|duration| duration.as_nanos())
+        .unwrap_or(0);
+    let tmp = parent.join(format!(".oasis-wiki.tmp.{}.{}", std::process::id(), nonce));
+    let rollback = parent.join(format!(
+        ".oasis-wiki.rollback.{}.{}",
+        std::process::id(),
+        nonce
+    ));
+    if tmp.exists() {
+        fs::remove_dir_all(&tmp)
+            .map_err(|error| format!("remove stale staged Skill {:?}: {error}", tmp))?;
+    }
+    if let Err(error) = copy_dir(resource_root, &tmp) {
+        let _ = fs::remove_dir_all(&tmp);
+        return Err(format!("stage Skill at {:?}: {error}", tmp));
+    }
+    if !tmp.join("SKILL.md").exists() {
+        let _ = fs::remove_dir_all(&tmp);
+        return Err(format!(
+            "staged Skill at {:?} does not contain SKILL.md",
+            tmp
+        ));
+    }
+
+    let had_previous = activate_staged_skill(&tmp, target, &rollback)?;
+    let mut roots = skill_roots.to_vec();
+    if !roots.iter().any(|root| root == parent) {
+        roots.push(parent.to_path_buf());
+    }
+    if let Err(error) = cleanup_obsolete_skill_copies(target, &roots, &rollback) {
+        let restore_error = restore_previous_skill(target, &rollback, had_previous).err();
+        return Err(match restore_error {
+            Some(restore_error) => format!("{error}; rollback failed: {restore_error}"),
+            None => error,
+        });
+    }
+
+    if had_previous {
+        if let Err(error) = fs::remove_dir_all(&rollback) {
+            let restore_error = restore_previous_skill(target, &rollback, true).err();
+            return Err(match restore_error {
+                Some(restore_error) => format!(
+                    "remove rollback Skill {:?}: {error}; rollback failed: {restore_error}",
+                    rollback
+                ),
+                None => format!("remove rollback Skill {:?}: {error}", rollback),
+            });
+        }
+    }
+
+    Ok(detect_path(target))
+}
+
+fn activate_staged_skill(staged: &Path, target: &Path, rollback: &Path) -> Result<bool, String> {
+    let had_previous = target.exists();
+    if had_previous {
+        fs::rename(target, rollback)
+            .map_err(|error| format!("back up current Skill {:?}: {error}", target))?;
+    }
+
+    if let Err(error) = fs::rename(staged, target) {
+        let restore_error = if had_previous {
+            fs::rename(rollback, target).err()
+        } else {
+            None
+        };
+        let _ = fs::remove_dir_all(staged);
+        return Err(match restore_error {
+            Some(restore_error) => format!(
+                "activate staged Skill {:?}: {error}; restore failed: {restore_error}",
+                staged
+            ),
+            None => format!("activate staged Skill {:?}: {error}", staged),
+        });
+    }
+
+    Ok(had_previous)
+}
+
+fn restore_previous_skill(
+    target: &Path,
+    rollback: &Path,
+    had_previous: bool,
+) -> Result<(), String> {
+    if target.exists() {
+        fs::remove_dir_all(target)
+            .map_err(|error| format!("remove failed Skill {:?}: {error}", target))?;
+    }
+    if had_previous && rollback.exists() {
+        fs::rename(rollback, target)
+            .map_err(|error| format!("restore previous Skill {:?}: {error}", rollback))?;
+    }
+    Ok(())
+}
+
+fn cleanup_obsolete_skill_copies(
+    target: &Path,
+    skill_roots: &[PathBuf],
+    rollback: &Path,
+) -> Result<(), String> {
+    for root in skill_roots {
+        if !root.exists() {
+            continue;
+        }
+        let entries = fs::read_dir(root)
+            .map_err(|error| format!("scan Skill directory {:?}: {error}", root))?;
+        for entry in entries {
+            let entry = entry.map_err(|error| format!("read Skill entry: {error}"))?;
+            let file_type = entry
+                .file_type()
+                .map_err(|error| format!("inspect Skill entry {:?}: {error}", entry.path()))?;
+            if !file_type.is_dir() || file_type.is_symlink() {
+                continue;
+            }
+
+            let path = entry.path();
+            if path == target || path == rollback {
+                continue;
+            }
+
             let name = entry.file_name();
             let name = name.to_string_lossy();
-            if let Some(ts) = name.strip_prefix("oasis-wiki.bak.") {
-                if let Ok(ts) = ts.parse::<u64>() {
-                    backups.push((entry.path(), ts));
-                }
+            let installer_residue = name.starts_with("oasis-wiki.bak.")
+                || name.starts_with(".oasis-wiki.tmp.")
+                || name.starts_with(".oasis-wiki.rollback.");
+            let duplicate_skill = read_skill_name(&path).as_deref() == Some("oasis-wiki");
+            if installer_residue || duplicate_skill {
+                fs::remove_dir_all(&path)
+                    .map_err(|error| format!("remove obsolete Skill {:?}: {error}", path))?;
+                log::info!("removed obsolete Skill copy: {:?}", path);
             }
         }
     }
-    backups.sort_by_key(|b| std::cmp::Reverse(b.1));
-    for (path, _) in backups.into_iter().skip(3) {
-        let _ = fs::remove_dir_all(&path);
+    Ok(())
+}
+
+fn read_skill_name(skill_dir: &Path) -> Option<String> {
+    let contents = fs::read_to_string(skill_dir.join("SKILL.md")).ok()?;
+    let mut lines = contents.lines();
+    if lines.next()?.trim() != "---" {
+        return None;
     }
+    for line in lines {
+        let line = line.trim();
+        if line == "---" {
+            break;
+        }
+        let Some((key, value)) = line.split_once(':') else {
+            continue;
+        };
+        if key.trim() == "name" {
+            let value = value.trim();
+            let value = value
+                .strip_prefix('"')
+                .and_then(|value| value.strip_suffix('"'))
+                .or_else(|| {
+                    value
+                        .strip_prefix('\'')
+                        .and_then(|value| value.strip_suffix('\''))
+                })
+                .unwrap_or(value);
+            return Some(value.to_string());
+        }
+    }
+    None
 }
 
 fn copy_dir(src: &Path, dst: &Path) -> std::io::Result<()> {
@@ -276,6 +428,27 @@ fn copy_dir(src: &Path, dst: &Path) -> std::io::Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn test_dir(label: &str) -> PathBuf {
+        let nonce = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap()
+            .as_nanos();
+        std::env::temp_dir().join(format!(
+            "oasis-companion-skill-{label}-{}-{nonce}",
+            std::process::id()
+        ))
+    }
+
+    fn write_skill(dir: &Path, name: &str, version: &str, marker: &str) {
+        fs::create_dir_all(dir).unwrap();
+        fs::write(
+            dir.join("SKILL.md"),
+            format!("---\nname: {name}\n---\n\n# {marker}\n"),
+        )
+        .unwrap();
+        fs::write(dir.join("VERSION"), version).unwrap();
+    }
 
     #[test]
     fn detect_status_empty_targets() {
@@ -339,5 +512,71 @@ mod tests {
         assert!(!status.all_installed());
         assert!(status.is_unhealthy());
         assert_eq!(status.aggregate(), SkillStatus::NotInstalled);
+    }
+
+    #[test]
+    fn successful_install_removes_old_skill_copies_and_residue() {
+        let root = test_dir("cleanup");
+        let source = root.join("source");
+        let commands_root = root.join("agent").join("commands");
+        let skills_root = root.join("agent").join("skills");
+        let target = commands_root.join("oasis-wiki");
+        let legacy_named = skills_root.join("oasis-wiki");
+        let legacy_aliased = skills_root.join("standalone-oasis-wiki");
+        let unrelated = skills_root.join("oasis-companion-popup-test");
+        let old_backup = commands_root.join("oasis-wiki.bak.100");
+        let stale_tmp = skills_root.join(".oasis-wiki.tmp.200");
+
+        write_skill(&source, "oasis-wiki", CURRENT_SKILL_VERSION, "new");
+        write_skill(&target, "oasis-wiki", "0.1.0", "old");
+        write_skill(&legacy_named, "oasis-wiki", "0.1.0", "legacy");
+        write_skill(&legacy_aliased, "oasis-wiki", "0.1.0", "alias");
+        write_skill(
+            &unrelated,
+            "oasis-companion-popup-test",
+            "0.1.0",
+            "unrelated",
+        );
+        write_skill(&old_backup, "oasis-wiki", "0.1.0", "backup");
+        fs::create_dir_all(&stale_tmp).unwrap();
+
+        let status = install_single_with_roots(
+            &source,
+            &target,
+            &[commands_root.clone(), skills_root.clone()],
+        )
+        .unwrap();
+
+        assert_eq!(status, SkillStatus::Installed);
+        assert!(fs::read_to_string(target.join("SKILL.md"))
+            .unwrap()
+            .contains("# new"));
+        assert!(!legacy_named.exists());
+        assert!(!legacy_aliased.exists());
+        assert!(!old_backup.exists());
+        assert!(!stale_tmp.exists());
+        assert!(unrelated.exists());
+
+        let _ = fs::remove_dir_all(root);
+    }
+
+    #[test]
+    fn activation_failure_restores_existing_skill() {
+        let root = test_dir("rollback");
+        let target = root.join("oasis-wiki");
+        let missing_staged = root.join("missing-staged");
+        let rollback = root.join(".oasis-wiki.rollback.test");
+        write_skill(&target, "oasis-wiki", "0.1.0", "old");
+
+        let error = activate_staged_skill(&missing_staged, &target, &rollback).unwrap_err();
+
+        assert!(error.contains("activate staged Skill"));
+        assert!(target.exists());
+        assert!(fs::read_to_string(target.join("SKILL.md"))
+            .unwrap()
+            .contains("# old"));
+        assert!(!rollback.exists());
+
+        let _ = fs::remove_dir_all(root);
     }
 }

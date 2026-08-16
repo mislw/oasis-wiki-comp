@@ -49,6 +49,12 @@ The canonical Skill source lives in `mislw/oasis-wiki`. Companion mirrors its
 plugin-specific `VERSION` marker used to detect bundled Skill upgrades. Run
 `scripts/sync-bundled-skill.ps1` after updating the sibling Skill checkout.
 
+After a successful Skill update, Companion removes installer-owned backup and
+temporary directories plus other directories whose `SKILL.md` declares the exact
+name `oasis-wiki` in that Agent's registered Skill locations. The canonical target
+is preserved, unrelated Skills are left untouched, and a failed activation restores
+the previous canonical installation.
+
 ## Repository Layout
 
 - `src/`: React and TypeScript UI, including the settings tabs and floating ball.
