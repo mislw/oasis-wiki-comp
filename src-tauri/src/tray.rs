@@ -184,6 +184,19 @@ pub fn hide_settings(app: &AppHandle) {
 }
 
 pub fn handle_window_event(window: &Window, event: &WindowEvent) {
+    if let WindowEvent::CloseRequested { api, .. } = event {
+        if should_preserve_window_on_close(window.label()) {
+            api.prevent_close();
+            if let Err(error) = window.hide() {
+                log::warn!(
+                    "window {} could not be hidden instead of closed: {}",
+                    window.label(),
+                    error
+                );
+            }
+            return;
+        }
+    }
     if !should_hide_settings_window(window.label(), event) {
         return;
     }
@@ -194,6 +207,10 @@ pub fn handle_window_event(window: &Window, event: &WindowEvent) {
             error
         );
     }
+}
+
+fn should_preserve_window_on_close(label: &str) -> bool {
+    label == "ui-workflow"
 }
 
 fn should_hide_settings_window(label: &str, event: &WindowEvent) -> bool {
@@ -342,6 +359,13 @@ mod tests {
             "ui-workbench",
             &WindowEvent::Focused(false)
         ));
+    }
+
+    #[test]
+    fn ui_workflow_is_preserved_when_the_title_bar_closes() {
+        assert!(should_preserve_window_on_close("ui-workflow"));
+        assert!(!should_preserve_window_on_close("ui-workbench"));
+        assert!(!should_preserve_window_on_close("settings"));
     }
 
     #[test]

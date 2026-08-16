@@ -7,9 +7,9 @@ description: Use for Oasis/绿洲启元/绿洲起源/和平精英 UGC projects, 
 
 For game UI reference analysis, reusable control libraries, project-specific asset catalogs and preview caches, UI Tree planning, or screenshot-to-UI work, use the integrated Game UI Design System branch in `references/game-ui-design-system.md` before MCP WidgetBlueprint operations.
 
-For AI UI generation, automatic native Cowart handoff, editable layer extraction, component confirmation, or RedCliff delivery planning, use the separate Cowart UI Production branch in `references/cowart-ui-workflow.md`. For staged Agent questions, approvals, review gates, backtracking, and result reporting around that existing workflow, also read `references/oasis-ui-agent-interaction.md`.
+For AI UI generation, optional native Cowart handoff, editable layer extraction, component confirmation, or RedCliff delivery planning, use the separate Cowart UI Production branch in `references/cowart-ui-workflow.md`. For staged Agent questions, approvals, review gates, backtracking, and result reporting around that existing workflow, also read `references/oasis-ui-agent-interaction.md`.
 
-Natural-language requests such as `做一下 UI 生成`, `我有一个 UI 需要生图`, `帮我做个 UI`, or `启动 UI 生图工具` immediately enter Cowart UI Production. Run `scripts/cowart-ui/component-extractor/open_ui_workflow.py` to open or focus Companion's native UI generation workflow, then continue the SOURCE stage in the same conversation.
+Natural-language requests such as `做一下 UI 生成`, `我有一个 UI 需要生图`, `帮我做个 UI`, or `启动 UI 生图工具` immediately enter Cowart UI Production at SOURCE. 默认进入 SOURCE 文字引导 and ask whether the user needs a new UI generated, already has a UI image, or wants to continue a previous UI. 不要自动打开 Companion. Only when the user explicitly asks `打开原生 UI 工具链`, run `scripts/cowart-ui/component-extractor/open_ui_workflow.py` to open or focus Companion's native workflow.
 
 Use this skill for Oasis/绿洲启元 and 和平精英 UGC development questions. The bundled wiki is the source of truth for Lua APIs, editor workflows, gameplay systems, UI, templates, troubleshooting, and examples. The project-pattern references summarize generic UGC Lua architecture habits without private project names, local paths, or planning details.
 
@@ -94,7 +94,7 @@ Additional distilled references:
 - `references/mcp-datatable.md`: MCP branch for config tables, DataTable/UAEDataTable lookup, low-token row reads, row mutation, and table-backed gameplay/UI.
 - `references/game-ui-design-system.md`: project-routed screenshot analysis, reusable control-library maintenance, UI Tree gates, generation workflow, and automatic UI validation.
 - `scripts/game-ui/project_library.py`: project manifest validation and local preview-key resolution used by the Game UI Design System.
-- `references/cowart-ui-workflow.md`: separate AI UI generation, automatic Cowart opening, editable component extraction, layer-manifest, confirmation, and RedCliff delivery category.
+- `references/cowart-ui-workflow.md`: separate AI UI generation, optional native Cowart opening, editable component extraction, layer-manifest, confirmation, and RedCliff delivery category.
 - `references/oasis-ui-agent-interaction.md`: interaction-only orchestration for Cowart/UI stages, contextual approval gates, review prompts, backtracking, and fail-closed reporting without runtime changes.
 - `references/companion-versioning.md`: `M.YYMMDD.N` versioning contract for Companion and bundled Skill builds, including synchronized release metadata.
 - `references/answer-modes.md`: rules for choosing normal mode or teaching mode.

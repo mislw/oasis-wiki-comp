@@ -45,6 +45,8 @@ python scripts/game-ui/generate_with_codex_provider.py --package <generation-pac
 
 ## 快速入口
 
+普通“启动 UI 生图工具”等自然语言请求先按 `references/oasis-ui-agent-interaction.md` 进入 SOURCE 文字引导，不自动运行原生工具。只有用户明确要求“打开原生 UI 工具链”时，才使用下面的 Companion 入口：
+
 ```powershell
 python scripts/cowart-ui/component-extractor/open_ui_workflow.py
 python scripts/cowart-ui/component-extractor/launch_ui_workflow_console.py --name "<page name>"

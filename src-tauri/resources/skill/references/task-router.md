@@ -153,7 +153,7 @@ This branch owns visual-system decisions and the mandatory UI Tree gate. `UI And
 
 ### Cowart UI Production
 
-Use when the user asks to generate or revise a game UI image, automatically place it into and open native Cowart, split a flat UI into editable controls, process a Canva Magic Layers export, recover a layer hierarchy, or create a RedCliff UI delivery plan.
+Use when the user asks to generate or revise a game UI image, optionally place it into and open native Cowart, split a flat UI into editable controls, process a Canva Magic Layers export, recover a layer hierarchy, or create a RedCliff UI delivery plan.
 
 Trigger examples:
 
@@ -176,7 +176,7 @@ Read:
 - Upstream branch: `UI Design System` for project style, reusable components, and the mandatory UI Tree
 - Secondary branch: `MCP Operation` only after explicit authorization to inspect or modify real WidgetBlueprint assets
 
-This category owns the production pipeline and automatic Cowart handoff. The UI Agent interaction reference only orchestrates the existing pipeline: ask only for missing information, keep one pending decision, stop at each approval gate, and report verified paths/results. It does not create persistent task state, Companion task UI, IPC, or automatic resume. The pipeline must not treat a visual-review bitmap as editable components, and it must not mutate UGC project files during visual review, component extraction, or delivery-plan generation.
+This category owns the production pipeline and optional Cowart handoff. Natural-language UI generation requests start with the SOURCE text guidance; opening Companion requires an explicit `打开原生 UI 工具链` request. The UI Agent interaction reference only orchestrates the existing pipeline: ask only for missing information, keep one pending decision, stop at each approval gate, and report verified paths/results. It does not create persistent task state, Companion task UI, IPC, or automatic resume. The pipeline must not treat a visual-review bitmap as editable components, and it must not mutate UGC project files during visual review, component extraction, or delivery-plan generation.
 
 ### UI And Interaction
 

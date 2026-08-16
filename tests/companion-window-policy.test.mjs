@@ -82,3 +82,15 @@ test("Skill handoffs never launch a duplicate Companion process while it is runn
     );
   }
 });
+
+test("the UI workflow title-bar close preserves its pre-created WebView", async () => {
+  const source = await readFile(
+    new URL("../src-tauri/src/tray.rs", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(source, /WindowEvent::CloseRequested/);
+  assert.match(source, /should_preserve_window_on_close/);
+  assert.match(source, /api\.prevent_close\(\)/);
+  assert.match(source, /"ui-workflow"/);
+});
