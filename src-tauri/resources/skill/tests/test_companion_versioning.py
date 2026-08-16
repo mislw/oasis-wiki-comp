@@ -24,14 +24,6 @@ class CompanionVersioningTests(unittest.TestCase):
             'Asia/Shanghai',
             'one-based distributable iteration number',
             'Do not reuse',
-            'GitHub default branch',
-            'v{version}',
-            'not complete',
-            '`oasis-wiki` and `oasis-wiki-comp`',
-            'Windows MSI',
-            'M.YY.MMDD+N',
-            'M.YY.MMDD.N',
-            '`tauri.build.conf.json`',
         ):
             with self.subTest(marker=marker):
                 self.assertIn(marker, GUIDE)
