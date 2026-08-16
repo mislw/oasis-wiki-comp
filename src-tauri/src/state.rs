@@ -6,6 +6,8 @@ use std::sync::Mutex;
 
 use crate::config::Settings;
 use crate::skill::MultiTargetStatus;
+use crate::ui_workbench_catalog::WorkbenchCatalog;
+use crate::ui_workflow::UiWorkflowStore;
 
 /// The four visual states of the floating ball.
 ///
@@ -40,12 +42,35 @@ pub struct AppState {
     pub active_targets: Mutex<Vec<String>>,
     pub update_available: AtomicBool,
     pub skill_status: Mutex<MultiTargetStatus>,
+    /// Latest validated external session URL for the UI Workbench window.
+    pub pending_ui_workbench_url: Mutex<Option<String>>,
+    /// Generated UI pages available across Companion restarts.
+    pub ui_workbench_catalog: Mutex<WorkbenchCatalog>,
+    /// Persistent eight-stage state for each generated UI page.
+    pub ui_workflow_store: Mutex<UiWorkflowStore>,
     /// True if settings.json had to be recovered from corruption this session.
     pub config_error: AtomicBool,
 }
 
 impl AppState {
+    #[cfg(test)]
     pub fn new(settings: Settings, skill_status: MultiTargetStatus, config_error: bool) -> Self {
+        Self::with_catalog(
+            settings,
+            skill_status,
+            config_error,
+            WorkbenchCatalog::default(),
+            UiWorkflowStore::default(),
+        )
+    }
+
+    pub fn with_catalog(
+        settings: Settings,
+        skill_status: MultiTargetStatus,
+        config_error: bool,
+        ui_workbench_catalog: WorkbenchCatalog,
+        ui_workflow_store: UiWorkflowStore,
+    ) -> Self {
         AppState {
             settings: Mutex::new(settings),
             ball_state: Mutex::new(BallState::Hidden),
@@ -53,6 +78,9 @@ impl AppState {
             active_targets: Mutex::new(Vec::new()),
             update_available: AtomicBool::new(false),
             skill_status: Mutex::new(skill_status),
+            pending_ui_workbench_url: Mutex::new(None),
+            ui_workbench_catalog: Mutex::new(ui_workbench_catalog),
+            ui_workflow_store: Mutex::new(ui_workflow_store),
             config_error: AtomicBool::new(config_error),
         }
     }

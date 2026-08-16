@@ -1,7 +1,34 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { invoke } from "@tauri-apps/api/core";
+import { listen } from "@tauri-apps/api/event";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
+import { openUrl } from "@tauri-apps/plugin-opener";
 import { analyzeUIImage } from "./uiImageAnalyzer";
 import { canOwnChildren } from "./uiHierarchy";
+import {
+  connectWorkbenchSessions,
+  loadPersistedWorkbenchPage,
+  loadPersistedAssetUrls,
+  loadWorkbenchSession,
+  nativeWorkbenchCloseTextStyle,
+  nativeWorkbenchDisplayText,
+  nativeWorkbenchTextCss,
+  preferredWorkbenchPage,
+  resolveSessionAssetUrl,
+  workbenchLayerAncestorIds,
+  workbenchPageNavRows,
+  type WorkbenchCatalog,
+  type WorkbenchTextStyle,
+} from "./uiWorkbenchSession";
+import {
+  workflowStageRows,
+  type DeliveryPreflightEvidence,
+  type DeliveryPreflightState,
+  type UiWorkflowStore,
+  type UiWorkflowTask,
+  type WidgetBlueprintCandidate,
+  type WidgetBlueprintSearchResult,
+} from "./uiWorkflowModel";
 import "./UIWorkbench.css";
 
 type ExtractionMode = "native" | "extract_artwork" | "reconstruct_skin" | "composite";
@@ -24,6 +51,9 @@ type Extraction = {
 type UINode = {
   id: string;
   name?: string;
+  display_text?: string;
+  content_hint?: string;
+  text_style?: WorkbenchTextStyle;
   category: string;
   parent_id?: string;
   bounds: Bounds;
@@ -60,6 +90,26 @@ type Interaction = {
 type PanInteraction = { startX: number; startY: number; panX: number; panY: number };
 type LayerRow = { node: UINode; depth: number; hasChildren: boolean };
 type AssetUrls = Record<string, Partial<Record<VisualMode, string>>>;
+type DeliveryDispatchResult = {
+  delivery_id: string;
+  request_path: string;
+  new_task_url: string;
+};
+type CodexPromptSubmissionResult = {
+  submitted: boolean;
+  message: string;
+};
+type DeliveryDialogState = {
+  task: UiWorkflowTask;
+  projectWorkspace: string;
+  query: string;
+  candidates: WidgetBlueprintCandidate[];
+  selectedLoadPath: string;
+  preflight: DeliveryPreflightEvidence | null;
+  state: DeliveryPreflightState;
+  message: string;
+};
+type TreeRevealRequest = { id: string; sequence: number };
 
 const DEMO_IMAGE = "/ui-workbench-demo.png";
 const CITY_DEFENCE_SESSION_BASE = "/ui-workbench-city-defence";
@@ -83,57 +133,6 @@ const GALLERY_FILTER_LABELS: Record<GalleryFilter, string> = {
   interaction: "Interaction",
   needs_cleanup: "待净化",
   ready: "Ready",
-};
-const NATIVE_DISPLAY_TEXT: Record<string, string> = {
-  "header.title": "城防",
-  "text.tab.defence_tower": "防御塔",
-  "text.tab.wall": "城墙",
-  "text.plan_label": "方案",
-  "text.plan.1": "1",
-  "text.plan.2": "2",
-  "text.plan.3": "3",
-  "badge.stage.1": "1",
-  "badge.stage.2": "2",
-  "badge.stage.3": "3",
-  "badge.stage.4": "4",
-  "badge.stage.5": "5",
-  "text.manage_building": "管理建筑",
-  "text.tower_name": "箭塔",
-  "badge.tag.ranged": "远程",
-  "badge.tag.single": "单体",
-  "badge.tag.physical": "物理",
-  "text.tower_level": "等级 1",
-  "text.tower_exp": "0/100",
-  "stat.attack": "攻击 120",
-  "stat.health": "生命 1200",
-  "stat.attack_speed": "攻速 1.0",
-  "stat.critical": "暴击 5%",
-  "stat.range": "范围 4",
-  "stat.damage": "伤害 120",
-  "text.effects_title": "升级效果",
-  "badge.effect.1": "1",
-  "badge.effect.2": "2",
-  "badge.effect.3": "3",
-  "badge.effect.4": "4",
-  "text.effect.1": "攻击提升",
-  "text.effect.2": "射程提升",
-  "text.effect.3": "攻速提升",
-  "text.effect.4": "解锁强化",
-  "value.effect.1": "+10%",
-  "value.effect.2": "+1",
-  "value.effect.3": "+5%",
-  "value.effect.4": "可用",
-  "status.effect.1": "已解锁",
-  "status.effect.2": "已解锁",
-  "status.effect.3": "未解锁",
-  "status.effect.4": "未解锁",
-  "counter.resource.attack": "20",
-  "counter.resource.range": "15",
-  "counter.resource.gold": "300",
-  "owned.resource.attack": "拥有 120",
-  "owned.resource.range": "拥有 80",
-  "owned.resource.gold": "拥有 1800",
-  "text.upgrade": "升级",
 };
 const DEFAULT_TREE: UITree = {
   artifact_type: "ui_tree",
@@ -167,12 +166,6 @@ function sameBounds(left: Bounds, right: Bounds) {
   return left.x === right.x && left.y === right.y && left.width === right.width && left.height === right.height;
 }
 
-function nativeDisplayText(node: UINode) {
-  return NATIVE_DISPLAY_TEXT[node.id]
-    ?? NATIVE_DISPLAY_TEXT[node.extraction?.target_component_id]
-    ?? (node.category === "counter" ? "0" : "");
-}
-
 function nativeDisplayClass(node: UINode) {
   if (node.id.includes("tab") || node.id.includes("upgrade") || node.id.includes("manage_building")) return "native-strong";
   if (node.id.includes("badge")) return "native-badge";
@@ -180,11 +173,32 @@ function nativeDisplayClass(node: UINode) {
   return "native-default";
 }
 
-function nativeFontSize(node: UINode, scale: number) {
-  const height = node.bounds.height * scale;
-  const width = node.bounds.width * scale;
+function nativeFontSize(node: UINode) {
+  const closeStyle = nativeWorkbenchCloseTextStyle(node);
+  if (closeStyle?.font_size !== undefined) return closeStyle.font_size;
+  const height = node.bounds.height;
+  const width = node.bounds.width;
   const cap = node.id.includes("tab") || node.id.includes("upgrade") || node.id.includes("manage_building") ? 28 : 18;
   return Math.round(clamp(Math.min(height * 0.58, width * 0.22), 9, cap));
+}
+
+function nativeTextDefaultColor(node: UINode) {
+  const closeStyle = nativeWorkbenchCloseTextStyle(node);
+  if (closeStyle?.color) return closeStyle.color;
+  if (node.category === "counter" || node.id.startsWith("stat.") || node.id.includes("value.") || node.id.includes("owned.")) return "#4f3322";
+  if (node.id.includes("badge")) return "#fff7da";
+  if (node.id.includes("tab") || node.id.includes("upgrade") || node.id.includes("manage_building")) return "#fff2c6";
+  return "#5b351e";
+}
+
+function nativeTextDefaultOutlineSize(node: UINode) {
+  const closeStyle = nativeWorkbenchCloseTextStyle(node);
+  if (closeStyle?.outline_size !== undefined) return closeStyle.outline_size;
+  return node.id.includes("badge") || node.id.includes("tab") || node.id.includes("upgrade") || node.id.includes("manage_building") ? 1 : 0;
+}
+
+function nativeTextDefaultOutlineColor(node: UINode) {
+  return nativeWorkbenchCloseTextStyle(node)?.outline_color ?? "#693716";
 }
 
 function containsBounds(parent: Bounds, child: Bounds) {
@@ -321,6 +335,34 @@ function sessionAssetUrls(nodes: UINode[], basePath: string) {
   return urls;
 }
 
+function externalSessionAssetUrls(nodes: UINode[], baseUrl: string) {
+  const urls: AssetUrls = {};
+  for (const node of nodes) {
+    const source = node.visual_assets?.source_crop;
+    const clean = cleanLayerPath(node);
+    const assembly = node.visual_assets?.assembly_preview;
+    urls[node.id] = {
+      ...(source && source !== "__source__" ? { source: resolveSessionAssetUrl(baseUrl, source) } : {}),
+      ...(clean ? { clean: resolveSessionAssetUrl(baseUrl, clean) } : {}),
+      ...(assembly ? { assembly: resolveSessionAssetUrl(baseUrl, assembly) } : {}),
+    };
+  }
+  return urls;
+}
+
+function persistedSessionAssetUrls(nodes: UINode[], byPath: Map<string, string>) {
+  const urls: AssetUrls = {};
+  for (const node of nodes) {
+    const clean = cleanLayerPath(node);
+    const assembly = node.visual_assets?.assembly_preview;
+    urls[node.id] = {
+      ...(clean && byPath.has(clean) ? { clean: byPath.get(clean)! } : {}),
+      ...(assembly && byPath.has(assembly) ? { assembly: byPath.get(assembly)! } : {}),
+    };
+  }
+  return urls;
+}
+
 function descendantIds(nodes: UINode[], parentId: string) {
   const result: string[] = [];
   const pending = [parentId];
@@ -400,6 +442,7 @@ function buildLayerRows(nodes: UINode[], collapsed: Set<string>, query: string) 
 }
 
 export default function UIWorkbench() {
+  const [pageCatalog, setPageCatalog] = useState<WorkbenchCatalog>({ selected_page_id: null, pages: [] });
   const [tree, setTree] = useState<UITree>(() => normalizeTree(cloneTree(DEFAULT_TREE)));
   const [imageUrl, setImageUrl] = useState(DEMO_IMAGE);
   const [imageName, setImageName] = useState("gem-lottery-ui-draft-v1.png");
@@ -421,20 +464,28 @@ export default function UIWorkbench() {
   const [canvasPan, setCanvasPan] = useState({ x: 0, y: 0 });
   const [notice, setNotice] = useState("演示项目已载入");
   const [analyzing, setAnalyzing] = useState(false);
+  const [workflowStore, setWorkflowStore] = useState<UiWorkflowStore>({ selected_task_id: null, tasks: [] });
+  const [deliveryDialog, setDeliveryDialog] = useState<DeliveryDialogState | null>(null);
+  const [deliveryBusy, setDeliveryBusy] = useState(false);
+  const [treeRevealRequest, setTreeRevealRequest] = useState<TreeRevealRequest | null>(null);
   const imageInput = useRef<HTMLInputElement>(null);
   const treeInput = useRef<HTMLInputElement>(null);
   const assetInput = useRef<HTMLInputElement>(null);
+  const treeListRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const interactionRef = useRef<Interaction | null>(null);
   const panRef = useRef<PanInteraction | null>(null);
   const canvasPanRef = useRef(canvasPan);
   const wheelAnchorRef = useRef<{ clientX: number; clientY: number; canvasX: number; canvasY: number } | null>(null);
-  const initialAnalysisRef = useRef(false);
   const ownedImageUrlRef = useRef<string | null>(null);
+  const treeRevealSequenceRef = useRef(0);
 
   const scale = zoom / 100;
   const selected = tree.nodes.find((node) => node.id === selectedId) ?? null;
+  const selectedSupportsText = Boolean(selected
+    && selected.node_kind === "native"
+    && (["text", "counter"].includes(selected.category) || nativeWorkbenchDisplayText(selected)));
   const layerRows = useMemo(() => buildLayerRows(tree.nodes, collapsedLayers, query), [collapsedLayers, query, tree.nodes]);
   const renderRows = useMemo(() => buildLayerRows(tree.nodes, new Set(), ""), [tree.nodes]);
   const layerOrder = useMemo(() => new Map(renderRows.map((row, index) => [row.node.id, index])), [renderRows]);
@@ -456,19 +507,59 @@ export default function UIWorkbench() {
     if (galleryFilter === "ready") return node.reusable_bitmap === true;
     return nodeKind === galleryFilter;
   }), [galleryFilter, galleryTab, tree.nodes]);
+  const pageNavRows = useMemo(() => workbenchPageNavRows(pageCatalog), [pageCatalog]);
+  const workflowTask = useMemo(
+    () => workflowStore.tasks.find((task) => task.page_id === pageCatalog.selected_page_id) ?? null,
+    [pageCatalog.selected_page_id, workflowStore.tasks],
+  );
+  const workflowStages = useMemo(
+    () => workflowTask ? workflowStageRows(workflowTask.stages) : [],
+    [workflowTask],
+  );
+  const deliveryReady = Boolean(
+    deliveryDialog?.preflight?.status === "ready"
+      && deliveryDialog.preflight.selected_load_path === deliveryDialog.selectedLoadPath,
+  );
 
   useEffect(() => {
     canvasPanRef.current = canvasPan;
   }, [canvasPan]);
 
   useEffect(() => {
-    if (initialAnalysisRef.current) return;
-    initialAnalysisRef.current = true;
-    void loadBuiltInCityDefenceSession();
+    let unsubscribe: (() => void) | undefined;
+    let cancelled = false;
+    void connectWorkbenchSessions({
+      getPendingUrl: async () => invoke<string | null>("get_pending_ui_workbench_url").catch(() => null),
+      subscribe: async (handler) => listen<string>("ui-workbench://session", (event) => handler(event.payload)),
+      loadExternal: loadForwardedSession,
+      loadFallback: loadCatalogOrBuiltIn,
+    }).then((stop) => {
+      if (cancelled) stop();
+      else unsubscribe = stop;
+    }).catch((error) => {
+      setNotice(`Workbench session connection failed: ${error}`);
+      void loadCatalogOrBuiltIn();
+    });
+    return () => {
+      cancelled = true;
+      unsubscribe?.();
+    };
   }, []);
 
   useEffect(() => () => {
     if (ownedImageUrlRef.current) URL.revokeObjectURL(ownedImageUrlRef.current);
+  }, []);
+
+  useEffect(() => {
+    invoke<UiWorkflowStore>("list_ui_workflow_tasks")
+      .then(setWorkflowStore)
+      .catch((error) => setNotice(`UI workflow could not be loaded: ${error}`));
+    const unlisten = listen<UiWorkflowStore>("ui-workflow://progress", (event) => {
+      setWorkflowStore(event.payload);
+    });
+    return () => {
+      unlisten.then((stop) => stop());
+    };
   }, []);
 
   useEffect(() => {
@@ -487,9 +578,42 @@ export default function UIWorkbench() {
     return () => window.removeEventListener("keydown", onKeyDown);
   });
 
+  useEffect(() => {
+    if (!treeRevealRequest) return;
+    const expandedIds = [
+      "__root__",
+      ...workbenchLayerAncestorIds(tree.nodes, treeRevealRequest.id),
+    ];
+    setCollapsedLayers((current) => {
+      const next = new Set(current);
+      let changed = false;
+      for (const id of expandedIds) changed = next.delete(id) || changed;
+      return changed ? next : current;
+    });
+  }, [tree.nodes, treeRevealRequest]);
+
+  useLayoutEffect(() => {
+    if (!treeRevealRequest || !treeListRef.current) return;
+    const row = Array.from(
+      treeListRef.current.querySelectorAll<HTMLElement>("[data-tree-node-id]"),
+    ).find((candidate) => candidate.dataset.treeNodeId === treeRevealRequest.id);
+    if (!row) return;
+    row.scrollIntoView({ block: "center", inline: "nearest" });
+    setTreeRevealRequest((current) => (
+      current?.sequence === treeRevealRequest.sequence ? null : current
+    ));
+  }, [layerRows, treeRevealRequest]);
+
   function flash(message: string) {
     setNotice(message);
     window.setTimeout(() => setNotice("就绪"), 2400);
+  }
+
+  function selectCanvasNode(id: string) {
+    setQuery("");
+    setSelectedId(id);
+    treeRevealSequenceRef.current += 1;
+    setTreeRevealRequest({ id, sequence: treeRevealSequenceRef.current });
   }
 
   function patchNode(id: string, patch: Partial<UINode>) {
@@ -541,6 +665,10 @@ export default function UIWorkbench() {
 
   function patchSelected(patch: Partial<UINode>) {
     if (selected) patchNode(selected.id, patch);
+  }
+
+  function patchSelectedTextStyle(patch: Partial<WorkbenchTextStyle>) {
+    if (selected) patchSelected({ text_style: { ...selected.text_style, ...patch } });
   }
 
   function renameSelected(nextId: string) {
@@ -803,6 +931,93 @@ export default function UIWorkbench() {
     }
   }
 
+  async function refreshPageCatalog() {
+    const catalog = await invoke<WorkbenchCatalog>("list_ui_workbench_pages");
+    setPageCatalog(catalog);
+    return catalog;
+  }
+
+  async function loadCatalogOrBuiltIn() {
+    try {
+      const catalog = await refreshPageCatalog();
+      const pageId = preferredWorkbenchPage(catalog);
+      if (pageId) {
+        await loadPersistedPage(pageId);
+        return;
+      }
+    } catch (error) {
+      setNotice(`Persistent page catalog could not be loaded: ${error}`);
+    }
+    await loadBuiltInCityDefenceSession();
+  }
+
+  async function loadForwardedSession(baseUrl: string) {
+    try {
+      const catalog = await refreshPageCatalog();
+      const pageId = preferredWorkbenchPage(catalog);
+      if (pageId) {
+        await loadPersistedPage(pageId);
+        return;
+      }
+    } catch {
+      // A URL-only handoff remains a supported ephemeral session.
+    }
+    await loadExternalSession(baseUrl);
+  }
+
+  async function selectPersistedPage(pageId: string) {
+    if (pageId === pageCatalog.selected_page_id) return;
+    try {
+      const catalog = await invoke<WorkbenchCatalog>("select_ui_workbench_page", { pageId });
+      await loadPersistedPage(pageId);
+      setPageCatalog(catalog);
+      const task = workflowStore.tasks.find((item) => item.page_id === pageId);
+      if (task) {
+        setWorkflowStore(await invoke<UiWorkflowStore>("select_ui_workflow_task", { taskId: task.task_id }));
+      }
+    } catch (error) {
+      setNotice(`UI page could not be opened: ${error}`);
+    }
+  }
+
+  async function loadPersistedPage(pageId: string) {
+    const loaded = await loadPersistedWorkbenchPage(pageId, {
+      loadPage: (targetPageId) => invoke("load_ui_workbench_page", { pageId: targetPageId }),
+      readAsset: (targetPageId, assetPath) => invoke("read_ui_workbench_asset", {
+        pageId: targetPageId,
+        assetPath,
+      }),
+    });
+    const next = coerceTree(loaded.raw);
+    const persistedAssets = await loadPersistedAssetUrls(
+      pageId,
+      loaded.raw,
+      (targetPageId, assetPath) => invoke("read_ui_workbench_asset", {
+        pageId: targetPageId,
+        assetPath,
+      }),
+    );
+    const nextAssetUrls = persistedSessionAssetUrls(next.nodes, persistedAssets);
+
+    setTree(next);
+    setImageUrl(loaded.sourceImageUrl);
+    setImageName(loaded.title);
+    setSelectedId(next.nodes[0]?.id ?? "");
+    setAssetUrls(nextAssetUrls);
+    setCollapsedLayers(new Set());
+    setReferenceVisible(false);
+    setReferenceOpacity(0.35);
+    setGalleryTab("assets");
+    setGalleryFilter("ready");
+    setVisualMode("clean");
+    setSnap(false);
+    setMoveScope("group");
+    setCanvasPan({ x: 0, y: 0 });
+    setPageCatalog((catalog) => ({ ...catalog, selected_page_id: pageId }));
+    window.setTimeout(() => fitCanvas(next.page_size), 0);
+    flash(`${loaded.title} loaded: ${next.nodes.length} controls`);
+  }
+
   async function loadBuiltInCityDefenceSession() {
     setNotice("Loading City Defence clean layers...");
     try {
@@ -833,6 +1048,31 @@ export default function UIWorkbench() {
       image.onerror = () => flash("内置演示图读取失败");
       image.src = DEMO_IMAGE;
       flash(`City Defence session load failed: ${error}`);
+    }
+  }
+
+  async function loadExternalSession(baseUrl: string) {
+    try {
+      const loaded = await loadWorkbenchSession(baseUrl);
+      const next = coerceTree(loaded.raw);
+      setTree(next);
+      setImageUrl(loaded.sourceImageUrl);
+      setImageName(typeof loaded.raw.source_name === "string" ? loaded.raw.source_name : "external-workbench-session.png");
+      setSelectedId(next.nodes[0]?.id ?? "");
+      setAssetUrls(externalSessionAssetUrls(next.nodes, loaded.assetBaseUrl));
+      setCollapsedLayers(new Set());
+      setReferenceVisible(false);
+      setReferenceOpacity(0.35);
+      setGalleryTab("assets");
+      setGalleryFilter("ready");
+      setVisualMode("clean");
+      setSnap(false);
+      setMoveScope("group");
+      setCanvasPan({ x: 0, y: 0 });
+      window.setTimeout(() => fitCanvas(next.page_size), 0);
+      flash(`External workbench loaded: ${next.nodes.length} controls`);
+    } catch (error) {
+      setNotice(`External workbench load failed. The localhost fallback remains available: ${error}`);
     }
   }
 
@@ -944,11 +1184,173 @@ export default function UIWorkbench() {
     flash("UI Tree 已导出");
   }
 
+  async function beginDelivery() {
+    const pageId = pageCatalog.selected_page_id;
+    if (!pageId) {
+      flash("请先选择一个持久化 UI 页面");
+      return;
+    }
+    try {
+      const workflow = await invoke<UiWorkflowStore>("list_ui_workflow_tasks");
+      setWorkflowStore(workflow);
+      const task = workflow.tasks.find((item) => item.page_id === pageId);
+      if (!task?.agent_context?.thread_id) {
+        flash("当前页面没有来源 Codex 任务，无法自动投递");
+        return;
+      }
+      const preflight = task.target.preflight?.status === "ready"
+        && task.target.preflight.selected_load_path === task.target.widget_blueprint
+        ? task.target.preflight
+        : null;
+      const restoredCandidate = preflight ? [{
+        display_name: task.target.widget_blueprint_name || task.target.widget_blueprint,
+        load_path: task.target.widget_blueprint,
+        class_name: task.target.widget_blueprint_class as WidgetBlueprintCandidate["class_name"],
+      }] : [];
+      setDeliveryDialog({
+        task,
+        projectWorkspace: task.target.project_workspace || task.agent_context.workspace || "",
+        query: task.target.widget_blueprint_name || "",
+        candidates: restoredCandidate,
+        selectedLoadPath: preflight?.selected_load_path || "",
+        preflight,
+        state: preflight ? "ready" : "idle",
+        message: preflight?.message || "输入名称或项目内 Asset 路径，从编辑器读取 WidgetBlueprint",
+      });
+    } catch (error) {
+      flash(`交付信息读取失败: ${error}`);
+    }
+  }
+
+  async function searchDeliveryTargets() {
+    if (!deliveryDialog) return;
+    const projectWorkspace = deliveryDialog.projectWorkspace.trim();
+    const query = deliveryDialog.query.trim();
+    if (!projectWorkspace || !query) {
+      setDeliveryDialog({
+        ...deliveryDialog,
+        state: "blocked",
+        message: "请填写项目工作区和至少两个字符的搜索内容",
+        candidates: [],
+        selectedLoadPath: "",
+        preflight: null,
+      });
+      return;
+    }
+    setDeliveryDialog({
+      ...deliveryDialog,
+      state: "searching_assets",
+      message: "正在通过编辑器 MCP 搜索 WidgetBlueprint",
+      candidates: [],
+      selectedLoadPath: "",
+      preflight: null,
+    });
+    try {
+      const result = await invoke<WidgetBlueprintSearchResult>("search_widget_blueprints", {
+        taskId: deliveryDialog.task.task_id,
+        projectWorkspace,
+        query,
+      });
+      setDeliveryDialog((current) => current ? {
+        ...current,
+        candidates: result.candidates,
+        selectedLoadPath: "",
+        preflight: null,
+        state: result.candidates.length ? result.state : "blocked",
+        message: result.candidates.length ? result.message : "编辑器没有返回匹配的 WidgetBlueprint",
+      } : current);
+    } catch (error) {
+      setDeliveryDialog((current) => current ? {
+        ...current,
+        candidates: [],
+        selectedLoadPath: "",
+        preflight: null,
+        state: "blocked",
+        message: `搜索失败: ${error}`,
+      } : current);
+    }
+  }
+
+  async function selectDeliveryTarget(candidate: WidgetBlueprintCandidate) {
+    if (!deliveryDialog) return;
+    const projectWorkspace = deliveryDialog.projectWorkspace.trim();
+    setDeliveryDialog({
+      ...deliveryDialog,
+      selectedLoadPath: candidate.load_path,
+      preflight: null,
+      state: "checking_mcp",
+      message: "正在确认编辑器项目、资产类型和精确 load_path",
+    });
+    try {
+      const next = await invoke<UiWorkflowStore>("preflight_ui_delivery", {
+        taskId: deliveryDialog.task.task_id,
+        projectWorkspace,
+        selectedLoadPath: candidate.load_path,
+      });
+      setWorkflowStore(next);
+      const task = next.tasks.find((item) => item.task_id === deliveryDialog.task.task_id);
+      const preflight = task?.target.preflight ?? null;
+      setDeliveryDialog((current) => current ? {
+        ...current,
+        task: task ?? current.task,
+        selectedLoadPath: candidate.load_path,
+        preflight,
+        state: preflight?.status === "ready" ? "ready" : "blocked",
+        message: preflight?.message || "编辑器预检没有返回可交付证据",
+      } : current);
+    } catch (error) {
+      setDeliveryDialog((current) => current ? {
+        ...current,
+        preflight: null,
+        state: "blocked",
+        message: `预检失败: ${error}`,
+      } : current);
+    }
+  }
+
+  async function confirmAndDeliver() {
+    if (!deliveryDialog) return;
+    const evidence = deliveryDialog.preflight;
+    if (
+      evidence?.status !== "ready"
+      || evidence.selected_load_path !== deliveryDialog.selectedLoadPath
+    ) {
+      setDeliveryDialog({
+        ...deliveryDialog,
+        state: "blocked",
+        message: "请先选择一个 WidgetBlueprint 并完成编辑器只读预检",
+      });
+      return;
+    }
+    setDeliveryBusy(true);
+    let prepared = false;
+    try {
+      const result = await invoke<DeliveryDispatchResult>("confirm_and_deliver_ui", {
+        pageId: deliveryDialog.task.page_id,
+        tree,
+        evidenceId: evidence.evidence_id,
+      });
+      prepared = true;
+      await openUrl(result.new_task_url);
+      const submission = await invoke<CodexPromptSubmissionResult>("submit_codex_new_task_prompt", {
+        pageId: deliveryDialog.task.page_id,
+      });
+      setDeliveryDialog(null);
+      flash(submission.submitted
+        ? `已新建 Codex 任务并开始实现：${result.delivery_id}`
+        : submission.message);
+    } catch (error) {
+      flash(prepared ? `交付文件已冻结，但 Codex 跳转失败: ${error}` : `交付失败: ${error}`);
+    } finally {
+      setDeliveryBusy(false);
+    }
+  }
+
   function beginInteraction(event: React.PointerEvent, node: UINode, kind: Interaction["kind"], handle?: string) {
     if (event.button !== 0) return;
     event.preventDefault();
     event.stopPropagation();
-    setSelectedId(node.id);
+    selectCanvasNode(node.id);
     if (node.locked) return;
     event.currentTarget.setPointerCapture(event.pointerId);
     const affectedIds = affectedNodeIds(node.id);
@@ -1037,6 +1439,7 @@ export default function UIWorkbench() {
           <button type="button" onClick={() => treeInput.current?.click()} title="导入 UI Tree JSON">导入 UI Tree</button>
           <button type="button" onClick={() => assetInput.current?.click()} title="载入 Clean Asset 与 Assembly Preview">导入资产</button>
           <button type="button" onClick={exportTree} className="accent">导出 UI Tree</button>
+          <button type="button" onClick={beginDelivery} className="delivery-action">确认并交付到编辑器</button>
         </div>
         <div className="toolbar-group compact">
           <button type="button" onClick={() => addNode(null)} title="新建根控件范围">＋</button>
@@ -1049,18 +1452,65 @@ export default function UIWorkbench() {
         <button type="button" className="window-tool" onClick={() => getCurrentWebviewWindow().hide()} title="隐藏工作台">×</button>
       </header>
 
+      <nav className="workbench-workflow-strip" aria-label="UI 工具链进度">
+        {(workflowStages.length ? workflowStages : [
+          "来源", "UI Tree", "视觉稿", "分层", "Workbench", "UMG", "逻辑", "验收",
+        ].map((label, index) => ({
+          id: `empty-${index}`,
+          index: index + 1,
+          label,
+          status: "not_started",
+          statusLabel: "未开始",
+        }))).map((stage) => (
+          <span
+            key={stage.id}
+            className={`workbench-workflow-stage status-${stage.status}`}
+            title={`${stage.label} · ${stage.statusLabel}`}
+          >
+            <i>{stage.index}</i>
+            <strong>{stage.label}</strong>
+            <small>{stage.statusLabel}</small>
+          </span>
+        ))}
+      </nav>
+
       <section className={`workbench-layout ${galleryOpen ? "gallery-visible" : ""}`}>
+        <nav className="page-navigation panel-shell" aria-label="UI 页面导航">
+          <div className="panel-heading"><strong>UI 页面</strong><span>{pageNavRows.length}</span></div>
+          <div className="page-navigation-list">
+            {pageNavRows.length === 0 ? <div className="page-navigation-empty">生成或导入 UI 后会显示在这里</div> : pageNavRows.map((page) => (
+              <button
+                type="button"
+                key={page.pageId}
+                className={`page-navigation-item ${page.selected ? "selected" : ""}`}
+                disabled={!page.available}
+                onClick={() => void selectPersistedPage(page.pageId)}
+                title={page.available ? page.title : `${page.title} · 会话文件不可用`}
+              >
+                <span className="page-thumbnail">
+                  {page.thumbnailUrl ? <img src={page.thumbnailUrl} alt="" /> : <span>UI</span>}
+                </span>
+                <span className="page-navigation-copy">
+                  <strong>{page.title}</strong>
+                  <small>{page.available ? page.controlCountLabel : "文件不可用"}</small>
+                </span>
+                <span className="page-selected-indicator" aria-hidden="true" />
+              </button>
+            ))}
+          </div>
+        </nav>
+
         <aside className="hierarchy-panel panel-shell">
           <div className="panel-heading"><strong>控件层级</strong><span>{tree.nodes.length}</span></div>
           <div className="panel-search"><span>⌕</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索控件" /></div>
-          <div className="tree-list">
+          <div ref={treeListRef} className="tree-list">
             <div className="tree-row tree-root-row">
               <button type="button" className="tree-toggle" onClick={() => toggleLayer("__root__")} title="展开或折叠全部图层">{collapsedLayers.has("__root__") ? "▸" : "▾"}</button>
               <span className="node-kind kind-canvas">C</span>
               <span className="tree-name">CanvasRoot</span>
             </div>
             {layerRows.map(({ node, depth, hasChildren }) => (
-              <div key={node.id} className={`tree-row ${node.id === selectedId ? "selected" : ""} ${!effectiveVisible(node, tree.nodes) ? "muted" : ""}`} onClick={() => setSelectedId(node.id)}>
+              <div key={node.id} data-tree-node-id={node.id} className={`tree-row ${node.id === selectedId ? "selected" : ""} ${!effectiveVisible(node, tree.nodes) ? "muted" : ""}`} onClick={() => setSelectedId(node.id)}>
                 <span className="tree-indent" style={{ width: Math.min(84, depth * 14) }} />
                 {hasChildren ? <button type="button" className="tree-toggle" onClick={(event) => { event.stopPropagation(); toggleLayer(node.id); }} title="展开或折叠子图层">{collapsedLayers.has(node.id) ? "▸" : "▾"}</button> : <span className="tree-toggle-spacer" />}
                 <span className={`node-kind kind-${node.category}`}>{node.category.slice(0, 1).toUpperCase()}</span>
@@ -1096,7 +1546,7 @@ export default function UIWorkbench() {
           >
             <div
               ref={stageRef}
-              className="canvas-stage"
+              className="canvas-stage-frame"
               style={{
                 width: tree.page_size.width * scale,
                 height: tree.page_size.height * scale,
@@ -1104,44 +1554,53 @@ export default function UIWorkbench() {
                 top: "50%",
                 transform: `translate(-50%, -50%) translate(${canvasPan.x}px, ${canvasPan.y}px)`,
               }}
-              onPointerDown={(event) => { if (event.button === 0) setSelectedId(""); }}
             >
-              {referenceVisible && <img className="reference-layer" src={imageUrl} alt="UI source reference" draggable={false} style={{ opacity: referenceOpacity }} />}
-              {referenceVisible && <span className="reference-badge">锁定参考底图 · 不参与资产导出</span>}
-              {renderRows.map(({ node }) => {
-                const cleanUrl = visualUrl(node, "clean");
-                if (!effectiveVisible(node, tree.nodes) || !cleanUrl || !node.reusable_bitmap || (node.node_kind !== "skin" && node.node_kind !== "artwork")) return null;
-                return <img key={`asset-${node.id}`} className="clean-asset-layer" data-asset-id={node.id} src={cleanUrl} alt="" draggable={false} style={{ left: node.bounds.x * scale, top: node.bounds.y * scale, width: node.bounds.width * scale, height: node.bounds.height * scale, opacity: effectiveOpacity(node, tree.nodes), zIndex: 100 + (layerOrder.get(node.id) ?? 0) }} />;
-              })}
-              {renderRows.map(({ node }) => {
-                if (!effectiveVisible(node, tree.nodes) || node.render_mode === "hidden") return null;
-                const moved = Boolean(node.source_bounds && !sameBounds(node.bounds, node.source_bounds));
-                const parent = node.parent_id ? nodeById.get(node.parent_id) : null;
-                const parentMoved = Boolean(parent?.source_bounds && !sameBounds(parent.bounds, parent.source_bounds));
-                const sourcePreview = node.node_kind !== "native" && moved && !parentMoved && node.source_bounds && !visualUrl(node, "clean");
-                return (
-                  <div
-                    key={node.id}
-                    data-node-id={node.id}
-                    className={`canvas-node kind-${node.node_kind} render-${node.render_mode} ${node.id === selectedId ? "selected" : ""} ${node.locked ? "locked" : ""} ${node.derived_from ? "derived-layer" : ""} ${moved ? "moved" : ""}`}
-                    style={{
-                      left: node.bounds.x * scale,
-                      top: node.bounds.y * scale,
-                      width: node.bounds.width * scale,
-                      height: node.bounds.height * scale,
-                      zIndex: node.id === selectedId && node.node_kind !== "composite" ? 5000 : 1000 + (layerOrder.get(node.id) ?? 0),
-                      pointerEvents: node.derived_from && node.id !== selectedId ? "none" : undefined,
-                    }}
-                    onPointerDown={(event) => beginInteraction(event, node, "drag")}
-                  >
-                    {sourcePreview && <span className="moved-source-preview" style={sourceCropCanvasStyle(imageUrl, tree.page_size, node.source_bounds!, node.bounds, scale)} />}
-                    {node.node_kind === "native" && node.id === "progress.tower_exp" && <span className="native-progress"><i /></span>}
-                    {node.node_kind === "native" && nativeDisplayText(node) && <span className={`native-text-content ${nativeDisplayClass(node)}`} style={{ fontSize: nativeFontSize(node, scale) }}>{nativeDisplayText(node)}</span>}
-                    <span className="canvas-node-label">{node.node_kind} · {node.id}{moved ? " · 已移动" : ""}</span>
-                    {node.id === selectedId && !node.locked && ["nw", "ne", "sw", "se"].map((handle) => <span key={handle} className={`resize-handle handle-${handle}`} onPointerDown={(event) => beginInteraction(event, node, "resize", handle)} />)}
-                  </div>
-                );
-              })}
+              <div
+                className="canvas-stage"
+                style={{
+                  width: tree.page_size.width,
+                  height: tree.page_size.height,
+                  transform: `scale(${scale})`,
+                }}
+                onPointerDown={(event) => { if (event.button === 0) setSelectedId(""); }}
+              >
+                {referenceVisible && <img className="reference-layer" src={imageUrl} alt="UI source reference" draggable={false} style={{ opacity: referenceOpacity }} />}
+                {referenceVisible && <span className="reference-badge">锁定参考底图 · 不参与资产导出</span>}
+                {renderRows.map(({ node }) => {
+                  const cleanUrl = visualUrl(node, "clean");
+                  if (!effectiveVisible(node, tree.nodes) || !cleanUrl || !node.reusable_bitmap || (node.node_kind !== "skin" && node.node_kind !== "artwork")) return null;
+                  return <img key={`asset-${node.id}`} className="clean-asset-layer" data-asset-id={node.id} src={cleanUrl} alt="" draggable={false} style={{ left: node.bounds.x, top: node.bounds.y, width: node.bounds.width, height: node.bounds.height, opacity: effectiveOpacity(node, tree.nodes), zIndex: 100 + (layerOrder.get(node.id) ?? 0) }} />;
+                })}
+                {renderRows.map(({ node }) => {
+                  if (!effectiveVisible(node, tree.nodes) || node.render_mode === "hidden") return null;
+                  const moved = Boolean(node.source_bounds && !sameBounds(node.bounds, node.source_bounds));
+                  const parent = node.parent_id ? nodeById.get(node.parent_id) : null;
+                  const parentMoved = Boolean(parent?.source_bounds && !sameBounds(parent.bounds, parent.source_bounds));
+                  const sourcePreview = node.node_kind !== "native" && moved && !parentMoved && node.source_bounds && !visualUrl(node, "clean");
+                  return (
+                    <div
+                      key={node.id}
+                      data-node-id={node.id}
+                      className={`canvas-node kind-${node.node_kind} render-${node.render_mode} ${node.id === selectedId ? "selected" : ""} ${node.locked ? "locked" : ""} ${node.derived_from ? "derived-layer" : ""} ${moved ? "moved" : ""}`}
+                      style={{
+                        left: node.bounds.x,
+                        top: node.bounds.y,
+                        width: node.bounds.width,
+                        height: node.bounds.height,
+                        zIndex: node.id === selectedId && node.node_kind !== "composite" ? 5000 : 1000 + (layerOrder.get(node.id) ?? 0),
+                        pointerEvents: node.derived_from && node.id !== selectedId ? "none" : undefined,
+                      }}
+                      onPointerDown={(event) => beginInteraction(event, node, "drag")}
+                    >
+                      {sourcePreview && <span className="moved-source-preview" style={sourceCropCanvasStyle(imageUrl, tree.page_size, node.source_bounds!, node.bounds)} />}
+                      {node.node_kind === "native" && node.id === "progress.tower_exp" && <span className="native-progress"><i /></span>}
+                      {node.node_kind === "native" && nativeWorkbenchDisplayText(node) && <span className={`native-text-content ${nativeDisplayClass(node)}`} style={nativeWorkbenchTextCss(node.text_style ?? nativeWorkbenchCloseTextStyle(node), nativeFontSize(node))}>{nativeWorkbenchDisplayText(node)}</span>}
+                      <span className="canvas-node-label">{node.node_kind} · {node.id}{moved ? " · 已移动" : ""}</span>
+                      {node.id === selectedId && !node.locked && ["nw", "ne", "sw", "se"].map((handle) => <span key={handle} className={`resize-handle handle-${handle}`} onPointerDown={(event) => beginInteraction(event, node, "resize", handle)} />)}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
           <div className="canvas-status"><span>{notice}</span><span>{tree.page_size.width} × {tree.page_size.height}</span><span>{selected ? `${Math.round(selected.bounds.x)}, ${Math.round(selected.bounds.y)} · ${Math.round(selected.bounds.width)} × ${Math.round(selected.bounds.height)}` : "未选择控件"}</span></div>
@@ -1186,6 +1645,23 @@ export default function UIWorkbench() {
               <div className="field-grid two"><NumberField label="ZOrder" value={selected.z_index ?? 0} onChange={(value) => patchSelected({ z_index: value })} /><NumberField label="透明度" value={selected.opacity ?? 1} min={0} max={1} step={0.05} onChange={(value) => patchSelected({ opacity: clamp(value, 0, 1) })} /></div>
               {selected.source_bounds && !sameBounds(selected.bounds, selected.source_bounds) && <div className="layout-source-note"><span>原始切图 {Math.round(selected.source_bounds.x)}, {Math.round(selected.source_bounds.y)} · {Math.round(selected.source_bounds.width)} × {Math.round(selected.source_bounds.height)}</span><button type="button" onClick={resetSelectedLayout}>归位</button></div>}
             </InspectorSection>
+            {selectedSupportsText && <InspectorSection title="文字外观（TextBlock）">
+              <Field label="预览文字"><input value={selected.display_text ?? nativeWorkbenchDisplayText(selected)} onChange={(event) => patchSelected({ display_text: event.target.value })} /></Field>
+              <div className="field-grid two">
+                <NumberField label="字号" value={selected.text_style?.font_size ?? nativeFontSize(selected)} min={1} max={256} onChange={(value) => patchSelectedTextStyle({ font_size: clamp(value, 1, 256) })} />
+                <NumberField label="描边" value={selected.text_style?.outline_size ?? nativeTextDefaultOutlineSize(selected)} min={0} max={12} step={0.5} onChange={(value) => patchSelectedTextStyle({ outline_size: clamp(value, 0, 12) })} />
+              </div>
+              <ColorField label="文字颜色" value={selected.text_style?.color ?? nativeTextDefaultColor(selected)} onChange={(value) => patchSelectedTextStyle({ color: value })} />
+              <ColorField label="描边颜色" value={selected.text_style?.outline_color ?? nativeTextDefaultOutlineColor(selected)} onChange={(value) => patchSelectedTextStyle({ outline_color: value })} />
+              <div className="field-grid two">
+                <NumberField label="阴影 X" value={selected.text_style?.shadow_offset_x ?? 0} min={-32} max={32} step={0.5} onChange={(value) => patchSelectedTextStyle({ shadow_offset_x: clamp(value, -32, 32) })} />
+                <NumberField label="阴影 Y" value={selected.text_style?.shadow_offset_y ?? 0} min={-32} max={32} step={0.5} onChange={(value) => patchSelectedTextStyle({ shadow_offset_y: clamp(value, -32, 32) })} />
+              </div>
+              <ColorField label="阴影颜色" value={selected.text_style?.shadow_color ?? "#180c06"} onChange={(value) => patchSelectedTextStyle({ shadow_color: value })} />
+              <SegmentedField label="水平对齐" value={selected.text_style?.horizontal_alignment ?? "center"} options={[{ value: "left", label: "左" }, { value: "center", label: "中" }, { value: "right", label: "右" }]} onChange={(value) => patchSelectedTextStyle({ horizontal_alignment: value as WorkbenchTextStyle["horizontal_alignment"] })} />
+              <SegmentedField label="垂直对齐" value={selected.text_style?.vertical_alignment ?? "middle"} options={[{ value: "top", label: "上" }, { value: "middle", label: "中" }, { value: "bottom", label: "下" }]} onChange={(value) => patchSelectedTextStyle({ vertical_alignment: value as WorkbenchTextStyle["vertical_alignment"] })} />
+              <ToggleField label="自动换行" checked={selected.text_style?.auto_wrap ?? false} onChange={(checked) => patchSelectedTextStyle({ auto_wrap: checked })} />
+            </InspectorSection>}
             <InspectorSection title="切图策略">
               <Field label="处理方式"><select value={selected.extraction.mode} onChange={(event) => patchExtraction({ mode: event.target.value as ExtractionMode })}>{Object.entries(MODE_LABELS).map(([mode, label]) => <option key={mode} value={mode}>{label}</option>)}</select></Field>
               <Field label="置信度"><input type="range" min="0" max="1" step="0.01" value={selected.extraction.confidence ?? 0.5} onChange={(event) => patchExtraction({ confidence: Number(event.target.value) })} /><output>{Math.round((selected.extraction.confidence ?? 0.5) * 100)}%</output></Field>
@@ -1224,6 +1700,121 @@ export default function UIWorkbench() {
         </section>
         {!galleryOpen && <button className="gallery-restore" type="button" onClick={() => setGalleryOpen(true)}>显示资产与结构</button>}
       </section>
+
+      {deliveryDialog && (
+        <div className="delivery-dialog-backdrop" role="presentation" onPointerDown={() => !deliveryBusy && setDeliveryDialog(null)}>
+          <section
+            className="delivery-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delivery-dialog-title"
+            onPointerDown={(event) => event.stopPropagation()}
+          >
+            <header>
+              <div>
+                <small>EDITOR DELIVERY</small>
+                <h2 id="delivery-dialog-title">确认并交付到编辑器</h2>
+              </div>
+              <button type="button" className="window-tool" onClick={() => setDeliveryDialog(null)} disabled={deliveryBusy} title="关闭">×</button>
+            </header>
+            <dl className="delivery-summary">
+              <div><dt>UI 页面</dt><dd>{deliveryDialog.task.title}</dd></div>
+              <div><dt>控件数量</dt><dd>{tree.nodes.length}</dd></div>
+              <div><dt>来源任务</dt><dd>{deliveryDialog.task.agent_context?.provider} · {deliveryDialog.task.agent_context?.thread_id}</dd></div>
+              <div><dt>执行方式</dt><dd>新建 Codex 任务</dd></div>
+            </dl>
+            <label>
+              <span>项目工作区</span>
+              <input
+                value={deliveryDialog.projectWorkspace}
+                onChange={(event) => setDeliveryDialog({
+                  ...deliveryDialog,
+                  projectWorkspace: event.target.value,
+                  candidates: [],
+                  selectedLoadPath: "",
+                  preflight: null,
+                  state: "idle",
+                  message: "工作区已变化，请重新搜索并预检",
+                })}
+                disabled={deliveryBusy}
+              />
+            </label>
+            <section className="delivery-target-selector">
+              <div className="delivery-target-search">
+                <label>
+                  <span>目标 WidgetBlueprint</span>
+                  <input
+                    value={deliveryDialog.query}
+                    onChange={(event) => setDeliveryDialog({
+                      ...deliveryDialog,
+                      query: event.target.value,
+                      candidates: [],
+                      selectedLoadPath: "",
+                      preflight: null,
+                      state: "idle",
+                      message: "搜索内容已变化，请重新读取编辑器资产",
+                    })}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") {
+                        event.preventDefault();
+                        void searchDeliveryTargets();
+                      }
+                    }}
+                    placeholder="名称或 /RedCliff/Asset/UI/..."
+                    disabled={deliveryBusy}
+                  />
+                </label>
+                <button
+                  type="button"
+                  onClick={() => void searchDeliveryTargets()}
+                  disabled={deliveryBusy || deliveryDialog.state === "searching_assets" || deliveryDialog.state === "checking_mcp"}
+                >
+                  {deliveryDialog.state === "searching_assets" ? "搜索中…" : "搜索"}
+                </button>
+              </div>
+              <div className="delivery-candidate-list" role="listbox" aria-label="WidgetBlueprint 搜索结果">
+                {deliveryDialog.candidates.length === 0 && (
+                  <div className="delivery-candidate-empty">搜索结果会显示名称、编辑器 load_path 和资产类型</div>
+                )}
+                {deliveryDialog.candidates.map((candidate) => (
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={deliveryDialog.selectedLoadPath === candidate.load_path}
+                    className={deliveryDialog.selectedLoadPath === candidate.load_path ? "selected" : ""}
+                    key={candidate.load_path}
+                    onClick={() => void selectDeliveryTarget(candidate)}
+                    disabled={deliveryBusy || deliveryDialog.state === "checking_mcp"}
+                  >
+                    <strong>{candidate.display_name}</strong>
+                    <span>{candidate.load_path}</span>
+                    <small>{candidate.class_name}</small>
+                  </button>
+                ))}
+              </div>
+              <div className={`delivery-preflight status-${deliveryDialog.state}`}>
+                <strong>{deliveryDialog.state === "ready" ? "预检通过" : "编辑器预检"}</strong>
+                <span>{deliveryDialog.message}</span>
+                {deliveryDialog.preflight?.status === "ready" && (
+                  <dl>
+                    <div><dt>load_path</dt><dd>{deliveryDialog.preflight.selected_load_path}</dd></div>
+                    <div><dt>资产类型</dt><dd>{deliveryDialog.preflight.selected_class_name}</dd></div>
+                    <div><dt>MCP</dt><dd>{deliveryDialog.preflight.mcp_server_name} {deliveryDialog.preflight.mcp_server_version}</dd></div>
+                    <div><dt>检查时间</dt><dd>{new Date(deliveryDialog.preflight.checked_at_unix_ms).toLocaleString()}</dd></div>
+                  </dl>
+                )}
+              </div>
+            </section>
+            <p>本次确认只授权实现当前冻结 UI Tree 对应的 WidgetBlueprint，不包含无关 Lua、DataTable、关卡或玩法修改。</p>
+            <footer>
+              <button type="button" onClick={() => setDeliveryDialog(null)} disabled={deliveryBusy}>取消</button>
+              <button type="button" className="delivery-action" onClick={confirmAndDeliver} disabled={deliveryBusy || !deliveryReady}>
+                {deliveryBusy ? "正在创建任务…" : "确认并在新任务中实现"}
+              </button>
+            </footer>
+          </section>
+        </div>
+      )}
     </main>
   );
 }
@@ -1239,9 +1830,9 @@ function cropStyle(imageUrl: string, page: UITree["page_size"], bounds: Bounds, 
   };
 }
 
-function sourceCropCanvasStyle(imageUrl: string, page: UITree["page_size"], source: Bounds, target: Bounds, scale: number) {
-  const scaleX = target.width / source.width * scale;
-  const scaleY = target.height / source.height * scale;
+function sourceCropCanvasStyle(imageUrl: string, page: UITree["page_size"], source: Bounds, target: Bounds) {
+  const scaleX = target.width / source.width;
+  const scaleY = target.height / source.height;
   return {
     backgroundImage: `url("${imageUrl}")`,
     backgroundSize: `${page.width * scaleX}px ${page.height * scaleY}px`,
@@ -1263,4 +1854,13 @@ function NumberField({ label, value, onChange, min, max, step }: { label: string
 
 function ToggleField({ label, checked, onChange }: { label: string; checked: boolean; onChange: (checked: boolean) => void }) {
   return <label className="toggle-field"><span>{label}</span><input type="checkbox" checked={checked} onChange={(event) => onChange(event.target.checked)} /></label>;
+}
+
+function ColorField({ label, value, onChange }: { label: string; value: string; onChange: (value: string) => void }) {
+  const swatch = /^#[0-9a-f]{6}$/i.test(value) ? value : "#ffffff";
+  return <Field label={label}><input className="color-swatch" type="color" value={swatch} onChange={(event) => onChange(event.target.value)} /><input className="color-value" value={value} onChange={(event) => onChange(event.target.value)} /></Field>;
+}
+
+function SegmentedField({ label, value, options, onChange }: { label: string; value: string; options: Array<{ value: string; label: string }>; onChange: (value: string) => void }) {
+  return <Field label={label}><span className="segmented-control">{options.map((option) => <button type="button" key={option.value} className={value === option.value ? "active" : ""} onClick={() => onChange(option.value)}>{option.label}</button>)}</span></Field>;
 }

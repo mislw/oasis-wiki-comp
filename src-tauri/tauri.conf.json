@@ -1,7 +1,7 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Oasis Companion",
-  "version": "1.260815.3",
+  "version": "1.260816.1",
   "identifier": "com.oasiswiki.companion",
   "build": {
     "beforeDevCommand": "npm run dev",
@@ -53,6 +53,23 @@
         "height": 880,
         "minWidth": 1080,
         "minHeight": 700,
+        "resizable": true,
+        "visible": false,
+        "center": true,
+        "decorations": true,
+        "transparent": false,
+        "alwaysOnTop": false,
+        "skipTaskbar": false,
+        "shadow": true
+      },
+      {
+        "label": "ui-workflow",
+        "url": "index.html",
+        "title": "UI 生图工具链",
+        "width": 980,
+        "height": 770,
+        "minWidth": 860,
+        "minHeight": 660,
         "resizable": true,
         "visible": false,
         "center": true,

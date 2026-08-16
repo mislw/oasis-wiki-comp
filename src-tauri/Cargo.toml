@@ -1,6 +1,6 @@
 [package]
 name = "oasis-companion"
-version = "1.260815.3"
+version = "1.260816.1"
 description = "Oasis Companion desktop assistant for the oasis-wiki Skill"
 authors = ["Oasis Wiki"]
 edition = "2021"
@@ -28,6 +28,18 @@ dirs = "5"
 log = "0.4"
 tokio = { version = "1", features = ["time", "sync"] }
 zip = "2"
+base64 = "0.22"
+mime_guess = "2"
+url = "2"
+sha2 = "0.10"
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "0.61", features = [
+  "Win32_Foundation",
+  "Win32_System_Threading",
+  "Win32_UI_Input_KeyboardAndMouse",
+  "Win32_UI_WindowsAndMessaging",
+] }
 
 [profile.release]
 # Smaller binaries for a tray-resident app.

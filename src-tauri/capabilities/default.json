@@ -2,7 +2,7 @@
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
   "description": "Oasis Companion default capabilities",
-  "windows": ["ball", "settings", "settings-codex", "settings-claude-code", "settings-workbuddy", "ui-workbench"],
+  "windows": ["ball", "settings", "ui-workbench", "ui-workflow"],
   "permissions": [
     "core:default",
     "core:window:allow-show",
@@ -14,6 +14,14 @@
     "core:window:allow-close",
     "core:event:default",
     "opener:default",
+    {
+      "identifier": "opener:allow-open-url",
+      "allow": [
+        {
+          "url": "codex://threads/new*"
+        }
+      ]
+    },
     "shell:allow-open",
     "autostart:allow-enable",
     "autostart:allow-disable",

@@ -1,11 +1,17 @@
 //! IPC commands exposed to the frontend.
 
+use serde::Serialize;
+use std::path::PathBuf;
 use std::sync::atomic::Ordering;
-use tauri::{AppHandle, Manager, WebviewWindow};
+use std::time::{Duration, SystemTime, UNIX_EPOCH};
+use tauri::{AppHandle, Emitter, Manager, WebviewWindow};
 
 use crate::config::{self, Settings};
 use crate::skill::MultiTargetStatus;
 use crate::state::{AppState, BallState};
+use crate::ui_delivery_preflight::{DeliveryPreflightState, WidgetBlueprintSearchResult};
+use crate::ui_workbench_catalog::{self, LoadedWorkbenchPageView, WorkbenchCatalogView};
+use crate::ui_workflow::{self, UiWorkflowStore};
 
 #[tauri::command]
 pub fn get_settings(app: AppHandle) -> Settings {
@@ -51,6 +57,381 @@ pub fn get_active_targets(app: AppHandle) -> Vec<String> {
         .clone()
 }
 
+/// Return the latest validated external UI Workbench session URL.
+#[tauri::command]
+pub fn get_pending_ui_workbench_url(app: AppHandle) -> Option<String> {
+    app.state::<AppState>()
+        .pending_ui_workbench_url
+        .lock()
+        .unwrap()
+        .clone()
+}
+
+/// Return generated UI pages for the left navigation rail.
+#[tauri::command]
+pub fn list_ui_workbench_pages(app: AppHandle) -> WorkbenchCatalogView {
+    let catalog = app
+        .state::<AppState>()
+        .ui_workbench_catalog
+        .lock()
+        .unwrap()
+        .clone();
+    ui_workbench_catalog::catalog_view(&catalog)
+}
+
+/// Persist and return the selected generated UI page.
+#[tauri::command]
+pub fn select_ui_workbench_page(
+    app: AppHandle,
+    page_id: String,
+) -> Result<WorkbenchCatalogView, String> {
+    let state = app.state::<AppState>();
+    let mut next = state.ui_workbench_catalog.lock().unwrap().clone();
+    ui_workbench_catalog::select_page(&mut next, &page_id)?;
+    ui_workbench_catalog::save_catalog(&next)?;
+    let view = ui_workbench_catalog::catalog_view(&next);
+    *state.ui_workbench_catalog.lock().unwrap() = next;
+    Ok(view)
+}
+
+/// Load one generated page's current session JSON.
+#[tauri::command]
+pub fn load_ui_workbench_page(
+    app: AppHandle,
+    page_id: String,
+) -> Result<LoadedWorkbenchPageView, String> {
+    let catalog = app
+        .state::<AppState>()
+        .ui_workbench_catalog
+        .lock()
+        .unwrap()
+        .clone();
+    ui_workbench_catalog::load_page_view(&catalog, &page_id)
+}
+
+/// Read one asset contained by a registered generated page.
+#[tauri::command]
+pub fn read_ui_workbench_asset(
+    app: AppHandle,
+    page_id: String,
+    asset_path: String,
+) -> Result<String, String> {
+    let catalog = app
+        .state::<AppState>()
+        .ui_workbench_catalog
+        .lock()
+        .unwrap()
+        .clone();
+    ui_workbench_catalog::read_page_asset(&catalog, &page_id, &asset_path)
+}
+
+/// Open the UI Workbench without requiring a newly generated session.
+#[tauri::command]
+pub fn open_ui_workbench(app: AppHandle) -> Result<(), String> {
+    crate::ui_workbench::show_ui_workbench(&app).map(|_| ())
+}
+
+/// Return the persistent eight-stage UI workflow store.
+#[tauri::command]
+pub fn list_ui_workflow_tasks(app: AppHandle) -> UiWorkflowStore {
+    app.state::<AppState>()
+        .ui_workflow_store
+        .lock()
+        .unwrap()
+        .clone()
+}
+
+/// Persist the selected UI workflow task.
+#[tauri::command]
+pub fn select_ui_workflow_task(app: AppHandle, task_id: String) -> Result<UiWorkflowStore, String> {
+    let state = app.state::<AppState>();
+    let mut next = state.ui_workflow_store.lock().unwrap().clone();
+    if !next.tasks.iter().any(|task| task.task_id == task_id) {
+        return Err(format!("unknown UI workflow task: {task_id}"));
+    }
+    next.selected_task_id = Some(task_id);
+    ui_workflow::save_store(&next)?;
+    *state.ui_workflow_store.lock().unwrap() = next.clone();
+    Ok(next)
+}
+
+/// Update the editor target for one UI workflow task.
+#[tauri::command]
+pub fn update_ui_workflow_target(
+    app: AppHandle,
+    task_id: String,
+    project_workspace: String,
+    widget_blueprint: String,
+) -> Result<UiWorkflowStore, String> {
+    let state = app.state::<AppState>();
+    let mut next = state.ui_workflow_store.lock().unwrap().clone();
+    let task = next
+        .tasks
+        .iter_mut()
+        .find(|task| task.task_id == task_id)
+        .ok_or_else(|| format!("unknown UI workflow task: {task_id}"))?;
+    task.target.project_workspace = project_workspace.trim().to_owned();
+    task.target.widget_blueprint = widget_blueprint.trim().to_owned();
+    task.target.widget_blueprint_name.clear();
+    task.target.widget_blueprint_class.clear();
+    task.target.preflight = None;
+    ui_workflow::save_store(&next)?;
+    *state.ui_workflow_store.lock().unwrap() = next.clone();
+    Ok(next)
+}
+
+#[tauri::command]
+pub async fn search_widget_blueprints(
+    app: AppHandle,
+    task_id: String,
+    project_workspace: String,
+    query: String,
+) -> Result<WidgetBlueprintSearchResult, String> {
+    if !app
+        .state::<AppState>()
+        .ui_workflow_store
+        .lock()
+        .unwrap()
+        .tasks
+        .iter()
+        .any(|task| task.task_id == task_id)
+    {
+        return Err(format!("unknown UI workflow task: {task_id}"));
+    }
+    crate::ui_delivery_preflight::search_widget_blueprints(&app, &project_workspace, &query)
+        .await
+        .map(|(result, _)| result)
+}
+
+#[tauri::command]
+pub async fn preflight_ui_delivery(
+    app: AppHandle,
+    task_id: String,
+    project_workspace: String,
+    selected_load_path: String,
+) -> Result<UiWorkflowStore, String> {
+    let now = current_unix_ms();
+    let (candidate, evidence) = crate::ui_delivery_preflight::validate_exact_widget_blueprint(
+        &app,
+        &task_id,
+        &project_workspace,
+        &selected_load_path,
+        now,
+    )
+    .await?;
+    let state = app.state::<AppState>();
+    let mut next = state.ui_workflow_store.lock().unwrap().clone();
+    let task = next
+        .tasks
+        .iter_mut()
+        .find(|task| task.task_id == task_id)
+        .ok_or_else(|| format!("unknown UI workflow task: {task_id}"))?;
+    task.target.project_workspace = project_workspace.trim().to_owned();
+    task.target.widget_blueprint = candidate.load_path;
+    task.target.widget_blueprint_name = candidate.display_name;
+    task.target.widget_blueprint_class = candidate.class_name;
+    task.target.preflight = Some(evidence);
+    task.updated_at_unix_ms = now;
+    ui_workflow::save_store(&next)?;
+    *state.ui_workflow_store.lock().unwrap() = next.clone();
+    app.emit("ui-workflow://progress", next.clone())
+        .map_err(|error| format!("could not emit UI workflow progress: {error}"))?;
+    Ok(next)
+}
+
+/// Open the native eight-stage UI workflow window.
+#[tauri::command]
+pub fn open_ui_workflow(app: AppHandle) -> Result<(), String> {
+    crate::ui_workflow::show_ui_workflow(&app).map(|_| ())
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct DeliveryDispatchResult {
+    pub delivery_id: String,
+    pub request_path: String,
+    pub new_task_url: String,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct CodexPromptSubmissionResult {
+    pub submitted: bool,
+    pub message: String,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct UiSourceDispatchResult {
+    pub new_task_url: String,
+}
+
+/// Prepare a new Codex task for a fresh generated or imported UI source.
+#[tauri::command]
+pub fn start_ui_source_task(
+    project_workspace: String,
+    source_mode: String,
+) -> Result<UiSourceDispatchResult, String> {
+    let workspace = PathBuf::from(project_workspace.trim());
+    if !workspace.is_dir() {
+        return Err("project workspace is unavailable".into());
+    }
+    let mode = crate::codex_delivery::UiSourceMode::parse(&source_mode)?;
+    let prompt = crate::codex_delivery::build_ui_source_prompt(mode);
+    let new_task_url = crate::codex_delivery::build_codex_new_task_url(&workspace, &prompt)?;
+    Ok(UiSourceDispatchResult { new_task_url })
+}
+
+/// Submit a prefilled UI source task only while packaged Codex Desktop owns the foreground.
+#[tauri::command]
+pub async fn submit_codex_ui_source_prompt() -> Result<CodexPromptSubmissionResult, String> {
+    let submitted = tauri::async_runtime::spawn_blocking(|| {
+        crate::codex_delivery::submit_foreground_codex_prompt(Duration::from_secs(6))
+    })
+    .await
+    .map_err(|error| format!("Codex foreground verification task failed: {error}"))??;
+    let message = if submitted {
+        "已新建 Codex 任务并开始 UI 流程"
+    } else {
+        "新 Codex 任务已打开并预填 UI 指令，请按 Enter 开始"
+    };
+    Ok(CodexPromptSubmissionResult {
+        submitted,
+        message: message.into(),
+    })
+}
+
+/// Freeze the current Workbench tree and prepare a new Desktop-owned Codex task.
+#[tauri::command]
+pub async fn confirm_and_deliver_ui(
+    app: AppHandle,
+    page_id: String,
+    tree: serde_json::Value,
+    evidence_id: String,
+) -> Result<DeliveryDispatchResult, String> {
+    let state = app.state::<AppState>();
+    let mut next = state.ui_workflow_store.lock().unwrap().clone();
+    let snapshot = next
+        .tasks
+        .iter()
+        .find(|task| task.page_id == page_id)
+        .cloned()
+        .ok_or_else(|| format!("unknown UI workflow page: {page_id}"))?;
+    if snapshot.stages.umg.status == crate::ui_workflow::WorkflowStatus::InProgress {
+        return Err("this UI task already has an active editor delivery".into());
+    }
+    let saved_evidence = snapshot
+        .target
+        .preflight
+        .as_ref()
+        .filter(|evidence| {
+            evidence.status == DeliveryPreflightState::Ready && evidence.evidence_id == evidence_id
+        })
+        .ok_or_else(|| "delivery preflight is missing or stale".to_string())?;
+    let now = current_unix_ms();
+    let (candidate, fresh_evidence) =
+        crate::ui_delivery_preflight::validate_exact_widget_blueprint(
+            &app,
+            &snapshot.task_id,
+            &snapshot.target.project_workspace,
+            &snapshot.target.widget_blueprint,
+            now,
+        )
+        .await?;
+    if candidate.load_path != saved_evidence.selected_load_path {
+        return Err("target WidgetBlueprint changed after preflight".into());
+    }
+    let task = next
+        .tasks
+        .iter_mut()
+        .find(|task| task.page_id == page_id)
+        .ok_or_else(|| format!("unknown UI workflow page: {page_id}"))?;
+    task.target.widget_blueprint_name = candidate.display_name;
+    task.target.widget_blueprint_class = candidate.class_name;
+    task.target.preflight = Some(fresh_evidence);
+    let agent = task
+        .agent_context
+        .clone()
+        .ok_or_else(|| "workflow task has no originating Agent".to_string())?;
+    let workspace_text = if task.target.project_workspace.trim().is_empty() {
+        agent.workspace.clone()
+    } else {
+        task.target.project_workspace.clone()
+    };
+    let workspace = PathBuf::from(workspace_text);
+    if !workspace.is_dir() {
+        return Err("registered project workspace is unavailable".into());
+    }
+    let prepared = crate::ui_workflow::prepare_delivery(task, &tree, now)?;
+    let resource_dir = app
+        .path()
+        .resource_dir()
+        .map_err(|error| format!("could not resolve Companion resources: {error}"))?;
+    let reporter = crate::codex_delivery::bundled_reporter_path(&resource_dir);
+    let prompt = crate::codex_delivery::build_delivery_prompt(
+        &prepared.request_path,
+        &reporter,
+        &task.session_dir,
+        &task.task_id,
+    );
+    let new_task_url = crate::codex_delivery::build_codex_new_task_url(&workspace, &prompt)?;
+    task.stages.umg.status = crate::ui_workflow::WorkflowStatus::AwaitingConfirmation;
+    task.stages.umg.message = "交付请求已冻结，正在新建 Codex 任务".into();
+    task.latest_message = task.stages.umg.message.clone();
+    crate::ui_workflow::save_store(&next)?;
+    *state.ui_workflow_store.lock().unwrap() = next.clone();
+    app.emit("ui-workflow://progress", next)
+        .map_err(|error| format!("could not emit UI workflow progress: {error}"))?;
+    Ok(DeliveryDispatchResult {
+        delivery_id: prepared.delivery_id,
+        request_path: prepared.request_path.to_string_lossy().into_owned(),
+        new_task_url,
+    })
+}
+
+/// Submit a prefilled new task only while packaged Codex Desktop owns the foreground.
+#[tauri::command]
+pub async fn submit_codex_new_task_prompt(
+    app: AppHandle,
+    page_id: String,
+) -> Result<CodexPromptSubmissionResult, String> {
+    let submitted = tauri::async_runtime::spawn_blocking(|| {
+        crate::codex_delivery::submit_foreground_codex_prompt(Duration::from_secs(6))
+    })
+    .await
+    .map_err(|error| format!("Codex foreground verification task failed: {error}"))??;
+    let state = app.state::<AppState>();
+    let mut next = state.ui_workflow_store.lock().unwrap().clone();
+    let message = {
+        let task = next
+            .tasks
+            .iter_mut()
+            .find(|task| task.page_id == page_id)
+            .ok_or_else(|| format!("unknown UI workflow page: {page_id}"))?;
+        let now = current_unix_ms();
+        task.stages.umg.updated_at_unix_ms = now;
+        task.updated_at_unix_ms = now;
+        if submitted {
+            task.stages.umg.status = crate::ui_workflow::WorkflowStatus::InProgress;
+            task.stages.umg.message = "已由新 Codex 任务开始实现".into();
+        } else {
+            task.stages.umg.status = crate::ui_workflow::WorkflowStatus::AwaitingConfirmation;
+            task.stages.umg.message = "新 Codex 任务已打开并预填交付指令，请按 Enter 开始".into();
+        }
+        task.latest_message = task.stages.umg.message.clone();
+        task.latest_message.clone()
+    };
+    crate::ui_workflow::save_store(&next)?;
+    *state.ui_workflow_store.lock().unwrap() = next.clone();
+    app.emit("ui-workflow://progress", next)
+        .map_err(|error| format!("could not emit UI workflow progress: {error}"))?;
+    Ok(CodexPromptSubmissionResult { submitted, message })
+}
+
+fn current_unix_ms() -> u64 {
+    SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .map(|duration| duration.as_millis().min(u64::MAX as u128) as u64)
+        .unwrap_or(0)
+}
+
 /// Toggle the settings popover (used by the floating ball click).
 #[tauri::command]
 pub fn open_settings(app: AppHandle) {
@@ -58,8 +439,8 @@ pub fn open_settings(app: AppHandle) {
 }
 
 #[tauri::command]
-pub fn open_agent_settings(app: AppHandle, target_id: String) {
-    crate::tray::show_agent_settings(&app, &target_id);
+pub fn open_agent_settings(app: AppHandle, target_id: String) -> Result<(), String> {
+    crate::tray::show_agent_settings_inline(&app, &target_id)
 }
 
 /// Hide the current settings page without stopping the background companion.
@@ -104,7 +485,10 @@ pub fn reinstall_skill_for_target(
     reinstall_skill_targets(&app, vec![target_id])
 }
 
-fn reinstall_skill_targets(app: &AppHandle, targets: Vec<String>) -> Result<MultiTargetStatus, String> {
+fn reinstall_skill_targets(
+    app: &AppHandle,
+    targets: Vec<String>,
+) -> Result<MultiTargetStatus, String> {
     let _installed = crate::skill::install_skill(&app, &targets)?;
 
     {

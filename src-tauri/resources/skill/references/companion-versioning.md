@@ -18,12 +18,21 @@ Example:
 
 This means major generation `1`, date `2026-08-14`, and the fourth distributable iteration made that day.
 
+Windows MSI builds use a separate valid SemVer mapping in `tauri.build.conf.json`:
+
+```text
+M.YY.MMDD+N
+```
+
+For example, canonical version `1.260815.21` maps to MSI build version `1.26.815+21`. Tauri and WiX expose that build as Windows file version `1.26.815.21`. Always build the MSI with `--config tauri.build.conf.json`; the canonical product and Skill version remain unchanged.
+
 ## Release Contract
 
 Before calling a Companion version complete, keep these values synchronized:
 
 - `package.json` and `package-lock.json`;
 - `src-tauri/tauri.conf.json`;
+- `tauri.build.conf.json`, using the `M.YY.MMDD+N` MSI mapping;
 - `src-tauri/Cargo.toml` and the root package entry in `src-tauri/Cargo.lock`;
 - `CURRENT_SKILL_VERSION` in `src-tauri/src/skill/mod.rs`;
 - the Companion/Skill version displayed by `src/windows/Settings.tsx`;

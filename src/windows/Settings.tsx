@@ -4,7 +4,12 @@ import { invoke } from "@tauri-apps/api/core";
 import { LogicalSize } from "@tauri-apps/api/dpi";
 import { listen } from "@tauri-apps/api/event";
 import { openUrl } from "@tauri-apps/plugin-opener";
-import { getCurrentWebviewWindow, WebviewWindow } from "@tauri-apps/api/webviewWindow";
+import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
+import {
+  selectSettingsPageForAgent,
+  settingsOverviewPage,
+  type SettingsPage,
+} from "./settingsNavigation";
 import type {
   BallState,
   DiscoveredEndpoint,
@@ -17,7 +22,7 @@ import type {
   UpdateStatus,
 } from "../types";
 
-const EXPECTED_VERSION = "1.260815.3";
+const EXPECTED_VERSION = "1.260816.1";
 const CORE_MCP_TOOLS = ["ue_read", "ue_py", "ue_plan_submit"];
 const MCP_AUTO_CHECK_INTERVAL_MS = 5 * 60 * 1000;
 
@@ -30,10 +35,6 @@ const AGENT_TARGETS = [
 type TabId = "overview" | "mcp" | "skill" | "updates";
 type PopoverSide = "left" | "right" | "floating";
 
-type SettingsWindowProps = {
-  agentId?: string | null;
-};
-
 const TABS: Array<{ id: TabId; label: string }> = [
   { id: "overview", label: "总览" },
   { id: "mcp", label: "MCP" },
@@ -41,8 +42,10 @@ const TABS: Array<{ id: TabId; label: string }> = [
   { id: "updates", label: "更新" },
 ];
 
-export default function SettingsWindow({ agentId = null }: SettingsWindowProps) {
-  const isAgentPage = Boolean(agentId);
+export default function SettingsWindow() {
+  const [settingsPage, setSettingsPage] = useState<SettingsPage>(settingsOverviewPage);
+  const agentId = settingsPage.kind === "agent" ? settingsPage.agentId : null;
+  const isAgentPage = settingsPage.kind === "agent";
   const currentAgent = useMemo(
     () => AGENT_TARGETS.find((target) => target.id === agentId) ?? null,
     [agentId],
@@ -115,7 +118,21 @@ export default function SettingsWindow({ agentId = null }: SettingsWindowProps) 
     const unlistenPopover = listen<PopoverSide>("settings://popover-side", (event) =>
       setPopoverSide(event.payload),
     );
-    const unlistenShowHome = listen("settings://show-home", () => setShowCompactHome(true));
+    const unlistenShowHome = listen("settings://show-home", () => {
+      setSettingsPage(settingsOverviewPage());
+      setShowCompactHome(true);
+    });
+    const unlistenSelectAgent = listen<string>("settings://select-agent", (event) => {
+      try {
+        setSettingsPage(selectSettingsPageForAgent(
+          event.payload,
+          AGENT_TARGETS.map((target) => target.id),
+        ));
+        setShowCompactHome(false);
+      } catch (error) {
+        flash(String(error));
+      }
+    });
     return () => {
       unlistenBall.then((fn) => fn());
       unlistenAgent.then((fn) => fn());
@@ -123,6 +140,7 @@ export default function SettingsWindow({ agentId = null }: SettingsWindowProps) 
       unlistenMcp.then((fn) => fn());
       unlistenPopover.then((fn) => fn());
       unlistenShowHome.then((fn) => fn());
+      unlistenSelectAgent.then((fn) => fn());
     };
   }, []);
 
@@ -159,7 +177,7 @@ export default function SettingsWindow({ agentId = null }: SettingsWindowProps) 
 
   async function openAgentSettings(targetId: string) {
     try {
-      await invoke("open_agent_settings", { target_id: targetId });
+      await invoke("open_agent_settings", { targetId });
     } catch (error) {
       flash("打开专页失败: " + error);
     }
@@ -167,23 +185,17 @@ export default function SettingsWindow({ agentId = null }: SettingsWindowProps) 
 
   async function openUIWorkbench() {
     try {
-      let workbench = await WebviewWindow.getByLabel("ui-workbench");
-      if (!workbench) {
-        workbench = new WebviewWindow("ui-workbench", {
-          url: "index.html",
-          title: "Oasis UI 工作台",
-          width: 1440,
-          height: 880,
-          minWidth: 1080,
-          minHeight: 700,
-          resizable: true,
-          center: true,
-        });
-      }
-      await workbench.show();
-      await workbench.setFocus();
+      await invoke("open_ui_workbench");
     } catch (error) {
       flash("打开 UI 工作台失败: " + error);
+    }
+  }
+
+  async function openUIWorkflow() {
+    try {
+      await invoke("open_ui_workflow");
+    } catch (error) {
+      flash("打开 UI 生图工具链失败: " + error);
     }
   }
 
@@ -529,7 +541,7 @@ export default function SettingsWindow({ agentId = null }: SettingsWindowProps) 
           <div className="actions action-wrap">
             <button onClick={refreshSkill} disabled={busy}>刷新状态</button>
             <button onClick={reinstallCurrentTarget} disabled={busy}>重装当前 agent Skill</button>
-            <button className="btn-secondary" onClick={() => invoke("open_settings")}>打开总览</button>
+            <button className="btn-secondary" onClick={() => setSettingsPage(settingsOverviewPage())}>打开总览</button>
           </div>
         </section>
 
@@ -609,6 +621,9 @@ export default function SettingsWindow({ agentId = null }: SettingsWindowProps) 
         </section>
 
         <footer className="compact-footer">
+          <button className="compact-tool-launch" type="button" onClick={openUIWorkflow}>
+            <span>UI 生图工具链</span><strong>八阶段进度与交付</strong>
+          </button>
           <button className="compact-tool-launch" type="button" onClick={openUIWorkbench}>
             <span>UI 工作台</span><strong>切图与控件编辑</strong>
           </button>
@@ -663,6 +678,10 @@ export default function SettingsWindow({ agentId = null }: SettingsWindowProps) 
         <>
           <section>
             <h2>UI 工具</h2>
+            <div className="row">
+              <span>查看八阶段进度并继续 Agent、Workbench 与编辑器交付</span>
+              <button type="button" onClick={openUIWorkflow}>打开 UI 生图工具链</button>
+            </div>
             <div className="row">
               <span>导入 UI 图与 UI Tree，编辑控件范围并查看切图候选</span>
               <button type="button" onClick={openUIWorkbench}>打开 UI 工作台</button>

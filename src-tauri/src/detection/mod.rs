@@ -13,6 +13,23 @@ use tauri::{AppHandle, Emitter, Manager};
 
 use crate::state::AppState;
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum SettingsVisibilityAction {
+    Keep,
+    Hide,
+}
+
+fn settings_visibility_action(
+    follow_lifecycle: bool,
+    agent_present: bool,
+) -> SettingsVisibilityAction {
+    if follow_lifecycle && !agent_present {
+        SettingsVisibilityAction::Hide
+    } else {
+        SettingsVisibilityAction::Keep
+    }
+}
+
 /// Spawn the detection loop. Runs for the lifetime of the app.
 pub fn spawn_loop(app: AppHandle) {
     tauri::async_runtime::spawn(async move {
@@ -66,7 +83,9 @@ pub fn spawn_loop(app: AppHandle) {
                 );
                 let _ = app.emit("agent://active-targets", detected_targets.clone());
             }
-            if follow_lifecycle && !present {
+            if settings_visibility_action(follow_lifecycle, present)
+                == SettingsVisibilityAction::Hide
+            {
                 crate::tray::hide_settings(&app);
             }
 
@@ -86,4 +105,33 @@ pub fn spawn_loop(app: AppHandle) {
             tokio::time::sleep(Duration::from_secs(interval.max(1))).await;
         }
     });
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn detecting_an_agent_never_requests_a_settings_popup() {
+        assert_eq!(
+            settings_visibility_action(true, true),
+            SettingsVisibilityAction::Keep
+        );
+        assert_eq!(
+            settings_visibility_action(false, true),
+            SettingsVisibilityAction::Keep
+        );
+    }
+
+    #[test]
+    fn lifecycle_following_hides_settings_after_the_agent_exits() {
+        assert_eq!(
+            settings_visibility_action(true, false),
+            SettingsVisibilityAction::Hide
+        );
+        assert_eq!(
+            settings_visibility_action(false, false),
+            SettingsVisibilityAction::Keep
+        );
+    }
 }

@@ -20,10 +20,28 @@ struct PopoverPlacement {
     side: &'static str,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+enum AgentSettingsRoute {
+    ExistingSettingsWindow(String),
+}
+
+fn agent_settings_route(target_id: &str) -> Result<AgentSettingsRoute, String> {
+    crate::agent_registry::find_target(target_id)
+        .map(|_| AgentSettingsRoute::ExistingSettingsWindow(target_id.to_owned()))
+        .ok_or_else(|| format!("unknown Agent target: {target_id}"))
+}
+
 /// Build the tray icon and wire its menu + click events.
 pub fn build(app: &AppHandle) -> tauri::Result<()> {
     let show_settings_item =
         MenuItem::with_id(app, "open_settings", "打开设置", true, None::<&str>)?;
+    let show_workbench_item = MenuItem::with_id(
+        app,
+        "open_ui_workbench",
+        "打开 Oasis UI 工作台",
+        true,
+        None::<&str>,
+    )?;
     let pause_item = MenuItem::with_id(
         app,
         "toggle_pause",
@@ -40,6 +58,7 @@ pub fn build(app: &AppHandle) -> tauri::Result<()> {
         app,
         &[
             &show_settings_item,
+            &show_workbench_item,
             &pause_item,
             &refresh_skill,
             &sep1,
@@ -65,6 +84,11 @@ pub fn build(app: &AppHandle) -> tauri::Result<()> {
 fn on_menu_event(app: &AppHandle, event: tauri::menu::MenuEvent) {
     match event.id().as_ref() {
         "open_settings" => show_settings(app),
+        "open_ui_workbench" => {
+            if let Err(error) = crate::ui_workbench::show_ui_workbench(app) {
+                log::error!("failed to open UI Workbench: {error}");
+            }
+        }
         "toggle_pause" => {
             let cur = app
                 .state::<crate::state::AppState>()
@@ -130,42 +154,15 @@ pub fn show_settings(app: &AppHandle) {
     }
 }
 
-pub fn show_agent_settings(app: &AppHandle, target_id: &str) {
-    let label = agent_settings_label(target_id);
-    let title = format!("Oasis Companion - {}", agent_settings_title(target_id));
-    if let Some(w) = app.get_webview_window(&label) {
-        let placement = position_settings_near_ball(app, &w);
-        emit_popover_side(&w, placement.map(|p| p.side));
-        let _ = w.show();
-        let _ = w.unminimize();
-        let _ = w.set_focus();
-        return;
-    }
-
-    match WebviewWindowBuilder::new(app, label, WebviewUrl::App("index.html".into()))
-        .title(&title)
-        .inner_size(SETTINGS_WIDTH, SETTINGS_HEIGHT)
-        .min_inner_size(420.0, 560.0)
-        .resizable(false)
-        .decorations(false)
-        .transparent(true)
-        .shadow(false)
-        .skip_taskbar(true)
-        .always_on_top(true)
-        .build()
-    {
-        Ok(w) => {
-            let placement = position_settings_near_ball(app, &w);
-            emit_popover_side(&w, placement.map(|p| p.side));
-            if let Err(err) = w.show() {
-                log::warn!("agent settings window could not be shown: {}", err);
-            }
-            if let Err(err) = w.set_focus() {
-                log::warn!("agent settings window could not be focused: {}", err);
-            }
-        }
-        Err(err) => log::warn!("agent settings window could not be created: {}", err),
-    }
+pub fn show_agent_settings_inline(app: &AppHandle, target_id: &str) -> Result<(), String> {
+    let AgentSettingsRoute::ExistingSettingsWindow(target_id) = agent_settings_route(target_id)?;
+    show_settings(app);
+    let window = app
+        .get_webview_window("settings")
+        .ok_or_else(|| "settings window is unavailable".to_string())?;
+    window
+        .emit("settings://select-agent", target_id)
+        .map_err(|error| format!("could not select Agent settings: {error}"))
 }
 
 pub fn toggle_settings(app: &AppHandle) {
@@ -180,7 +177,7 @@ pub fn toggle_settings(app: &AppHandle) {
 
 pub fn hide_settings(app: &AppHandle) {
     for (label, w) in app.webview_windows() {
-        if label == "settings" || label.starts_with("settings-") {
+        if label == "settings" {
             let _ = w.hide();
         }
     }
@@ -232,19 +229,6 @@ fn sync_settings_popover(app: &AppHandle, last_side: &mut Option<&'static str>) 
 
 fn emit_popover_side(settings: &WebviewWindow, side: Option<&'static str>) {
     let _ = settings.emit("settings://popover-side", side.unwrap_or("floating"));
-}
-
-fn agent_settings_label(target_id: &str) -> String {
-    format!("settings-{}", target_id)
-}
-
-fn agent_settings_title(target_id: &str) -> &'static str {
-    match target_id {
-        "codex" => "Codex",
-        "claude-code" => "Claude Code",
-        "workbuddy" => "WorkBuddy",
-        _ => "Agent",
-    }
 }
 
 fn position_settings_near_ball(
@@ -358,5 +342,14 @@ mod tests {
             "ui-workbench",
             &WindowEvent::Focused(false)
         ));
+    }
+
+    #[test]
+    fn agent_settings_route_reuses_the_existing_settings_window() {
+        assert_eq!(
+            agent_settings_route("codex").unwrap(),
+            AgentSettingsRoute::ExistingSettingsWindow("codex".into())
+        );
+        assert!(agent_settings_route("unknown").is_err());
     }
 }

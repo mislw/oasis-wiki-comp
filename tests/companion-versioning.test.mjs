@@ -20,6 +20,12 @@ test('Companion uses the M.YYMMDD.N version format', () => {
 });
 
 
+test('MSI build config maps the canonical version to valid Windows SemVer', () => {
+  const [, major, year, monthDay, iteration] = version.match(/^(\d+)\.(\d{2})(\d{4})\.(\d+)$/) ?? [];
+  assert.equal(tauriBuildConfig.version, `${major}.${year}.${Number(monthDay)}+${iteration}`);
+});
+
+
 test('all Companion and bundled Skill version fields stay synchronized', () => {
   assert.equal(tauriConfig.version, version);
   assert.match(cargoToml, new RegExp(`^version = "${version.replaceAll('.', '\\.') }"$`, 'm'));

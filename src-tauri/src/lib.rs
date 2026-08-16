@@ -5,13 +5,19 @@
 mod agent_registry;
 mod autostart;
 mod ball;
+mod codex_delivery;
 mod commands;
+mod companion_handoff;
 mod config;
 mod detection;
 mod mcp;
 mod skill;
 mod state;
 mod tray;
+mod ui_delivery_preflight;
+mod ui_workbench;
+mod ui_workbench_catalog;
+mod ui_workflow;
 mod updater;
 
 use std::sync::atomic::Ordering;
@@ -125,18 +131,56 @@ pub fn run() {
     let created_default = load.created_default;
     let autostart_want = load.settings.companion.autostart;
     let skill_status = skill::detect_status(&load.settings.skill.targets);
-    let initial_state = state::AppState::new(load.settings, skill_status.clone(), load.recovered);
+    let initial_state = state::AppState::with_catalog(
+        load.settings,
+        skill_status.clone(),
+        load.recovered,
+        ui_workbench_catalog::load_catalog(),
+        ui_workflow::load_store(),
+    );
+    let initial_workbench_url = ui_workbench::handoff_action(&std::env::args().collect::<Vec<_>>());
+    let initial_workflow_update =
+        ui_workflow::parse_update_arg(&std::env::args().collect::<Vec<_>>());
+    let initial_workflow_open =
+        ui_workflow::is_open_requested(&std::env::args().collect::<Vec<_>>());
 
     // Single-instance: a second launch forwards its args to this callback (runs
     // in the already-running instance), then the second process exits.
     let single_instance = tauri_plugin_single_instance::init(|app, argv, _cwd| {
         log::info!("second instance args: {:?}", argv);
-        if argv.iter().any(|a| a == "--launch-agent") {
-            launch_agent(app);
-        } else if argv.iter().any(|a| a == "--background") {
-            log::info!("second background launch ignored");
-        } else {
-            tray::show_settings(app);
+        match ui_workflow::parse_update_arg(&argv) {
+            Ok(Some(path)) => {
+                if let Err(error) = ui_workflow::apply_update_handoff(app, &path) {
+                    log::error!("UI workflow update failed: {error}");
+                }
+                return;
+            }
+            Ok(None) => {}
+            Err(error) => {
+                log::warn!("rejected UI workflow update: {error}");
+                return;
+            }
+        }
+        match ui_workbench::handoff_action(&argv) {
+            Ok(Some(handoff)) => {
+                if let Err(error) = ui_workbench::apply_ui_workbench_handoff(app, handoff) {
+                    log::error!("UI Workbench handoff failed: {error}");
+                }
+            }
+            Ok(None) => {
+                if ui_workflow::is_open_requested(&argv) {
+                    if let Err(error) = ui_workflow::show_ui_workflow(app) {
+                        log::error!("UI workflow window failed: {error}");
+                    }
+                } else if argv.iter().any(|a| a == "--launch-agent") {
+                    launch_agent(app);
+                } else if argv.iter().any(|a| a == "--background") {
+                    log::info!("second background launch ignored");
+                } else {
+                    tray::show_settings(app);
+                }
+            }
+            Err(error) => log::warn!("rejected UI Workbench handoff: {error}"),
         }
     });
 
@@ -157,6 +201,9 @@ pub fn run() {
 
             // --- tray ---
             tray::build(app.handle())?;
+
+            let inbox_handoff =
+                companion_handoff::initialize(app.handle()).map_err(std::io::Error::other)?;
 
             // --- detection loop ---
             detection::spawn_loop(app.handle().clone());
@@ -180,8 +227,31 @@ pub fn run() {
             // --- startup window policy ---
             // `--background` (autostart) => stay in tray only.
             // direct launch => show settings so the user gets feedback.
+            let mut opened_workbench = inbox_handoff;
+            match &initial_workflow_update {
+                Ok(Some(path)) => {
+                    ui_workflow::apply_update_handoff(app.handle(), path)
+                        .map_err(std::io::Error::other)?;
+                    opened_workbench = true;
+                }
+                Ok(None) => {}
+                Err(error) => log::warn!("rejected UI workflow update: {error}"),
+            }
+            match &initial_workbench_url {
+                Ok(Some(handoff)) => {
+                    ui_workbench::apply_ui_workbench_handoff(app.handle(), handoff.clone())
+                        .map_err(std::io::Error::other)?;
+                    opened_workbench = true;
+                }
+                Ok(None) => {}
+                Err(error) => log::warn!("rejected UI Workbench handoff: {error}"),
+            }
+            if initial_workflow_open {
+                ui_workflow::show_ui_workflow(app.handle()).map_err(std::io::Error::other)?;
+                opened_workbench = true;
+            }
             let background = std::env::args().any(|a| a == "--background");
-            if !background {
+            if !background && !opened_workbench {
                 tray::show_settings(app.handle());
             }
 
@@ -204,6 +274,22 @@ pub fn run() {
             commands::get_ball_state,
             commands::get_agent_present,
             commands::get_active_targets,
+            commands::get_pending_ui_workbench_url,
+            commands::list_ui_workbench_pages,
+            commands::select_ui_workbench_page,
+            commands::load_ui_workbench_page,
+            commands::read_ui_workbench_asset,
+            commands::open_ui_workbench,
+            commands::list_ui_workflow_tasks,
+            commands::select_ui_workflow_task,
+            commands::update_ui_workflow_target,
+            commands::search_widget_blueprints,
+            commands::preflight_ui_delivery,
+            commands::open_ui_workflow,
+            commands::start_ui_source_task,
+            commands::submit_codex_ui_source_prompt,
+            commands::confirm_and_deliver_ui,
+            commands::submit_codex_new_task_prompt,
             commands::open_settings,
             commands::open_agent_settings,
             commands::close_settings,
