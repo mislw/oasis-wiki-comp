@@ -7,7 +7,6 @@ INTERACTION_GUIDE = (
     ROOT / 'references' / 'oasis-ui-agent-interaction.md'
 ).read_text(encoding='utf-8')
 SKILL_GUIDE = (ROOT / 'SKILL.md').read_text(encoding='utf-8')
-AGENT_GUIDE = (ROOT / 'AGENTS.md').read_text(encoding='utf-8')
 TASK_ROUTER = (ROOT / 'references' / 'task-router.md').read_text(encoding='utf-8')
 COWART_GUIDE = (
     ROOT / 'references' / 'cowart-ui-workflow.md'
@@ -63,7 +62,7 @@ class OasisUiAgentInteractionTests(unittest.TestCase):
             with self.subTest(guide_length=len(guide)):
                 self.assertIn(marker, guide)
 
-    def test_natural_language_ui_generation_requests_enter_text_source_guidance(self):
+    def test_natural_language_ui_generation_requests_open_the_native_tool(self):
         trigger_examples = [
             '做一下 UI 生成',
             '我有一个 UI 需要生图',
@@ -74,28 +73,13 @@ class OasisUiAgentInteractionTests(unittest.TestCase):
             with self.subTest(trigger=trigger):
                 self.assertIn(trigger, SKILL_GUIDE)
                 self.assertIn(trigger, TASK_ROUTER)
-
         for marker in [
-            '默认只进入当前对话的 SOURCE 文字引导',
-            '还没有 UI，需要我先生成',
-            '已经有 UI 图，直接使用',
-            '继续之前做到一半的 UI',
+            'open_ui_workflow.py',
             '不要等待用户再次说“开始”',
-            '不得默认运行 `open_ui_workflow.py`',
+            '直接启动或聚焦 Companion 的 `UI 生图工具链`',
         ]:
             with self.subTest(marker=marker):
                 self.assertIn(marker, INTERACTION_GUIDE)
-
-        for guide in (SKILL_GUIDE, AGENT_GUIDE):
-            with self.subTest(guide_length=len(guide)):
-                self.assertIn('默认进入 SOURCE 文字引导', guide)
-                self.assertIn('不要自动打开 Companion', guide)
-
-    def test_native_ui_workflow_opens_only_for_an_explicit_request(self):
-        for guide in (SKILL_GUIDE, AGENT_GUIDE, INTERACTION_GUIDE):
-            with self.subTest(guide_length=len(guide)):
-                self.assertIn('打开原生 UI 工具链', guide)
-                self.assertIn('open_ui_workflow.py', guide)
 
 
 if __name__ == '__main__':

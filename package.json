@@ -1,7 +1,7 @@
 {
   "name": "oasis-companion",
   "private": true,
-  "version": "1.260816.4",
+  "version": "1.260817.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
