@@ -69,6 +69,9 @@ type UINode = {
   interaction?: { role: "button"; target_widget: string };
   review?: { status: "candidate" | "pending_review"; cleanup_status: "not_applicable" | "needs_cleanup" | "requested" | "in_progress" | "clean" | "ready" | "failed" };
   reusable_bitmap?: boolean;
+  reuse_of?: string;
+  texture_asset?: string;
+  component_reuse?: { component_id: string; source_asset: string; asset_id?: string | null; state: string; status: "ready" };
   derived_from?: string;
 };
 type UITree = {
@@ -1635,9 +1638,11 @@ export default function UIWorkbench() {
               <div className="semantic-grid">
                 <span><small>Children</small><strong>{directChildren.get(selected.id)?.length ?? 0}</strong></span>
                 <span><small>Reusable Bitmap</small><strong>{selected.reusable_bitmap ? "Yes" : "No"}</strong></span>
+                <span><small>Component Reuse</small><strong>{selected.component_reuse?.status === "ready" ? "Ready" : "No"}</strong></span>
                 <span><small>Cleanup</small><strong>{selected.review?.cleanup_status ?? "not_applicable"}</strong></span>
                 <span><small>Assembly</small><strong>{selected.visual_assets?.assembly_preview ? "Available" : "Missing"}</strong></span>
               </div>
+              {selected.component_reuse?.status === "ready" && <Field label="Library Asset"><input value={selected.component_reuse.source_asset} readOnly /></Field>}
               <div className="visual-tabs" role="tablist" aria-label="资产查看模式">
                 {(["source", "clean", "assembly"] as VisualMode[]).map((mode) => <button type="button" key={mode} className={visualMode === mode ? "active" : ""} onClick={() => setVisualMode(mode)}>{mode === "source" ? "Source" : mode === "clean" ? "Clean" : "Assembly"}</button>)}
               </div>

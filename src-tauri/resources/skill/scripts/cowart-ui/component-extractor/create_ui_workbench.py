@@ -94,6 +94,26 @@ def resolve_library_preview(item: dict[str, Any], records: list[dict[str, Any]])
     return None
 
 
+def library_component_reuse(item: dict[str, Any], record: dict[str, Any] | None) -> dict[str, Any] | None:
+    if record is None:
+        return None
+    reuse_of = item.get("reuse_of")
+    library = record["library"]
+    component_ids = library.get("component_ids", [])
+    if not isinstance(reuse_of, str) or reuse_of not in component_ids:
+        return None
+    source_asset = library.get("source_asset")
+    if not isinstance(source_asset, str) or not source_asset.startswith("/"):
+        return None
+    return {
+        "component_id": reuse_of,
+        "source_asset": source_asset,
+        "asset_id": library.get("asset_id"),
+        "state": str(item.get("state") or "default"),
+        "status": "ready",
+    }
+
+
 def resolve_page_id(explicit: str | None, title: str) -> str:
     value = explicit.strip() if explicit else ""
     if value:
@@ -457,6 +477,7 @@ def normalize_controls(
         if isinstance(explicit_native_preview, str) and not raw_visual_assets.get("native_preview"):
             raw_visual_assets["native_preview"] = explicit_native_preview
         library_preview = resolve_library_preview(item, library_preview_records)
+        component_reuse = library_component_reuse(item, library_preview)
         library_preview_slot = "native_preview" if declared_native else "clean_layer"
         if library_preview and not raw_visual_assets.get(library_preview_slot):
             raw_visual_assets[library_preview_slot] = str(library_preview["source"])
@@ -524,6 +545,9 @@ def normalize_controls(
                 control[field] = item[field]
         if library_preview:
             control["library_reference"] = dict(library_preview["library"])
+        if component_reuse:
+            control["component_reuse"] = component_reuse
+            control.setdefault("texture_asset", component_reuse["source_asset"])
         display_text = item.get("display_text")
         if not isinstance(display_text, str) or not display_text.strip():
             display_text = item.get("content_hint")
@@ -531,6 +555,7 @@ def normalize_controls(
         if (
             (not isinstance(display_text, str) or not display_text.strip())
             and is_native_close_button(item, component_id, semantics["node_kind"])
+            and component_reuse is None
         ):
             display_text = "×"
             defaulted_close_button = True

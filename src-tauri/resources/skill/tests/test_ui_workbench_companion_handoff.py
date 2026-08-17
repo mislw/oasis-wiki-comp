@@ -186,6 +186,17 @@ class UIWorkbenchCompanionHandoffTests(unittest.TestCase):
                                 },
                             },
                             {
+                                "source": str(preview),
+                                "library": {
+                                    "status": "active",
+                                    "asset_id": "redcliff.uiresources.common.btn.btn_close_01",
+                                    "source_asset": "/RedCliff/Asset/UIresources/Common/Btn/Btn_Close_01.Btn_Close_01",
+                                    "component_ids": ["button.close.default"],
+                                    "semantic_keys": [],
+                                    "states": ["default"],
+                                },
+                            },
+                            {
                                 "source": str(pending_preview),
                                 "library": {
                                     "status": "pending_review",
@@ -222,6 +233,15 @@ class UIWorkbenchCompanionHandoffTests(unittest.TestCase):
                                 "asset_policy": "layer",
                                 "extraction": {"mode": "reconstruct_skin", "target_component_id": "button.primary.gold"},
                                 "reuse_of": "button.primary.gold",
+                            },
+                            {
+                                "component_id": "button.close.instance",
+                                "category": "hit_target",
+                                "parent_id": "root",
+                                "bounds": {"x": 190, "y": 10, "width": 40, "height": 40},
+                                "asset_policy": "native",
+                                "extraction": {"mode": "native", "target_component_id": "button.close.default"},
+                                "reuse_of": "button.close.default",
                             },
                             {
                                 "component_id": "button.pending",
@@ -261,6 +281,13 @@ class UIWorkbenchCompanionHandoffTests(unittest.TestCase):
         self.assertTrue(reusable["visual_assets"]["clean_layer"].startswith("layers/"))
         self.assertTrue(reusable["reusable_bitmap"])
         self.assertEqual(reusable["layer_reconstruction"]["status"], "ready")
+
+        close = by_id["button.close.instance"]
+        self.assertEqual(close["component_reuse"]["status"], "ready")
+        self.assertEqual(close["component_reuse"]["component_id"], "button.close.default")
+        self.assertEqual(close["texture_asset"], "/RedCliff/Asset/UIresources/Common/Btn/Btn_Close_01.Btn_Close_01")
+        self.assertTrue(close["visual_assets"]["native_preview"].startswith("native/"))
+        self.assertNotIn("display_text", close)
 
         pending = by_id["button.pending"]
         self.assertIsNone(pending["visual_assets"]["native_preview"])
