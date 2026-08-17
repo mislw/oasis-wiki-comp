@@ -91,13 +91,14 @@ test("loads one persisted page as an isolated session with contained assets", as
     loadPage: async () => ({
       page_id: "currency",
       title: "货币兑换",
-      control_count: 2,
+      control_count: 3,
       source_image: "source.png",
       session: {
         source_image: "source.png",
         controls: [
           { component_id: "background.currency", visual_assets: { source_crop: "__source__" } },
           { component_id: "button.currency.buy", visual_assets: { clean_layer: "layers/buy.png" } },
+          { component_id: "icon.currency.jade", visual_assets: { native_preview: "native/jade.png" } },
         ],
       },
     }),
@@ -108,13 +109,14 @@ test("loads one persisted page as an isolated session with contained assets", as
   });
 
   assert.equal(preferredWorkbenchPage(catalog), "currency");
-  assert.deepEqual(collectPersistedAssetPaths(loaded.raw), ["layers/buy.png"]);
+  assert.deepEqual(collectPersistedAssetPaths(loaded.raw), ["layers/buy.png", "native/jade.png"]);
   assert.deepEqual(reads, ["source.png"]);
   assert.equal(loaded.pageId, "currency");
   assert.match(loaded.sourceImageUrl, /^data:image\/png;base64,/);
   assert.deepEqual(loaded.raw.controls.map((node) => node.component_id), [
     "background.currency",
     "button.currency.buy",
+    "icon.currency.jade",
   ]);
 });
 
@@ -150,6 +152,7 @@ test("loads available persisted assets without failing the whole page when one i
         visual_assets: {
           clean_layer: "layers/buy.png",
           assembly_preview: "preview/missing.png",
+          native_preview: "native/jade.png",
         },
       }],
     },
@@ -159,7 +162,7 @@ test("loads available persisted assets without failing the whole page when one i
     },
   );
 
-  assert.deepEqual([...result.keys()], ["layers/buy.png"]);
+  assert.deepEqual([...result.keys()], ["layers/buy.png", "native/jade.png"]);
 });
 
 test("prefers node display text and keeps legacy currency sessions readable", async () => {
@@ -196,7 +199,7 @@ test("prefers node display text and keeps legacy currency sessions readable", as
   }), "0");
   const closeButton = {
     id: "button.currency.close",
-    category: "button",
+    category: "hit_target",
     extraction: { target_component_id: "button.currency.close" },
   };
   assert.equal(nativeWorkbenchDisplayText(closeButton), "×");
@@ -210,6 +213,16 @@ test("prefers node display text and keeps legacy currency sessions readable", as
   });
 });
 
+test("renders native preview assets without promoting them to reusable bitmaps", async () => {
+  const source = await readFile(new URL("../src/windows/UIWorkbench.tsx", import.meta.url), "utf8");
+  const css = await readFile(new URL("../src/windows/UIWorkbench.css", import.meta.url), "utf8");
+
+  assert.match(source, /function nativePreviewPath\(node: UINode\)/);
+  assert.match(source, /node\.node_kind === "native" \? visualUrl\(node, "clean"\) : null/);
+  assert.match(source, /className="native-preview-layer"/);
+  assert.match(source, /!node\.reusable_bitmap/);
+  assert.match(css, /\.native-preview-layer \{[^}]*object-fit: contain/);
+});
 test("keeps UMG-like text settings in design space so canvas zoom cannot reflow text", async () => {
   const { nativeWorkbenchTextCss } = await importTypeScript("../src/windows/uiWorkbenchSession.ts");
 

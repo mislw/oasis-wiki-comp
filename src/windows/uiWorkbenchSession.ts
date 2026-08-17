@@ -180,7 +180,7 @@ function hasComponentToken(value: string | undefined, token: string): boolean {
 
 /** Return the native close-glyph defaults for recognized close-button nodes. */
 export function nativeWorkbenchCloseTextStyle(node: NativeWorkbenchNode): WorkbenchTextStyle | undefined {
-  if (node.category !== "button") return undefined;
+  if (!(["button", "hit_target"] as string[]).includes(node.category)) return undefined;
   const targetId = node.extraction?.target_component_id;
   return hasComponentToken(node.id, "close") || hasComponentToken(targetId, "close")
     ? { ...CLOSE_BUTTON_TEXT_STYLE }
@@ -382,7 +382,7 @@ export function collectPersistedAssetPaths(raw: Record<string, unknown>): string
     if (!value || typeof value !== "object" || Array.isArray(value)) continue;
     const assets = (value as Record<string, unknown>).visual_assets;
     if (!assets || typeof assets !== "object" || Array.isArray(assets)) continue;
-    for (const key of ["clean_layer", "clean_asset", "assembly_preview"] as const) {
+    for (const key of ["clean_layer", "clean_asset", "assembly_preview", "native_preview"] as const) {
       const path = (assets as Record<string, unknown>)[key];
       if (typeof path !== "string" || !path || path === "__source__") continue;
       if (/^(?:[a-z]+:|[\\/])|(?:^|[\\/])\.\.(?:[\\/]|$)/i.test(path)) continue;

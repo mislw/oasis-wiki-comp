@@ -65,7 +65,7 @@ type UINode = {
   z_index?: number;
   node_kind?: NodeKind;
   render_mode?: RenderMode;
-  visual_assets?: { source_crop: string | null; clean_layer?: string | null; clean_asset?: string | null; assembly_preview: string | null };
+  visual_assets?: { source_crop: string | null; clean_layer?: string | null; clean_asset?: string | null; assembly_preview: string | null; native_preview?: string | null };
   interaction?: { role: "button"; target_widget: string };
   review?: { status: "candidate" | "pending_review"; cleanup_status: "not_applicable" | "needs_cleanup" | "requested" | "in_progress" | "clean" | "ready" | "failed" };
   reusable_bitmap?: boolean;
@@ -246,6 +246,7 @@ function normalizeTree(input: UITree): UITree {
       source_crop: node.visual_assets?.source_crop ?? "__source__",
       clean_layer: node.visual_assets?.clean_layer ?? node.visual_assets?.clean_asset ?? null,
       assembly_preview: node.visual_assets?.assembly_preview ?? null,
+      native_preview: node.visual_assets?.native_preview ?? null,
     };
     const cleanupStatus = nodeKind === "composite" || nodeKind === "native" || nodeKind === "interaction" ? "not_applicable"
       : assets.clean_layer ? "clean" : node.review?.cleanup_status && node.review.cleanup_status !== "not_applicable" ? node.review.cleanup_status : "needs_cleanup";
@@ -317,6 +318,14 @@ function cleanLayerPath(node: UINode) {
   return node.visual_assets?.clean_layer ?? node.visual_assets?.clean_asset ?? null;
 }
 
+function nativePreviewPath(node: UINode) {
+  return node.visual_assets?.native_preview ?? null;
+}
+
+function displayPreviewPath(node: UINode) {
+  return node.node_kind === "native" ? nativePreviewPath(node) : cleanLayerPath(node);
+}
+
 function makeSessionUrl(basePath: string, value: string | null | undefined) {
   if (!value || value === "__source__") return null;
   if (directVisualUrl(value)) return value;
@@ -328,7 +337,7 @@ function sessionAssetUrls(nodes: UINode[], basePath: string) {
   for (const node of nodes) {
     urls[node.id] = {
       ...(makeSessionUrl(basePath, node.visual_assets?.source_crop) ? { source: makeSessionUrl(basePath, node.visual_assets?.source_crop)! } : {}),
-      ...(makeSessionUrl(basePath, cleanLayerPath(node)) ? { clean: makeSessionUrl(basePath, cleanLayerPath(node))! } : {}),
+      ...(makeSessionUrl(basePath, displayPreviewPath(node)) ? { clean: makeSessionUrl(basePath, displayPreviewPath(node))! } : {}),
       ...(makeSessionUrl(basePath, node.visual_assets?.assembly_preview) ? { assembly: makeSessionUrl(basePath, node.visual_assets?.assembly_preview)! } : {}),
     };
   }
@@ -339,7 +348,7 @@ function externalSessionAssetUrls(nodes: UINode[], baseUrl: string) {
   const urls: AssetUrls = {};
   for (const node of nodes) {
     const source = node.visual_assets?.source_crop;
-    const clean = cleanLayerPath(node);
+    const clean = displayPreviewPath(node);
     const assembly = node.visual_assets?.assembly_preview;
     urls[node.id] = {
       ...(source && source !== "__source__" ? { source: resolveSessionAssetUrl(baseUrl, source) } : {}),
@@ -353,7 +362,7 @@ function externalSessionAssetUrls(nodes: UINode[], baseUrl: string) {
 function persistedSessionAssetUrls(nodes: UINode[], byPath: Map<string, string>) {
   const urls: AssetUrls = {};
   for (const node of nodes) {
-    const clean = cleanLayerPath(node);
+    const clean = displayPreviewPath(node);
     const assembly = node.visual_assets?.assembly_preview;
     urls[node.id] = {
       ...(clean && byPath.has(clean) ? { clean: byPath.get(clean)! } : {}),
@@ -1130,7 +1139,7 @@ export default function UIWorkbench() {
       const next: AssetUrls = {};
       for (const node of tree.nodes) {
         const source = findFile(node.visual_assets?.source_crop);
-        const clean = findFile(cleanLayerPath(node));
+        const clean = findFile(displayPreviewPath(node));
         const assembly = findFile(node.visual_assets?.assembly_preview);
         next[node.id] = {
           ...(source ? { source: URL.createObjectURL(source) } : {}),
@@ -1142,7 +1151,7 @@ export default function UIWorkbench() {
     });
     const matched = tree.nodes.filter((node) => {
       const assets = node.visual_assets;
-      return findFile(assets?.clean_layer ?? assets?.clean_asset) || findFile(assets?.assembly_preview);
+      return findFile(assets?.clean_layer ?? assets?.clean_asset ?? assets?.native_preview) || findFile(assets?.assembly_preview);
     }).length;
     flash(`已载入 ${matched} 个节点的 Clean / Assembly 资产`);
   }
@@ -1154,7 +1163,7 @@ export default function UIWorkbench() {
     }
     const loaded = assetUrls[node.id]?.[mode];
     if (loaded) return loaded;
-    const value = mode === "source" ? node.visual_assets?.source_crop : mode === "clean" ? cleanLayerPath(node) : node.visual_assets?.assembly_preview;
+    const value = mode === "source" ? node.visual_assets?.source_crop : mode === "clean" ? displayPreviewPath(node) : node.visual_assets?.assembly_preview;
     return directVisualUrl(value);
   }
 
@@ -1570,6 +1579,11 @@ export default function UIWorkbench() {
                   const cleanUrl = visualUrl(node, "clean");
                   if (!effectiveVisible(node, tree.nodes) || !cleanUrl || !node.reusable_bitmap || (node.node_kind !== "skin" && node.node_kind !== "artwork")) return null;
                   return <img key={`asset-${node.id}`} className="clean-asset-layer" data-asset-id={node.id} src={cleanUrl} alt="" draggable={false} style={{ left: node.bounds.x, top: node.bounds.y, width: node.bounds.width, height: node.bounds.height, opacity: effectiveOpacity(node, tree.nodes), zIndex: 100 + (layerOrder.get(node.id) ?? 0) }} />;
+                })}
+                {renderRows.map(({ node }) => {
+                  const previewUrl = node.node_kind === "native" ? visualUrl(node, "clean") : null;
+                  if (!effectiveVisible(node, tree.nodes) || !previewUrl || node.render_mode === "hidden") return null;
+                  return <img key={"native-preview-" + node.id} className="native-preview-layer" data-asset-id={node.id} src={previewUrl} alt="" draggable={false} style={{ left: node.bounds.x, top: node.bounds.y, width: node.bounds.width, height: node.bounds.height, opacity: effectiveOpacity(node, tree.nodes), zIndex: 900 + (layerOrder.get(node.id) ?? 0) }} />;
                 })}
                 {renderRows.map(({ node }) => {
                   if (!effectiveVisible(node, tree.nodes) || node.render_mode === "hidden") return null;
