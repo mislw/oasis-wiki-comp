@@ -29,6 +29,22 @@ The plugin manifest declares `skills: "./skills/"`. Codex installs the repositor
 
 The existing `src-tauri/resources/skill/` bundle remains the Companion MSI copy. A synchronization command updates both `src-tauri/resources/skill/` and `skills/oasis-wiki/` from the same canonical Skill source.
 
+## Companion Skill Source Resolution
+
+Companion resolves a trusted Skill source in this order:
+
+1. Packaged Tauri resource: `<resource_dir>/skill`.
+2. Installed plugin package: `<resource_dir>/skills/oasis-wiki`.
+3. Source checkout fallback: `<CARGO_MANIFEST_DIR>/resources/skill`.
+
+A candidate is valid only when it is a directory containing `SKILL.md`. The packaged resource remains authoritative for MSI installations, while the plugin and source-checkout candidates make Git/plugin development layouts usable without copying a standalone executable beside an unstaged `skill` directory.
+
+If no candidate is valid, the error lists every attempted absolute path and explains that the user must run the packaged installer, install the complete plugin, or keep `src-tauri/resources/skill` in the source checkout. It must not suggest that an arbitrary untrusted download directory is acceptable.
+
+## Reinstall UI
+
+The reinstall confirmation describes the actual bundled Skill version and selected targets. It must not unconditionally claim that the bundled Skill may be a minimal stub. Missing or invalid Skill resources are reported by the resolver with the attempted paths instead of a speculative warning before every reinstall.
+
 ## Marketplace Metadata
 
 The plugin keeps the stable ID `oasis-wiki-comp` and the display name `Oasis Wiki`. Its marketplace entry uses the normal install action; installing that entry downloads the complete plugin package, including the Skill.
@@ -54,6 +70,7 @@ The marketplace entry must not claim that installing the plugin also installs th
 
 - Missing `.codex-plugin/plugin.json` or `skills/oasis-wiki/SKILL.md`: plugin validation fails before publication.
 - Skill copies differ: synchronization/version tests fail before publication.
+- Companion source resolution finds no valid `SKILL.md`: installation stops before modifying any Agent target and reports all attempted trusted paths.
 - Plugin installation fails: Codex keeps the prior installed plugin; no standalone Skill downloader runs.
 - Companion MSI is absent: the Skill remains usable, while desktop-only Companion features report that the Companion is unavailable.
 - A user installs only the standalone Skill: the Skill works, but it does not silently install the plugin; documentation directs new users to the plugin entry.
@@ -63,8 +80,11 @@ The marketplace entry must not claim that installing the plugin also installs th
 - Run the plugin manifest validator from the `plugin-creator` Skill.
 - Assert the manifest points to `./skills/` and the `oasis-wiki` Skill is discoverable.
 - Assert `skills/oasis-wiki/` matches `src-tauri/resources/skill/`, excluding explicitly generated or private-only files.
+- Assert Companion source resolution prefers packaged resources, falls back to plugin/source layouts, rejects directories without `SKILL.md`, and reports all attempted paths.
+- Assert the settings UI contains no unconditional minimal-stub warning.
 - Run Skill hygiene and version consistency tests.
 - Run an installation smoke test against an isolated Codex home or plugin cache when the local Codex plugin CLI is executable.
+- Run a cloned-source smoke test where the executable resource directory has no staged `skill` folder but `src-tauri/resources/skill/SKILL.md` exists.
 - Verify the published repository contains no build targets, credentials, private project files, or local caches.
 
 ## Non-Goals
