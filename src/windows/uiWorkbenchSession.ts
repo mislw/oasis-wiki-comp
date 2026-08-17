@@ -328,6 +328,31 @@ export async function loadWorkbenchSession(
   };
 }
 
+/** Retry a loopback session briefly so the server watchdog can replace a crashed worker. */
+export async function loadWorkbenchSessionWithRetry(
+  baseUrl: string,
+  options: {
+    attempts?: number;
+    delayMs?: number;
+    fetchImpl?: typeof fetch;
+    wait?: (delayMs: number) => Promise<void>;
+  } = {},
+): Promise<LoadedWorkbenchSession> {
+  const attempts = Math.max(1, Math.trunc(options.attempts ?? 4));
+  const delayMs = Math.max(0, options.delayMs ?? 250);
+  const wait = options.wait ?? ((delay) => new Promise((resolve) => setTimeout(resolve, delay)));
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      return await loadWorkbenchSession(baseUrl, options.fetchImpl);
+    } catch (error) {
+      lastError = error;
+      if (attempt < attempts) await wait(delayMs);
+    }
+  }
+  throw lastError;
+}
+
 /** Connect initial and forwarded workbench sessions to one loader. */
 export async function connectWorkbenchSessions({
   getPendingUrl,

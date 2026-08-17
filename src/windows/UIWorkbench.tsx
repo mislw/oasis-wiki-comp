@@ -9,7 +9,7 @@ import {
   connectWorkbenchSessions,
   loadPersistedWorkbenchPage,
   loadPersistedAssetUrls,
-  loadWorkbenchSession,
+  loadWorkbenchSessionWithRetry,
   nativeWorkbenchCloseTextStyle,
   nativeWorkbenchDisplayText,
   nativeWorkbenchTextCss,
@@ -1065,7 +1065,7 @@ export default function UIWorkbench() {
 
   async function loadExternalSession(baseUrl: string) {
     try {
-      const loaded = await loadWorkbenchSession(baseUrl);
+      const loaded = await loadWorkbenchSessionWithRetry(baseUrl);
       const next = coerceTree(loaded.raw);
       setTree(next);
       setImageUrl(loaded.sourceImageUrl);
@@ -1084,7 +1084,20 @@ export default function UIWorkbench() {
       window.setTimeout(() => fitCanvas(next.page_size), 0);
       flash(`External workbench loaded: ${next.nodes.length} controls`);
     } catch (error) {
-      setNotice(`External workbench load failed. The localhost fallback remains available: ${error}`);
+      try {
+        const catalog = await refreshPageCatalog();
+        const pageId = preferredWorkbenchPage(catalog);
+        if (pageId) {
+          await loadPersistedPage(pageId);
+          setNotice("本地预览服务中断，已从持久会话自动恢复。服务守护进程会继续尝试修复 localhost 预览。");
+          flash("UI 工作台已自动恢复");
+          return;
+        }
+      } catch (recoveryError) {
+        setNotice(`本地预览服务中断，自动恢复失败：${recoveryError}`);
+        return;
+      }
+      setNotice(`本地预览服务中断，且没有可恢复的持久会话。请重新生成或重新打开该 UI：${error}`);
     }
   }
 

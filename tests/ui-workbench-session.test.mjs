@@ -48,6 +48,38 @@ test("loads a loopback workbench session and resolves contained assets", async (
   assert.throws(() => resolveSessionAssetUrl(loaded.assetBaseUrl, "../outside.png"), /outside the workbench session/);
 });
 
+test("retries a loopback session while the server watchdog replaces its worker", async () => {
+  const { loadWorkbenchSessionWithRetry } = await importTypeScript("../src/windows/uiWorkbenchSession.ts");
+  let attempts = 0;
+  const delays = [];
+  const loaded = await loadWorkbenchSessionWithRetry("http://127.0.0.1:50691/", {
+    attempts: 3,
+    delayMs: 25,
+    wait: async (delay) => { delays.push(delay); },
+    fetchImpl: async () => {
+      attempts += 1;
+      if (attempts < 3) throw new TypeError("connection refused");
+      return new Response(JSON.stringify({ source_image: "source.png", controls: [] }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    },
+  });
+
+  assert.equal(attempts, 3);
+  assert.deepEqual(delays, [25, 25]);
+  assert.equal(loaded.sourceImageUrl, "http://127.0.0.1:50691/source.png");
+});
+
+test("falls back to a persisted page when the external localhost session stays unavailable", async () => {
+  const source = await readFile(new URL("../src/windows/UIWorkbench.tsx", import.meta.url), "utf8");
+
+  assert.match(source, /loadWorkbenchSessionWithRetry\(baseUrl\)/);
+  assert.match(source, /const catalog = await refreshPageCatalog\(\);/);
+  assert.match(source, /await loadPersistedPage\(pageId\);/);
+  assert.match(source, /UI 工作台已自动恢复/);
+});
+
 test("connects pending and forwarded sessions without replacing event data with fallback", async () => {
   const { connectWorkbenchSessions } = await importTypeScript("../src/windows/uiWorkbenchSession.ts");
   const loaded = [];
