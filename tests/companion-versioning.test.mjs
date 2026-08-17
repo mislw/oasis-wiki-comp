@@ -53,3 +53,16 @@ test('Windows MSI config uses numeric SemVer build metadata', () => {
   const installerConfigVersion = `${major}.${releaseDate.slice(0, 2)}.${Number(releaseDate.slice(2))}+${iteration}`;
   assert.equal(tauriBuildConfig.version, installerConfigVersion);
 });
+
+
+test('settings display the canonical Companion version instead of the MSI build mapping', () => {
+  assert.match(settingsUi, /<span className="app-version">v\{EXPECTED_VERSION\}<\/span>/);
+  assert.doesNotMatch(settingsUi, /<span className="app-version">v\{companionVersion\}<\/span>/);
+});
+
+
+test('settings identify the GitHub updater as Skill-only', () => {
+  assert.match(settingsUi, /<h2>Skill 更新<\/h2>/);
+  assert.match(settingsUi, /<span>Skill 仓库<\/span>/);
+  assert.match(settingsUi, /这里只更新 oasis-wiki Skill，不会安装 Companion MSI/);
+});

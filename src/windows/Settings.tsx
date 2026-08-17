@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { getVersion } from "@tauri-apps/api/app";
 import { invoke } from "@tauri-apps/api/core";
 import { LogicalSize } from "@tauri-apps/api/dpi";
 import { listen } from "@tauri-apps/api/event";
@@ -22,7 +21,7 @@ import type {
   UpdateStatus,
 } from "../types";
 
-const EXPECTED_VERSION = "1.260817.5";
+const EXPECTED_VERSION = "1.260817.6";
 const CORE_MCP_TOOLS = ["ue_read", "ue_py", "ue_plan_submit"];
 const MCP_AUTO_CHECK_INTERVAL_MS = 5 * 60 * 1000;
 
@@ -64,7 +63,6 @@ export default function SettingsWindow() {
   const [toast, setToast] = useState<string | null>(null);
   const [popoverSide, setPopoverSide] = useState<PopoverSide>("floating");
   const [showCompactHome, setShowCompactHome] = useState(true);
-  const [companionVersion, setCompanionVersion] = useState("");
 
   async function reload() {
     const s = await invoke<Settings>("get_settings");
@@ -108,7 +106,6 @@ export default function SettingsWindow() {
 
   useEffect(() => {
     reload();
-    getVersion().then(setCompanionVersion).catch(() => undefined);
     const unlistenBall = listen<BallState>("ball://state", (event) => setBallState(event.payload));
     const unlistenAgent = listen<boolean>("agent://presence", (event) => setAgentPresent(event.payload));
     const unlistenActiveTargets = listen<string[]>("agent://active-targets", (event) =>
@@ -569,7 +566,7 @@ export default function SettingsWindow() {
           <div className="settings-title">
             <div className="settings-title-line">
               <h1>Oasis Companion</h1>
-              {companionVersion && <span className="app-version">v{companionVersion}</span>}
+              <span className="app-version">v{EXPECTED_VERSION}</span>
             </div>
             <p>随 Agent 自动出现的桌面控制器</p>
           </div>
@@ -648,7 +645,7 @@ export default function SettingsWindow() {
         <div className="settings-title">
           <div className="settings-title-line">
             <h1>Oasis Companion</h1>
-            {companionVersion && <span className="app-version">v{companionVersion}</span>}
+            <span className="app-version">v{EXPECTED_VERSION}</span>
           </div>
           <p>随 Agent 自动出现的 oasis-wiki 桌面控制器</p>
         </div>
@@ -1041,7 +1038,10 @@ export default function SettingsWindow() {
 
       {activeTab === "updates" && (
         <section>
-          <h2>GitHub 更新</h2>
+          <h2>Skill 更新</h2>
+          <div className="warning-box">
+            这里只更新 oasis-wiki Skill，不会安装 Companion MSI。Companion 当前版本为 v{EXPECTED_VERSION}。
+          </div>
           <label className="row">
             <span>自动检查</span>
             <input
@@ -1051,7 +1051,7 @@ export default function SettingsWindow() {
             />
           </label>
           <label className="col">
-            <span>项目仓库</span>
+            <span>Skill 仓库</span>
             <input
               type="text"
               value={settings.updates.github_repo}
