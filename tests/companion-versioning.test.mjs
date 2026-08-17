@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import test from 'node:test';
 
 
@@ -27,6 +27,13 @@ test('MSI build config maps the canonical version to valid Windows SemVer', () =
 
 
 test('all Companion and bundled Skill version fields stay synchronized', () => {
+  const pluginManifestPath = new URL('../.codex-plugin/plugin.json', import.meta.url);
+  const pluginSkillVersionPath = new URL('../skills/oasis-wiki/VERSION', import.meta.url);
+  assert.ok(existsSync(pluginManifestPath), '.codex-plugin/plugin.json must exist');
+  assert.ok(existsSync(pluginSkillVersionPath), 'skills/oasis-wiki/VERSION must exist');
+  const pluginManifest = JSON.parse(readFileSync(pluginManifestPath, 'utf8'));
+  const pluginSkillVersion = readFileSync(pluginSkillVersionPath, 'utf8').trim();
+
   assert.equal(tauriConfig.version, version);
   assert.match(cargoToml, new RegExp(`^version = "${version.replaceAll('.', '\\.') }"$`, 'm'));
   assert.match(
@@ -36,6 +43,8 @@ test('all Companion and bundled Skill version fields stay synchronized', () => {
   assert.match(skillModule, new RegExp(`CURRENT_SKILL_VERSION: &str = "${version.replaceAll('.', '\\.') }"`));
   assert.match(settingsUi, new RegExp(`EXPECTED_VERSION = "${version.replaceAll('.', '\\.') }"`));
   assert.equal(bundledSkillVersion, version);
+  assert.equal(pluginManifest.version, version);
+  assert.equal(pluginSkillVersion, version);
 });
 
 

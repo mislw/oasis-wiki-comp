@@ -1,0 +1,32 @@
+{
+  "name": "oasis-wiki-comp",
+  "version": "1.260817.5",
+  "description": "Oasis Companion plugin wrapper for the Oasis Wiki Codex skill.",
+  "author": {
+    "name": "mislw"
+  },
+  "homepage": "https://github.com/mislw/oasis-wiki-comp",
+  "repository": "https://github.com/mislw/oasis-wiki-comp",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Oasis Wiki",
+    "shortDescription": "Oasis UGC wiki and companion workflows.",
+    "longDescription": "Provides the Oasis Wiki skill for Oasis UGC development, including local wiki references, UGC Lua guidance, UGCAskQ MCP workflows, debugging notes, project routing, and Companion runtime settings.",
+    "developerName": "mislw",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "composerIcon": "./src-tauri/icons/32x32.png",
+    "logo": "./src-tauri/icons/icon.png",
+    "brandColor": "#16A34A",
+    "defaultPrompt": [
+      "Analyze this Oasis UGC project",
+      "Check the current UGCAskQ MCP connection",
+      "Look up UGCGameSystem usage"
+    ],
+    "screenshots": []
+  }
+}

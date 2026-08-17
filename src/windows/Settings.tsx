@@ -22,7 +22,7 @@ import type {
   UpdateStatus,
 } from "../types";
 
-const EXPECTED_VERSION = "1.260817.4";
+const EXPECTED_VERSION = "1.260817.5";
 const CORE_MCP_TOOLS = ["ue_read", "ue_py", "ue_plan_submit"];
 const MCP_AUTO_CHECK_INTERVAL_MS = 5 * 60 * 1000;
 
@@ -275,7 +275,7 @@ export default function SettingsWindow() {
 
   async function reinstall() {
     const ok = window.confirm(
-      "当前安装包内置的 Skill 可能是最小 stub。继续会覆盖已安装的 oasis-wiki。确认继续？",
+      `将使用内置 oasis-wiki v${EXPECTED_VERSION} 覆盖选中 Agent 的现有 Skill。确认继续？`,
     );
     if (!ok) return;
     setBusy(true);

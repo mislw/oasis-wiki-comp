@@ -45,8 +45,8 @@ src-tauri\target\release\bundle\msi\
 ## Bundled Skill
 
 The canonical Skill source lives in `mislw/oasis-wiki`. Companion mirrors its
-`oasis-wiki/` directory into `src-tauri/resources/skill/`, then adds only the
-plugin-specific `VERSION` marker used to detect bundled Skill upgrades. Run
+`oasis-wiki/` directory into both `src-tauri/resources/skill/` for the Windows
+installer and `skills/oasis-wiki/` for the Codex plugin. Run
 `scripts/sync-bundled-skill.ps1` after updating the sibling Skill checkout.
 
 After a successful Skill update, Companion removes installer-owned backup and
@@ -61,8 +61,10 @@ the previous canonical installation.
 - `src-tauri/src/`: Tauri and Rust runtime, configuration, Agent detection, MCP,
   Skill installation, tray, autostart, and updater modules.
 - `src-tauri/resources/skill/`: read-only Skill resources bundled into the installer.
+- `skills/oasis-wiki/`: complete Skill discovered automatically when Codex installs the plugin.
 - `docs/`: release design and implementation plans.
 
-This project is distributed as a Windows Companion application, not as a Codex
-marketplace plugin. The Skill and the desktop companion are installed together by
-the MSI, but the Skill itself remains independently usable by Codex.
+This repository is distributed both as a Codex plugin and as a Windows Companion
+application. Installing the plugin downloads and discovers the complete Skill.
+Installing the MSI bundles the same Skill for Companion-managed Agent targets; it
+does not require or silently install the Codex plugin.

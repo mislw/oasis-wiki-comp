@@ -14,7 +14,7 @@ use tauri::{AppHandle, Manager};
 /// The version shipped in the bundled Skill resource. Bump when the bundle
 /// changes. If an installed Skill includes `VERSION`, status detection compares
 /// it against this value.
-pub const CURRENT_SKILL_VERSION: &str = "1.260817.4";
+pub const CURRENT_SKILL_VERSION: &str = "1.260817.5";
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(tag = "kind", rename_all = "snake_case")]
@@ -157,20 +157,38 @@ fn detect_path(target: &Path) -> SkillStatus {
 /// installer-owned backup or temporary directories.
 ///
 /// Returns the post-install status for all targets.
+fn resolve_skill_source(candidates: &[PathBuf]) -> Result<PathBuf, String> {
+    for candidate in candidates {
+        if candidate.is_dir() && candidate.join("SKILL.md").is_file() {
+            return Ok(candidate.clone());
+        }
+    }
+
+    let attempted = candidates
+        .iter()
+        .map(|candidate| format!("- {}", candidate.display()))
+        .collect::<Vec<_>>()
+        .join("\n");
+    Err(format!(
+        "bundled Skill resource not found; attempted trusted paths:\n{}",
+        attempted
+    ))
+}
+
 pub fn install_skill(app: &AppHandle, targets: &[String]) -> Result<MultiTargetStatus, String> {
-    let resource_root = app
+    let resource_dir = app
         .path()
         .resource_dir()
-        .map_err(|e| format!("resource_dir: {}", e))?
-        .join("skill");
+        .map_err(|e| format!("resource_dir: {}", e))?;
+    let candidates = vec![
+        resource_dir.join("skill"),
+        resource_dir.join("skills").join("oasis-wiki"),
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("resources")
+            .join("skill"),
+    ];
+    let resource_root = resolve_skill_source(&candidates)?;
     log::info!("skill bundle resource: {:?}", resource_root);
-
-    if !resource_root.exists() {
-        return Err(format!(
-            "bundled Skill resource not found at {:?}. Build with `resources/skill/**`.",
-            resource_root
-        ));
-    }
     install_skill_from_dir(&resource_root, targets)
 }
 
@@ -448,6 +466,48 @@ mod tests {
         )
         .unwrap();
         fs::write(dir.join("VERSION"), version).unwrap();
+    }
+
+    #[test]
+    fn resolve_skill_source_prefers_the_first_valid_candidate() {
+        let root = test_dir("source-priority");
+        let invalid = root.join("invalid");
+        let first = root.join("first");
+        let second = root.join("second");
+        fs::create_dir_all(&invalid).unwrap();
+        write_skill(&first, "oasis-wiki", CURRENT_SKILL_VERSION, "first");
+        write_skill(&second, "oasis-wiki", CURRENT_SKILL_VERSION, "second");
+
+        let selected = resolve_skill_source(&[invalid, first.clone(), second]).unwrap();
+
+        assert_eq!(selected, first);
+        let _ = fs::remove_dir_all(root);
+    }
+
+    #[test]
+    fn resolve_skill_source_rejects_a_directory_without_skill_md() {
+        let root = test_dir("source-marker");
+        let candidate = root.join("candidate");
+        fs::create_dir_all(&candidate).unwrap();
+
+        let error = resolve_skill_source(&[candidate.clone()]).unwrap_err();
+
+        assert!(error.contains(candidate.to_string_lossy().as_ref()));
+        let _ = fs::remove_dir_all(root);
+    }
+
+    #[test]
+    fn resolve_skill_source_error_lists_every_attempted_path() {
+        let root = test_dir("source-error");
+        let first = root.join("first");
+        let second = root.join("second");
+
+        let error = resolve_skill_source(&[first.clone(), second.clone()]).unwrap_err();
+
+        assert!(error.contains("attempted trusted paths"));
+        assert!(error.contains(first.to_string_lossy().as_ref()));
+        assert!(error.contains(second.to_string_lossy().as_ref()));
+        let _ = fs::remove_dir_all(root);
     }
 
     #[test]
