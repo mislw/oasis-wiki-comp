@@ -62,6 +62,7 @@ type NativeWorkbenchNode = {
   display_text?: string;
   content_hint?: string;
   extraction?: { target_component_id?: string };
+  visual_assets?: { native_preview?: string | null };
 };
 
 type WorkbenchLayerNode = {
@@ -196,7 +197,7 @@ export function nativeWorkbenchDisplayText(node: NativeWorkbenchNode): string {
   const legacy = LEGACY_NATIVE_DISPLAY_TEXT[node.id]
     ?? LEGACY_NATIVE_DISPLAY_TEXT[node.extraction?.target_component_id ?? ""];
   if (legacy) return legacy;
-  if (nativeWorkbenchCloseTextStyle(node)) return "×";
+  if (nativeWorkbenchCloseTextStyle(node)) return node.visual_assets?.native_preview ? "" : "×";
   return node.category === "counter" ? "0" : "";
 }
 

@@ -203,6 +203,10 @@ test("prefers node display text and keeps legacy currency sessions readable", as
     extraction: { target_component_id: "button.currency.close" },
   };
   assert.equal(nativeWorkbenchDisplayText(closeButton), "×");
+  assert.equal(nativeWorkbenchDisplayText({
+    ...closeButton,
+    visual_assets: { native_preview: "native/button.close.default.png" },
+  }), "");
   assert.deepEqual(nativeWorkbenchCloseTextStyle(closeButton), {
     font_size: 30,
     color: "#fff3cf",
