@@ -22,7 +22,7 @@ test("background Agent detection never opens a settings window", () => {
 test("an explicit Agent settings command can still open the window", () => {
   assert.match(
     commandsSource,
-    /crate::tray::show_agent_settings\(&app, &target_id\);/,
+    /crate::tray::show_agent_settings_inline/,
   );
 });
 
