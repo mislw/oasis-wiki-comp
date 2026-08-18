@@ -1,6 +1,6 @@
 [package]
 name = "oasis-companion"
-version = "1.260818.6"
+version = "1.260818.8"
 description = "Oasis Companion desktop assistant for the oasis-wiki Skill"
 authors = ["Oasis Wiki"]
 edition = "2021"

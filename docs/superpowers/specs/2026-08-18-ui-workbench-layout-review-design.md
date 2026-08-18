@@ -122,7 +122,7 @@ The initial schema is `artifact_type: "ui_layout_review"` with `schema_version: 
 
 The persisted `nodes` array contains every complete editable node, not only changed nodes. It preserves the Workbench node contract, including identity, semantic category, optional text and display metadata, hierarchy, bounds, extraction data, visibility, locking, opacity, Z-order, Node Kind, Render Mode, visual-asset references, review state, reuse metadata, and interaction metadata when present. This allows add, duplicate, and delete operations to survive saving without overwriting `session.json`.
 
-`change_summary` is diagnostic evidence for the user and Agent. It is derived by comparing the submitted layout to the original `session.json`; it is never used as the authoritative reconstruction input.
+`change_summary` is diagnostic evidence for the user and Agent. It is derived by comparing the submitted layout to the original `session.json`; it is never used as the authoritative reconstruction input. Source sessions may expose the original tree as `nodes[].id` or as the legacy `controls[].component_id`, but submitted and persisted review nodes still require the canonical `id` field. Equivalent JSON integer and floating-point representations compare as the same layout value. Frontend-only nodes marked with `derived_from` remain in the complete saved snapshot but are excluded from the diagnostic change summary because they are synthesized presentation layers rather than user-added logical controls.
 
 ## Validation
 
@@ -132,10 +132,10 @@ The backend validates the complete submitted layout before writing:
 - The registered session directory must still contain a readable `session.json` whose `page_id` matches the request.
 - `page_size.width` and `page_size.height` must be finite and greater than zero.
 - Every node ID must be non-empty and unique.
-- Every `parent_id` must identify another submitted node.
+- Every `parent_id` must identify another submitted node or the existing implicit Workbench canvas parent `root`.
 - A node cannot parent itself, and the parent graph must contain no cycles.
 - Bounds values must be finite; width and height must be greater than zero.
-- `z_index` must be an integer within the supported signed 32-bit range.
+- `z_index` must be a finite number within the supported signed 32-bit range. Fractional values are preserved because existing Workbench nodes use them for stable layer ordering.
 - `node_kind` and `render_mode` must be members of the Workbench enums.
 - Every submitted node must contain the minimum fields required by the Workbench node contract: `id`, `category`, `bounds`, and a valid `extraction` object.
 - Visual-asset paths remain relative session asset references or recognized native asset references; arbitrary filesystem traversal is rejected.
@@ -231,6 +231,9 @@ After a successful editor write, the normal readback, compile/save, editor visua
 
 - First save creates revision `1` without changing `session.json`.
 - Repeated valid saves increment revisions and preserve the latest complete snapshot.
+- Legacy `controls[].component_id` source sessions compare against canonical submitted node IDs without reporting the whole page as added.
+- Equivalent integer and floating-point layout values do not create false moved, resized, or Z-order changes.
+- Frontend-derived background nodes remain saved but do not appear as added controls in the diagnostic summary.
 - Duplicate IDs, missing parents, self-parenting, cycles, invalid bounds, invalid Z-order, unsupported enums, and mismatched node sets are rejected.
 - A rejected save leaves the previous snapshot byte-for-byte unchanged.
 - Atomic replacement produces valid JSON and cleans up the temporary file.

@@ -14,6 +14,7 @@ use time::OffsetDateTime;
 const LAYOUT_REVIEW_ARTIFACT_TYPE: &str = "ui_layout_review";
 const LAYOUT_REVIEW_SCHEMA_VERSION: u32 = 1;
 const LAYOUT_REVIEW_STATUS: &str = "pending_chat_confirmation";
+const WORKBENCH_IMPLICIT_ROOT_PARENT: &str = "root";
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct LayoutPageSize {
@@ -212,7 +213,7 @@ fn validate_request(request: &LayoutReviewRequest) -> Result<(), String> {
     }
     for (id, parent) in &parents {
         if let Some(parent) = parent {
-            if !ids.contains(parent) {
+            if parent != WORKBENCH_IMPLICIT_ROOT_PARENT && !ids.contains(parent) {
                 return Err(format!("node {id} references missing parent {parent}"));
             }
         }
@@ -285,13 +286,15 @@ fn validate_z_index(id: &str, value: Option<&Value>) -> Result<(), String> {
     let Some(value) = value else {
         return Ok(());
     };
-    let valid = value
-        .as_i64()
-        .is_some_and(|number| i32::try_from(number).is_ok());
+    let valid = value.as_f64().is_some_and(|number| {
+        number.is_finite() && number >= i32::MIN as f64 && number <= i32::MAX as f64
+    });
     if valid {
         Ok(())
     } else {
-        Err(format!("node {id} z_index must be a signed 32-bit integer"))
+        Err(format!(
+            "node {id} z_index must be a finite number within the signed 32-bit range"
+        ))
     }
 }
 
@@ -385,7 +388,7 @@ fn build_change_summary(session: &Value, nodes: &[Value]) -> LayoutChangeSummary
         .and_then(Value::as_array)
         .cloned()
         .unwrap_or_default();
-    let source_by_id = nodes_by_id(&source_nodes);
+    let source_by_id = source_nodes_by_id(&source_nodes);
     let next_by_id = nodes_by_id(nodes);
     let source_ids = source_by_id.keys().cloned().collect::<BTreeSet<_>>();
     let next_ids = next_by_id.keys().cloned().collect::<BTreeSet<_>>();
@@ -407,20 +410,20 @@ fn build_change_summary(session: &Value, nodes: &[Value]) -> LayoutChangeSummary
         let next = next_by_id[id];
         let source_bounds = source.get("bounds").unwrap_or(&Value::Null);
         let next_bounds = next.get("bounds").unwrap_or(&Value::Null);
-        if source_bounds.get("x") != next_bounds.get("x")
-            || source_bounds.get("y") != next_bounds.get("y")
+        if numeric_field_changed(source_bounds, next_bounds, "x")
+            || numeric_field_changed(source_bounds, next_bounds, "y")
         {
             moved.push(id.clone());
         }
-        if source_bounds.get("width") != next_bounds.get("width")
-            || source_bounds.get("height") != next_bounds.get("height")
+        if numeric_field_changed(source_bounds, next_bounds, "width")
+            || numeric_field_changed(source_bounds, next_bounds, "height")
         {
             resized.push(id.clone());
         }
         if source.get("parent_id") != next.get("parent_id") {
             reparented.push(id.clone());
         }
-        if source.get("z_index") != next.get("z_index") {
+        if numeric_value_changed(source.get("z_index"), next.get("z_index")) {
             z_order_changed.push(id.clone());
         }
         if source.get("node_kind") != next.get("node_kind")
@@ -451,9 +454,38 @@ fn build_change_summary(session: &Value, nodes: &[Value]) -> LayoutChangeSummary
     }
 }
 
+fn numeric_field_changed(source: &Value, next: &Value, field: &str) -> bool {
+    numeric_value_changed(source.get(field), next.get(field))
+}
+
+fn numeric_value_changed(source: Option<&Value>, next: Option<&Value>) -> bool {
+    match (source.and_then(Value::as_f64), next.and_then(Value::as_f64)) {
+        (Some(source), Some(next)) => source != next,
+        _ => source != next,
+    }
+}
+
+fn is_frontend_derived_node(node: &Value) -> bool {
+    node.get("derived_from").and_then(Value::as_str).is_some()
+}
+
+fn source_nodes_by_id(nodes: &[Value]) -> HashMap<String, &Value> {
+    nodes
+        .iter()
+        .filter(|node| !is_frontend_derived_node(node))
+        .filter_map(|node| {
+            node.get("id")
+                .or_else(|| node.get("component_id"))
+                .and_then(Value::as_str)
+                .map(|id| (id.into(), node))
+        })
+        .collect()
+}
+
 fn nodes_by_id(nodes: &[Value]) -> HashMap<String, &Value> {
     nodes
         .iter()
+        .filter(|node| !is_frontend_derived_node(node))
         .filter_map(|node| {
             node.get("id")
                 .and_then(Value::as_str)
@@ -572,7 +604,9 @@ mod tests {
                         "category": "panel",
                         "bounds": { "x": 10, "y": 20, "width": 600, "height": 400 },
                         "extraction": { "mode": "composite", "target_component_id": "panel.main" },
-                        "z_index": 0
+                        "z_index": 0,
+                        "node_kind": "composite",
+                        "render_mode": "outline"
                     }
                 ]
             }))
@@ -649,6 +683,102 @@ mod tests {
     }
 
     #[test]
+    fn compares_legacy_control_component_ids_when_building_the_change_summary() {
+        let (catalog, session_dir) = catalog_with_session("legacy-component-id");
+        fs::write(
+            session_dir.join("session.json"),
+            serde_json::to_vec_pretty(&json!({
+                "page_id": "resource-exchange",
+                "title": "资源兑换",
+                "source_image": "source.png",
+                "page_size": { "width": 1415, "height": 794 },
+                "controls": [
+                    {
+                        "component_id": "panel.main",
+                        "category": "panel",
+                        "bounds": { "x": 10, "y": 20, "width": 600, "height": 400 },
+                        "extraction": { "mode": "composite", "target_component_id": "panel.main" },
+                        "z_index": 0
+                    }
+                ]
+            }))
+            .unwrap(),
+        )
+        .unwrap();
+
+        save_layout_review(&catalog, "resource-exchange", request(30.0), 10).unwrap();
+        let review = load_layout_review(&catalog, "resource-exchange")
+            .unwrap()
+            .unwrap();
+
+        assert_eq!(review.change_summary.added, Vec::<String>::new());
+        assert_eq!(review.change_summary.moved, vec!["panel.main"]);
+        assert_eq!(review.change_summary.changed_node_count, 1);
+    }
+
+    #[test]
+    fn treats_equivalent_integer_and_floating_point_layout_values_as_unchanged() {
+        let (catalog, session_dir) = catalog_with_session("equivalent-layout-numbers");
+        fs::write(
+            session_dir.join("session.json"),
+            serde_json::to_vec_pretty(&json!({
+                "page_id": "resource-exchange",
+                "title": "资源兑换",
+                "source_image": "source.png",
+                "page_size": { "width": 1415, "height": 794 },
+                "controls": [
+                    {
+                        "component_id": "panel.main",
+                        "category": "panel",
+                        "bounds": { "x": 10.0, "y": 20.0, "width": 600.0, "height": 400.0 },
+                        "extraction": { "mode": "composite", "target_component_id": "panel.main" },
+                        "z_index": 0.0,
+                        "node_kind": "composite",
+                        "render_mode": "outline"
+                    }
+                ]
+            }))
+            .unwrap(),
+        )
+        .unwrap();
+
+        save_layout_review(&catalog, "resource-exchange", request(10.0), 10).unwrap();
+        let review = load_layout_review(&catalog, "resource-exchange")
+            .unwrap()
+            .unwrap();
+
+        assert_eq!(review.change_summary.changed_node_count, 0);
+        assert!(review.change_summary.moved.is_empty());
+        assert!(review.change_summary.resized.is_empty());
+        assert!(review.change_summary.z_order_changed.is_empty());
+    }
+
+    #[test]
+    fn ignores_frontend_derived_background_nodes_in_the_change_summary() {
+        let (catalog, _) = catalog_with_session("derived-background-summary");
+        let mut layout = request(10.0);
+        layout.nodes.push(json!({
+            "id": "panel.main.background",
+            "derived_from": "panel.main",
+            "category": "panel",
+            "parent_id": "panel.main",
+            "bounds": { "x": 10, "y": 20, "width": 600, "height": 400 },
+            "extraction": { "mode": "reconstruct_skin", "target_component_id": "panel.main" },
+            "z_index": -0.5,
+            "node_kind": "skin",
+            "render_mode": "bitmap"
+        }));
+
+        save_layout_review(&catalog, "resource-exchange", layout, 10).unwrap();
+        let review = load_layout_review(&catalog, "resource-exchange")
+            .unwrap()
+            .unwrap();
+
+        assert_eq!(review.change_summary.changed_node_count, 0);
+        assert!(review.change_summary.added.is_empty());
+    }
+
+    #[test]
     fn repeated_save_increments_revision_and_replaces_the_snapshot() {
         let (catalog, session_dir) = catalog_with_session("repeat-save");
 
@@ -660,6 +790,28 @@ mod tests {
         assert_eq!(second.revision, 2);
         assert_eq!(review.revision, 2);
         assert_eq!(review.nodes[0]["bounds"]["x"], 45.0);
+    }
+
+    #[test]
+    fn accepts_fractional_z_indexes_used_by_workbench_layers() {
+        let (catalog, _) = catalog_with_session("fractional-z-index");
+        let mut layout = request(30.0);
+        layout.nodes[0]["z_index"] = json!(19.5);
+
+        let result = save_layout_review(&catalog, "resource-exchange", layout, 10).unwrap();
+
+        assert_eq!(result.revision, 1);
+    }
+
+    #[test]
+    fn accepts_the_workbench_implicit_root_parent() {
+        let (catalog, _) = catalog_with_session("implicit-root-parent");
+        let mut layout = request(30.0);
+        layout.nodes[0]["parent_id"] = json!("root");
+
+        let result = save_layout_review(&catalog, "resource-exchange", layout, 10).unwrap();
+
+        assert_eq!(result.revision, 1);
     }
 
     #[test]
@@ -722,8 +874,8 @@ mod tests {
             ),
             (
                 "z_index",
-                json!(1.5),
-                "z_index must be a signed 32-bit integer",
+                json!(2_147_483_648_i64),
+                "z_index must be a finite number within the signed 32-bit range",
             ),
             ("node_kind", json!("unknown"), "unsupported node_kind"),
             ("render_mode", json!("unknown"), "unsupported render_mode"),
