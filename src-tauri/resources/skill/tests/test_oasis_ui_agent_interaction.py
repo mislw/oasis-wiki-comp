@@ -15,6 +15,9 @@ COWART_GUIDE = (
 COMPONENT_GUIDE = (
     ROOT / 'references' / 'cowart-ui' / 'component-extractor.md'
 ).read_text(encoding='utf-8')
+USAGE_GUIDE = (
+    ROOT / 'references' / 'cowart-ui' / 'usage-guide.md'
+).read_text(encoding='utf-8')
 OPENAI_AGENT_GUIDE = (ROOT / 'agents' / 'openai.yaml').read_text(encoding='utf-8')
 
 
@@ -155,6 +158,40 @@ class OasisUiAgentInteractionTests(unittest.TestCase):
             'UI image generation or control slicing',
             'offer the text-only UI toolchain once per task',
             'do not ask again',
+        ):
+            with self.subTest(openai_agent_marker=marker):
+                self.assertIn(marker, OPENAI_AGENT_GUIDE)
+
+    def test_saved_workbench_layout_requires_chat_confirmation_and_fresh_source(self):
+        interaction_markers = [
+            'layout-review.json',
+            'pending_chat_confirmation',
+            'session_sha256',
+            '确认导入',
+            '按刚保存的位置导入',
+            '不会自动回传到对话',
+            '恰好一份',
+            '不能只按保存时间选择',
+            '保存布局不等于编辑器写入授权',
+            '精确 WidgetBlueprint `load_path`',
+            '项目外备份',
+            '明确授权本次写入',
+        ]
+        for marker in interaction_markers:
+            with self.subTest(marker=marker):
+                self.assertIn(marker, INTERACTION_GUIDE)
+
+        for guide in (SKILL_GUIDE, AGENTS_GUIDE, USAGE_GUIDE):
+            for marker in ('layout-review.json', '确认导入', '保存布局不等于编辑器写入授权'):
+                with self.subTest(guide_length=len(guide), marker=marker):
+                    self.assertIn(marker, guide)
+
+        for marker in (
+            'layout-review.json',
+            'pending_chat_confirmation',
+            'session_sha256',
+            'must not choose the newest snapshot when multiple pages are pending',
+            'does not authorize an editor write',
         ):
             with self.subTest(openai_agent_marker=marker):
                 self.assertIn(marker, OPENAI_AGENT_GUIDE)

@@ -197,6 +197,19 @@ USER_APPROVAL_REQUIRED
 
 工作台修改 `bounds`、`parent`、`ZOrder`、节点分类、clean layer、拆分或合并以后，旧的 layer approval 立即失效。重新验证并再次等待用户确认。不要声称工作台会自动回传这些变化；没有运行时桥接时，应重新读取实际 manifest、文件时间和工作台产物。
 
+### 保存布局后的原对话确认
+
+Workbench 点击 `保存布局` 后，在已注册页面的会话目录生成 `layout-review.json`。快照必须是 `artifact_type: ui_layout_review`、`schema_version: 1`、`status: pending_chat_confirmation`，并记录 `source.session_sha256`、page ID、revision、保存时间、完整节点和变更摘要。保存完成后不会自动回传到对话，也不会打开或创建新的 Codex task。
+
+用户回到原对话说 `确认导入`、`按刚保存的位置导入` 或同义明确说法时：
+
+1. 优先使用当前对话已经识别的 page ID，读取该页面实际 `layout-review.json`。
+2. 当前对话没有 page ID 时，只能在当前项目恰好一份 `pending_chat_confirmation` 快照时使用它；存在多份时必须询问页面，不能只按保存时间选择。
+3. 重新读取 `session.json` 并计算 SHA-256；与 `source.session_sha256` 不一致时，报告快照已过期并要求回到 Workbench 重新保存。
+4. 在执行任何编辑器操作前，先报告 page ID、revision、保存时间和 change summary，并把快照中的完整 bounds、尺寸、parent 和 Z-order 作为后续 UMG 计划输入。
+
+保存布局不等于编辑器写入授权。`确认导入` 只确认该 revision 可以进入下一步交付计划；写入前仍必须具备精确 WidgetBlueprint `load_path`、编辑器项目匹配、已冻结且引用该 revision 的 UMG 计划、只读 MCP 预检、项目外备份，以及用户明确授权本次写入。任何一项缺失都停在计划或预检，不得修改 `.uasset`、WidgetBlueprint、Lua 或 DataTable。
+
 ## UMG_REQUIREMENTS
 
 用户确认分层后，先读取真实 UI Tree、项目中已工作的 WidgetTree、Lua、UIManager、配置和 RPC，再生成交互需求草案。不得直接创建 WidgetBlueprint。
