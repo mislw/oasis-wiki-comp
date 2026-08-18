@@ -9,6 +9,8 @@ For game UI reference analysis, reusable control libraries, project-specific ass
 
 For AI UI generation, automatic native Cowart handoff, editable layer extraction, component confirmation, or RedCliff delivery planning, use the separate Cowart UI Production branch in `references/cowart-ui-workflow.md`. For staged Agent questions, approvals, review gates, backtracking, and result reporting around that existing workflow, also read `references/oasis-ui-agent-interaction.md`.
 
+For user-facing instructions on starting, continuing, reviewing, confirming components, planning UMG, or authorizing editor delivery, read `references/cowart-ui/usage-guide.md`. Treat `更新 Skill/UI 工具链说明` as documentation-only; ambiguous editor-sync wording requires one clarification and never grants editor-write permission by itself.
+
 Natural-language requests such as `做一下 UI 生成`, `我有一个 UI 需要生图`, `帮我做个 UI`, or `启动 UI 生图工具` immediately enter Cowart UI Production. Run `scripts/cowart-ui/component-extractor/open_ui_workflow.py` to open or focus Companion's native UI generation workflow, then continue the SOURCE stage in the same conversation.
 
 When built-in `image_gen` is unavailable, an official environment Key is absent, the active credential belongs to a custom provider, or the default image model is unavailable, do not stop before querying the active provider. Run `scripts/game-ui/generate_with_codex_provider.py --discover-image-models`; this metadata-only `/models` discovery reports `generation_attempted: false`, never performs an automatic paid probe, and never prints credentials. List the `confirmed`, `likely`, and `uncertain` candidates with their evidence for the developer. Keep `selection_required: true` even when only one candidate exists, and generate only after the developer selects a model and explicitly authorizes provider-direct generation.
@@ -115,3 +117,4 @@ Additional distilled references:
 - `references/cowart-ui-workflow.md`: staged workflow for turning approved UI visuals into reviewable reusable controls.
 - `references/cowart-ui/precision-reconstruction.md`: Stage 2A/2B recognition, reconstruction, recomposition, and review gate.
 - `references/cowart-ui/component-extractor.md`: extraction-plan schema and local command-line tools.
+- `references/cowart-ui/usage-guide.md`: user-facing entry phrases, stage-by-stage next actions, component reuse expectations, and the boundary between documentation updates and authorized editor delivery.
