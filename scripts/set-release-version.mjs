@@ -83,6 +83,11 @@ export function setReleaseVersion(root, version) {
       `self.assertEqual(VERSION, '${version}')`,
     );
   }
+  replaceRequired(
+    join(root, 'tests', 'companion-versioning.test.mjs'),
+    /expectedReleaseVersion = '[^']+';/,
+    `expectedReleaseVersion = '${version}';`,
+  );
 }
 
 

@@ -46,6 +46,8 @@ python scripts/game-ui/generate_with_codex_provider.py --package <generation-pac
 
 ## 暂停的原生入口
 
+用户询问怎么启动、继续或验收这套流程时，先读 `references/cowart-ui/usage-guide.md`。其中的常用说法只负责选择或继续阶段；除非满足精确资产、冻结计划、项目外备份和本次明确授权，不得把“同步编辑器”等模糊说法当成写入许可。
+
 ```powershell
 python scripts/cowart-ui/component-extractor/open_ui_workflow.py
 python scripts/cowart-ui/component-extractor/launch_ui_workflow_console.py --name "<page name>"
@@ -56,6 +58,7 @@ python scripts/cowart-ui/component-extractor/launch_ui_workflow_console.py --nam
 ## 分类资源
 
 - `references/cowart-ui/component-extractor.md`：Stage 0-3、Cowart 自动交接、组件提取与工作台流程。
+- `references/cowart-ui/usage-guide.md`：用户如何启动、继续、审核和授权 UI 工具链，以及说明更新与编辑器写入的权限边界。
 - `references/cowart-ui/precision-reconstruction.md`：Stage 2A/2B 识别、clean layer 重建、Assembly Preview 与审核 Gate。
 - `references/cowart-ui/two-stage-workflow.md`：视觉评审与组件化的阶段边界。
 - `references/cowart-ui/layer-manifest.md`：图层清单和导入契约。
