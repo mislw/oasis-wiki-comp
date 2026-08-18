@@ -17,6 +17,7 @@ mod tray;
 mod ui_delivery_preflight;
 mod ui_workbench;
 mod ui_workbench_catalog;
+mod ui_workbench_layout;
 mod ui_workflow;
 mod updater;
 
@@ -279,6 +280,8 @@ pub fn run() {
             commands::select_ui_workbench_page,
             commands::load_ui_workbench_page,
             commands::read_ui_workbench_asset,
+            commands::save_ui_workbench_layout,
+            commands::load_ui_workbench_layout_review,
             commands::open_ui_workbench,
             commands::list_ui_workflow_tasks,
             commands::select_ui_workflow_task,

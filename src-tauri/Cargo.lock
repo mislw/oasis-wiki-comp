@@ -2428,6 +2428,7 @@ dependencies = [
  "tauri-plugin-opener",
  "tauri-plugin-shell",
  "tauri-plugin-single-instance",
+ "time",
  "tokio",
  "url",
  "windows-sys 0.61.2",

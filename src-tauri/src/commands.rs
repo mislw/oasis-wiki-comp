@@ -11,6 +11,7 @@ use crate::skill::MultiTargetStatus;
 use crate::state::{AppState, BallState};
 use crate::ui_delivery_preflight::{DeliveryPreflightState, WidgetBlueprintSearchResult};
 use crate::ui_workbench_catalog::{self, LoadedWorkbenchPageView, WorkbenchCatalogView};
+use crate::ui_workbench_layout::{self, LayoutReview, LayoutReviewRequest, LayoutReviewSaveResult};
 use crate::ui_workflow::{self, UiWorkflowStore};
 
 #[tauri::command]
@@ -123,6 +124,37 @@ pub fn read_ui_workbench_asset(
         .unwrap()
         .clone();
     ui_workbench_catalog::read_page_asset(&catalog, &page_id, &asset_path)
+}
+
+/// Persist one human-reviewed layout without mutating its source session.
+#[tauri::command]
+pub fn save_ui_workbench_layout(
+    app: AppHandle,
+    page_id: String,
+    layout: LayoutReviewRequest,
+) -> Result<LayoutReviewSaveResult, String> {
+    let catalog = app
+        .state::<AppState>()
+        .ui_workbench_catalog
+        .lock()
+        .unwrap()
+        .clone();
+    ui_workbench_layout::save_layout_review(&catalog, &page_id, layout, current_unix_ms())
+}
+
+/// Load the latest saved layout review for one registered page.
+#[tauri::command]
+pub fn load_ui_workbench_layout_review(
+    app: AppHandle,
+    page_id: String,
+) -> Result<Option<LayoutReview>, String> {
+    let catalog = app
+        .state::<AppState>()
+        .ui_workbench_catalog
+        .lock()
+        .unwrap()
+        .clone();
+    ui_workbench_layout::load_layout_review(&catalog, &page_id)
 }
 
 /// Open the UI Workbench without requiring a newly generated session.
