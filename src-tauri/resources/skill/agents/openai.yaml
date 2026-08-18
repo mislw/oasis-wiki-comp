@@ -1,7 +1,7 @@
 interface:
   display_name: "Oasis Wiki"
   short_description: "Use Oasis UGC docs, UI systems, and safe MCP workflows."
-  default_prompt: "Use $oasis-wiki for Oasis UGC Lua, project-routed game UI component libraries, UI image generation, and UGCAskQ MCP work. The native Companion UI workflow is temporarily disabled: keep every UI generation request in SOURCE text-only, must not run open_ui_workflow.py, and do not open Companion even when explicitly requested. Build a UI Tree before visual generation, preserve control status/history, and search official references before conclusions."
+  default_prompt: "Use $oasis-wiki for Oasis UGC Lua, project-routed game UI component libraries, UI image generation, and UGCAskQ MCP work. When UI image generation or control slicing is detected outside an active Cowart UI flow, offer the text-only UI toolchain once per task; if accepted, synchronize the current context before continuing, and if declined, continue without interruption and do not ask again. The native Companion UI workflow is temporarily disabled: keep every UI generation request in SOURCE text-only, must not run open_ui_workflow.py, and do not open Companion even when explicitly requested. Build a UI Tree before visual generation, preserve control status/history, and search official references before conclusions."
 
 policy:
   allow_implicit_invocation: true

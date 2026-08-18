@@ -44,6 +44,18 @@ class CowartUiUsageGuideTests(unittest.TestCase):
             with self.subTest(marker=marker):
                 self.assertIn(marker, content)
 
+    def test_usage_guide_documents_proactive_ui_work_detection(self):
+        content = USAGE_GUIDE_PATH.read_text(encoding='utf-8')
+        for marker in (
+            '检测到你正在进行 UI 生图或控件拆分',
+            '每个任务最多询问一次',
+            '同步当前进度',
+            '拒绝后继续当前任务',
+            '不会打开原生 Companion',
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, content)
+
 
 if __name__ == '__main__':
     unittest.main()

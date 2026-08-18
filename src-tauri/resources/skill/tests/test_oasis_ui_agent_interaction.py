@@ -122,6 +122,43 @@ class OasisUiAgentInteractionTests(unittest.TestCase):
             OPENAI_AGENT_GUIDE,
         )
 
+    def test_ui_work_detection_offers_text_only_toolchain_assistance_once(self):
+        prompt = (
+            '检测到你正在进行 UI 生图或控件拆分，是否需要我接入文字版 UI 工具链，'
+            '帮你同步当前进度并继续协助？'
+        )
+        for marker in (
+            'UI 生图',
+            '界面效果图',
+            '切控件',
+            '拆控件',
+            '组件提取',
+            '图层拆分',
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, INTERACTION_GUIDE)
+
+        for marker in (
+            prompt,
+            '每个任务最多询问一次',
+            '先总结并同步当前上下文',
+            '继续当前任务且不重复询问',
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, INTERACTION_GUIDE)
+
+        for guide in (SKILL_GUIDE, AGENTS_GUIDE):
+            with self.subTest(guide_length=len(guide)):
+                self.assertIn(prompt, guide)
+
+        for marker in (
+            'UI image generation or control slicing',
+            'offer the text-only UI toolchain once per task',
+            'do not ask again',
+        ):
+            with self.subTest(openai_agent_marker=marker):
+                self.assertIn(marker, OPENAI_AGENT_GUIDE)
+
 
 if __name__ == '__main__':
     unittest.main()
