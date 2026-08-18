@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "test:hierarchy": "node --test tests/ui-image-analyzer-hierarchy.test.mjs tests/city-defence-workbench-hierarchy.test.mjs tests/ui-workbench-session.test.mjs tests/ui-workflow.test.mjs tests/companion-window-policy.test.mjs",
+    "test:hierarchy": "node --test tests/ui-image-analyzer-hierarchy.test.mjs tests/city-defence-workbench-hierarchy.test.mjs tests/ui-workbench-session.test.mjs tests/ui-workbench-layout.test.mjs tests/ui-workflow.test.mjs tests/companion-window-policy.test.mjs",
     "test:version": "node --test tests/companion-versioning.test.mjs",
     "version:set": "node scripts/set-release-version.mjs",
     "preview": "vite preview",

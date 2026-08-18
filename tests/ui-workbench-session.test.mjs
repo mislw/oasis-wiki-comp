@@ -325,26 +325,33 @@ test("canvas selection reveals and centers the matching hierarchy row", async ()
   assert.match(source, /scrollIntoView\(\{\s*block: "center",\s*inline: "nearest",?\s*}\)/s);
 });
 
-test("workbench confirms the current page and starts a new Codex task", async () => {
+test("workbench saves layout for chat confirmation without direct delivery", async () => {
   const source = await readFile(new URL("../src/windows/UIWorkbench.tsx", import.meta.url), "utf8");
-  assert.match(source, /confirm_and_deliver_ui/);
-  assert.match(source, /search_widget_blueprints/);
-  assert.match(source, /preflight_ui_delivery/);
-  assert.match(source, /evidenceId/);
-  assert.doesNotMatch(source, /\|\|\s*"\/Game\/UI\/"/);
-  assert.match(source, /submit_codex_new_task_prompt/);
-  assert.match(source, /确认并交付到编辑器/);
-  assert.match(source, /openUrl\(result\.new_task_url\)/);
-  assert.match(source, /来源任务/);
-  assert.match(source, /新建 Codex 任务/);
-  assert.match(source, /确认并在新任务中实现/);
-  assert.doesNotMatch(source, /process_id/);
-  assert.match(source, /ui-workflow:\/\/progress/);
-  assert.match(source, /workflowStageRows/);
-  assert.match(source, /workbench-workflow-strip/);
-  assert.match(source, /role="dialog"/);
-  assert.doesNotMatch(source, /window\.prompt/);
-  assert.doesNotMatch(source, /window\.confirm/);
+  assert.match(source, /save_ui_workbench_layout/);
+  assert.match(source, /load_ui_workbench_layout_review/);
+  assert.match(source, /workbenchLayoutFingerprint/);
+  assert.match(source, /保存布局/);
+  assert.match(source, /layoutSaveState\.label/);
+  assert.doesNotMatch(source, /confirm_and_deliver_ui/);
+  assert.doesNotMatch(source, /search_widget_blueprints/);
+  assert.doesNotMatch(source, /preflight_ui_delivery/);
+  assert.doesNotMatch(source, /submit_codex_new_task_prompt/);
+  assert.doesNotMatch(source, /openUrl/);
+  assert.doesNotMatch(source, /workflowStageRows/);
+  assert.doesNotMatch(source, /workbench-workflow-strip/);
+  for (const removedLabel of [
+    "导入图片",
+    "重新自动识别",
+    "导入 UI Tree",
+    "导入资产",
+    "导出 UI Tree",
+    "确认并交付到编辑器",
+  ]) {
+    assert.doesNotMatch(source, new RegExp(removedLabel));
+  }
+  for (const retainedLabel of ["Node Kind", "Render Mode", "Assets", "Structure", "归位", "重置"]) {
+    assert.match(source, new RegExp(retainedLabel));
+  }
 });
 
 test("ui workbench may open only the Codex new-task deep link", async () => {

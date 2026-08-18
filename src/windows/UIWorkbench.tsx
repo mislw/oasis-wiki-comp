@@ -2,9 +2,13 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-import { openUrl } from "@tauri-apps/plugin-opener";
-import { analyzeUIImage } from "./uiImageAnalyzer";
 import { canOwnChildren } from "./uiHierarchy";
+import {
+  workbenchLayoutFingerprint,
+  workbenchLayoutProjection,
+  workbenchLayoutSaveState,
+  type PersistedLayoutState,
+} from "./uiWorkbenchLayout";
 import {
   connectWorkbenchSessions,
   loadPersistedWorkbenchPage,
@@ -20,15 +24,6 @@ import {
   type WorkbenchCatalog,
   type WorkbenchTextStyle,
 } from "./uiWorkbenchSession";
-import {
-  workflowStageRows,
-  type DeliveryPreflightEvidence,
-  type DeliveryPreflightState,
-  type UiWorkflowStore,
-  type UiWorkflowTask,
-  type WidgetBlueprintCandidate,
-  type WidgetBlueprintSearchResult,
-} from "./uiWorkflowModel";
 import "./UIWorkbench.css";
 
 type ExtractionMode = "native" | "extract_artwork" | "reconstruct_skin" | "composite";
@@ -93,24 +88,21 @@ type Interaction = {
 type PanInteraction = { startX: number; startY: number; panX: number; panY: number };
 type LayerRow = { node: UINode; depth: number; hasChildren: boolean };
 type AssetUrls = Record<string, Partial<Record<VisualMode, string>>>;
-type DeliveryDispatchResult = {
-  delivery_id: string;
-  request_path: string;
-  new_task_url: string;
+type LayoutReview = {
+  artifact_type: "ui_layout_review";
+  schema_version: 1;
+  status: "pending_chat_confirmation";
+  page_id: string;
+  revision: number;
+  page_size: UITree["page_size"];
+  nodes: UINode[];
 };
-type CodexPromptSubmissionResult = {
-  submitted: boolean;
-  message: string;
-};
-type DeliveryDialogState = {
-  task: UiWorkflowTask;
-  projectWorkspace: string;
-  query: string;
-  candidates: WidgetBlueprintCandidate[];
-  selectedLoadPath: string;
-  preflight: DeliveryPreflightEvidence | null;
-  state: DeliveryPreflightState;
-  message: string;
+type LayoutReviewSaveResult = {
+  page_id: string;
+  revision: number;
+  saved_at: string;
+  status: "pending_chat_confirmation";
+  content_sha256: string;
 };
 type TreeRevealRequest = { id: string; sequence: number };
 
@@ -475,14 +467,9 @@ export default function UIWorkbench() {
   const [panning, setPanning] = useState(false);
   const [canvasPan, setCanvasPan] = useState({ x: 0, y: 0 });
   const [notice, setNotice] = useState("演示项目已载入");
-  const [analyzing, setAnalyzing] = useState(false);
-  const [workflowStore, setWorkflowStore] = useState<UiWorkflowStore>({ selected_task_id: null, tasks: [] });
-  const [deliveryDialog, setDeliveryDialog] = useState<DeliveryDialogState | null>(null);
-  const [deliveryBusy, setDeliveryBusy] = useState(false);
+  const [savedLayouts, setSavedLayouts] = useState<Record<string, PersistedLayoutState>>({});
+  const [savingLayout, setSavingLayout] = useState(false);
   const [treeRevealRequest, setTreeRevealRequest] = useState<TreeRevealRequest | null>(null);
-  const imageInput = useRef<HTMLInputElement>(null);
-  const treeInput = useRef<HTMLInputElement>(null);
-  const assetInput = useRef<HTMLInputElement>(null);
   const treeListRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -490,8 +477,8 @@ export default function UIWorkbench() {
   const panRef = useRef<PanInteraction | null>(null);
   const canvasPanRef = useRef(canvasPan);
   const wheelAnchorRef = useRef<{ clientX: number; clientY: number; canvasX: number; canvasY: number } | null>(null);
-  const ownedImageUrlRef = useRef<string | null>(null);
   const treeRevealSequenceRef = useRef(0);
+  const currentFingerprintRef = useRef("");
 
   const scale = zoom / 100;
   const selected = tree.nodes.find((node) => node.id === selectedId) ?? null;
@@ -520,22 +507,19 @@ export default function UIWorkbench() {
     return nodeKind === galleryFilter;
   }), [galleryFilter, galleryTab, tree.nodes]);
   const pageNavRows = useMemo(() => workbenchPageNavRows(pageCatalog), [pageCatalog]);
-  const workflowTask = useMemo(
-    () => workflowStore.tasks.find((task) => task.page_id === pageCatalog.selected_page_id) ?? null,
-    [pageCatalog.selected_page_id, workflowStore.tasks],
-  );
-  const workflowStages = useMemo(
-    () => workflowTask ? workflowStageRows(workflowTask.stages) : [],
-    [workflowTask],
-  );
-  const deliveryReady = Boolean(
-    deliveryDialog?.preflight?.status === "ready"
-      && deliveryDialog.preflight.selected_load_path === deliveryDialog.selectedLoadPath,
-  );
+  const currentFingerprint = useMemo(() => workbenchLayoutFingerprint(tree), [tree]);
+  const activeSavedLayout = pageCatalog.selected_page_id
+    ? savedLayouts[pageCatalog.selected_page_id] ?? null
+    : null;
+  const layoutSaveState = workbenchLayoutSaveState(currentFingerprint, activeSavedLayout);
 
   useEffect(() => {
     canvasPanRef.current = canvasPan;
   }, [canvasPan]);
+
+  useEffect(() => {
+    currentFingerprintRef.current = currentFingerprint;
+  }, [currentFingerprint]);
 
   useEffect(() => {
     let unsubscribe: (() => void) | undefined;
@@ -555,22 +539,6 @@ export default function UIWorkbench() {
     return () => {
       cancelled = true;
       unsubscribe?.();
-    };
-  }, []);
-
-  useEffect(() => () => {
-    if (ownedImageUrlRef.current) URL.revokeObjectURL(ownedImageUrlRef.current);
-  }, []);
-
-  useEffect(() => {
-    invoke<UiWorkflowStore>("list_ui_workflow_tasks")
-      .then(setWorkflowStore)
-      .catch((error) => setNotice(`UI workflow could not be loaded: ${error}`));
-    const unlisten = listen<UiWorkflowStore>("ui-workflow://progress", (event) => {
-      setWorkflowStore(event.payload);
-    });
-    return () => {
-      unlisten.then((stop) => stop());
     };
   }, []);
 
@@ -914,35 +882,6 @@ export default function UIWorkbench() {
     };
   }, []);
 
-  async function applyAutomaticAnalysis(image: HTMLImageElement, nextUrl: string, nextName: string) {
-    if (analyzing) return;
-    setAnalyzing(true);
-    setNotice("正在自动识别背景、控件、文字和层级…");
-    await new Promise<void>((resolve) => window.requestAnimationFrame(() => resolve()));
-    try {
-      const result = await analyzeUIImage(image);
-      const next = normalizeTree(result.tree as UITree);
-      setTree(next);
-      setImageUrl(nextUrl);
-      setImageName(nextName);
-      setSelectedId(next.nodes.find((node) => node.category === "panel")?.id ?? next.nodes[0]?.id ?? "");
-      setAssetUrls({});
-      setCollapsedLayers(new Set());
-      setReferenceVisible(true);
-      setReferenceOpacity(0.72);
-      setGalleryTab("structure");
-      setGalleryFilter("all");
-      setSnap(false);
-      setMoveScope("layer");
-      window.setTimeout(() => fitCanvas(next.page_size), 0);
-      flash(`自动识别完成：${result.stats.panels} 面板 · ${result.stats.buttons} 按钮 · ${result.stats.text} 文字 · ${result.stats.artwork} 图标`);
-    } catch (error) {
-      flash(`自动识别失败: ${error}`);
-    } finally {
-      setAnalyzing(false);
-    }
-  }
-
   async function refreshPageCatalog() {
     const catalog = await invoke<WorkbenchCatalog>("list_ui_workbench_pages");
     setPageCatalog(catalog);
@@ -983,10 +922,6 @@ export default function UIWorkbench() {
       const catalog = await invoke<WorkbenchCatalog>("select_ui_workbench_page", { pageId });
       await loadPersistedPage(pageId);
       setPageCatalog(catalog);
-      const task = workflowStore.tasks.find((item) => item.page_id === pageId);
-      if (task) {
-        setWorkflowStore(await invoke<UiWorkflowStore>("select_ui_workflow_task", { taskId: task.task_id }));
-      }
     } catch (error) {
       setNotice(`UI page could not be opened: ${error}`);
     }
@@ -1000,7 +935,7 @@ export default function UIWorkbench() {
         assetPath,
       }),
     });
-    const next = coerceTree(loaded.raw);
+    const sourceTree = coerceTree(loaded.raw);
     const persistedAssets = await loadPersistedAssetUrls(
       pageId,
       loaded.raw,
@@ -1009,6 +944,16 @@ export default function UIWorkbench() {
         assetPath,
       }),
     );
+    let review: LayoutReview | null = null;
+    let reviewError = "";
+    try {
+      review = await invoke<LayoutReview | null>("load_ui_workbench_layout_review", { pageId });
+    } catch (error) {
+      reviewError = String(error);
+    }
+    const next = review
+      ? normalizeTree({ ...sourceTree, page_size: review.page_size, nodes: review.nodes })
+      : sourceTree;
     const nextAssetUrls = persistedSessionAssetUrls(next.nodes, persistedAssets);
 
     setTree(next);
@@ -1026,8 +971,26 @@ export default function UIWorkbench() {
     setMoveScope("group");
     setCanvasPan({ x: 0, y: 0 });
     setPageCatalog((catalog) => ({ ...catalog, selected_page_id: pageId }));
+    setSavedLayouts((current) => {
+      const nextSaved = { ...current };
+      if (review) {
+        nextSaved[pageId] = {
+          revision: review.revision,
+          fingerprint: workbenchLayoutFingerprint(next),
+        };
+      } else {
+        delete nextSaved[pageId];
+      }
+      return nextSaved;
+    });
     window.setTimeout(() => fitCanvas(next.page_size), 0);
-    flash(`${loaded.title} loaded: ${next.nodes.length} controls`);
+    if (reviewError) {
+      flash(`${loaded.title} 已载入，但布局快照不可用：${reviewError}`);
+    } else if (review) {
+      flash(`${loaded.title} 已载入保存布局 v${review.revision}`);
+    } else {
+      flash(`${loaded.title} loaded: ${next.nodes.length} controls`);
+    }
   }
 
   async function loadBuiltInCityDefenceSession() {
@@ -1055,10 +1018,17 @@ export default function UIWorkbench() {
       window.setTimeout(() => fitCanvas(next.page_size), 0);
       flash(`City Defence loaded: ${next.nodes.filter((node) => Boolean(cleanLayerPath(node))).length} clean layers`);
     } catch (error) {
-      const image = new Image();
-      image.onload = () => void applyAutomaticAnalysis(image, DEMO_IMAGE, "gem-lottery-ui-draft-v1.png");
-      image.onerror = () => flash("内置演示图读取失败");
-      image.src = DEMO_IMAGE;
+      const next = normalizeTree(cloneTree(DEFAULT_TREE));
+      setTree(next);
+      setImageUrl(DEMO_IMAGE);
+      setImageName("gem-lottery-ui-draft-v1.png");
+      setSelectedId(next.nodes[0]?.id ?? "");
+      setAssetUrls({});
+      setReferenceVisible(true);
+      setReferenceOpacity(0.72);
+      setGalleryTab("structure");
+      setGalleryFilter("all");
+      setMoveScope("layer");
       flash(`City Defence session load failed: ${error}`);
     }
   }
@@ -1101,77 +1071,6 @@ export default function UIWorkbench() {
     }
   }
 
-  function analyzeCurrentImage() {
-    if (analyzing) return;
-    const image = new Image();
-    image.onload = () => void applyAutomaticAnalysis(image, imageUrl, imageName);
-    image.onerror = () => flash("当前图片读取失败");
-    image.src = imageUrl;
-  }
-
-  function onImageFile(file?: File) {
-    if (!file || analyzing) return;
-    const nextUrl = URL.createObjectURL(file);
-    const image = new Image();
-    image.onload = () => {
-      if (ownedImageUrlRef.current) URL.revokeObjectURL(ownedImageUrlRef.current);
-      ownedImageUrlRef.current = nextUrl;
-      void applyAutomaticAnalysis(image, nextUrl, file.name);
-    };
-    image.onerror = () => {
-      URL.revokeObjectURL(nextUrl);
-      flash("图片读取失败");
-    };
-    image.src = nextUrl;
-  }
-
-  function onTreeFile(file?: File) {
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      try {
-        const next = coerceTree(JSON.parse(String(reader.result)));
-        setTree(next);
-        setSelectedId(next.nodes[0]?.id ?? "");
-        flash(`已导入 ${file.name}`);
-      } catch (error) {
-        flash("UI Tree 读取失败: " + error);
-      }
-    };
-    reader.readAsText(file);
-  }
-
-  function onAssetFiles(files?: FileList | null) {
-    if (!files?.length) return;
-    const candidates = Array.from(files);
-    const findFile = (path: string | null | undefined) => {
-      if (!path || path === "__source__") return null;
-      const normalized = path.replace(/\\/g, "/");
-      const name = normalized.split("/").pop();
-      return candidates.find((file) => (file.webkitRelativePath || file.name).replace(/\\/g, "/").endsWith(normalized) || file.name === name) ?? null;
-    };
-    setAssetUrls((current) => {
-      for (const slots of Object.values(current)) for (const url of Object.values(slots)) if (url?.startsWith("blob:")) URL.revokeObjectURL(url);
-      const next: AssetUrls = {};
-      for (const node of tree.nodes) {
-        const source = findFile(node.visual_assets?.source_crop);
-        const clean = findFile(displayPreviewPath(node));
-        const assembly = findFile(node.visual_assets?.assembly_preview);
-        next[node.id] = {
-          ...(source ? { source: URL.createObjectURL(source) } : {}),
-          ...(clean ? { clean: URL.createObjectURL(clean) } : {}),
-          ...(assembly ? { assembly: URL.createObjectURL(assembly) } : {}),
-        };
-      }
-      return next;
-    });
-    const matched = tree.nodes.filter((node) => {
-      const assets = node.visual_assets;
-      return findFile(assets?.clean_layer ?? assets?.clean_asset ?? assets?.native_preview) || findFile(assets?.assembly_preview);
-    }).length;
-    flash(`已载入 ${matched} 个节点的 Clean / Assembly 资产`);
-  }
-
   function visualUrl(node: UINode, mode: VisualMode) {
     if (mode === "clean" && !cleanLayerPath(node) && node.node_kind === "composite") {
       const background = tree.nodes.find((candidate) => candidate.derived_from === node.id || candidate.id === `${node.id}.background`);
@@ -1198,176 +1097,36 @@ export default function UIWorkbench() {
     setGalleryFilter("all");
   }
 
-  function exportTree() {
-    const payload = JSON.stringify(tree, null, 2);
-    const url = URL.createObjectURL(new Blob([payload], { type: "application/json" }));
-    const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = imageName.replace(/\.[^.]+$/, "") + "-ui-tree.json";
-    anchor.click();
-    URL.revokeObjectURL(url);
-    flash("UI Tree 已导出");
-  }
-
-  async function beginDelivery() {
+  async function saveLayout() {
     const pageId = pageCatalog.selected_page_id;
     if (!pageId) {
-      flash("请先选择一个持久化 UI 页面");
+      flash("当前页面不是持久化页面，无法保存布局");
       return;
     }
+    const submittedFingerprint = currentFingerprint;
+    setSavingLayout(true);
     try {
-      const workflow = await invoke<UiWorkflowStore>("list_ui_workflow_tasks");
-      setWorkflowStore(workflow);
-      const task = workflow.tasks.find((item) => item.page_id === pageId);
-      if (!task?.agent_context?.thread_id) {
-        flash("当前页面没有来源 Codex 任务，无法自动投递");
-        return;
-      }
-      const preflight = task.target.preflight?.status === "ready"
-        && task.target.preflight.selected_load_path === task.target.widget_blueprint
-        ? task.target.preflight
-        : null;
-      const restoredCandidate = preflight ? [{
-        display_name: task.target.widget_blueprint_name || task.target.widget_blueprint,
-        load_path: task.target.widget_blueprint,
-        class_name: task.target.widget_blueprint_class as WidgetBlueprintCandidate["class_name"],
-      }] : [];
-      setDeliveryDialog({
-        task,
-        projectWorkspace: task.target.project_workspace || task.agent_context.workspace || "",
-        query: task.target.widget_blueprint_name || "",
-        candidates: restoredCandidate,
-        selectedLoadPath: preflight?.selected_load_path || "",
-        preflight,
-        state: preflight ? "ready" : "idle",
-        message: preflight?.message || "输入名称或项目内 Asset 路径，从编辑器读取 WidgetBlueprint",
+      const result = await invoke<LayoutReviewSaveResult>("save_ui_workbench_layout", {
+        pageId,
+        layout: {
+          workflow_task_id: null,
+          ...workbenchLayoutProjection(tree),
+        },
       });
-    } catch (error) {
-      flash(`交付信息读取失败: ${error}`);
-    }
-  }
-
-  async function searchDeliveryTargets() {
-    if (!deliveryDialog) return;
-    const projectWorkspace = deliveryDialog.projectWorkspace.trim();
-    const query = deliveryDialog.query.trim();
-    if (!projectWorkspace || !query) {
-      setDeliveryDialog({
-        ...deliveryDialog,
-        state: "blocked",
-        message: "请填写项目工作区和至少两个字符的搜索内容",
-        candidates: [],
-        selectedLoadPath: "",
-        preflight: null,
-      });
-      return;
-    }
-    setDeliveryDialog({
-      ...deliveryDialog,
-      state: "searching_assets",
-      message: "正在通过编辑器 MCP 搜索 WidgetBlueprint",
-      candidates: [],
-      selectedLoadPath: "",
-      preflight: null,
-    });
-    try {
-      const result = await invoke<WidgetBlueprintSearchResult>("search_widget_blueprints", {
-        taskId: deliveryDialog.task.task_id,
-        projectWorkspace,
-        query,
-      });
-      setDeliveryDialog((current) => current ? {
+      setSavedLayouts((current) => ({
         ...current,
-        candidates: result.candidates,
-        selectedLoadPath: "",
-        preflight: null,
-        state: result.candidates.length ? result.state : "blocked",
-        message: result.candidates.length ? result.message : "编辑器没有返回匹配的 WidgetBlueprint",
-      } : current);
+        [pageId]: {
+          revision: result.revision,
+          fingerprint: submittedFingerprint,
+        },
+      }));
+      flash(currentFingerprintRef.current === submittedFingerprint
+        ? `布局已保存 v${result.revision}，请回到原对话确认导入`
+        : `布局 v${result.revision} 已保存，但保存期间又有修改`);
     } catch (error) {
-      setDeliveryDialog((current) => current ? {
-        ...current,
-        candidates: [],
-        selectedLoadPath: "",
-        preflight: null,
-        state: "blocked",
-        message: `搜索失败: ${error}`,
-      } : current);
-    }
-  }
-
-  async function selectDeliveryTarget(candidate: WidgetBlueprintCandidate) {
-    if (!deliveryDialog) return;
-    const projectWorkspace = deliveryDialog.projectWorkspace.trim();
-    setDeliveryDialog({
-      ...deliveryDialog,
-      selectedLoadPath: candidate.load_path,
-      preflight: null,
-      state: "checking_mcp",
-      message: "正在确认编辑器项目、资产类型和精确 load_path",
-    });
-    try {
-      const next = await invoke<UiWorkflowStore>("preflight_ui_delivery", {
-        taskId: deliveryDialog.task.task_id,
-        projectWorkspace,
-        selectedLoadPath: candidate.load_path,
-      });
-      setWorkflowStore(next);
-      const task = next.tasks.find((item) => item.task_id === deliveryDialog.task.task_id);
-      const preflight = task?.target.preflight ?? null;
-      setDeliveryDialog((current) => current ? {
-        ...current,
-        task: task ?? current.task,
-        selectedLoadPath: candidate.load_path,
-        preflight,
-        state: preflight?.status === "ready" ? "ready" : "blocked",
-        message: preflight?.message || "编辑器预检没有返回可交付证据",
-      } : current);
-    } catch (error) {
-      setDeliveryDialog((current) => current ? {
-        ...current,
-        preflight: null,
-        state: "blocked",
-        message: `预检失败: ${error}`,
-      } : current);
-    }
-  }
-
-  async function confirmAndDeliver() {
-    if (!deliveryDialog) return;
-    const evidence = deliveryDialog.preflight;
-    if (
-      evidence?.status !== "ready"
-      || evidence.selected_load_path !== deliveryDialog.selectedLoadPath
-    ) {
-      setDeliveryDialog({
-        ...deliveryDialog,
-        state: "blocked",
-        message: "请先选择一个 WidgetBlueprint 并完成编辑器只读预检",
-      });
-      return;
-    }
-    setDeliveryBusy(true);
-    let prepared = false;
-    try {
-      const result = await invoke<DeliveryDispatchResult>("confirm_and_deliver_ui", {
-        pageId: deliveryDialog.task.page_id,
-        tree,
-        evidenceId: evidence.evidence_id,
-      });
-      prepared = true;
-      await openUrl(result.new_task_url);
-      const submission = await invoke<CodexPromptSubmissionResult>("submit_codex_new_task_prompt", {
-        pageId: deliveryDialog.task.page_id,
-      });
-      setDeliveryDialog(null);
-      flash(submission.submitted
-        ? `已新建 Codex 任务并开始实现：${result.delivery_id}`
-        : submission.message);
-    } catch (error) {
-      flash(prepared ? `交付文件已冻结，但 Codex 跳转失败: ${error}` : `交付失败: ${error}`);
+      flash(`布局保存失败: ${error}`);
     } finally {
-      setDeliveryBusy(false);
+      setSavingLayout(false);
     }
   }
 
@@ -1452,20 +1211,8 @@ export default function UIWorkbench() {
 
   return (
     <main className="ui-workbench">
-      <input ref={imageInput} type="file" accept="image/png,image/jpeg,image/webp" hidden onChange={(event) => onImageFile(event.target.files?.[0])} />
-      <input ref={treeInput} type="file" accept="application/json,.json" hidden onChange={(event) => onTreeFile(event.target.files?.[0])} />
-      <input ref={assetInput} type="file" accept="image/png,image/webp" multiple hidden onChange={(event) => onAssetFiles(event.target.files)} />
-
       <header className="workbench-topbar">
         <div className="workbench-brand"><span className="workbench-logo" /> <strong>Oasis UI 工作台</strong><small>{imageName}</small></div>
-        <div className="toolbar-group">
-          <button type="button" onClick={() => imageInput.current?.click()} title="导入图片并自动识别" disabled={analyzing}>导入图片</button>
-          <button type="button" onClick={analyzeCurrentImage} title="重新分析当前图片的控件和层级" disabled={analyzing}>{analyzing ? "识别中…" : "重新自动识别"}</button>
-          <button type="button" onClick={() => treeInput.current?.click()} title="导入 UI Tree JSON">导入 UI Tree</button>
-          <button type="button" onClick={() => assetInput.current?.click()} title="载入 Clean Asset 与 Assembly Preview">导入资产</button>
-          <button type="button" onClick={exportTree} className="accent">导出 UI Tree</button>
-          <button type="button" onClick={beginDelivery} className="delivery-action">确认并交付到编辑器</button>
-        </div>
         <div className="toolbar-group compact">
           <button type="button" onClick={() => addNode(null)} title="新建根控件范围">＋</button>
           <button type="button" onClick={duplicateSelected} disabled={!selected} title="复制所选控件">复制</button>
@@ -1474,30 +1221,18 @@ export default function UIWorkbench() {
           <button type="button" onClick={resetDemo} title="恢复内置演示">重置</button>
         </div>
         <div className="toolbar-spacer" />
+        <span className={`layout-save-state ${layoutSaveState.dirty ? "is-dirty" : "is-saved"}`}>{layoutSaveState.label}</span>
+        <button
+          type="button"
+          className="accent layout-save-action"
+          onClick={() => void saveLayout()}
+          disabled={savingLayout || !pageCatalog.selected_page_id}
+          title="保存当前控件位置、尺寸、父级、Z-order 和分类"
+        >
+          {savingLayout ? "保存中…" : "保存布局"}
+        </button>
         <button type="button" className="window-tool" onClick={() => getCurrentWebviewWindow().hide()} title="隐藏工作台">×</button>
       </header>
-
-      <nav className="workbench-workflow-strip" aria-label="UI 工具链进度">
-        {(workflowStages.length ? workflowStages : [
-          "来源", "UI Tree", "视觉稿", "分层", "Workbench", "UMG", "逻辑", "验收",
-        ].map((label, index) => ({
-          id: `empty-${index}`,
-          index: index + 1,
-          label,
-          status: "not_started",
-          statusLabel: "未开始",
-        }))).map((stage) => (
-          <span
-            key={stage.id}
-            className={`workbench-workflow-stage status-${stage.status}`}
-            title={`${stage.label} · ${stage.statusLabel}`}
-          >
-            <i>{stage.index}</i>
-            <strong>{stage.label}</strong>
-            <small>{stage.statusLabel}</small>
-          </span>
-        ))}
-      </nav>
 
       <section className={`workbench-layout ${galleryOpen ? "gallery-visible" : ""}`}>
         <nav className="page-navigation panel-shell" aria-label="UI 页面导航">
@@ -1733,120 +1468,6 @@ export default function UIWorkbench() {
         {!galleryOpen && <button className="gallery-restore" type="button" onClick={() => setGalleryOpen(true)}>显示资产与结构</button>}
       </section>
 
-      {deliveryDialog && (
-        <div className="delivery-dialog-backdrop" role="presentation" onPointerDown={() => !deliveryBusy && setDeliveryDialog(null)}>
-          <section
-            className="delivery-dialog"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="delivery-dialog-title"
-            onPointerDown={(event) => event.stopPropagation()}
-          >
-            <header>
-              <div>
-                <small>EDITOR DELIVERY</small>
-                <h2 id="delivery-dialog-title">确认并交付到编辑器</h2>
-              </div>
-              <button type="button" className="window-tool" onClick={() => setDeliveryDialog(null)} disabled={deliveryBusy} title="关闭">×</button>
-            </header>
-            <dl className="delivery-summary">
-              <div><dt>UI 页面</dt><dd>{deliveryDialog.task.title}</dd></div>
-              <div><dt>控件数量</dt><dd>{tree.nodes.length}</dd></div>
-              <div><dt>来源任务</dt><dd>{deliveryDialog.task.agent_context?.provider} · {deliveryDialog.task.agent_context?.thread_id}</dd></div>
-              <div><dt>执行方式</dt><dd>新建 Codex 任务</dd></div>
-            </dl>
-            <label>
-              <span>项目工作区</span>
-              <input
-                value={deliveryDialog.projectWorkspace}
-                onChange={(event) => setDeliveryDialog({
-                  ...deliveryDialog,
-                  projectWorkspace: event.target.value,
-                  candidates: [],
-                  selectedLoadPath: "",
-                  preflight: null,
-                  state: "idle",
-                  message: "工作区已变化，请重新搜索并预检",
-                })}
-                disabled={deliveryBusy}
-              />
-            </label>
-            <section className="delivery-target-selector">
-              <div className="delivery-target-search">
-                <label>
-                  <span>目标 WidgetBlueprint</span>
-                  <input
-                    value={deliveryDialog.query}
-                    onChange={(event) => setDeliveryDialog({
-                      ...deliveryDialog,
-                      query: event.target.value,
-                      candidates: [],
-                      selectedLoadPath: "",
-                      preflight: null,
-                      state: "idle",
-                      message: "搜索内容已变化，请重新读取编辑器资产",
-                    })}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter") {
-                        event.preventDefault();
-                        void searchDeliveryTargets();
-                      }
-                    }}
-                    placeholder="名称或 /RedCliff/Asset/UI/..."
-                    disabled={deliveryBusy}
-                  />
-                </label>
-                <button
-                  type="button"
-                  onClick={() => void searchDeliveryTargets()}
-                  disabled={deliveryBusy || deliveryDialog.state === "searching_assets" || deliveryDialog.state === "checking_mcp"}
-                >
-                  {deliveryDialog.state === "searching_assets" ? "搜索中…" : "搜索"}
-                </button>
-              </div>
-              <div className="delivery-candidate-list" role="listbox" aria-label="WidgetBlueprint 搜索结果">
-                {deliveryDialog.candidates.length === 0 && (
-                  <div className="delivery-candidate-empty">搜索结果会显示名称、编辑器 load_path 和资产类型</div>
-                )}
-                {deliveryDialog.candidates.map((candidate) => (
-                  <button
-                    type="button"
-                    role="option"
-                    aria-selected={deliveryDialog.selectedLoadPath === candidate.load_path}
-                    className={deliveryDialog.selectedLoadPath === candidate.load_path ? "selected" : ""}
-                    key={candidate.load_path}
-                    onClick={() => void selectDeliveryTarget(candidate)}
-                    disabled={deliveryBusy || deliveryDialog.state === "checking_mcp"}
-                  >
-                    <strong>{candidate.display_name}</strong>
-                    <span>{candidate.load_path}</span>
-                    <small>{candidate.class_name}</small>
-                  </button>
-                ))}
-              </div>
-              <div className={`delivery-preflight status-${deliveryDialog.state}`}>
-                <strong>{deliveryDialog.state === "ready" ? "预检通过" : "编辑器预检"}</strong>
-                <span>{deliveryDialog.message}</span>
-                {deliveryDialog.preflight?.status === "ready" && (
-                  <dl>
-                    <div><dt>load_path</dt><dd>{deliveryDialog.preflight.selected_load_path}</dd></div>
-                    <div><dt>资产类型</dt><dd>{deliveryDialog.preflight.selected_class_name}</dd></div>
-                    <div><dt>MCP</dt><dd>{deliveryDialog.preflight.mcp_server_name} {deliveryDialog.preflight.mcp_server_version}</dd></div>
-                    <div><dt>检查时间</dt><dd>{new Date(deliveryDialog.preflight.checked_at_unix_ms).toLocaleString()}</dd></div>
-                  </dl>
-                )}
-              </div>
-            </section>
-            <p>本次确认只授权实现当前冻结 UI Tree 对应的 WidgetBlueprint，不包含无关 Lua、DataTable、关卡或玩法修改。</p>
-            <footer>
-              <button type="button" onClick={() => setDeliveryDialog(null)} disabled={deliveryBusy}>取消</button>
-              <button type="button" className="delivery-action" onClick={confirmAndDeliver} disabled={deliveryBusy || !deliveryReady}>
-                {deliveryBusy ? "正在创建任务…" : "确认并在新任务中实现"}
-              </button>
-            </footer>
-          </section>
-        </div>
-      )}
     </main>
   );
 }
