@@ -58,13 +58,9 @@ COMPLETE
 
 ### 自然语言启动
 
-用户表达“做一下 UI 生成”“我有一个 UI 需要生图”“帮我做个 UI”“启动 UI 生图工具”或同义意图时，直接启动或聚焦 Companion 的 `UI 生图工具链`：
+用户表达“做一下 UI 生成”“我有一个 UI 需要生图”“帮我做个 UI”“启动 UI 生图工具”或同义意图时，直接进入当前对话的 SOURCE 文字引导，读取已有任务或询问一个真正缺失的来源信息。不要等待用户再次说“开始”，不要只回复工具位置，也不要新开一个脱离当前 Agent 上下文的对话。
 
-```powershell
-python scripts/cowart-ui/component-extractor/open_ui_workflow.py
-```
-
-启动后立即进入 SOURCE，在当前对话中读取已有任务或询问一个真正缺失的来源信息。不要等待用户再次说“开始”，不要只回复工具位置，也不要新开一个脱离当前 Agent 上下文的对话。启动失败时报告脚本返回的 `companion_not_found`，同时继续保留文字流程和 localhost 静态回退。
+原生 Companion `UI 生图工具链` 暂时禁用。不得运行 `open_ui_workflow.py`，不得打开或聚焦 Companion，也不得启动 localhost UI workflow console。即使用户明确要求打开原生 UI 工具链，也要说明该入口当前暂停，并继续使用纯文字 SOURCE 流程。只有未来明确更新本 Skill 解除暂停后，才能恢复这些入口。
 
 开始新 UI 时自然询问来源，不要求用户填写固定表格：
 

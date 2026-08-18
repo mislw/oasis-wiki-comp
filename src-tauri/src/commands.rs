@@ -489,7 +489,7 @@ fn reinstall_skill_targets(
     app: &AppHandle,
     targets: Vec<String>,
 ) -> Result<MultiTargetStatus, String> {
-    let _installed = crate::skill::install_skill(&app, &targets)?;
+    let _installed = crate::skill::install_skill(app, &targets)?;
 
     {
         let st = app.state::<AppState>();
@@ -512,7 +512,7 @@ fn reinstall_skill_targets(
         c
     };
     if changed {
-        crate::ball::apply_state(&app, ns);
+        crate::ball::apply_state(app, ns);
     }
     Ok(app.state::<AppState>().skill_status.lock().unwrap().clone())
 }

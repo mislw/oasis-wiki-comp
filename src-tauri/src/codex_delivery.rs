@@ -101,7 +101,7 @@ pub fn is_codex_desktop_executable_path(path: &str) -> bool {
 pub fn submit_foreground_codex_prompt(timeout: Duration) -> Result<bool, String> {
     #[cfg(target_os = "windows")]
     {
-        return windows::submit_foreground_codex_prompt(timeout);
+        windows::submit_foreground_codex_prompt(timeout)
     }
     #[cfg(not(target_os = "windows"))]
     {

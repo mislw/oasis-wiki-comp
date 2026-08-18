@@ -32,6 +32,8 @@ Identify the protected predecessor internally by Git author name `HeQirui` and c
 
 For RedCliff work, follow the protected predecessor's confirmed same-type code style:
 
+- Extend the existing feature in place whenever its current variables, functions, data owners, RPC/event paths, archive keys, replication, or UI refresh flow can express the requested behavior. Do not add a parallel field, helper, manager, or second flow merely to avoid a small compatible edit.
+- Introduce a new field, helper, manager, or flow only when the existing implementation cannot satisfy the required semantics, ownership boundary, lifecycle, compatibility, or verification path. Before doing so, state the concrete reason the existing implementation is unusable and the smallest resulting impact surface.
 - Reuse existing data owners, tables, RPC/event paths, archive keys, replication patterns, and UI refresh flow.
 - Match naming, function placement, call order, comment density, nil-check style, and change size.
 - Prefer direct local hooks over new wrappers, managers, generic abstractions, or broad refactors.

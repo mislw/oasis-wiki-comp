@@ -70,13 +70,13 @@ When a reconstructable node owns child controls, preserve it as a Composite and 
 
 Resolve a Python runtime before running scripts. When `python` is not on PATH, use the Python path returned by `codex_app__load_workspace_dependencies`.
 
-For the native Companion control surface, open or focus the UI generation workflow:
+The native Companion control surface is 暂时禁用. The commands are retained only for future maintenance:
 
 ```powershell
 python scripts/cowart-ui/component-extractor/open_ui_workflow.py
 ```
 
-The launcher writes a validated command to `%USERPROFILE%\.oasis-companion\handoffs`. A running Companion consumes that inbox directly and must not start a duplicate `oasis-companion.exe`; this prevents the short-lived Tauri event window from flashing during Skill handoffs. If Companion is not running, the launcher starts it once with `--background --no-autostart-sync`, and the new instance consumes the queued command after startup.
+For current requests, use SOURCE 文字引导 only and 不得运行 `open_ui_workflow.py`, the localhost workflow console, or any command that opens/focuses Companion. 即使用户明确要求打开原生 UI 工具链, explain that the entry is temporarily disabled and continue text-only until this Skill explicitly re-enables it. When re-enabled in the future, the launcher writes a validated command to `%USERPROFILE%\.oasis-companion\handoffs`; the remaining launcher details below are maintenance reference only.
 
 Keep the localhost workflow console as the browser fallback. It orchestrates only local scripts and local session files; all AI image generation or edits remain Codex actions in the active conversation:
 

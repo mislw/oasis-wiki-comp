@@ -14,7 +14,7 @@ use tauri::{AppHandle, Manager};
 /// The version shipped in the bundled Skill resource. Bump when the bundle
 /// changes. If an installed Skill includes `VERSION`, status detection compares
 /// it against this value.
-pub const CURRENT_SKILL_VERSION: &str = "1.260817.6";
+pub const CURRENT_SKILL_VERSION: &str = "1.260818.3";
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(tag = "kind", rename_all = "snake_case")]
@@ -490,7 +490,7 @@ mod tests {
         let candidate = root.join("candidate");
         fs::create_dir_all(&candidate).unwrap();
 
-        let error = resolve_skill_source(&[candidate.clone()]).unwrap_err();
+        let error = resolve_skill_source(std::slice::from_ref(&candidate)).unwrap_err();
 
         assert!(error.contains(candidate.to_string_lossy().as_ref()));
         let _ = fs::remove_dir_all(root);

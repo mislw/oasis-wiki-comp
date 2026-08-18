@@ -7,10 +7,15 @@ INTERACTION_GUIDE = (
     ROOT / 'references' / 'oasis-ui-agent-interaction.md'
 ).read_text(encoding='utf-8')
 SKILL_GUIDE = (ROOT / 'SKILL.md').read_text(encoding='utf-8')
+AGENTS_GUIDE = (ROOT / 'AGENTS.md').read_text(encoding='utf-8')
 TASK_ROUTER = (ROOT / 'references' / 'task-router.md').read_text(encoding='utf-8')
 COWART_GUIDE = (
     ROOT / 'references' / 'cowart-ui-workflow.md'
 ).read_text(encoding='utf-8')
+COMPONENT_GUIDE = (
+    ROOT / 'references' / 'cowart-ui' / 'component-extractor.md'
+).read_text(encoding='utf-8')
+OPENAI_AGENT_GUIDE = (ROOT / 'agents' / 'openai.yaml').read_text(encoding='utf-8')
 
 
 class OasisUiAgentInteractionTests(unittest.TestCase):
@@ -62,7 +67,7 @@ class OasisUiAgentInteractionTests(unittest.TestCase):
             with self.subTest(guide_length=len(guide)):
                 self.assertIn(marker, guide)
 
-    def test_natural_language_ui_generation_requests_open_the_native_tool(self):
+    def test_ui_generation_requests_stay_text_only_and_never_open_native_tool(self):
         trigger_examples = [
             '做一下 UI 生成',
             '我有一个 UI 需要生图',
@@ -73,13 +78,49 @@ class OasisUiAgentInteractionTests(unittest.TestCase):
             with self.subTest(trigger=trigger):
                 self.assertIn(trigger, SKILL_GUIDE)
                 self.assertIn(trigger, TASK_ROUTER)
-        for marker in [
-            'open_ui_workflow.py',
-            '不要等待用户再次说“开始”',
+
+        required_markers = [
+            'SOURCE 文字引导',
+            '暂时禁用',
+            '不得运行 `open_ui_workflow.py`',
+            '即使用户明确要求打开原生 UI 工具链',
+        ]
+        for guide in (
+            SKILL_GUIDE,
+            AGENTS_GUIDE,
+            TASK_ROUTER,
+            INTERACTION_GUIDE,
+            COWART_GUIDE,
+            COMPONENT_GUIDE,
+        ):
+            for marker in required_markers:
+                with self.subTest(guide_length=len(guide), marker=marker):
+                    self.assertIn(marker, guide)
+
+        forbidden_directives = [
+            'immediately run `scripts/cowart-ui/component-extractor/open_ui_workflow.py`',
             '直接启动或聚焦 Companion 的 `UI 生图工具链`',
+            'Run `scripts/cowart-ui/component-extractor/open_ui_workflow.py` to open or focus',
+        ]
+        combined_guides = '\n'.join(
+            (SKILL_GUIDE, AGENTS_GUIDE, INTERACTION_GUIDE)
+        )
+        for directive in forbidden_directives:
+            with self.subTest(directive=directive):
+                self.assertNotIn(directive, combined_guides)
+
+        for marker in [
+            'native Companion UI workflow is temporarily disabled',
+            'SOURCE text-only',
+            'must not run open_ui_workflow.py',
+            'even when explicitly requested',
         ]:
-            with self.subTest(marker=marker):
-                self.assertIn(marker, INTERACTION_GUIDE)
+            with self.subTest(openai_agent_marker=marker):
+                self.assertIn(marker, OPENAI_AGENT_GUIDE)
+        self.assertNotIn(
+            'should open the native Companion UI workflow',
+            OPENAI_AGENT_GUIDE,
+        )
 
 
 if __name__ == '__main__':
