@@ -13,7 +13,7 @@ const skillModule = read('../src-tauri/src/skill/mod.rs');
 const settingsUi = read('../src/windows/Settings.tsx');
 const bundledSkillVersion = read('../src-tauri/resources/skill/VERSION').trim();
 const version = packageJson.version;
-const expectedReleaseVersion = '1.260820.1';
+const expectedReleaseVersion = '1.260820.2';
 
 
 test('Companion uses the approved August 18 release version', () => {
