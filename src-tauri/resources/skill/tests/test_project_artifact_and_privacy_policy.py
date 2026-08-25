@@ -49,6 +49,17 @@ class ProjectArtifactAndPrivacyPolicyTests(unittest.TestCase):
             with self.subTest(marker=marker):
                 self.assertIn(marker, combined)
 
+    def test_same_type_extension_parity_gate_is_explicit(self):
+        for marker in (
+            'structural template',
+            'archive migrations',
+            'missing-key backfills',
+            'line-ending changes',
+            'focused `git diff`',
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, PREDECESSOR_POLICY)
+
 
 if __name__ == '__main__':
     unittest.main()
