@@ -10,6 +10,9 @@ PITFALLS = (ROOT / 'references' / 'pitfalls.md').read_text(encoding='utf-8')
 PREDECESSOR_POLICY = (
     ROOT / 'references' / 'predecessor-code-policy.md'
 ).read_text(encoding='utf-8')
+FEATURE_FLOW = (
+    ROOT / 'references' / 'feature-development-flow.md'
+).read_text(encoding='utf-8')
 
 
 class ProjectArtifactAndPrivacyPolicyTests(unittest.TestCase):
@@ -59,6 +62,24 @@ class ProjectArtifactAndPrivacyPolicyTests(unittest.TestCase):
         ):
             with self.subTest(marker=marker):
                 self.assertIn(marker, PREDECESSOR_POLICY)
+
+    def test_feature_changes_have_first_attempt_and_retry_knowledge_gates(self):
+        combined = SKILL + AGENTS + FEATURE_FLOW
+        for marker in (
+            'Knowledge-first feature change gate',
+            'Before modifying or adding a gameplay or UI feature',
+            'search the bundled knowledge base',
+            'Before a third implementation attempt',
+            'two consecutive edit-and-verify attempts',
+            'references/wiki/*.md',
+            'symptom and exact error text',
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, combined)
+
+        for portable_entrypoint in (SKILL, AGENTS):
+            self.assertIn('Knowledge-first feature change gate', portable_entrypoint)
+            self.assertIn('Before a third implementation attempt', portable_entrypoint)
 
 
 if __name__ == '__main__':

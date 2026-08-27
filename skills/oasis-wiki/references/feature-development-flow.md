@@ -28,6 +28,16 @@ Before writing code, decide:
 
 If the feature changes gameplay results, the server must decide the result. The client can request, animate, and display, but should not directly change authoritative resources.
 
+## Step 0.1: Knowledge-First Checkpoints
+
+The Knowledge-first feature change gate applies before implementation and again when repeated changes are not working.
+
+- Before modifying or adding a gameplay or UI feature, configuration-backed behavior, editor workflow, or other UGC capability, search the bundled knowledge base in `references/wiki/*.md` before the first edit.
+- Search by the feature and system names, relevant class/API names, UI or DataTable identifiers, and Chinese/English synonyms. Start from `references/wiki/README.md`, then inspect the matching category file, `官方API参考手册.md`, `新增内容_1.37版本.md`, and `论坛经验帖_绿洲启妹.md` when relevant.
+- Use the result to identify an official implementation, supported API, required editor setup, known limitation, or established troubleshooting path. Reconcile it with the current project's ownership and data flow instead of copying it blindly.
+- Before a third implementation attempt, if two consecutive edit-and-verify attempts have not succeeded, stop editing. Search again using the observed symptom and exact error text, affected class/API names, and the failed behavior. Compare the new evidence with the current logs, project code, and same-type predecessor implementation before selecting the next change.
+- If the knowledge base has no relevant result, state that explicitly and continue from current-project evidence; do not claim that a matching official implementation exists.
+
 ## Step 0.25: Find And Verify A Same-Type Implementation
 
 Before designing the feature, follow `predecessor-code-policy.md`:
