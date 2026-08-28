@@ -35,6 +35,7 @@ The Knowledge-first feature change gate applies before implementation and again 
 - Before modifying or adding a gameplay or UI feature, configuration-backed behavior, editor workflow, or other UGC capability, search the bundled knowledge base in `references/wiki/*.md` before the first edit.
 - Search by the feature and system names, relevant class/API names, UI or DataTable identifiers, and Chinese/English synonyms. Start from `references/wiki/README.md`, then inspect the matching category file, `官方API参考手册.md`, `新增内容_1.37版本.md`, and `论坛经验帖_绿洲启妹.md` when relevant.
 - Use the result to identify an official implementation, supported API, required editor setup, known limitation, or established troubleshooting path. Reconcile it with the current project's ownership and data flow instead of copying it blindly.
+- When a relevant knowledge-base document is confirmed, say the exact standalone sentence `已查到相关实现`, then identify the knowledge-base file and section/article before presenting the plan.
 - Before a third implementation attempt, if two consecutive edit-and-verify attempts have not succeeded, stop editing. Search again using the observed symptom and exact error text, affected class/API names, and the failed behavior. Compare the new evidence with the current logs, project code, and same-type predecessor implementation before selecting the next change.
 - If the knowledge base has no relevant result, state that explicitly and continue from current-project evidence; do not claim that a matching official implementation exists.
 
@@ -42,11 +43,11 @@ The Knowledge-first feature change gate applies before implementation and again 
 
 Before designing the feature, follow `predecessor-code-policy.md`:
 
-- Resolve the private primary and secondary predecessor identities, then search only their authored history for feature-reference candidates, primary first.
+- Resolve the configured primary predecessor from private local instructions, then search the primary predecessor only by default. Search the secondary predecessor only when the user explicitly requests a broader predecessor search.
 - Search the current project first, then the available `RedCliff`, `StarMon`, and `StealItem` repositories.
 - Inspect the complete config -> authority -> RPC/event -> UI -> replication/save -> reconnect path instead of copying an isolated function.
 - Cross-check the candidate with `references/wiki/官方API参考手册.md`, `references/wiki/新增内容_1.37版本.md`, the matching official category document, and `references/wiki/论坛经验帖_绿洲启妹.md`.
-- If a relevant implementation is confirmed, say `已找到相关的代码实现。` and identify its project, file, function/table, and commit without revealing either predecessor identity.
+- If a relevant code or knowledge-base document is confirmed, say the exact standalone sentence `已查到相关实现`. Identify code by project, file, function/table, and commit; identify documentation by knowledge-base file and section/article. Never reveal a configured predecessor identity.
 - If no relevant implementation is found, state that clearly and continue from verified current-project structure and official documentation.
 
 ## Step 0.5: Summarize Existing Foundation

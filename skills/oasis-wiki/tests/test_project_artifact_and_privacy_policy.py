@@ -35,19 +35,33 @@ class ProjectArtifactAndPrivacyPolicyTests(unittest.TestCase):
         self.assertIn('private local agent instructions', PREDECESSOR_POLICY)
         self.assertIn('Never store, publish, quote, or reveal', PREDECESSOR_POLICY)
 
-    def test_feature_reference_search_uses_private_predecessor_priority(self):
-        combined = SKILL + AGENTS + PREDECESSOR_POLICY
+    def test_feature_reference_search_uses_primary_predecessor_by_default(self):
+        combined = SKILL + AGENTS + PREDECESSOR_POLICY + FEATURE_FLOW
         for marker in (
-            'configured primary and secondary predecessors',
-            'authored only by those two',
-            'primary first',
+            'configured primary predecessor',
+            'primary predecessor only by default',
+            'secondary predecessor only when the user explicitly requests',
             'RedCliff',
             'StarMon',
             'StealItem',
             'references/wiki/官方API参考手册.md',
             'references/wiki/新增内容_1.37版本.md',
             'references/wiki/论坛经验帖_绿洲启妹.md',
-            '已找到相关的代码实现。',
+            '已查到相关实现',
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, combined)
+
+        old_confirmation = '已找到相关的' + '代码实现。'
+        self.assertNotIn(old_confirmation, combined)
+
+    def test_code_and_knowledge_hits_share_confirmation_and_evidence(self):
+        combined = SKILL + AGENTS + PREDECESSOR_POLICY + FEATURE_FLOW
+        for marker in (
+            'code or knowledge-base document',
+            '已查到相关实现',
+            'project, file, function/table, and commit',
+            'knowledge-base file and section/article',
         ):
             with self.subTest(marker=marker):
                 self.assertIn(marker, combined)
