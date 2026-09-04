@@ -51,7 +51,7 @@ class CowartUiUsageGuideTests(unittest.TestCase):
             '每个任务最多询问一次',
             '同步当前进度',
             '拒绝后继续当前任务',
-            '不会打开原生 Companion',
+            '只有用户明确要求打开/继续工作台',
         ):
             with self.subTest(marker=marker):
                 self.assertIn(marker, content)

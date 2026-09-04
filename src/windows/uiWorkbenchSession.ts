@@ -61,6 +61,7 @@ type NativeWorkbenchNode = {
   category: string;
   display_text?: string;
   content_hint?: string;
+  suppress_native_text?: boolean;
   extraction?: { target_component_id?: string };
   visual_assets?: { native_preview?: string | null };
 };
@@ -190,6 +191,7 @@ export function nativeWorkbenchCloseTextStyle(node: NativeWorkbenchNode): Workbe
 
 /** Resolve native preview text from session data before legacy built-in samples. */
 export function nativeWorkbenchDisplayText(node: NativeWorkbenchNode): string {
+  if (node.suppress_native_text || node.visual_assets?.native_preview) return "";
   const explicit = typeof node.display_text === "string" ? node.display_text.trim() : "";
   if (explicit) return explicit;
   const hint = typeof node.content_hint === "string" ? node.content_hint.trim() : "";
@@ -197,7 +199,7 @@ export function nativeWorkbenchDisplayText(node: NativeWorkbenchNode): string {
   const legacy = LEGACY_NATIVE_DISPLAY_TEXT[node.id]
     ?? LEGACY_NATIVE_DISPLAY_TEXT[node.extraction?.target_component_id ?? ""];
   if (legacy) return legacy;
-  if (nativeWorkbenchCloseTextStyle(node)) return node.visual_assets?.native_preview ? "" : "×";
+  if (nativeWorkbenchCloseTextStyle(node)) return "×";
   return node.category === "counter" ? "0" : "";
 }
 
@@ -396,7 +398,7 @@ export function workbenchPageNavRows(catalog: WorkbenchCatalog): WorkbenchPageNa
   }));
 }
 
-/** Collect relative reusable-asset paths from one persisted session. */
+/** Collect the small assets needed for the initial persisted-session render. */
 export function collectPersistedAssetPaths(raw: Record<string, unknown>): string[] {
   const nodes = Array.isArray(raw.controls)
     ? raw.controls
@@ -408,7 +410,7 @@ export function collectPersistedAssetPaths(raw: Record<string, unknown>): string
     if (!value || typeof value !== "object" || Array.isArray(value)) continue;
     const assets = (value as Record<string, unknown>).visual_assets;
     if (!assets || typeof assets !== "object" || Array.isArray(assets)) continue;
-    for (const key of ["clean_layer", "clean_asset", "assembly_preview", "native_preview"] as const) {
+    for (const key of ["clean_layer", "clean_asset", "native_preview"] as const) {
       const path = (assets as Record<string, unknown>)[key];
       if (typeof path !== "string" || !path || path === "__source__") continue;
       if (/^(?:[a-z]+:|[\\/])|(?:^|[\\/])\.\.(?:[\\/]|$)/i.test(path)) continue;
@@ -418,22 +420,21 @@ export function collectPersistedAssetPaths(raw: Record<string, unknown>): string
   return [...paths];
 }
 
-/** Read every available reusable asset while leaving missing assets unresolved. */
+/** Read initial reusable assets without flooding the synchronous Tauri command handler. */
 export async function loadPersistedAssetUrls(
   pageId: string,
   raw: Record<string, unknown>,
   readAsset: (pageId: string, assetPath: string) => Promise<string>,
 ): Promise<Map<string, string>> {
-  const entries = await Promise.all(
-    collectPersistedAssetPaths(raw).map(async (path) => {
-      try {
-        return [path, await readAsset(pageId, path)] as const;
-      } catch {
-        return null;
-      }
-    }),
-  );
-  return new Map(entries.filter((entry): entry is readonly [string, string] => entry !== null));
+  const entries: Array<readonly [string, string]> = [];
+  for (const path of collectPersistedAssetPaths(raw)) {
+    try {
+      entries.push([path, await readAsset(pageId, path)] as const);
+    } catch {
+      // One missing optional asset must not prevent the page from opening.
+    }
+  }
+  return new Map(entries);
 }
 
 /** Load one persisted page without retaining data from the previously selected page. */

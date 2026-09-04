@@ -2410,7 +2410,7 @@ dependencies = [
 
 [[package]]
 name = "oasis-companion"
-version = "1.260827.1"
+version = "1.260904.1"
 dependencies = [
  "base64 0.22.1",
  "dirs 5.0.1",

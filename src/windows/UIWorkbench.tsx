@@ -48,6 +48,7 @@ type UINode = {
   name?: string;
   display_text?: string;
   content_hint?: string;
+  suppress_native_text?: boolean;
   text_style?: WorkbenchTextStyle;
   category: string;
   parent_id?: string;
@@ -260,7 +261,7 @@ function normalizeTree(input: UITree): UITree {
     normalized.push({
       ...node,
       id: backgroundId,
-      name: `${node.name ?? node.id} Background`,
+      name: `${node.name ?? node.id} 背景`,
       parent_id: node.id,
       node_kind: "skin",
       render_mode: "bitmap",
@@ -424,7 +425,11 @@ function buildLayerRows(nodes: UINode[], collapsed: Set<string>, query: string) 
   const included = new Set<string>();
   if (term) {
     for (const node of nodes) {
-      if (!node.id.toLowerCase().includes(term) && !node.category.toLowerCase().includes(term)) continue;
+      if (
+        !node.id.toLowerCase().includes(term)
+        && !node.category.toLowerCase().includes(term)
+        && !(node.name ?? "").toLowerCase().includes(term)
+      ) continue;
       included.add(node.id);
       let parentId = node.parent_id;
       while (parentId && byId.has(parentId)) {
@@ -512,6 +517,8 @@ export default function UIWorkbench() {
     ? savedLayouts[pageCatalog.selected_page_id] ?? null
     : null;
   const layoutSaveState = workbenchLayoutSaveState(currentFingerprint, activeSavedLayout);
+  const selectedAssemblyPath = selected?.visual_assets?.assembly_preview ?? null;
+  const selectedAssemblyUrl = selected ? assetUrls[selected.id]?.assembly : null;
 
   useEffect(() => {
     canvasPanRef.current = canvasPan;
@@ -520,6 +527,42 @@ export default function UIWorkbench() {
   useEffect(() => {
     currentFingerprintRef.current = currentFingerprint;
   }, [currentFingerprint]);
+
+  useEffect(() => {
+    const pageId = pageCatalog.selected_page_id;
+    const nodeId = selected?.id;
+    if (
+      visualMode !== "assembly"
+      || !pageId
+      || !nodeId
+      || !selectedAssemblyPath
+      || selectedAssemblyUrl
+      || directVisualUrl(selectedAssemblyPath)
+    ) return;
+
+    let cancelled = false;
+    void invoke<string>("read_ui_workbench_asset", {
+      pageId,
+      assetPath: selectedAssemblyPath,
+    }).then((url) => {
+      if (cancelled) return;
+      setAssetUrls((current) => ({
+        ...current,
+        [nodeId]: { ...current[nodeId], assembly: url },
+      }));
+    }).catch((error) => {
+      if (!cancelled) setNotice(`Assembly preview could not be loaded: ${error}`);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    pageCatalog.selected_page_id,
+    selected?.id,
+    selectedAssemblyPath,
+    selectedAssemblyUrl,
+    visualMode,
+  ]);
 
   useEffect(() => {
     let unsubscribe: (() => void) | undefined;
@@ -1267,7 +1310,7 @@ export default function UIWorkbench() {
             <div className="tree-row tree-root-row">
               <button type="button" className="tree-toggle" onClick={() => toggleLayer("__root__")} title="展开或折叠全部图层">{collapsedLayers.has("__root__") ? "▸" : "▾"}</button>
               <span className="node-kind kind-canvas">C</span>
-              <span className="tree-name">CanvasRoot</span>
+              <span className="tree-name" title="CanvasRoot">画布根节点</span>
             </div>
             {layerRows.map(({ node, depth, hasChildren }) => (
               <div key={node.id} data-tree-node-id={node.id} className={`tree-row ${node.id === selectedId ? "selected" : ""} ${!effectiveVisible(node, tree.nodes) ? "muted" : ""}`} onClick={() => setSelectedId(node.id)}>
@@ -1377,7 +1420,7 @@ export default function UIWorkbench() {
             <InspectorSection title="标识">
               <Field label="控件 ID"><input value={selected.id} onChange={(event) => renameSelected(event.target.value)} /></Field>
               <Field label="分类"><input value={selected.category} onChange={(event) => patchSelected({ category: event.target.value })} /></Field>
-              <Field label="父级图层"><select value={selected.parent_id ?? ""} onChange={(event) => setSelectedParent(event.target.value)}><option value="">CanvasRoot</option>{tree.nodes.filter((node) => node.id !== selected.id && !descendantIds(tree.nodes, selected.id).includes(node.id)).map((node) => <option key={node.id} value={node.id}>{node.id}</option>)}</select></Field>
+              <Field label="父级图层"><select value={selected.parent_id ?? ""} onChange={(event) => setSelectedParent(event.target.value)}><option value="">画布根节点</option>{tree.nodes.filter((node) => node.id !== selected.id && !descendantIds(tree.nodes, selected.id).includes(node.id)).map((node) => <option key={node.id} value={node.id}>{node.name ?? node.id}</option>)}</select></Field>
               <Field label="目标组件"><input value={selected.extraction.target_component_id} onChange={(event) => patchExtraction({ target_component_id: event.target.value })} /></Field>
             </InspectorSection>
             <InspectorSection title="组件语义">
@@ -1455,12 +1498,12 @@ export default function UIWorkbench() {
                     ? <img className="asset-thumbnail" src={visualUrl(node, "clean")!} alt="" />
                     : <><span className="crop-image" style={cropStyle(imageUrl, tree.page_size, node.source_bounds ?? node.bounds, 90, 70)} /><em className="source-badge">SOURCE / {node.review?.cleanup_status === "requested" ? "已排队" : "待净化"}</em></>}
                 </span>
-                <span className="slice-meta"><strong>{node.id}</strong><small>{NODE_KIND_LABELS[node.node_kind ?? "artwork"]} · {node.reusable_bitmap ? "Ready" : node.review?.cleanup_status ?? "Needs Cleanup"}</small></span>
+                <span className="slice-meta"><strong title={node.id}>{node.name ?? node.id}</strong><small>{NODE_KIND_LABELS[node.node_kind ?? "artwork"]} · {node.reusable_bitmap ? "Ready" : node.review?.cleanup_status ?? "Needs Cleanup"}</small></span>
               </button>
             ) : (
               <button type="button" key={node.id} className={`structure-card kind-${node.node_kind} ${node.id === selectedId ? "selected" : ""}`} onClick={() => setSelectedId(node.id)}>
                 <span className="structure-symbol">{node.node_kind === "composite" ? "C" : "N"}</span>
-                <span><strong>{node.id}</strong><small>{NODE_KIND_LABELS[node.node_kind ?? "native"]} · {directChildren.get(node.id)?.length ?? 0} children · {RENDER_MODE_LABELS[node.render_mode ?? "outline"]}</small></span>
+                <span><strong title={node.id}>{node.name ?? node.id}</strong><small>{NODE_KIND_LABELS[node.node_kind ?? "native"]} · {directChildren.get(node.id)?.length ?? 0} 个子控件 · {RENDER_MODE_LABELS[node.render_mode ?? "outline"]}</small></span>
               </button>
             ))}
           </div>

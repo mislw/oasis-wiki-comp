@@ -70,7 +70,7 @@ class OasisUiAgentInteractionTests(unittest.TestCase):
             with self.subTest(guide_length=len(guide)):
                 self.assertIn(marker, guide)
 
-    def test_ui_generation_requests_stay_text_only_and_never_open_native_tool(self):
+    def test_ui_generation_requests_open_native_tool_only_when_requested(self):
         trigger_examples = [
             '做一下 UI 生成',
             '我有一个 UI 需要生图',
@@ -82,23 +82,21 @@ class OasisUiAgentInteractionTests(unittest.TestCase):
                 self.assertIn(trigger, SKILL_GUIDE)
                 self.assertIn(trigger, TASK_ROUTER)
 
-        required_markers = [
-            'SOURCE 文字引导',
-            '暂时禁用',
-            '不得运行 `open_ui_workflow.py`',
-            '即使用户明确要求打开原生 UI 工具链',
+        enabled_markers = [
+            (SKILL_GUIDE, 'The native Companion workflow is enabled.'),
+            (AGENTS_GUIDE, 'The native Companion UI workflow is enabled.'),
+            (TASK_ROUTER, 'The native Companion workflow is enabled:'),
+            (INTERACTION_GUIDE, '原生 Companion `UI 生图工具链` 已启用'),
+            (COWART_GUIDE, '原生 Companion 工作流已启用'),
+            (COMPONENT_GUIDE, 'The native Companion control surface is enabled:'),
         ]
-        for guide in (
-            SKILL_GUIDE,
-            AGENTS_GUIDE,
-            TASK_ROUTER,
-            INTERACTION_GUIDE,
-            COWART_GUIDE,
-            COMPONENT_GUIDE,
-        ):
-            for marker in required_markers:
-                with self.subTest(guide_length=len(guide), marker=marker):
-                    self.assertIn(marker, guide)
+        for guide, marker in enabled_markers:
+            with self.subTest(guide_length=len(guide), marker=marker):
+                self.assertIn(marker, guide)
+
+        for guide in (INTERACTION_GUIDE, COWART_GUIDE, COMPONENT_GUIDE):
+            with self.subTest(guide_length=len(guide)):
+                self.assertIn('open_ui_workflow.py', guide)
 
         forbidden_directives = [
             'immediately run `scripts/cowart-ui/component-extractor/open_ui_workflow.py`',
@@ -113,21 +111,17 @@ class OasisUiAgentInteractionTests(unittest.TestCase):
                 self.assertNotIn(directive, combined_guides)
 
         for marker in [
-            'native Companion UI workflow is temporarily disabled',
-            'SOURCE text-only',
-            'must not run open_ui_workflow.py',
-            'even when explicitly requested',
+            'native Companion UI workflow is enabled',
+            'only after an explicit request',
+            'verify the session identity',
+            'never treat opening Companion as editor-write authorization',
         ]:
             with self.subTest(openai_agent_marker=marker):
                 self.assertIn(marker, OPENAI_AGENT_GUIDE)
-        self.assertNotIn(
-            'should open the native Companion UI workflow',
-            OPENAI_AGENT_GUIDE,
-        )
 
-    def test_ui_work_detection_offers_text_only_toolchain_assistance_once(self):
+    def test_ui_work_detection_offers_toolchain_assistance_once(self):
         prompt = (
-            '检测到你正在进行 UI 生图或控件拆分，是否需要我接入文字版 UI 工具链，'
+            '检测到你正在进行 UI 生图或控件拆分，是否需要我接入 UI 工具链，'
             '帮你同步当前进度并继续协助？'
         )
         for marker in (
@@ -156,7 +150,7 @@ class OasisUiAgentInteractionTests(unittest.TestCase):
 
         for marker in (
             'UI image generation or control slicing',
-            'offer the text-only UI toolchain once per task',
+            'offer the UI toolchain once per task',
             'do not ask again',
         ):
             with self.subTest(openai_agent_marker=marker):

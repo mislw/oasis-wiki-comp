@@ -176,6 +176,9 @@ test("falls back to the first available page when the persisted selection is una
 
 test("loads available persisted assets without failing the whole page when one is missing", async () => {
   const { loadPersistedAssetUrls } = await importTypeScript("../src/windows/uiWorkbenchSession.ts");
+  const reads = [];
+  let activeReads = 0;
+  let maxActiveReads = 0;
   const result = await loadPersistedAssetUrls(
     "currency",
     {
@@ -189,12 +192,27 @@ test("loads available persisted assets without failing the whole page when one i
       }],
     },
     async (_pageId, path) => {
-      if (path === "preview/missing.png") throw new Error("missing");
+      reads.push(path);
+      activeReads += 1;
+      maxActiveReads = Math.max(maxActiveReads, activeReads);
+      await new Promise((resolve) => setTimeout(resolve, 1));
+      activeReads -= 1;
       return `data:image/png;base64,${Buffer.from(path).toString("base64")}`;
     },
   );
 
   assert.deepEqual([...result.keys()], ["layers/buy.png", "native/jade.png"]);
+  assert.deepEqual(reads, ["layers/buy.png", "native/jade.png"]);
+  assert.equal(maxActiveReads, 1);
+});
+
+test("loads assembly previews only when the selected persisted node requests one", async () => {
+  const source = await readFile(new URL("../src/windows/UIWorkbench.tsx", import.meta.url), "utf8");
+
+  assert.match(source, /visualMode !== "assembly"/);
+  assert.match(source, /selectedAssemblyPath/);
+  assert.match(source, /read_ui_workbench_asset/);
+  assert.match(source, /\[nodeId\]: \{ \.\.\.current\[nodeId\], assembly: url \}/);
 });
 
 test("prefers node display text and keeps legacy currency sessions readable", async () => {
@@ -209,6 +227,13 @@ test("prefers node display text and keeps legacy currency sessions readable", as
     display_text: "自定义兑换标题",
     extraction: { target_component_id: "text.currency.title" },
   }), "自定义兑换标题");
+  assert.equal(nativeWorkbenchDisplayText({
+    id: "text.currency.title",
+    category: "text",
+    display_text: "不得重复绘制",
+    visual_assets: { native_preview: "native/text.currency.title.png" },
+    extraction: { target_component_id: "text.currency.title" },
+  }), "");
   assert.equal(nativeWorkbenchDisplayText({
     id: "text.currency.name_element_02",
     category: "text",
@@ -239,6 +264,12 @@ test("prefers node display text and keeps legacy currency sessions readable", as
     ...closeButton,
     visual_assets: { native_preview: "native/button.close.default.png" },
   }), "");
+  assert.equal(nativeWorkbenchDisplayText({
+    id: "button.upgrade.hit",
+    category: "button",
+    display_text: "升级",
+    suppress_native_text: true,
+  }), "");
   assert.deepEqual(nativeWorkbenchCloseTextStyle(closeButton), {
     font_size: 30,
     color: "#fff3cf",
@@ -258,6 +289,15 @@ test("renders native preview assets without promoting them to reusable bitmaps",
   assert.match(source, /className="native-preview-layer"/);
   assert.match(source, /!node\.reusable_bitmap/);
   assert.match(css, /\.native-preview-layer \{[^}]*object-fit: contain/);
+});
+
+test("renders localized workbench names while preserving stable ids", async () => {
+  const source = await readFile(new URL("../src/windows/UIWorkbench.tsx", import.meta.url), "utf8");
+
+  assert.match(source, /node\.name \?\? node\.id/);
+  assert.match(source, /name: `\$\{node\.name \?\? node\.id\} 背景`/);
+  assert.match(source, /title="CanvasRoot">画布根节点/);
+  assert.match(source, /\(node\.name \?\? ""\)\.toLowerCase\(\)\.includes\(term\)/);
 });
 test("keeps UMG-like text settings in design space so canvas zoom cannot reflow text", async () => {
   const { nativeWorkbenchTextCss } = await importTypeScript("../src/windows/uiWorkbenchSession.ts");

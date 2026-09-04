@@ -176,7 +176,7 @@ Read:
 - Upstream branch: `UI Design System` for project style, reusable components, and the mandatory UI Tree
 - Secondary branch: `MCP Operation` only after explicit authorization to inspect or modify real WidgetBlueprint assets
 
-This category owns the text-first production pipeline. The native Companion workflow is 暂时禁用: remain in SOURCE 文字引导, 不得运行 `open_ui_workflow.py`, and do not open or focus Companion. 即使用户明确要求打开原生 UI 工具链, explain that it is temporarily disabled and continue text-only. The UI Agent interaction reference orchestrates the existing pipeline: ask only for missing information, keep one pending decision, stop at each approval gate, and report verified paths/results. It does not create persistent task state, Companion task UI, IPC, or automatic resume. The pipeline must not treat a visual-review bitmap as editable components, and it must not mutate UGC project files during visual review, component extraction, or delivery-plan generation.
+This category owns the Cowart UI production pipeline. The native Companion workflow is enabled: open or focus it only after an explicit user request or when presenting the exact generated review handoff is part of the requested task. Verify the project, page ID, and session path before opening. The UI Agent interaction reference orchestrates the existing pipeline: ask only for missing information, keep one pending decision, stop at each approval gate, and report verified paths/results. Opening Companion does not authorize editor writes. The pipeline must not treat a visual-review bitmap as editable components, and it must not mutate UGC project files during visual review, component extraction, or delivery-plan generation.
 
 ### UI And Interaction
 
@@ -233,4 +233,3 @@ Use these pairings for common mixed tasks:
 - `接手新项目并准备开发`: Project Analysis + Feature Development.
 
 If a secondary branch would only restate obvious engineering knowledge, skip it.
-
