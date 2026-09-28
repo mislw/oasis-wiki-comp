@@ -21,7 +21,7 @@ import type {
   UpdateStatus,
 } from "../types";
 
-const EXPECTED_VERSION = "1.260928.1";
+const EXPECTED_VERSION = "1.260928.2";
 const CORE_MCP_TOOLS = ["ue_read", "ue_py", "ue_plan_submit"];
 const MCP_AUTO_CHECK_INTERVAL_MS = 5 * 60 * 1000;
 
@@ -1056,7 +1056,7 @@ export default function SettingsWindow() {
               type="text"
               value={settings.updates.github_repo}
               onChange={(event) => patch({ updates: { ...settings.updates, github_repo: event.target.value } })}
-              placeholder="mislw/oasis-wiki"
+              placeholder="mislw/oasis-wiki-comp"
             />
           </label>
           <div className="row">

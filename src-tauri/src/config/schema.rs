@@ -229,7 +229,7 @@ fn default_update_provider() -> String {
     "github".into()
 }
 fn default_github_repo() -> String {
-    "mislw/oasis-wiki".into()
+    "mislw/oasis-wiki-comp".into()
 }
 fn default_channel() -> String {
     "stable".into()

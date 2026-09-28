@@ -1,20 +1,18 @@
 param(
-    [string]$SkillRepository = (Join-Path $PSScriptRoot '..\..\oasis-wiki'),
+    [string]$SkillPath = (Join-Path $PSScriptRoot '..\skills\oasis-wiki'),
     [switch]$DryRun
 )
 
 $ErrorActionPreference = 'Stop'
 
 $companionRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
-$skillRepository = (Resolve-Path $SkillRepository).Path
-$source = Join-Path $skillRepository 'oasis-wiki'
+$source = (Resolve-Path $SkillPath).Path
 $targets = @(
-    (Join-Path $companionRoot 'src-tauri\resources\skill'),
-    (Join-Path $companionRoot 'skills\oasis-wiki')
+    (Join-Path $companionRoot 'src-tauri\resources\skill')
 )
 
 if (-not (Test-Path (Join-Path $source 'SKILL.md'))) {
-    throw "Skill repository is missing oasis-wiki\SKILL.md: $skillRepository"
+    throw "Skill source is missing SKILL.md: $source"
 }
 
 foreach ($target in $targets) {

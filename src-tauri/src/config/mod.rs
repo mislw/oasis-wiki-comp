@@ -81,11 +81,16 @@ pub fn load() -> Result<LoadResult, Box<dyn std::error::Error>> {
     };
 
     match serde_json::from_str::<Settings>(&raw) {
-        Ok(s) => Ok(LoadResult {
-            settings: s,
-            created_default: false,
-            recovered: false,
-        }),
+        Ok(mut settings) => {
+            if migrate_settings(&mut settings) {
+                save(&settings)?;
+            }
+            Ok(LoadResult {
+                settings,
+                created_default: false,
+                recovered: false,
+            })
+        }
         Err(e) => {
             log::warn!("settings.json parse error ({}), backing up + resetting", e);
             backup_and_reset(&path)?;
@@ -97,6 +102,15 @@ pub fn load() -> Result<LoadResult, Box<dyn std::error::Error>> {
                 recovered: true,
             })
         }
+    }
+}
+
+fn migrate_settings(settings: &mut Settings) -> bool {
+    if settings.updates.github_repo == "mislw/oasis-wiki" {
+        settings.updates.github_repo = "mislw/oasis-wiki-comp".into();
+        true
+    } else {
+        false
     }
 }
 
@@ -143,6 +157,24 @@ fn backup_and_reset(path: &Path) -> Result<(), Box<dyn std::error::Error>> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn migrates_the_legacy_skill_repository_to_the_unified_repository() {
+        let mut settings = Settings::default();
+        settings.updates.github_repo = "mislw/oasis-wiki".into();
+
+        assert!(migrate_settings(&mut settings));
+        assert_eq!(settings.updates.github_repo, "mislw/oasis-wiki-comp");
+    }
+
+    #[test]
+    fn preserves_custom_update_repositories() {
+        let mut settings = Settings::default();
+        settings.updates.github_repo = "example/custom-oasis-wiki".into();
+
+        assert!(!migrate_settings(&mut settings));
+        assert_eq!(settings.updates.github_repo, "example/custom-oasis-wiki");
+    }
 
     #[test]
     fn save_can_replace_an_existing_settings_file() {
