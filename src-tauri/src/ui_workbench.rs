@@ -12,7 +12,7 @@ use crate::ui_workflow;
 /// Validated arguments for opening a generated UI Workbench session.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct WorkbenchHandoff {
-    pub url: String,
+    pub url: Option<String>,
     pub session_dir: Option<PathBuf>,
 }
 
@@ -73,7 +73,10 @@ pub fn handoff_action(args: &[String]) -> Result<Option<WorkbenchHandoff>, Strin
         }
         None => None,
     };
-    Ok(Some(WorkbenchHandoff { url, session_dir }))
+    Ok(Some(WorkbenchHandoff {
+        url: Some(url),
+        session_dir,
+    }))
 }
 
 /// Register an optional persistent page, retain its URL, and show the workbench.
@@ -107,7 +110,7 @@ pub fn apply_ui_workbench_handoff(
     *app.state::<AppState>()
         .pending_ui_workbench_url
         .lock()
-        .unwrap() = Some(handoff.url.clone());
+        .unwrap() = handoff.url.clone();
 
     let window = show_ui_workbench(app)?;
     window
@@ -196,7 +199,7 @@ mod tests {
         assert_eq!(
             handoff_action(&args).unwrap(),
             Some(WorkbenchHandoff {
-                url: "http://localhost:50691/".into(),
+                url: Some("http://localhost:50691/".into()),
                 session_dir: Some(session_dir),
             })
         );
@@ -212,7 +215,7 @@ mod tests {
         assert_eq!(
             handoff_action(&valid).unwrap(),
             Some(WorkbenchHandoff {
-                url: "http://127.0.0.1:50691/".into(),
+                url: Some("http://127.0.0.1:50691/".into()),
                 session_dir: None,
             })
         );

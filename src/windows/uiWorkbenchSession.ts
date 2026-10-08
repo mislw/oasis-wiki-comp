@@ -51,7 +51,7 @@ export type WorkbenchPageNavRow = {
 
 type WorkbenchSessionConnection = {
   getPendingUrl: () => Promise<string | null>;
-  subscribe: (handler: (url: string) => void) => Promise<() => void>;
+  subscribe: (handler: (url: string | null) => void) => Promise<() => void>;
   loadExternal: (url: string) => Promise<void>;
   loadFallback: () => Promise<void>;
 };
@@ -367,7 +367,8 @@ export async function connectWorkbenchSessions({
   const unsubscribe = await subscribe((url) => {
     eventSeen = true;
     latestEventUrl = url;
-    void loadExternal(url);
+    if (url) void loadExternal(url);
+    else void loadFallback();
   });
   const pendingUrl = await getPendingUrl();
   if (pendingUrl && pendingUrl !== latestEventUrl) {

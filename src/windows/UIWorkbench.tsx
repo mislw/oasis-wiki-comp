@@ -569,7 +569,7 @@ export default function UIWorkbench() {
     let cancelled = false;
     void connectWorkbenchSessions({
       getPendingUrl: async () => invoke<string | null>("get_pending_ui_workbench_url").catch(() => null),
-      subscribe: async (handler) => listen<string>("ui-workbench://session", (event) => handler(event.payload)),
+      subscribe: async (handler) => listen<string | null>("ui-workbench://session", (event) => handler(event.payload)),
       loadExternal: loadForwardedSession,
       loadFallback: loadCatalogOrBuiltIn,
     }).then((stop) => {

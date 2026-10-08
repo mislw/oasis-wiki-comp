@@ -18,7 +18,7 @@ struct HandoffEnvelope {
 enum HandoffAction {
     OpenUiWorkflow,
     UiWorkbench {
-        url: String,
+        url: Option<String>,
         session_dir: Option<PathBuf>,
     },
     WorkflowUpdate {
@@ -88,7 +88,12 @@ fn parse_handoff(path: &Path) -> Result<HandoffAction, String> {
     }
     match &envelope.action {
         HandoffAction::UiWorkbench { url, session_dir } => {
-            crate::ui_workbench::validate_ui_workbench_url(url)?;
+            if url.is_none() && session_dir.is_none() {
+                return Err("UI Workbench handoff requires a URL or session directory".into());
+            }
+            if let Some(url) = url {
+                crate::ui_workbench::validate_ui_workbench_url(url)?;
+            }
             if session_dir.as_ref().is_some_and(|path| !path.is_absolute()) {
                 return Err("UI Workbench session directory must be absolute".into());
             }
@@ -108,7 +113,10 @@ fn apply_handoff(app: &AppHandle, action: HandoffAction) -> Result<(), String> {
             crate::ui_workbench::apply_ui_workbench_handoff(
                 app,
                 crate::ui_workbench::WorkbenchHandoff {
-                    url: crate::ui_workbench::validate_ui_workbench_url(&url)?,
+                    url: url
+                        .as_deref()
+                        .map(crate::ui_workbench::validate_ui_workbench_url)
+                        .transpose()?,
                     session_dir,
                 },
             )
@@ -206,7 +214,7 @@ mod tests {
         assert_eq!(
             parse_handoff(&workbench).unwrap(),
             HandoffAction::UiWorkbench {
-                url: "http://localhost:50691/".into(),
+                url: Some("http://localhost:50691/".into()),
                 session_dir: Some(PathBuf::from(r"C:\session")),
             }
         );
@@ -219,6 +227,21 @@ mod tests {
             parse_handoff(&update).unwrap(),
             HandoffAction::WorkflowUpdate {
                 update_path: PathBuf::from(r"C:\session\update.json"),
+            }
+        );
+    }
+
+    #[test]
+    fn parses_a_local_workbench_handoff_without_a_url() {
+        let workbench = temp_file(
+            "local-workbench",
+            r#"{"schema_version":1,"kind":"ui_workbench","session_dir":"C:\\session"}"#,
+        );
+        assert_eq!(
+            parse_handoff(&workbench).unwrap(),
+            HandoffAction::UiWorkbench {
+                url: None,
+                session_dir: Some(PathBuf::from(r"C:\session")),
             }
         );
     }

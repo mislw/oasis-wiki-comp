@@ -105,6 +105,25 @@ test("connects pending and forwarded sessions without replacing event data with 
   assert.equal(unsubscribed, true);
 });
 
+test("reloads the persisted catalog when a local session handoff has no URL", async () => {
+  const { connectWorkbenchSessions } = await importTypeScript("../src/windows/uiWorkbenchSession.ts");
+  let listener;
+  let fallbackCount = 0;
+
+  await connectWorkbenchSessions({
+    getPendingUrl: async () => null,
+    subscribe: async (handler) => {
+      listener = handler;
+      return () => {};
+    },
+    loadExternal: async () => { throw new Error("local handoff must not load HTTP"); },
+    loadFallback: async () => { fallbackCount += 1; },
+  });
+  await listener(null);
+
+  assert.equal(fallbackCount, 2);
+});
+
 test("loads one persisted page as an isolated session with contained assets", async () => {
   const {
     collectPersistedAssetPaths,
