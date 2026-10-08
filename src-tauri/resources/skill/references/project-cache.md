@@ -27,11 +27,37 @@ Refresh the cache with:
 powershell -ExecutionPolicy Bypass -File "<skill-root>\scripts\index-oasis-project.ps1" -ProjectRoot "<project-root>" -Force
 ```
 
-Record a completed feature when the user says `记住这个功能`, `同步一下项目知识`, `记录这次改动`, `沉淀这个功能`, or similar:
+After feature work is completed and verified, record it automatically unless the user says `不要记录这次` or otherwise opts out. Explicit phrases such as `记住这个功能`, `同步一下项目知识`, `记录这次改动`, and `沉淀这个功能` also trigger the same workflow.
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File "<skill-root>\scripts\remember-oasis-feature.ps1" -ProjectRoot "<project-root>" -Title "<feature title>" -Summary "<short human intent>" -Author "luojiawei"
+powershell -ExecutionPolicy Bypass -File "<skill-root>\scripts\remember-oasis-feature.ps1" `
+  -ProjectRoot "<project-root>" `
+  -Title "<feature title>" `
+  -Summary "<short human intent>" `
+  -Requirements "<confirmed requirements>" `
+  -Decisions "<confirmed decisions>" `
+  -Implementation "<implementation and ownership notes>" `
+  -Pitfalls "<errors, failed approaches, and causes>" `
+  -Verification "<tests, logs, and observed results>" `
+  -SourceFiles "<relevant conversation attachment>" `
+  -SourceNotes "<distilled attachment findings>" `
+  -Keywords "<search terms>" `
+  -Author "luojiawei"
 ```
+
+## Task Memory Contract
+
+Write one task memory only after the feature has a stable outcome and fresh verification evidence. Distill the current conversation into:
+
+- Requirements: the user-visible behavior and accepted boundaries.
+- Confirmed decisions: choices that future work should preserve, including rejected alternatives when the reason matters.
+- Implementation notes: real owners, files, functions, RPC/event/data flow, and compatibility constraints.
+- Pitfalls and errors: observed symptoms, root causes, failed approaches, and the successful correction.
+- Verification: commands, editor/runtime checks, logs, and outcomes that were actually observed.
+- Conversation sources: short summaries of relevant uploaded or referenced files plus their path, size, modified time, and SHA-256 provenance.
+- Keywords: project terminology, APIs, systems, UI names, and error strings future agents are likely to search.
+
+Do not copy the raw conversation or full attachment contents. Do not record guesses, unresolved claims, secrets, credentials, account data, or conclusions contradicted by current source. If the task is abandoned, unverified, or still under active design, leave it out or record the unresolved point in project planning memory instead.
 
 ## What The Cache Contains
 
@@ -39,7 +65,7 @@ powershell -ExecutionPolicy Bypass -File "<skill-root>\scripts\remember-oasis-fe
 - `index\summary.md`: compact human-readable architecture overview, key files, Lua classes, RPCs, events, timers, replication, UI hints, and frequent APIs.
 - `index\symbols.tsv`: searchable line-oriented facts extracted from Lua files.
 - `index\files.tsv`: searchable file inventory with size, mtime, hash, and relative path.
-- `features\*.md`: feature memories created on explicit trigger.
+- `features\*.md`: structured task memories created after verified feature work or on an explicit trigger.
 - `features.tsv`: searchable feature-memory index.
 - `feature-memory.json`: latest feature-memory metadata, preferred author, git user, and cache location.
 
@@ -57,7 +83,7 @@ rg --line-number --smart-case "ServerRPC|UIManager|EventDefine|RepLazyProperty|k
 
 4. Open only the real source files identified by the cache.
 5. If the cache is missing or stale, run `scripts/index-oasis-project.ps1`.
-6. If the user explicitly says to remember a completed feature, run `scripts/remember-oasis-feature.ps1`.
+6. After completed and verified feature work, run `scripts/remember-oasis-feature.ps1` unless the user says `不要记录这次` or otherwise opts out.
 7. Do not copy generated project cache files into the project workspace, `references/`, or global skill files.
 
 ## Staleness Checks

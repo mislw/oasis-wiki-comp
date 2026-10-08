@@ -388,7 +388,7 @@ class UIWorkbenchCompanionHandoffTests(unittest.TestCase):
             ):
                 self.assertIsNone(create_workbench.find_companion_executable(None))
 
-    def test_launches_companion_with_the_normalized_workbench_url(self) -> None:
+    def test_launches_companion_with_a_local_session_directory(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             executable = Path(directory) / "oasis-companion.exe"
             executable.touch()
@@ -401,7 +401,6 @@ class UIWorkbenchCompanionHandoffTests(unittest.TestCase):
             ) as dispatch:
                 result = create_workbench.start_companion_handoff(
                     executable,
-                    "http://localhost:50691/",
                     session_dir,
                 )
 
@@ -416,11 +415,47 @@ class UIWorkbenchCompanionHandoffTests(unittest.TestCase):
                     {
                         "schema_version": 1,
                         "kind": "ui_workbench",
-                        "url": "http://localhost:50691/",
                         "session_dir": str(session_dir.resolve()),
                     },
                 ),
             )
+
+    def test_default_workbench_creation_uses_no_port_server_url_or_shortcut(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            image = root / "source.png"
+            output = root / "workbenches"
+            companion = root / "oasis-companion.exe"
+            Image.new("RGB", (16, 12), "white").save(image)
+            companion.touch()
+            argv = [
+                "create_ui_workbench.py",
+                "--image",
+                str(image),
+                "--allow-unreviewed",
+                "--output-root",
+                str(output),
+                "--companion-executable",
+                str(companion),
+            ]
+            with patch.object(sys, "argv", argv), patch.object(
+                create_workbench, "free_port"
+            ) as free_port, patch.object(create_workbench, "start_server") as start_server, patch.object(
+                create_workbench,
+                "dispatch_companion_handoff",
+                return_value={"status": "queued", "handoff": "handoff.json"},
+            ):
+                self.assertEqual(create_workbench.main(), 0)
+
+            free_port.assert_not_called()
+            start_server.assert_not_called()
+            session_dir = next(output.iterdir())
+            manifest = json.loads((session_dir / "workbench.json").read_text(encoding="utf-8"))
+            self.assertEqual(manifest["access_mode"], "companion_persisted_page")
+            self.assertNotIn("url", manifest)
+            self.assertNotIn("shortcut", manifest)
+            self.assertNotIn("server_pid", manifest)
+            self.assertFalse((session_dir / "Open UI Workbench.url").exists())
 
     def test_derives_stable_distinct_page_ids_for_chinese_titles(self) -> None:
         currency = create_workbench.resolve_page_id(None, "货币兑换")
@@ -545,6 +580,7 @@ class UIWorkbenchCompanionHandoffTests(unittest.TestCase):
             ):
                 result = create_workbench.create_companion_handoff(
                     executable,
+                    Path(directory),
                     "http://localhost:50691/",
                 )
 
@@ -564,7 +600,7 @@ class UIWorkbenchCompanionHandoffTests(unittest.TestCase):
             "DEFAULT_COMPANION_EXECUTABLE",
             Path(directory) / "missing.exe",
         ):
-            result = create_workbench.create_companion_handoff(None, "http://localhost:50691/")
+            result = create_workbench.create_companion_handoff(None, Path(directory))
 
         self.assertEqual(result, {"status": "fallback", "reason": "companion_not_found"})
 
@@ -583,6 +619,7 @@ class UIWorkbenchCompanionHandoffTests(unittest.TestCase):
                 str(output),
                 "--port",
                 "50691",
+                "--browser-fallback",
             ]
             with patch.object(sys, "argv", argv), patch.object(
                 create_workbench, "start_server", return_value=2468

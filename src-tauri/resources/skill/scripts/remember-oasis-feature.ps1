@@ -5,6 +5,22 @@ param(
 
     [string] $Summary = '',
 
+    [string] $Requirements = '',
+
+    [string] $Decisions = '',
+
+    [string] $Implementation = '',
+
+    [string] $Pitfalls = '',
+
+    [string] $Verification = '',
+
+    [string[]] $SourceFiles = @(),
+
+    [string] $SourceNotes = '',
+
+    [string[]] $Keywords = @(),
+
     [string] $Author = 'luojiawei',
 
     [switch] $FromLastAuthorCommit,
@@ -98,6 +114,53 @@ function Limit-Text {
     return $Text.Substring(0, $MaxLength) + "`n... <truncated>"
 }
 
+function Get-FileSha256 {
+    param([Parameter(Mandatory = $true)][string] $Path)
+
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    $stream = [System.IO.File]::OpenRead($Path)
+    try {
+        $hashBytes = $sha.ComputeHash($stream)
+        return -join ($hashBytes | ForEach-Object { $_.ToString('x2') })
+    } finally {
+        $stream.Dispose()
+        $sha.Dispose()
+    }
+}
+
+function Get-NormalizedKeywords {
+    param([string[]] $Values)
+
+    $normalized = New-Object System.Collections.Generic.List[string]
+    foreach ($value in $Values) {
+        if ([string]::IsNullOrWhiteSpace($value)) { continue }
+        foreach ($part in ($value -split '[,;\r\n]+')) {
+            $keyword = $part.Trim()
+            if (-not [string]::IsNullOrWhiteSpace($keyword) -and -not $normalized.Contains($keyword)) {
+                $normalized.Add($keyword) | Out-Null
+            }
+        }
+    }
+    return @($normalized)
+}
+
+function Add-MemorySection {
+    param(
+        [Parameter(Mandatory = $true)] $Lines,
+        [Parameter(Mandatory = $true)][string] $Heading,
+        [AllowEmptyString()][string] $Content,
+        [Parameter(Mandatory = $true)][string] $EmptyMessage
+    )
+
+    $Lines.Add('') | Out-Null
+    $Lines.Add("## $Heading") | Out-Null
+    if ([string]::IsNullOrWhiteSpace($Content)) {
+        $Lines.Add("- $EmptyMessage") | Out-Null
+    } else {
+        $Lines.Add($Content.Trim()) | Out-Null
+    }
+}
+
 $projectRootFull = Resolve-FullPath $ProjectRoot
 $projectCache = Get-ProjectCacheRoot $projectRootFull
 $featureRoot = Join-Path $projectCache.CacheRoot 'features'
@@ -112,6 +175,8 @@ $status = (Invoke-Git $projectRootFull @('status', '--short')).Text
 $diffNameStatus = (Invoke-Git $projectRootFull @('diff', '--name-status')).Text
 $diffStat = (Invoke-Git $projectRootFull @('diff', '--stat')).Text
 $diffText = (Invoke-Git $projectRootFull @('diff', '--', '*.lua', '*.ini', '*.json', '*.csv', '*.md')).Text
+$normalizedKeywords = Get-NormalizedKeywords $Keywords
+$keywordText = $normalizedKeywords -join ', '
 
 $commitHash = ''
 $commitSubject = ''
@@ -158,6 +223,9 @@ $lines.Add(('- Git HEAD: `' + $gitHead + '`')) | Out-Null
 if (-not [string]::IsNullOrWhiteSpace($commitHash)) {
     $lines.Add(('- Source commit: `' + $commitHash + '` ' + $commitSubject)) | Out-Null
 }
+if (-not [string]::IsNullOrWhiteSpace($keywordText)) {
+    $lines.Add(('- Keywords: ' + $keywordText)) | Out-Null
+}
 $lines.Add('') | Out-Null
 $lines.Add('## Human Summary') | Out-Null
 if ([string]::IsNullOrWhiteSpace($Summary)) {
@@ -165,6 +233,33 @@ if ([string]::IsNullOrWhiteSpace($Summary)) {
 } else {
     $lines.Add($Summary) | Out-Null
 }
+Add-MemorySection $lines 'Requirements' $Requirements 'No confirmed requirements were captured.'
+Add-MemorySection $lines 'Confirmed Decisions' $Decisions 'No confirmed decisions were captured.'
+Add-MemorySection $lines 'Implementation Notes' $Implementation 'No implementation notes were captured.'
+Add-MemorySection $lines 'Pitfalls And Errors' $Pitfalls 'No pitfalls or errors were captured.'
+Add-MemorySection $lines 'Verification' $Verification 'No verification evidence was captured.'
+
+$lines.Add('') | Out-Null
+$lines.Add('## Conversation Sources') | Out-Null
+if (-not [string]::IsNullOrWhiteSpace($SourceNotes)) {
+    $lines.Add($SourceNotes.Trim()) | Out-Null
+}
+if ($SourceFiles.Count -eq 0) {
+    $lines.Add('- No conversation files were recorded.') | Out-Null
+} else {
+    foreach ($sourceFile in $SourceFiles) {
+        if ([string]::IsNullOrWhiteSpace($sourceFile)) { continue }
+        $sourcePath = Resolve-FullPath $sourceFile
+        $sourceItem = Get-Item -LiteralPath $sourcePath
+        $sourceHash = Get-FileSha256 $sourcePath
+        $lines.Add(('- `' + $sourceItem.Name + '`')) | Out-Null
+        $lines.Add(('  - Path: `' + $sourcePath + '`')) | Out-Null
+        $lines.Add(('  - Size: ' + $sourceItem.Length + ' bytes')) | Out-Null
+        $lines.Add(('  - Modified UTC: ' + $sourceItem.LastWriteTimeUtc.ToString('o'))) | Out-Null
+        $lines.Add(('  - SHA-256: `' + $sourceHash + '`')) | Out-Null
+    }
+}
+
 $lines.Add('') | Out-Null
 $lines.Add('## Changed Files') | Out-Null
 if (-not [string]::IsNullOrWhiteSpace($diffNameStatus)) {
@@ -216,7 +311,8 @@ $indexLine = @(
     $gitHead,
     ($Title -replace "`t", ' '),
     ($featurePath -replace "`t", ' '),
-    ($changedFilesOneLine -replace "`t", ' ')
+    ($changedFilesOneLine -replace "`t", ' '),
+    ($keywordText -replace "`t", ' ')
 ) -join "`t"
 Add-Content -LiteralPath $indexPath -Value $indexLine -Encoding UTF8
 
@@ -231,6 +327,7 @@ $memory = [pscustomobject]@{
     gitUserEmail = $gitUserEmail
     lastFeatureId = $featureId
     lastFeaturePath = $featurePath
+    lastFeatureKeywords = $normalizedKeywords
     updatedAtUtc = (Get-Date).ToUniversalTime().ToString('o')
 }
 $memory | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath $memoryJsonPath -Encoding UTF8

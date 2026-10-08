@@ -609,7 +609,7 @@ end
 
 > 文档ID: 20094 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20094)
 
-> 新增: 2026-05-22 11:30:54 | 更新: 2026-09-02 13:56:24
+> 新增: 2026-05-22 11:30:54 | 更新: 2026-09-23 09:47:10
 
 **涉及API/标识符:** `Anim3DTransformWarpingTargetType_Custom`, `Anim3DTransformWarpingTargetType_SelectTarget`, `Anim3DTransformWarpingTargetType_SelectTransform`, `AnimListComp`, `AUniversalProjectileCore`, `CustomShakeClass`, `GenericCharacterAnim.General.SharingStateAnim.Attack`, `Input.Skill.Slot0`, `Interval`, `None`, `PawnState.SwitchPP`, `PESkillPickerBase`, `Script.Blueprint.NewLua`, `Slot0`, `SortFunction`
 
@@ -1589,20 +1589,6 @@ end
 
 ---
 
-### 技能Task-显示取消按钮
-
-执行该Task时，将显示技能的取消按钮，点击取消按钮，则可以主动取消该技能。
-
-![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/UZnpjimage.png)
-
-- 取消按钮自定义描述：未配置时显示默认值“取消释放”，若已配置时则使用该配置字符串进行显示
-- Cancel Action：
-   - 直接取消技能：结束技能流程，跳转End阶段
-   - 仅发送取消事件： 不直接结束技能，触发状态图中的技能取消状态和事件
-- 取消按钮UI：支持自定义取消按钮控件的样式
-
----
-
 ### 技能Task-显示UI
 
 执行该Task时，将按配置显示一个UI效果。
@@ -1811,7 +1797,7 @@ end
 
 **扇形目标选取器**
 
-![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/Fhy7Dimage.png)
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/HmotHimage.png)
 
 - 半径：扇形区域的半径
 - 角度：扇形区域的角度
@@ -1828,6 +1814,13 @@ end
 	- 敌人：敌方
 	- 中立：中立
 - 选取目标需要是否可见：如果勾选，目标需要可见才会被选取
+- 额外目标过滤器：选取到的目标进行额外过滤
+	- Actor类过滤器：选取符合对应Actor类的目标
+	- 状态Tag过滤器：选取符合对应状态Tag的目标
+	- 自定义条件过滤器：选取符合自定义条件的目标
+	- 实体类型过滤器：选取符合对应实体类型的目标
+	- 非队友过滤器：选取非队友目标
+> 额外目标过滤器均支持取反操作，取反后将选取非对应条件的目标
 - 变换源类型：该选取区域的起点位置类型，非“释放者自身”类型依赖前置 **``目标选择``** 类型Task的选取结果
 	- 技能释放者自身：扇形区域以施法者为中心
 	- 技能选择的位置：扇形区域以选中的目标位置为中心
@@ -1847,7 +1840,7 @@ end
 
 **矩形目标选取器**
 
-![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/cgihkimage.png)
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/R3xVPimage.png)
 
 - 选取器宽度：选取矩形区域的宽度
 - 选取器长度：选取矩形区域的长度
@@ -1862,7 +1855,14 @@ end
 	- 相同：友方
 	- 敌人：敌方
 	- 中立：中立
-- 是否需要可见：如果勾选，目标需要可见，才会被选取。
+- 是否需要可见：如果勾选，目标需要可见才会被选取
+- 额外目标过滤器：选取到的目标进行额外过滤
+	- Actor类过滤器：选取符合对应Actor类的目标
+	- 状态Tag过滤器：选取符合对应状态Tag的目标
+	- 自定义条件过滤器：选取符合自定义条件的目标
+	- 实体类型过滤器：选取符合对应实体类型的目标
+	- 非队友过滤器：选取非队友目标
+> 额外目标过滤器均支持取反操作，取反后将选取非对应条件的目标
 - 位置来源类型：该选取区域的起点位置类型，非“释放者自身”类型依赖前置 **``目标选择``** 类型Task的选取结果
 	- 技能释放者自身：扇形区域以施法者为中心
 	- 技能选择的位置：扇形区域以选中的目标位置为中心
@@ -1883,7 +1883,7 @@ end
 
 **球形目标选择器**
 
-![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/rFa1ximage.png)
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/vzu8wimage.png)
 
 - 球形选取半径：球形范围的半径。
 - 最大数量：至多能选取到多少个目标，-1代表无限制
@@ -1896,7 +1896,14 @@ end
 	- 相同：友方
 	- 敌人：敌方
 	- 中立：中立
-- 是否需要可见：如果勾选，目标需要可见，才会被选取。
+- 是否需要可见：如果勾选，目标需要可见才会被选取
+- 额外目标过滤器：选取到的目标进行额外过滤
+	- Actor类过滤器：选取符合对应Actor类的目标
+	- 状态Tag过滤器：选取符合对应状态Tag的目标
+	- 自定义条件过滤器：选取符合自定义条件的目标
+	- 实体类型过滤器：选取符合对应实体类型的目标
+	- 非队友过滤器：选取非队友目标
+> 额外目标过滤器均支持取反操作，取反后将选取非对应条件的目标
 - 位置来源类型：该选取区域的起点位置类型，非“释放者自身”类型依赖前置 **``目标选择``** 类型Task的选取结果
 	- 技能释放者自身：球形区域以施法者为中心
 	- 技能选择的位置：球形区域以选中的目标位置为中心
@@ -1919,7 +1926,7 @@ end
 
 执行时，点击技能UI的触控位置会额外显示一个右摇杆用于目标选取，右摇杆的轴位置最终会映射到实际场景里的3D位置，并基于该位置为中心进行目标的选取。
 
-![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/h8sMhimage.png)
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/yPYxgimage.png)
 
 - 操纵杆范围半径：摇杆选取区域大小，选到的点位和施法者的最大距离，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
 - 范围半径：选取目标位置半径区域大小，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
@@ -1953,6 +1960,13 @@ end
 	- 敌人：敌方
 	- 中立：中立
 - 是否需要可见：如果勾选，目标需要可见才会被选取
+- 额外目标过滤器：选取到的目标进行额外过滤
+	- Actor类过滤器：选取符合对应Actor类的目标
+	- 状态Tag过滤器：选取符合对应状态Tag的目标
+	- 自定义条件过滤器：选取符合自定义条件的目标
+	- 实体类型过滤器：选取符合对应实体类型的目标
+	- 非队友过滤器：选取非队友目标
+> 额外目标过滤器均支持取反操作，取反后将选取非对应条件的目标
 - 位置来源类型：该选取区域的起点位置类型，非“释放者自身”类型依赖前置 **``目标选择``** 类型Task的选取结果
 	- 技能释放者自身：摇杆出发点以施法者为中心
 	- 技能选择的位置：摇杆出发点以选中的目标位置为中心
@@ -1966,7 +1980,7 @@ end
 
 以屏幕中心发射射线进行检测，将命中的目标作为最终选取的目标。
 
-![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/dUKc7image.png)
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/wrSTrimage.png)
 
 - 检测距离：射线检测的最大有效距离，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
 - 扫描球半径：检测射线的体积半径大小，射线路径上在此半径范围内的所有物体均会被视为命中
@@ -1999,6 +2013,13 @@ end
 	- Enemy：敌方
 	- Neutral：中立
 - 是否需要可见：如果勾选，目标需要可见才会被选取
+- 额外目标过滤器：选取到的目标进行额外过滤
+	- Actor类过滤器：选取符合对应Actor类的目标
+	- 状态Tag过滤器：选取符合对应状态Tag的目标
+	- 自定义条件过滤器：选取符合自定义条件的目标
+	- 实体类型过滤器：选取符合对应实体类型的目标
+	- 非队友过滤器：选取非队友目标
+> 额外目标过滤器均支持取反操作，取反后将选取非对应条件的目标
 - 位置来源类型：该选取区域的起点位置类型，非“释放者自身”类型依赖前置 **``目标选择``** 类型Task的选取结果
 	- 技能释放者自身：射线出发点以施法者为中心
 	- 技能选择的位置：射线出发点以选中的目标位置为中心

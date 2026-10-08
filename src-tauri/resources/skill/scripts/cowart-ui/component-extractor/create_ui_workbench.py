@@ -731,37 +731,39 @@ def find_companion_executable(explicit: Path | None) -> Path | None:
 
 def start_companion_handoff(
     executable: Path,
-    url: str,
-    session_dir: Path | None = None,
+    session_dir: Path,
+    url: str | None = None,
 ) -> dict[str, Any]:
+    payload: dict[str, Any] = {
+        "schema_version": 1,
+        "kind": "ui_workbench",
+        "session_dir": str(session_dir.resolve()),
+    }
+    if url is not None:
+        payload["url"] = url
     return dispatch_companion_handoff(
         executable,
-        {
-            "schema_version": 1,
-            "kind": "ui_workbench",
-            "url": url,
-            "session_dir": str(session_dir.resolve()) if session_dir is not None else None,
-        },
+        payload,
     )
 
 
 def create_companion_handoff(
     explicit: Path | None,
-    url: str,
-    session_dir: Path | None = None,
+    session_dir: Path,
+    url: str | None = None,
 ) -> dict[str, Any]:
     executable = find_companion_executable(explicit)
     if executable is None:
         return {"status": "fallback", "reason": "companion_not_found"}
     try:
-        handoff = start_companion_handoff(executable, url, session_dir)
+        handoff = start_companion_handoff(executable, session_dir, url)
     except OSError as error:
         return {
             "status": "fallback",
             "reason": "companion_launch_failed",
             "error_type": type(error).__name__,
         }
-    return {**handoff, "url": url}
+    return {**handoff, **({"url": url} if url is not None else {})}
 
 
 def main() -> int:
@@ -778,9 +780,12 @@ def main() -> int:
     parser.add_argument("--output-root", type=Path, default=Path.home() / ".codex" / "ui-workbenches")
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=0)
+    parser.add_argument("--browser-fallback", action="store_true", help="Explicitly start the legacy loopback HTTP workbench.")
     parser.add_argument("--companion-executable", type=Path)
     parser.add_argument("--no-start", action="store_true")
     args = parser.parse_args()
+    if args.port and not args.browser_fallback:
+        parser.error("--port requires --browser-fallback")
 
     image_path = args.image.resolve()
     if not image_path.is_file():
@@ -838,27 +843,32 @@ def main() -> int:
         "agent_context": agent_context,
     }
     (session_dir / "session.json").write_text(json.dumps(session, ensure_ascii=False, indent=2), encoding="utf-8")
-    port = args.port or free_port(args.host)
-    url = f"http://localhost:{port}/"
-    shortcut = session_dir / "Open UI Workbench.url"
-    shortcut.write_text(f"[InternetShortcut]\nURL={url}\n", encoding="utf-8")
-    pid = None if args.no_start else start_server(session_dir, args.host, port)
+    url = None
+    shortcut = None
+    pid = None
+    if args.browser_fallback:
+        port = args.port or free_port(args.host)
+        url = f"http://localhost:{port}/"
+        shortcut = session_dir / "Open UI Workbench.url"
+        shortcut.write_text(f"[InternetShortcut]\nURL={url}\n", encoding="utf-8")
+        if not args.no_start:
+            pid = start_server(session_dir, args.host, port)
     companion_handoff = (
         {"status": "disabled", "reason": "no_start"}
         if args.no_start
-        else create_companion_handoff(args.companion_executable, url, session_dir)
+        else create_companion_handoff(args.companion_executable, session_dir, url)
     )
     result = {
-        "url": url,
+        "access_mode": "browser_fallback" if args.browser_fallback else "companion_persisted_page",
         "session_dir": str(session_dir),
-        "shortcut": str(shortcut),
-        "server_pid": pid,
         "companion_handoff": companion_handoff,
         "control_count": len(controls),
         "legacy_extractor_ui_hidden": True,
         "extraction_plan": str(extraction_plan_path) if extraction_plan_path else None,
         "library_references": str(library_references_path) if library_references_path else None,
     }
+    if args.browser_fallback:
+        result.update({"url": url, "shortcut": str(shortcut), "server_pid": pid})
     (session_dir / "workbench.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(result, ensure_ascii=False))
     return 0

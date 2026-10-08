@@ -1,6 +1,6 @@
 # 绿洲启元 Lua API 参考索引
 
-> 共收录 1547 个API/类/标识符，来自 332 篇官网文档
+> 共收录 1565 个API/类/标识符，来自 332 篇官网文档
 
 ---
 
@@ -1710,6 +1710,12 @@
 
 - [BuffListUI](id:20444) (进阶内容/GamePlay系统/技能系统/Buff编辑器2.0)
 
+### `DistanceTextBlock`
+
+出现于 1 篇文档：
+
+- [新手引导组件](id:20437) (进阶内容)
+
 ### `DisuseItemV2`
 
 出现于 1 篇文档：
@@ -2256,6 +2262,12 @@
 - [快速入门](id:178) (进阶内容/GamePlay系统/技能系统/技能编辑器1.0)
 - [强引导组件](id:20383) (进阶内容/UI系统)
 
+### `GameState.lua`
+
+出现于 1 篇文档：
+
+- [物品实例化数据](id:20433) (进阶内容/GamePlay系统/物资系统/物资编辑器2.0)
+
 ### `GenerateAirDrop`
 
 出现于 1 篇文档：
@@ -2450,6 +2462,12 @@
 出现于 1 篇文档：
 
 - [全局伤害公式](id:20099) (进阶内容/GamePlay系统/属性与伤害)
+
+### `GetDSEnvType`
+
+出现于 1 篇文档：
+
+- [调试日志说明](id:354) (绿洲编辑器基础内容/调试游戏)
 
 ### `GetDSRemainingTime`
 
@@ -3424,6 +3442,18 @@
 
 - [Tween功能](id:20351) (通用功能)
 
+### `LineGuideActor`
+
+出现于 1 篇文档：
+
+- [新手引导组件](id:20437) (进阶内容)
+
+### `LineGuideActorClass`
+
+出现于 1 篇文档：
+
+- [新手引导组件](id:20437) (进阶内容)
+
 ### `ListenedObject`
 
 出现于 1 篇文档：
@@ -3453,6 +3483,12 @@
 出现于 1 篇文档：
 
 - [通用消息系统](id:20163) (通用功能)
+
+### `LoadItemCustomData:~:text=GetItemCustomizedTypeV2-,LoadItemCustomData,-SaveItemCustomData`
+
+出现于 1 篇文档：
+
+- [物品实例化数据](id:20433) (进阶内容/GamePlay系统/物资系统/物资编辑器2.0)
 
 ### `LoadLobbyChatFrameUI`
 
@@ -3663,9 +3699,10 @@
 
 ### `Material`
 
-出现于 1 篇文档：
+出现于 2 篇文档：
 
 - [修改怪物模型](id:20255) (进阶内容/GamePlay系统/怪物系统)
+- [新手引导组件](id:20437) (进阶内容)
 
 ### `MaxCount`
 
@@ -3684,6 +3721,12 @@
 出现于 1 篇文档：
 
 - [通过UGC-AskQ制作编辑器工具](id:20464) (绿洲编辑器基础内容/UGCAskQ MCP)
+
+### `Mesh`
+
+出现于 1 篇文档：
+
+- [新手引导组件](id:20437) (进阶内容)
 
 ### `MessageID`
 
@@ -4670,6 +4713,12 @@
 
 - [通用GM面板](id:20109) (绿洲编辑器基础内容/调试游戏)
 
+### `RegisterItemPropertyGetOverride:~:text=函数-,RegisterItemPropertyGetOverride,-UnregisterItemPropertyGetOverride`
+
+出现于 1 篇文档：
+
+- [物品实例化数据](id:20433) (进阶内容/GamePlay系统/物资系统/物资编辑器2.0)
+
 ### `RegisterUserDefinedMessage`
 
 出现于 1 篇文档：
@@ -4894,6 +4943,12 @@
 - [新手引导组件](id:20437) (进阶内容)
 
 ## S
+
+### `SaveItemCustomData:~:text=LoadItemCustomData-,SaveItemCustomData,-GetItemDefineID`
+
+出现于 1 篇文档：
+
+- [物品实例化数据](id:20433) (进阶内容/GamePlay系统/物资系统/物资编辑器2.0)
 
 ### `SaveLoadSourceAsset`
 
@@ -5297,9 +5352,10 @@
 
 ### `SizeBox_0`
 
-出现于 1 篇文档：
+出现于 2 篇文档：
 
 - [强引导组件](id:20383) (进阶内容/UI系统)
+- [新手引导组件](id:20437) (进阶内容)
 
 ### `SK_CH_UGC_Elements_Skeleton`
 
@@ -5381,6 +5437,12 @@
 
 - [技能Task查询手册](id:20094) (进阶内容/GamePlay系统/技能系统/技能编辑器2.0)
 
+### `Spacing`
+
+出现于 1 篇文档：
+
+- [新手引导组件](id:20437) (进阶内容)
+
 ### `SpawnActor`
 
 出现于 2 篇文档：
@@ -5418,6 +5480,12 @@
 出现于 1 篇文档：
 
 - [怪物刷新器](id:20156) (进阶内容/GamePlay系统/怪物系统)
+
+### `SpawnOffSet`
+
+出现于 1 篇文档：
+
+- [新手引导组件](id:20437) (进阶内容)
 
 ### `SpawnVehicle`
 
@@ -5605,6 +5673,12 @@
 
 - [Gameplay标签](id:20102) (进阶内容/GamePlay系统)
 
+### `TagName`
+
+出现于 1 篇文档：
+
+- [新手引导组件](id:20437) (进阶内容)
+
 ### `TakeDamageLogicComp`
 
 出现于 3 篇文档：
@@ -5624,6 +5698,12 @@
 出现于 1 篇文档：
 
 - [让怪物移动起来](id:171) (进阶内容/GamePlay系统/怪物系统/AI编辑器1.0/怪物制作)
+
+### `TargetActor`
+
+出现于 1 篇文档：
+
+- [新手引导组件](id:20437) (进阶内容)
 
 ### `TargetEnemyActor`
 
@@ -5702,6 +5782,12 @@
 出现于 1 篇文档：
 
 - [任务模板](id:20237) (商业化及功能模板)
+
+### `TaskTextBlock`
+
+出现于 1 篇文档：
+
+- [新手引导组件](id:20437) (进阶内容)
 
 ### `TeamCount`
 
@@ -6524,6 +6610,12 @@
 
 - [背包 / 物品 功能边界](id:20470) (进阶内容/GamePlay系统/物资系统/物资编辑器2.0)
 
+### `UGCBackpackSystemV2.GetBackpackPersistData`
+
+出现于 1 篇文档：
+
+- [背包系统](id:20104) (进阶内容/GamePlay系统/物资系统/物资编辑器2.0)
+
 ### `UGCBackpackSystemV2.GetBackpackTipsConfig`
 
 出现于 1 篇文档：
@@ -7227,7 +7319,7 @@
 
 ### `UGCGameSystem`
 
-出现于 13 篇文档：
+出现于 14 篇文档：
 
 - [脚本逻辑](id:20318) (常见问题)
 - [1.29 Release Notes](id:20044) (版本日志)
@@ -7238,6 +7330,7 @@
 - [二次匹配功能](id:376) (绿洲编辑器基础内容/匹配系统)
 - [局内补人](id:20270) (绿洲编辑器基础内容/匹配系统)
 - [游戏结束时的逻辑处理](id:272) (绿洲编辑器基础内容/脚本编写)
+- [调试日志说明](id:354) (绿洲编辑器基础内容/调试游戏)
 - [通用GM面板](id:20109) (绿洲编辑器基础内容/调试游戏)
 - [怪物受击](id:20252) (进阶内容/GamePlay系统/怪物系统)
 - [表格管理器](id:20208) (通用功能)
@@ -7293,6 +7386,12 @@
 
 - [经典海岛模板](id:302) (玩法案例及模板)
 - [游戏结束时的逻辑处理](id:272) (绿洲编辑器基础内容/脚本编写)
+
+### `UGCGameSystem.DSEnvType`
+
+出现于 1 篇文档：
+
+- [调试日志说明](id:354) (绿洲编辑器基础内容/调试游戏)
 
 ### `UGCGameSystem.EnterSpectating`
 
@@ -7826,6 +7925,12 @@
 - [活动模板](id:20396) (商业化及功能模板)
 - [通用GM面板](id:20109) (绿洲编辑器基础内容/调试游戏)
 
+### `UGCGommonUISystem.AddDragSuccess`
+
+出现于 1 篇文档：
+
+- [背包系统](id:20104) (进阶内容/GamePlay系统/物资系统/物资编辑器2.0)
+
 ### `UGCGunSystem`
 
 出现于 1 篇文档：
@@ -7886,11 +7991,12 @@
 
 ### `UGCItemSystemV2`
 
-出现于 7 篇文档：
+出现于 8 篇文档：
 
 - [1.35 Release Notes](id:20302) (版本日志)
 - [1.38 Release Notes](id:20472) (版本日志)
 - [物品与背包槽位](id:20210) (进阶内容/GamePlay系统/物资系统/物资编辑器2.0)
+- [物品实例化数据](id:20433) (进阶内容/GamePlay系统/物资系统/物资编辑器2.0)
 - [背包 / 物品 功能边界](id:20470) (进阶内容/GamePlay系统/物资系统/物资编辑器2.0)
 - [背包流程概览](id:20471) (进阶内容/GamePlay系统/物资系统/物资编辑器2.0)
 - [背包系统](id:20104) (进阶内容/GamePlay系统/物资系统/物资编辑器2.0)
@@ -8752,8 +8858,9 @@
 
 ### `UGCPickupWrapper_BP`
 
-出现于 2 篇文档：
+出现于 3 篇文档：
 
+- [物品实例化数据](id:20433) (进阶内容/GamePlay系统/物资系统/物资编辑器2.0)
 - [物品编辑器](id:20101) (进阶内容/GamePlay系统/物资系统/物资编辑器2.0)
 - [自定义掉落效果](id:20429) (进阶内容/GamePlay系统/物资系统/物资编辑器2.0)
 
@@ -8981,8 +9088,9 @@
 
 ### `UGCPlayerStateSystem.GetTableDataSize`
 
-出现于 1 篇文档：
+出现于 2 篇文档：
 
+- [背包系统](id:20104) (进阶内容/GamePlay系统/物资系统/物资编辑器2.0)
 - [玩家数据存档](id:20052) (进阶内容/存档)
 
 ### `UGCPlayerStateSystem.SavePlayerArchiveData`
@@ -9611,6 +9719,12 @@
 出现于 1 篇文档：
 
 - [任务模板](id:20237) (商业化及功能模板)
+
+### `UpdateTime`
+
+出现于 1 篇文档：
+
+- [新手引导组件](id:20437) (进阶内容)
 
 ### `UPersistEffectBase`
 

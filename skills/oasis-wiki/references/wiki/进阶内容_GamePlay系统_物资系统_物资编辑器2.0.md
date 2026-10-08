@@ -152,9 +152,9 @@
 
 > 文档ID: 20433 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20433)
 
-> 新增: 2026-08-12 12:35:58
+> 新增: 2026-08-12 12:35:58 | 更新: 2026-09-23 09:47:28
 
-**涉及API/标识符:** `UE.LoadClass`, `UGCBackpackSystemV2.AddItemV2`, `UGCGameData.AddItemWithInstanceData`, `UGCGameData.GetItemInstanceData`, `UGCGameData.ItemInstanceTablePath`, `UGCGameData.lua`, `UGCGameData.ParseItemIDFromDataID`, `UGCGameData.RegisterItemPropertyOverrides`, `UGCGameSystem.GetTableDataByRowName`, `UGCGameSystem.GetUGCResourcesFullPath`, `UGCItemSystemV2.GetItemDetailV2`, `UGCItemSystemV2.GetItemNameV2`, `UGCItemSystemV2.LoadItemCustomData`, `UGCItemSystemV2.RegisterItemPropertyGetOverride`, `UGCItemSystemV2.SaveItemCustomData`, `UGCItemSystemV2.SpawnPickupWrapper`, `UGCPlayerController.lua`, `UGCPlayerController.SuperClass`, `UGCPresetCommonDropItemComponent.StrategySelector`
+**涉及API/标识符:** `GameState.lua`, `LoadItemCustomData:~:text=GetItemCustomizedTypeV2-,LoadItemCustomData,-SaveItemCustomData`, `RegisterItemPropertyGetOverride:~:text=函数-,RegisterItemPropertyGetOverride,-UnregisterItemPropertyGetOverride`, `SaveItemCustomData:~:text=LoadItemCustomData-,SaveItemCustomData,-GetItemDefineID`, `UE.LoadClass`, `UGCBackpackSystemV2.AddItemV2`, `UGCGameData.AddItemWithInstanceData`, `UGCGameData.GetItemInstanceData`, `UGCGameData.ItemInstanceTablePath`, `UGCGameData.lua`, `UGCGameData.ParseItemIDFromDataID`, `UGCGameData.RegisterItemPropertyOverrides`, `UGCGameSystem.GetTableDataByRowName`, `UGCGameSystem.GetUGCResourcesFullPath`, `UGCItemSystemV2`, `UGCItemSystemV2.GetItemDetailV2`, `UGCItemSystemV2.GetItemNameV2`, `UGCItemSystemV2.LoadItemCustomData`, `UGCItemSystemV2.RegisterItemPropertyGetOverride`, `UGCItemSystemV2.SaveItemCustomData`, `UGCItemSystemV2.SpawnPickupWrapper`, `UGCPickupWrapper_BP`, `UGCPlayerController.lua`, `UGCPlayerController.SuperClass`, `UGCPresetCommonDropItemComponent.StrategySelector`
 
 # 物品实例化数据
 
@@ -217,9 +217,9 @@ DataID 是物品实例数据的唯一标识，格式为 "ItemID_Level"：
 
 ## 使用说明
 
-### 前置：启用 [V2背包](https://developer.gp.qq.com/wikieditor/#/catalog/20104?autoJump=%E5%90%AF%E7%94%A8%E8%83%8C%E5%8C%85%E7%B3%BB%E7%BB%9F:~:text=%E5%A4%A7%E7%BA%B2-,%E5%90%AF%E7%94%A8%E8%83%8C%E5%8C%85%E7%B3%BB%E7%BB%9F,-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%83%8C%E5%8C%85) 和 [自定义拾取组件](https://developer.gp.qq.com/wikieditor/#/catalog/20420)
+### 前置
 
-点击编辑器菜单栏的【玩法通用设置】按钮，在【GamePart】中添加【GP_BackpackV2】模块和【GP_PickUpV2List】。
+点击编辑器菜单栏的【玩法通用设置】按钮，在【GamePart】中添加【GP_BackpackV2】模块和【GP_PickUpV2List】，启用 [V2背包](https://developer.gp.qq.com/wikieditor/#/catalog/20104?autoJump=%E5%90%AF%E7%94%A8%E8%83%8C%E5%8C%85%E7%B3%BB%E7%BB%9F:~:text=%E5%A4%A7%E7%BA%B2-,%E5%90%AF%E7%94%A8%E8%83%8C%E5%8C%85%E7%B3%BB%E7%BB%9F,-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%83%8C%E5%8C%85) 和 [自定义拾取组件](https://developer.gp.qq.com/wikieditor/#/catalog/20420)。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/YJediimage.png)
 
@@ -339,7 +339,7 @@ end)
 
 ### 添加带实例数据的物品
 
-#### 方式一：通过接口直接添加到背包
+#### 方式一：通过接口添加到背包
 
 流程说明：
 
@@ -453,6 +453,60 @@ end
 
 <br>
 
+### 通过物品编辑器配置实例化数据
+
+#### 物品配置项
+
+除了通过表格的方式解析实例化数据，物品编辑器还提供了更加便捷的实例化数据配置方式，如下：
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/vEU7kimage.png)
+
+通过新建实例化数据预设，可以为当前物品配置不同的实例化数据。
+
+> 注意：此处的实例化数据，会直接存入物品的 CustomData 字段中，因此我们建议您，尽量进行简写，比如LEVEL简写成Lv，QUALITY简写成Q，以及对应的值，也可以尽量使用1、2、3，A、B、C的方式简写
+
+配置完成之后，注册属性覆盖即可。
+
+<br>
+
+#### 拾取物配置
+
+在场景中创建 ``UGCPickupWrapper_BP`` ，可以看到新增了一个物品实例化数据预设索引：
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/wfFcIimage.png)
+
+配置上索引，在 ``GameState.lua`` 上注册重写函数即可，在场景中摆上三个物品：
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/zHCmSimage.png)
+
+<br>
+
+#### 掉落组件/表配置
+
+怪物的掉落物也可以掉落带有实例数据的物品。
+
+**蓝图掉落**
+
+在怪物的 [掉落组件](https://developer.gp.qq.com/wikieditor/#/catalog/20142) 上，选择蓝图掉落方式，填写想要掉落的物品实例化数据索引：
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/ynEgOimage.png)
+
+进入调试，击杀怪物可见：
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/ZbLOCimage.png)
+
+- 索引0：带有一个红点瞄准镜
+- 索引1：带有一个红点瞄准镜、一个枪口
+- 索引-1：不带有配件，直接使用配置数据
+
+**读表掉落**
+
+[掉落表](https://developer.gp.qq.com/wikieditor/#/catalog/20058) 新增了物品实例化数据的索引，配置索引之后，在怪物的掉落组件上配置掉落ID：
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/VS3gyimage.png)
+
+<br>
+
 ## 案例工程操作指南
 
 在编辑器创建项目中找到功能演示工程，创建一个工程。
@@ -491,15 +545,15 @@ end
 
 |函数名|说明|
 |-|-|
-|[RegisterItemPropertyGetOverride]()|注册物品属性读取函数|
-|[UnregisterItemPropertyGetOverride]()|注销物品属性读取函数|
+|[RegisterItemPropertyGetOverride](https://developer.gp.qq.com/api/#/searchContent/UGCItemSystemV2?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E7%89%A9%E5%93%81%E4%B8%8E%E8%83%8C%E5%8C%85%2FUGCItemSystemV2.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCItemSystemV2&autoJump=RegisterItemPropertyGetOverride:~:text=%E5%87%BD%E6%95%B0-,RegisterItemPropertyGetOverride,-UnregisterItemPropertyGetOverride)|注册物品属性读取函数|
+|[UnregisterItemPropertyGetOverride](https://developer.gp.qq.com/api/#/searchContent/UGCItemSystemV2?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E7%89%A9%E5%93%81%E4%B8%8E%E8%83%8C%E5%8C%85%2FUGCItemSystemV2.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCItemSystemV2&autoJump=UnregisterItemPropertyGetOverride:~:text=RegisterItemPropertyGetOverride-,UnregisterItemPropertyGetOverride,-GetConfigItemHandle)|注销物品属性读取函数|
 
 **自定义数据重写**
 
 |函数名|说明|
 |-|-|
-|[LoadItemCustomData]()|获取物品自定义数据|
-|[LoadItemCustomData]()|保存物品自定义数据|
+|[LoadItemCustomData](https://developer.gp.qq.com/api/#/searchContent/UGCItemSystemV2?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E7%89%A9%E5%93%81%E4%B8%8E%E8%83%8C%E5%8C%85%2FUGCItemSystemV2.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCItemSystemV2&autoJump=LoadItemCustomData:~:text=GetItemCustomizedTypeV2-,LoadItemCustomData,-SaveItemCustomData)|获取物品自定义数据|
+|[SaveItemCustomData](https://developer.gp.qq.com/api/#/searchContent/UGCItemSystemV2?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E7%89%A9%E5%93%81%E4%B8%8E%E8%83%8C%E5%8C%85%2FUGCItemSystemV2.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCItemSystemV2&autoJump=SaveItemCustomData:~:text=LoadItemCustomData-,SaveItemCustomData,-GetItemDefineID)|保存物品自定义数据|
 
 **支持重写的属性列表**
 
@@ -2745,9 +2799,9 @@ V2 背包是绿洲启元专用背包系统，基于 [GP Backpack V2 Game Part](h
 
 > 文档ID: 20104 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20104)
 
-> 新增: 2026-04-24 15:29:28
+> 新增: 2026-04-24 15:29:28 | 更新: 2026-09-20 16:19:09
 
-**涉及API/标识符:** `AddCellCapacity`, `AddCellCapacity:~:text=GetMaxCellCapacity-,AddCellCapacity,-AddMaxCellCapacity`, `AddMaxCellCapacity`, `AddMaxCellCapacity:~:text=AddCellCapacity-,AddMaxCellCapacity,-RemoveMaxCellCapacity`, `BackpackUIComponent`, `BP_BackpackComponentV2`, `BP_BackpackComponentV2_Custom`, `BP_BackpackUIComponentV2`, `BP_BackpackUIComponentV2_Custom`, `BP_Grid_Tag`, `CheckUseItem`, `ClickLockBackpackItem`, `DA_GameModeGeneral`, `EquipmentSlot`, `EquipmentSlot.Core.MainSlot1`, `EquipmentSlot.Core.MainSlot2`, `EquipmentSlot.Core.MeleeSlot`, `EquipmentSlot.Core.SubSlot`, `GP_BackpackV2`, `InitData`, `OpenBackPackPanel`, `OpenBackpackPanel:~:text=OpenBackpackPanelStyle-,OpenBackpackPanel,-CloseBackpackPanel`, `OpenBackpackPanelStyle`, `OpenBackpackPanelStyle:~:text=IsCurrency-,OpenBackpackPanelStyle,-OpenBackpackPanel`, `SetBackpackButtonVisible`, `SetBackpackButtonVisible:~:text=GetCustomUIWidget-,SetBackpackButtonVisible,-绿洲启元`, `UGCBackpackSystemV2`, `UGCBackpackSystemV2.AddCellCapacity`, `UGCBackpackSystemV2.GetItemCountV2`, `UGCBackpackSystemV2.OpenBackpackPanel`, `UGCItemSystemV2`, `UGCItemSystemV2.GetItemIconTextureV2`, `UGCItemSystemV2.GetItemQualityV2`, `UGCObjectUtility.AsyncLoadObjectBySoftPath`
+**涉及API/标识符:** `AddCellCapacity`, `AddCellCapacity:~:text=GetMaxCellCapacity-,AddCellCapacity,-AddMaxCellCapacity`, `AddMaxCellCapacity`, `AddMaxCellCapacity:~:text=AddCellCapacity-,AddMaxCellCapacity,-RemoveMaxCellCapacity`, `BackpackUIComponent`, `BP_BackpackComponentV2`, `BP_BackpackComponentV2_Custom`, `BP_BackpackUIComponentV2`, `BP_BackpackUIComponentV2_Custom`, `BP_Grid_Tag`, `CheckUseItem`, `ClickLockBackpackItem`, `DA_GameModeGeneral`, `EquipmentSlot`, `EquipmentSlot.Core.MainSlot1`, `EquipmentSlot.Core.MainSlot2`, `EquipmentSlot.Core.MeleeSlot`, `EquipmentSlot.Core.SubSlot`, `GP_BackpackV2`, `InitData`, `OpenBackPackPanel`, `OpenBackpackPanel:~:text=OpenBackpackPanelStyle-,OpenBackpackPanel,-CloseBackpackPanel`, `OpenBackpackPanelStyle`, `OpenBackpackPanelStyle:~:text=IsCurrency-,OpenBackpackPanelStyle,-OpenBackpackPanel`, `SetBackpackButtonVisible`, `SetBackpackButtonVisible:~:text=GetCustomUIWidget-,SetBackpackButtonVisible,-绿洲启元`, `UGCBackpackSystemV2`, `UGCBackpackSystemV2.AddCellCapacity`, `UGCBackpackSystemV2.GetBackpackPersistData`, `UGCBackpackSystemV2.GetItemCountV2`, `UGCBackpackSystemV2.OpenBackpackPanel`, `UGCGommonUISystem.AddDragSuccess`, `UGCItemSystemV2`, `UGCItemSystemV2.GetItemIconTextureV2`, `UGCItemSystemV2.GetItemQualityV2`, `UGCObjectUtility.AsyncLoadObjectBySoftPath`, `UGCPlayerStateSystem.GetTableDataSize`
 
 # 背包系统
 
@@ -3116,6 +3170,14 @@ end
 
 ---
 
+#### 背包拖拽开关
+
+通过取消勾选关闭内置的拖拽逻辑，开发者可以通过 ``UGCGommonUISystem.AddDragSuccess`` 自行处理相关逻辑。
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/Ebum8image.png)
+
+---
+
 ### 自定义装备栏
 
 装备栏的槽位分为武器槽位和装备槽位两部分，其中武器槽位包含2个固定预设的主副武器槽位，除此之外，开发者可以修改和扩展自定义的槽位。
@@ -3179,6 +3241,119 @@ end
 - 最大仓库格子容量：仓库最大网格数，包含空闲状态和待解锁状态，也即 **``待解锁格子数 = 最大格子容量 - 默认格子容量``**
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/KgQpXimage.png)
+
+<br>
+
+## 背包持久化数据分析（GM工具）
+
+在 V2 背包中，物品实例化数据（CustomData）会随玩家背包/仓库一同持久化。当开发者在物品编辑器中为单个物品挂载过多自定义实例化数据，或玩家持有的物品数量过多时，会导致：
+- 持久化数据膨胀：单次保存数据量过大，影响存档性能与稳定性
+- 超出存储上限：可能触发持久化失败或被截断
+- 不易自查：开发者无法直观看到自己玩法下的背包持久化数据规模
+
+此功能提供了一套面向开发者的【V2背包持久化数据大小分析】能力，可在 DS 端通过 GM 按钮一键检测当前玩家的背包数据规模、定位超限物品，并输出优化建议。
+
+<br>
+
+### 功能能力
+
+**1. 新增 API：UGCBackpackSystemV2.GetBackpackPersistData**
+
+获取玩家的完整背包持久化数据（只读），用于分析与优化数据大小。
+
+```lua
+---获取背包完整持久化数据（只读）
+---在背包数据持久化时，会以此数据执行
+---可以通过这个接口，分析并优化持久化数据大小和物品实例化数据大小
+---生效范围：服务器
+---@param Player PlayerPawn | PlayerController @玩家角色或者玩家控制器
+---@param ContainsNoPersist boolean @true:包含不持久化物品数据, false:仅包含持久化物品数据. 默认false
+---@return table @背包完整持久化数据
+function UGCBackpackSystemV2.GetBackpackPersistData(Player, ContainsNoPersist)
+```
+
+返回值结构（与实际持久化落地的数据一致）：
+
+```lua
+{
+    BackpackInstanceData  = {...}, -- 背包物品实例化数据
+    WareHouseInstanceData = {...}, -- 仓库物品实例化数据
+    CellCapacity          = {...}, -- 已解锁的背包格子容量
+    WareHouseCellCapacity = {...}, -- 已解锁的仓库格子容量
+    DepotMaxCount         = number,
+    DisableSlots          = {...}, -- 被禁用的装备槽位
+    FailedBackpackItemsCache = {...}, -- 加背包失败的物品缓存
+}
+```
+
+> 仅在服务器端生效。客户端调用会返回 nil。
+
+**2. GM 按钮：分析背包/物品数据**
+
+在 GM 面板的「背包」分组下新增按钮，按钮触发之后，在 DS（服务器）端执行，对触发 GM 的玩家做一次完整分析。
+
+内置阈值：
+
+|项|阈值|含义|
+|-|-|-|
+|TOTAL_SIZE_LIMIT|256 KB|单个玩家背包持久化数据整体大小上限|
+|BACKPACK_ITEM_LIMIT|200|背包物品数量上限|
+|WAREHOUSE_ITEM_LIMIT|200|仓库物品数量上限|
+|SINGLE_ITEM_SIZE_LIMIT	|0.5 KB|单个物品实例化数据大小上限|
+
+分析维度：
+
+1. 整体持久化数据大小：通过 UGCPlayerStateSystem.GetTableDataSize 计算总字节数，超过 TOTAL_SIZE_LIMIT 时输出告警。
+2. 背包/仓库物品数量：超过对应上限时告警并提示玩家清理或扩容。
+3. 单个物品实例化数据大小：遍历背包与仓库，找出每件物品的实例化数据大小：
+	- 输出最大单个物品大小及对应 ItemID
+	- 收集所有超过 SINGLE_ITEM_SIZE_LIMIT 的物品，按大小降序排序，输出前 10 条 [WARNING]，多余条目以 [NOTICE] 统一说明剩余数量
+4. 输出汇总结论：若无超限项，输出「数据占用情况良好」；否则汇总所有告警。
+
+日志格式：
+
+DS 日志中可通过关键字 V2背包持久化数据大小分析 直接检索，示例片段：
+
+```lua
+========== [V2背包物品实例化数据分析] PlayerController:xxx Begin ==========
+[背包] 物品数量:N 最大单个物品数据大小:xx (ItemID:yyy)
+[仓库] 物品数量:M 最大单个物品数据大小:xx (ItemID:yyy)
+[Result] 检测到 K 条告警/提示：
+  [WARNING] 背包 中物品(ItemID:xxx) 实例化数据大小 xx 已超出单个物品限制 0.50KB...
+  [NOTICE]  背包 中共有 N 个超限物品，仅展示数据最大的前 10 条，剩余 N-10 条已省略。
+========== [V2背包物品实例化数据分析] PlayerController:xxx End ==========
+```
+
+<br>
+
+### 使用方式
+
+**方式一：GM 面板（推荐自查使用）**
+
+1. 启动调试进入对局，打开 GM 面板。
+2. 在【背包】分组下点击【分析背包/物品数据】按钮。
+3. 在DS日志中搜索关键字 ``V2背包持久化数据大小分析`` ，即可看到完整的分析报告与告警。
+
+**方式二：调用开放化 API（自定义分析流程）**
+
+开发者可在自己的服务器端 Lua 中调用 GetBackpackPersistData，结合自定义的统计逻辑，构建周期性巡检或持久化前校验：
+
+```lua
+local Data = UGCBackpackSystemV2.GetBackpackPersistData(PC, false)
+if Data then
+    -- TODO: 通过 UGCPlayerStateSystem.GetTableDataSize 等接口分析数据规模
+end
+```
+
+<br>
+
+### 优化建议
+
+当检测到告警时，建议按以下方向优化：
+
+- 单物品实例化数据超限：精简该物品 CustomData 中的字段，避免存储大字符串、嵌套表、不必要的运行时缓存
+- 背包/仓库物品数量超限：通过销毁、合并堆叠、扩容或调整玩法节奏来控制玩家持有的物品数量
+- 整体数据超限：综合上述两点，优先治理单物品大小最大的若干物品，可显著降低整体持久化压力
 
 <br>
 
