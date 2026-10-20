@@ -1657,9 +1657,9 @@ self._cachedItemDefineID = totable(defineID)
 
 > 文档ID: 20475 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20475)
 
-> 新增: 2026-09-16 14:27:35
+> 新增: 2026-09-16 14:27:35 | 更新: 2026-10-10 14:29:23
 
-**涉及API/标识符:** `BP_BackpackUIComponentV2_Custom`, `Image_QualityBar`, `UE.IsValid`, `UGCGameSystem.GetLocalPlayerController`, `UGCGameSystem.GetLocalPlayerPawn`, `UGCGameSystem.NewObject`, `UGCItemSystemV2.GetBigIconTextureWithPlayerSkinV2`, `UGCItemSystemV2.GetBigIconTextureWithPlayerSkinV2ByDefineID`, `UGCItemSystemV2.GetConfigItemHandle`, `UGCItemSystemV2.GetDisplayNameBySlotName`, `UGCItemSystemV2.GetEquipmentQualityTexturePath`, `UGCItemSystemV2.GetItemDetailV2`, `UGCItemSystemV2.GetItemDetailV2ByDefineID`, `UGCItemSystemV2.GetItemIconWithPlayerSkinV2`, `UGCItemSystemV2.GetItemIconWithPlayerSkinV2ByDefineID`, `UGCItemSystemV2.GetItemNameV2`, `UGCItemSystemV2.GetItemNameV2ByDefineID`, `UGCItemSystemV2.GetItemQualityV2`, `UGCItemSystemV2.GetItemQualityV2ByDefineID`, `UGCItemSystemV2.GetQualityBarTexturePath`, `UGCItemSystemV2.GetQualityTexturePath`, `UGCObjectUtility.AsyncLoadObject`, `UGCObjectUtility.AsyncLoadObjectBySoftPath`, `UGCWeaponManagerSystem.GetCurrentWeapon`
+**涉及API/标识符:** `bIsLeft`, `BP_BackpackUIComponentV2_Custom`, `consume_ui`, `CustomizeTagList`, `false`, `Image_QualityBar`, `UE.IsValid`, `UGCGameSystem.GetLocalPlayerController`, `UGCGameSystem.GetLocalPlayerPawn`, `UGCGameSystem.NewObject`, `UGCItemSystemV2.GetBigIconTextureWithPlayerSkinV2`, `UGCItemSystemV2.GetBigIconTextureWithPlayerSkinV2ByDefineID`, `UGCItemSystemV2.GetConfigItemHandle`, `UGCItemSystemV2.GetDisplayNameBySlotName`, `UGCItemSystemV2.GetEquipmentQualityTexturePath`, `UGCItemSystemV2.GetItemDetailV2`, `UGCItemSystemV2.GetItemDetailV2ByDefineID`, `UGCItemSystemV2.GetItemIconWithPlayerSkinV2`, `UGCItemSystemV2.GetItemIconWithPlayerSkinV2ByDefineID`, `UGCItemSystemV2.GetItemNameV2`, `UGCItemSystemV2.GetItemNameV2ByDefineID`, `UGCItemSystemV2.GetItemQualityV2`, `UGCItemSystemV2.GetItemQualityV2ByDefineID`, `UGCItemSystemV2.GetQualityBarTexturePath`, `UGCItemSystemV2.GetQualityTexturePath`, `UGCObjectUtility.AsyncLoadObject`, `UGCObjectUtility.AsyncLoadObjectBySoftPath`, `UGCWeaponManagerSystem.GetCurrentWeapon`
 
 # 背包UI开放
 
@@ -1901,7 +1901,7 @@ end
 
 #### 主武器UI模板
 
-装备品质背景 ``Image_QualityBar`` 会读取玩法偶那个用配置上的 ``装备品质条纹理``。
+装备品质背景 ``Image_QualityBar`` 会读取【玩法通用配置】上的 ``装备品质条纹理路径``。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/67h8himage.png)
 
@@ -1914,8 +1914,8 @@ end
 ```lua
 --更新武器展示信息
 --@param data table 武器数据
-function Bag_4_MainWeapon:UpdateCurrentDisplay(data)
-    self.UGCCommonDragDropItem:SetDragEnable(false)
+function MainWeapon:UpdateCurrentDisplay(data)
+    self:RefreshWeaponDragMode()
     if data == nil then
         return
     end
@@ -1964,12 +1964,11 @@ function Bag_4_MainWeapon:UpdateCurrentDisplay(data)
             UGCObjectUtility.AsyncLoadObject(QualityBgPath, function(LoadedTexture)
                 if weakSelf:IsValid() then
                     local selfObj = weakSelf:Get()
-                    if selfObj then
-                        if selfObj.Image_QualityBar then
-                            selfObj.Image_QualityBar:SetBrushFromTexture(LoadedTexture, false)
-                        elseif selfObj.Image_QualityBg then
-                            selfObj.Image_QualityBg:SetBrushFromTexture(LoadedTexture, false)
-                        end
+
+                    if selfObj.Image_QualityBar then
+                        selfObj.Image_QualityBar:SetBrushFromTexture(LoadedTexture, false)
+                    elseif selfObj.Image_QualityBg then
+                        selfObj.Image_QualityBg:SetBrushFromTexture(LoadedTexture, false)
                     end
                 end
             end)
@@ -2049,7 +2048,7 @@ function Bag_4_MainWeapon:UpdateCurrentDisplay(data)
             end)
         end
 
-        self.UGCCommonDragDropItem:SetDragEnable(true)
+        self:RefreshWeaponDragMode()
         self:EnsureFittingWidgets(function()
             self:UpdateAttachUI()
         end)
@@ -2344,6 +2343,42 @@ end
 #### 数量选择控件UI模板
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/N4Y5cimage.png)
+
+<br>
+
+## 快捷栏UI UGC化
+
+快捷栏是玩家在局内快速使用消耗品 / 投掷物 / 近战武器的核心交互入口。原生快捷栏由客户端 ``consume_ui`` 与背包 V2 系统深度耦合实现。UGC化目标是把这套能力下沉为可复用的 OpenAPI 控件，让 UGC 蓝图直接挂载、传 Tag 即可使用，无需关心背包事件绑定、排序、置顶、回收等内部逻辑。
+
+### 使用方式
+
+以自定义一个简单的武器快捷栏为例：
+
+1. 【玩法通用设置】->【物品】中勾选 ``启用UGC快捷栏``
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/vPr2pimage.png)
+
+2. 【UI编辑器】中创建一个自定义的快捷栏UI控件
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/eNjn9image.png)
+
+3. 点击【图表】，选中变量 ``CustomizeTagList`` ，默认值中添加武器物品的Tag
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/KeUf0image.png)
+
+4. ``bIsLeft`` 这个变量决定了快捷栏物品的排列方式，比如 ``bIsLeft``为 ``false`` 时，该快捷栏就应当放在屏幕居右，反之亦然
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/zoma4image.png)
+
+5. 在 PlayerController 蓝图中使用接口挂载该UI，同时需要注意调用控件的初始化接口 ``InitConfig()`` ，如果在蓝图中配置了相关参数，这里可不传参，锚点设置可参考 [和平控件锚点](https://developer.gp.qq.com/wikieditor/#/catalog/20097)
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/LQZQlimage.png)
+
+6. 配置完后启用调试，具体效果如下：
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/D6Uraimage.png)
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/QZG6simage.png)
 
 ---
 
@@ -3512,7 +3547,7 @@ end
 
 > 文档ID: 20420 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20420)
 
-> 新增: 2026-07-27 19:03:53 | 更新: 2026-09-17 11:57:07
+> 新增: 2026-07-27 19:03:53 | 更新: 2026-10-08 14:28:18
 
 **涉及API/标识符:** `bPickUpWidgetEnable`, `Event_PickUpWrapperInfoChange`, `PickUpWidgetClass`, `true`, `UE.IsValid`, `UGCGameSystem.GetLocalPlayerPawn`, `UGCItemSystemV2.GetItemNameV2ByDefineID`, `UGCItemSystemV2.GetItemQualityV2ByDefineID`, `UGCItemSystemV2.GetQualityBarTexturePath`, `UGCObjectUtility.AsyncLoadObject`, `UGCPlayerPawnSystem.PickUpWrapperActor`
 
@@ -3696,14 +3731,11 @@ end
 
 **自定义控件显示**
 
-自定义控件显示规则（如过滤低品质物品），返回 ``true`` 显示控件
+在创建的 UGCPickupWrapper_BP 拾取物蓝图 Lua 里自定义控件显示规则（如过滤低品质物品），返回 ``true`` 显示控件
 
 ```lua
-function UGC_WrapperNameWidget_UIBP:CanShowPickUpWidget()
-    if not UE.IsValid(self.WrapperActor) then return false end
-    -- 仅显示831开头的UGC物品
-    local DefineID = self.WrapperActor:GetDefineID()
-    return tostring(DefineID.TypeSpecificID):sub(1, 3) == "831"
+function UGCPickupWrapper_BP:CanShowPickUpWidget()
+    return tostring(self.DefineID.TypeSpecificID):sub(1, 3) == "831"
 end
 ```
 

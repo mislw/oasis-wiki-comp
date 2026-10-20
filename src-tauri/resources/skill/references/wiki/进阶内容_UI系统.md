@@ -1,6 +1,99 @@
 # 进阶内容/UI系统
 
-> 官方知识库同步分类，共 16 篇文章
+> 官方知识库同步分类，共 17 篇文章
+
+---
+
+## Moba技能按钮模板
+
+> 文档路径: 进阶内容 > UI系统 > Moba技能按钮模板
+
+> 文档ID: 20478 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20478)
+
+> 新增: 2026-10-09 17:19:29
+
+**涉及API/标识符:** `bool`, `Border_VirtualJoystick`, `bShowDes`, `Button_Skill`, `CanvasPanel_CDSkill`, `CanvasPanel_Number`, `CanvasPanel_TextTips`, `CanvasPanel_Upgrade`, `DX_UpgradeSkills`, `float`, `FString`, `Image_CDTime`, `Image_ChargingCD`, `Image_Icon`, `Image_Icon02`, `int32`, `NewButton_Upgrade`, `PESkillVirtualJoystick_0`, `PressTime`, `ShowDesDistance`, `skill`, `SkillPointAttrName`, `Text_Name`, `Text_Num`, `Text_Time`, `TextBlock_Class`, `UBorder`, `UButton`, `UCanvasPanel`, `UImage`, `UNewButton`, `UPESkillVirtualJoystick`, `UTextBlock`, `UWidgetAnimation`, `UWidgetSwitcher`, `WidgetSwitcher_Status`
+
+# Moba技能按钮模板
+
+提供一套适用于 MOBA（多人在线战术竞技）类游戏的技能按钮模板。
+
+<br>
+
+## 创建Mova技能元件蓝图
+
+点击【UI编辑器】->【元件】->【Moba技能按钮模板】创建Moba技能按钮模板。
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/hgPAyimage.png)
+
+---
+
+### UI蓝图参数介绍
+
+**UMG 控件介绍**
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/ttyEOimage.png)
+
+| 标号 | 控件 | 类型 | 作用 |
+|:---|---|---|---|
+| 1 | `Button_Skill` | `UButton` | 技能按钮（点击/按下/抬起都挂在它身上） |
+| 2 | `Image_Icon` | `UImage` | 父类用的技能图标 |
+| 3 | `Image_Icon02` | `UImage` | 本脚本异步加载的图标（`GetSkillIconPath()`） |
+| 4 | `Text_Name` | `UTextBlock` | 技能名（父类绑定） |
+| 5 | `CanvasPanel_CDSkill` | `UCanvasPanel` | CD 整体显隐 |
+| 6 | `Image_CDTime` | `UImage` | CD 遮罩（**必须能拿到动态材质**） |
+| 7 | `Text_Time` | `UTextBlock` | CD 剩余秒数 |
+| 8 | `Image_ChargingCD` | `UImage` | 等级进度材质（**需要动态材质**） |
+| 9 | `CanvasPanel_Number` / `Text_Num` | `UCanvasPanel` / `UTextBlock` | 层数文本与容器 |
+| 10 | `CanvasPanel_TextTips` | `UCanvasPanel` | 长按弹出的技能描述面板 |
+| 11 | `TextBlock_Class` | `UTextBlock` | 描述文本，自动填 `Skill:GetSkillDetail()` |
+| 12 | `CanvasPanel_Upgrade` / `NewButton_Upgrade` | `UCanvasPanel` / `UNewButton` | 升级按钮（可点时显示） |
+| 13 | `Border_VirtualJoystick` / `PESkillVirtualJoystick_0` | `UBorder` / `UPESkillVirtualJoystick` | 技能方向摇杆 |
+| 14 | `WidgetSwitcher_Status` | `UWidgetSwitcher` | `0 = 已学习，1 = 未学习` |
+| 15 | `DX_UpgradeSkills` | `UWidgetAnimation` | 升级成功时播放的动画 |
+
+**蓝图变量**
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/O0IdMimage.png)
+
+| 变量 | 类型 | 默认 | 说明 |
+|---|---|---|---|
+| `ShowDesDistance` | `int32` | 10 | 判定为“按在按钮上”的最大半径（**逻辑单位**，内部会乘 DPI Scale） |
+| `bShowDes` | `bool` | 勾选 | 是否启用“长按看描述”，勾选后生效 |
+| `PressTime` | `float` | 2 | 长按多久（秒）弹出描述 |
+| `SkillPointAttrName` | `FString` | — | 技能点属性名，**必须是角色身上的属性，即用什么属性作为技能点使用** |
+
+---
+
+### 配置属性
+
+点击【属性管理器】->【人物属性】->【自定义属性】中创建名为`skill`的自定义属性。（属性名和配置项均可自定义）。
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/9nOPlimage.png)
+
+点击【UI编辑器】->【元件】->【Moba技能按钮蓝图】修改`Skill Point Attr Name`内的参数为`skill`。
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/jLJZrimage.png)
+
++ 技能等级的属性配置参照 [技能等级配置](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) 进行配置。
+
+---
+
+### 技能与元件蓝图的绑定
+
+参照 [技能创建流程](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%8A%80%E8%83%BD%E5%88%9B%E5%BB%BA%E6%B5%81%E7%A8%8B) 创建技能。
+
+点击【技能编辑器】->技能->创建好的技能->默认技能UI，更改为创建好的“Moba技能按钮蓝图”。
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/DLNKYimage.png)
+
+---
+
+### 技能的挂载
+
+参照 [添加技能](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%B7%BB%E5%8A%A0%E6%8A%80%E8%83%BD) 技能添加成功后，即可使用Moba技能按钮。
+
+![QQ20260924151535-ezgif.com-video-to-gif-converter.gif](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/T876UQQ20260924151535-ezgif.com-video-to-gif-converter.gif)
 
 ---
 

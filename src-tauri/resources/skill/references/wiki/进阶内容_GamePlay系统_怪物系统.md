@@ -3194,11 +3194,11 @@ Preconstruct 时绑定两个消息：
 
 > 文档ID: 20161 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20161)
 
-> 更新: 2025-07-21 16:51:41
+> 新增: 2026-10-19 17:10:20
 
 # 怪物调试工具
 
-游戏中怪物的行为依赖于 [行为树](https://developer.gp.qq.com/wikieditor/#/catalog/20147) 和 [怪物逻辑组件]() 的运行，怪物的状态也在动态发生变化，为了方便开发者调试和优化怪物的行为，提供了适用于运行时的怪物调试工具。该工具允许开发者直观地查看游戏运行时怪物行为树的执行状态，包括节点信息、黑板变量值、装饰器打断判定等，帮助开发者快速定位问题并调整AI行为。
+游戏中怪物的行为依赖于 [行为树](https://developer.gp.qq.com/wikieditor/#/catalog/20265) 和 [怪物逻辑管理组件](https://developer.gp.qq.com/wikieditor/#/catalog/20162) 的运行，怪物的状态也在动态发生变化，为了方便开发者调试和优化怪物的行为，提供了适用于运行时的怪物调试工具。该工具允许开发者直观地查看游戏运行时怪物行为树的执行状态，包括节点信息、黑板变量值、装饰器打断判定等，帮助开发者快速定位问题并调整AI行为。
 
 ![企业微信截图_17496351338454.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/Mka7l%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_17496351338454.png)
 
@@ -3276,7 +3276,7 @@ Preconstruct 时绑定两个消息：
 
 怪物调试工具支持快速将指定怪物添加到场景中，便于进一步调试怪物行为。
 
-点击调试工具界面右下角 `调试怪物` 按钮，弹出添加怪物面板，开发者需要选择生成的目标怪物蓝图类、怪物数量以及生成范围。
+点击调试工具界面右下角 `添加怪物` 按钮，弹出添加怪物面板，开发者需要选择生成的目标怪物蓝图类、怪物数量以及生成范围。
 
 ![企业微信截图_17496347383359.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/e6yyK%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_17496347383359.png)
 ![TODO换图.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/FRRUcTODO%E6%8D%A2%E5%9B%BE.png)

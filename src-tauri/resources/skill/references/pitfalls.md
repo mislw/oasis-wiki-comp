@@ -146,6 +146,49 @@ Check:
 - Move item IDs, durations, skill cooldowns, text, and icon paths into `GlobalConfig.lua` or focused config files.
 - Keep Actions focused on flow, not giant data tables.
 
+## Table Or Struct Change Not Visible At Runtime
+
+Symptoms:
+
+- A planner updated a config table and the editor asset reads the new value, but the running game/PIE still shows the old value.
+- A DataTable or `UserDefinedStruct` was reloaded or re-imported, yet an already-running PIE session behaves as before.
+- Unlock counts, costs, drop rules, or table-driven UI text stay stale.
+
+Check:
+
+- Editor asset reload and PIE runtime are different caches. Saving or reloading the `.uasset` updates the editor, but a PIE session that started earlier keeps the DataTable values it loaded at startup; PIE does not hot-reload table content.
+- Start a new PIE session after the table or struct change, then read the runtime value directly in client/DS Lua before judging the data.
+- Confirm the disk asset is the committed version and the editor is not holding an unsaved override.
+- Separate "not synchronized" from "bad data": after a fresh PIE confirms the new values, inspect the row content itself (for example a delimiter-separated count list with one missing value) before blaming the loading pipeline.
+
+## Editor-Rewritten Tracked Files Before Commit
+
+Symptoms:
+
+- `git status` shows tracked Lua or asset files you never edited.
+- The diff is only line-ending, whitespace, timestamp, or whole-file re-save churn from the UGC editor.
+- A large group of assets was re-saved by one editor batch operation at an unrelated time.
+
+Check:
+
+- Inspect the diff before staging: `git diff --stat`, `git diff --ignore-cr-at-eol`, and a normal diff of the suspicious file. If only line endings or formatting changed, restore it and keep it out of feature commits.
+- Restore only files that are clearly editor-generated noise. Never restore a teammate's or the user's real edits to make the worktree look clean.
+- When many unrelated editor-resaved files exist, group commits by feature and keep editor churn in a separate commit or stash only after the owner confirms; do not mix them into a feature commit silently.
+- After push, compare the remote tree for the changed paths so a concurrent merge by another author is not mistaken for a lost change.
+
+## Config Source Owned Outside The Repository
+
+Symptoms:
+
+- A table row is wrong in the `.uasset`, but its authoritative source is a planner CSV/Excel kept on another machine.
+- Fixing the `.uasset` locally works until the next import silently overwrites it.
+
+Check:
+
+- Before a permanent table fix, determine the import source. If the source lives outside this checkout, report the exact table, row name, field, current value, expected value, and why it is wrong, and ask the owner to fix and re-import.
+- A local hot-fix is acceptable only as a temporary PIE-verification aid: label it as temporary, keep it uncommitted or revert it afterward, and state clearly that the source still needs the fix.
+- Do not claim the issue is resolved when only the local `.uasset` was patched.
+
 ## Wrong Player Lookup
 
 Symptoms:

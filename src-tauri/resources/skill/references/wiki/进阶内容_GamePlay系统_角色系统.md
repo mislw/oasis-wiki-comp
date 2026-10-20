@@ -340,7 +340,7 @@ end
 
 > 文档ID: 20228 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20228)
 
-> 更新: 2025-10-27 11:49:14
+> 新增: 2026-10-16 10:26:02
 
 **涉及API/标识符:** `ClientShowAvatar`, `PlayAnim`, `ServerShowAvatar`, `UE.LoadObject`, `UGCCharAvatarShowcaseActor`, `UGCGameSystem.GetLocalPlayerController`, `UGCGameSystem.GetUIDByPlayerController`, `UGCObjectUtility.FindObject`, `UGCPlayerController.lua`, `UnrealNetwork.CallUnrealRPC`
 
@@ -454,8 +454,8 @@ end
 
 function MainUI:ButtonPlayAnimOnClicked()
 	ugcprint("播放动画");
-	--根据路径加载动画资源（该路径对应动画蒙太奇“机动兵投掷物飞行_Montage”）
-  local Animation = UE.LoadObject('/Game/Arts_Timeliness/CG005_Hero/Arts_Player/Anim/AgileSoldier/AgileSoldier_Grenade_Fly_Montage.AgileSoldier_Grenade_Fly_Montage');
+	--根据路径加载动画资源（该路径对应动画序列“准备待机动作1”）
+  local Animation = UE.LoadObject('/Game/Arts_Player/Characters/Animation/Shared_Anim/Loading/004/DianFengSai_P1_Idle.DianFengSai_P1_Idle');
 	--根据ID名称获取Actor
 	local AvatarDisplayActor = UGCObjectUtility.FindObject("AvatarDisplayActor");
 	--循环播放动画
@@ -465,8 +465,8 @@ end
 
 function MainUI:ButtonStopAnimOnClicked()
 	ugcprint("停止动画");
-	--根据路径加载动画资源（该路径对应动画蒙太奇“机动兵投掷物飞行_Montage”）
-  local Animation = UE.LoadObject('/Game/Arts_Timeliness/CG005_Hero/Arts_Player/Anim/AgileSoldier/AgileSoldier_Grenade_Fly_Montage.AgileSoldier_Grenade_Fly_Montage');
+	--根据路径加载动画资源（该路径对应动画序列“准备待机动作1”）
+  local Animation = UE.LoadObject('/Game/Arts_Player/Characters/Animation/Shared_Anim/Loading/004/DianFengSai_P1_Idle.DianFengSai_P1_Idle');
 	--根据ID名称获取Actor
 	local AvatarDisplayActor = UGCObjectUtility.FindObject("AvatarDisplayActor");
 	--停止播放动画
@@ -478,7 +478,7 @@ end
 
 Avatar展示Actor显示Avatar后，点击“PlayAnim”按键，该Actor会循环播放指定动画。
 
-![循环播放3.gif](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/UL3hM%E5%BE%AA%E7%8E%AF%E6%92%AD%E6%94%BE3.gif)
+![_20260928_153720-ezgif.com-video-to-gif-converter.gif](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/6dWAT_20260928_153720-ezgif.com-video-to-gif-converter.gif)
 
 点击“StopAnim”按键，该Actor播放一次指定动画后停止。
 

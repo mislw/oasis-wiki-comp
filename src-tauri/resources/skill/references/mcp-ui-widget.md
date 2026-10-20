@@ -231,6 +231,24 @@ bp.save_package()
 
 Refresh or reopen the WidgetBlueprint. If the three controls changed color, apply the full palette. If not, inspect functions/properties again before bulk styling.
 
+## Runtime Text Inside A ScaleBox
+
+Symptoms:
+
+- A value such as `157/9999` renders smaller than neighboring numbers and sticks to the top of its row.
+- The TextBlock asset itself is unchanged, but a longer runtime string looks misaligned.
+
+Cause and check:
+
+- A parent `ScaleBox` shrinks the whole text block to fit the wider string; `TextBlock` defaults to top vertical alignment, so the scaled-down text looks offset.
+- For a runtime-only fix, set the alignment in Lua `Construct` instead of editing the UMG asset:
+
+```lua
+self.TextBlock_Currency_3:SetVerticalJustification(ETextVerticalJustify.Middle)
+```
+
+- Re-run PIE and confirm the value is vertically aligned with its neighbors. If the digits must match neighboring font size exactly, that is a different change (split current value and maximum into separate TextBlocks), not an alignment fix.
+
 ## Imported PNG Is Blank Or White
 
 Use this branch when imported PNG assets exist and native text renders, but Image layers, icons, buttons, or artwork remain blank. A common UE4 UGC failure is:
@@ -315,6 +333,14 @@ For a clickable UI, verify both layers:
 - Lua binds `OnClicked` or the project UI event pattern and calls the intended RPC/config update.
 
 Prefer existing project UIManager and RPC patterns over one-off binding style.
+
+## UI Asset Placement And External Edit Audit
+
+Before adding textures or WidgetBlueprints:
+
+- Inspect an existing sibling module and follow the project's placement convention. In RedCliff, textures live under `Asset/UIresources/<Module>/` and WidgetBlueprints under `Asset/UI/`; do not create a parallel `ArtSource/UI` or ad-hoc texture folder when an existing location already exists.
+- Remove temporary source-image folders before committing; source art belongs in history or an external archive, not beside runtime assets.
+- When auditing a UI change produced by another tool or person, determine whether the same asset path was replaced or a new duplicate asset was added. Load the path Lua actually references, compare names, hierarchy, and bindings, and verify in PIE. Do not assume the edited asset is the one the game uses.
 
 ## Save And Verify
 

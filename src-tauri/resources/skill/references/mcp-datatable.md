@@ -172,6 +172,47 @@ row2 = table.data_table_find_row('RowName').as_dict()
 
 For Chinese strings, use the Unicode-safe pattern in `mcp-integration.md`.
 
+## DataTable Freshness After A Change
+
+Saving a table or running an editor-level reload updates the asset in the editor, but an already-running PIE session keeps the values it loaded at startup. PIE does not hot-reload DataTable content.
+
+After any row, struct, or table change:
+
+1. Save the package and reload or re-read the editor asset.
+2. Stop the old PIE session and start a new one.
+3. Read the value from runtime Lua on the client or DS before reporting success.
+4. If the runtime value is still old, check the disk asset and the row content before assuming the save failed.
+
+## UserDefinedStruct Schema Changes
+
+For user-defined struct assets, field edits are index-based. Read the field list first, then remove or add by index:
+
+```python
+s = ue.find_asset('/Project/Asset/Data/Table/CoopChallenge/Struct_CoopStage.Struct_CoopStage')
+names_before = [str(getattr(v, 'FriendlyName', '?')) for v in s.struct_get_variables()]
+idx = names_before.index('KillPercentTarget')
+s.struct_remove_variable(idx)
+names_after = [str(getattr(v, 'FriendlyName', '?')) for v in s.struct_get_variables()]
+assert 'KillPercentTarget' not in names_after
+assert len(names_after) == len(names_before) - 1
+s.save_package()
+```
+
+- Re-read `struct_get_variables()` after the change and assert the expected field list before saving.
+- The struct may be used by several tables and Blueprints; confirm consumers before removing or reordering fields.
+- Re-read a sample row after the schema change to confirm the table still parses, then restart PIE before judging runtime behavior.
+- `struct_add_variable` follows the same read-verify-save pattern; confirm the new field type and default value afterward.
+
+## Verify Table-Driven Values End To End
+
+For numeric or behavioral fields that feed runtime logic, do not stop at reading the row back. Use distinguishable test values:
+
+1. Temporarily set values that differ per index or case, for example `2|3|4|5|6` and `10|20|30|40|50`.
+2. Save, start a fresh PIE, and read both the raw row and the parsed/cached runtime structure.
+3. Substitute one known entity's base value into the consumer formula and confirm the expected product.
+4. Restore the test values, save, and re-read the row to confirm no test residue remains.
+5. Report the verification boundary: "table -> struct -> Lua parse -> manager cache -> formula" is covered; an actual combat run is separate.
+
 For config-driven UI or gameplay tasks, read only the config table rows that drive the requested feature, then search code for the binding path. Do not read every related table unless a row reference points to another table and the referenced row is required to complete or verify the task.
 
 Use runtime Lua/code lookup only to explain how the table is consumed. For example, a table may define `FeatureKey` rows while values live in code-side config such as `GemFeatureValueConfig`; report that distinction instead of implying all gameplay values come from the table.

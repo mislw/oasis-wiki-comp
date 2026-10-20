@@ -204,7 +204,7 @@ Fast Lua iteration is the default:
 5. Inspect the current session and fresh logs.
 6. Repeat without restarting PIE.
 
-When only project Lua changed or a small runtime check is needed, do not stop and restart PIE. Restart only for non-Lua assets such as Blueprint changes, a required re-run BeginPlay/full initialization, different start settings, or an unrecoverable session.
+When only project Lua changed or a small runtime check is needed, do not stop and restart PIE. Restart after DataTable or `UserDefinedStruct` changes because PIE does not hot-reload table content, and for other non-Lua assets such as Blueprint changes, a required re-run BeginPlay/full initialization, different start settings, or an unrecoverable session.
 
 Raw proxy examples:
 

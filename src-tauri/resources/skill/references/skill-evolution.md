@@ -58,6 +58,15 @@ Before changing the skill, tell the user:
 
 Only write files after user approval or when the current user request clearly asks to update the skill.
 
+## External Skill Borrowing
+
+When importing rules or references from another team's skill repository:
+
+- Record the source URL and the exact list of imported items before editing.
+- Create a timestamped backup of the current skill folder first, and keep imported material in a small number of identifiable files or sections so it can be removed in one pass.
+- Validate each imported rule against this team's actual environment and workflow before keeping it; another team's crash-safety or ownership assumptions may not apply here.
+- Do not interleave borrowed rules with locally validated fixes. If the user asks to remove the borrowed material, restore only that layer and keep local changes intact.
+
 ## Implementation Checklist
 
 1. Inspect current `SKILL.md` and related references.
