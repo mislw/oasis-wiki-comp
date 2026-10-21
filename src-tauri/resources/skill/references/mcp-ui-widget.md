@@ -325,6 +325,96 @@ Required validation order:
 7. Reopen the WidgetBlueprint and visually verify the rendered editor result.
 
 `widget_inspect` proves hierarchy and slot layout only. It does not prove that a bitmap rendered.
+
+## Designer Preview Staleness After Programmatic Edits
+
+Report this diagnosis when the WidgetTree readback and the Designer disagree:
+
+```text
+UMG_DESIGNER_PREVIEW_STALE
+```
+
+Symptoms:
+
+- `widget_inspect` and property readback show the new layout, visibility, or brush, but the open Designer still draws the old header, old background, or a widget that was removed.
+- Moving a slot updates the preview immediately, while `Visibility`, brush changes, and removed widgets do not.
+- `compile_blueprint` plus `save_package` does not refresh the preview.
+
+Cause and diagnosis:
+
+- Direct Python writes do not notify the WidgetBlueprint editor, so the preview keeps the Slate state it was built with. Slot positions and text apply to the live widget objects; Slate visibility, brushes, and child structure do not.
+- Use a reversible move test to prove which side is stale: move the suspect widget by a large offset, compile, and screenshot. If the preview moves but still shows stale visibility or brushes, the asset is correct and the preview is stale.
+
+Refresh the preview:
+
+```python
+ed = ue.find_editor_for_asset(bp)
+ed.close_window()          # ue.close_editor_for_asset may not close the tab
+ue.open_editor_for_asset(bp)
+```
+
+- Confirm the tab really closed with `ue.get_all_edited_assets()` (the asset must disappear from the list) before reopening.
+- Restarting the editor also rebuilds the preview.
+- Judge visibility, brush, 9-slice, and widget-removal changes only after a real reopen or a fresh PIE session.
+
+## Brush And 9-Slice Changes Need A Rebuilt Preview
+
+- `Margin` is normalized per texture; different UIs in the same project may use different values for the same texture. Copy the values from a known-good peer that uses the texture at a similar size instead of inventing them.
+- A wrong margin can make an Image render as oversized borders or disappear. Do not judge the change from the open Designer; save, reopen the tab (or start PIE), and compare against the source texture.
+
+## Lua Field Binding For Widgets Added Through MCP
+
+- A widget added with `widget_add` exists at runtime (`GetWidgetFromName` finds it) but the Lua field is nil, so `self.NewWidget` throws `attempt to index a nil value (field 'NewWidget')`.
+- The UGC Lua widget binding list is not updated by external widget additions; adding the annotation line alone does not create the field.
+- Read it defensively in the owning screen's Lua:
+
+```lua
+local widget = self.NewWidget or self:GetWidgetFromName("NewWidget")
+if widget ~= nil then
+    widget:SetText(text)
+end
+```
+
+- Prefer adding widgets that Lua owns from the start. When extending a shared official widget (for example a shop purchase popup), use the fallback above and verify in PIE.
+
+## Create UI Textures Programmatically
+
+For generated icons or padded source art, create the texture directly instead of importing a PNG:
+
+```python
+pkg = ue.get_or_create_package('/Project/Asset/UI/Textures/Icon_New')
+t = ue.create_texture(pkg, 'Icon_New', width, height, bytearray(bgra_bytes))
+t.set_property('CompressionSettings', 7)   # TC_EditorIcon in this build
+t.set_property('LODGroup', 16)             # UI
+t.set_property('MipGenSettings', 13)       # NoMipmaps
+t.set_property('SRGB', True)
+t.set_property('NeverStream', True)
+t.set_property('CompressionNoAlpha', False)
+t.texture_set_source_data(bytearray(bgra_bytes))
+t.texture_update_resource()
+t.post_edit_change()
+t.save_package()
+```
+
+- `create_texture` takes exactly five arguments: package object, asset name, width, height, BGRA bytes. The first argument must be a package from `get_or_create_package`, not a path string.
+- First creation can silently drop alpha (transparent pixels read back with A=255). Setting `CompressionNoAlpha=False` and writing the source data again after the compression settings fixes it; verify by reading back a transparent corner pixel.
+- Pixel format is raw BGRA. Read back with `texture_get_source_data()` and compare the length to `width * height * 4`.
+- For small icon batches, prefer this path over `import_asset`: a batch import of generated icons blocked the editor long enough to time out in this build. If `import_asset` is unavoidable, import one file at a time and verify the asset exists on disk before the next.
+
+## Read Texture Pixels For Visual Diagnosis
+
+When a rendered Image looks wrong or the Designer is stale, inspect the texture itself:
+
+```python
+tex = ue.load_object(ue.find_class('Texture2D'), '/Project/Asset/UI/Textures/Icon.Icon')
+w, h = tex.texture_get_width(), tex.texture_get_height()
+data = tex.texture_get_source_data()      # bytearray, BGRA
+corner = data[0:4]                        # transparent padding must be A=0
+```
+
+- Dump the raw bytes to a temporary file and convert them to PNG outside the editor when the art itself is in question. This separates "wrong texture" from "wrong brush or stale preview".
+- Check `Brush.ResourceObject`, `DrawAs`, `Margin`, `ImageSize`, and `ColorAndOpacity` before changing import settings.
+
 ## Interaction Binding
 
 For a clickable UI, verify both layers:

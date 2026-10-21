@@ -228,6 +228,13 @@ Invoke-RestMethod -Uri "http://127.0.0.1:18763/call" -Method POST -ContentType "
 
 All `ue_pie` actions are one-way triggers. A successful tool call normally returns an empty JSON object; that proves dispatch only, not PIE readiness or Lua execution. Read the MCP resource `ugc://pie/session/current` through `resources/read` for the current phase, DebugID, and editor, client, and DS log paths. The proxy's `GET /read` endpoint calls `ue_read`, so do not pass the PIE resource URI to that endpoint. For `doluastring`, inspect the applicable client or DS log for `DoString Success/Error` and the snippet's own unique marker. Startup can take 1-2 minutes after `start` returns, so wait on session state and logs rather than clicking the editor.
 
+### PIE Readiness And UI-Flow Checks
+
+- `doluastring` can fail with `No PIE client window is registered with the Lua console` while the client is still booting, even after the PIE window appears. Wait 30-60 seconds and retry; the Lua console registers later than the window.
+- Do not open business UIs immediately after the client window appears. Official managers and shop/product data load later; opening early produces nil-manager or "row not found" errors that look like config bugs. Wait for a stable in-game state, then open the UI and re-check values through Lua.
+- `reloadlua` discovers saved Lua under the project Script tree; do not assume it reloads modules under `ExtendResource` or other mounted package trees. If the new code does not take effect (error line numbers still match the old file), restart PIE and verify the file loads from disk.
+- Print unique markers in snippets and read the client or DS Lua log; the tool response only proves dispatch.
+
 Proxy safety rules:
 
 - Check `/health` before doing editor work.
