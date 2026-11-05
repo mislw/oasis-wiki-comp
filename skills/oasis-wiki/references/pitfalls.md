@@ -161,6 +161,22 @@ Check:
 - Confirm the disk asset is the committed version and the editor is not holding an unsaved override.
 - Separate "not synchronized" from "bad data": after a fresh PIE confirms the new values, inspect the row content itself (for example a delimiter-separated count list with one missing value) before blaming the loading pipeline.
 
+## Transform Buff Stuck Or Model Misplaced
+
+Symptoms:
+
+- After `UGCPersistEffectSystem.AddBuffByClass` applies a copied official transform Buff (`PEBuff_Transform_*`), the player can no longer move, turn, or act.
+- DS or client log shows `PEBuff_Transforming.lua:15: attempt to index a nil value (global 'PersistEffectSkillStaticFunction')`.
+- The transformed model is sunk into the ground (wheels or feet missing), faces backwards, or still carries leftovers from the source template (extra weapon, extra health, auto-ending after a fixed time).
+
+Check:
+
+- In editor 1.39 the global `PersistEffectSkillStaticFunction` used by the official `PEBuff_Transforming` template may be undefined while `UAEClosure_PersistEffectSkillStaticFunction` exists. The transition sub-buff then fails in `OnApply_BP` and leaves the pawn in the non-operable transforming state. Define the alias in a module that loads on both DS and client before the Buff is applied: `PersistEffectSkillStaticFunction = PersistEffectSkillStaticFunction or UAEClosure_PersistEffectSkillStaticFunction`. Re-check the log after each editor update; drop the alias once the official template no longer needs it.
+- `变身-静态模型` needs a `StaticMesh`. A vehicle resource that only ships a `SkeletalMesh` must use the Preset (怪物骨骼) type. A Preset with `PresetTransformAnim = None` renders the reference pose; never keep another skeleton's ABP from the copied template.
+- For the Preset type, `MeshRelativeTransform` is relative to the character `Mesh` component (offset below the capsule center and rotated by the character mesh yaw), not to the capsule. Measure at runtime: compare the transformed mesh component world Z with `CharacterMovement.CurrentFloor.HitResult.ImpactPoint.Z`, then fix Z and yaw in the Buff defaults.
+- When copying a template such as `PEBuff_Transform_Chicken`, reset `WeaponID`, `EnableExtraHealth`/`ExtraHealth`, `ApplyTime` (`< 0` means permanent), the camera additive fields, and the collision box size for the new model.
+- `CharacterMovement.MaxWalkSpeed` set in `ReceiveBeginPlay` can be overwritten by the game's own speed logic; read the runtime value before relying on it.
+
 ## Editor-Rewritten Tracked Files Before Commit
 
 Symptoms:

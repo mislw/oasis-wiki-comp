@@ -234,6 +234,10 @@ All `ue_pie` actions are one-way triggers. A successful tool call normally retur
 - Do not open business UIs immediately after the client window appears. Official managers and shop/product data load later; opening early produces nil-manager or "row not found" errors that look like config bugs. Wait for a stable in-game state, then open the UI and re-check values through Lua.
 - `reloadlua` discovers saved Lua under the project Script tree; do not assume it reloads modules under `ExtendResource` or other mounted package trees. If the new code does not take effect (error line numbers still match the old file), restart PIE and verify the file loads from disk.
 - Print unique markers in snippets and read the client or DS Lua log; the tool response only proves dispatch.
+- On editor 1.39 the UGCAskQ endpoint can be streamable HTTP (`POST http://127.0.0.1:<port>/mcp`, keep the `Mcp-Session-Id` response header for later calls) while `GET /sse` returns 404. If the SSE proxy reports `SSE HTTP 404`, try the `/mcp` endpoint on the same panel port before assuming the server is down.
+- `doluastring` needs the `player_key` returned in `players[]` by `start` (and in `ugc://pie/session/current`).
+- Mobile PIE can run a `RemoteDS` plus separate client processes. In-memory CDO or Blueprint edits made through `ue_py` do not reach them; save the package, then restart PIE before judging asset changes.
+- In the PIE Lua log, `print(a, b, ...)` may record only the first argument. Concatenate values into one string (`tostring(...)`) when printing diagnostics.
 
 Proxy safety rules:
 
