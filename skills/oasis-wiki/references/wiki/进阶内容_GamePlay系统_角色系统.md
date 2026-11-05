@@ -1,6 +1,6 @@
 # 进阶内容/GamePlay系统/角色系统
 
-> 官方知识库同步分类，共 6 篇文章
+> 官方知识库同步分类，共 7 篇文章
 
 ---
 
@@ -211,6 +211,399 @@ end
 	end
 	```
 - 枪械的配件及子弹也属于独立的物品，因此需要配合枪械单独配置掉落属性，否则会出现保留或掉落效果不一致的现象
+
+---
+
+## 组队招募
+
+> 文档路径: 进阶内容 > GamePlay系统 > 角色系统 > 组队招募
+
+> 文档ID: 20485 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20485)
+
+> 新增: 2026-10-20 10:05:16
+
+**涉及API/标识符:** `bEnableRecruit`, `BP_TeamRecruit_PlayerComponent`, `Construct`, `CreateWidgetAsync`, `DeclarationIndex`, `FRecruitInfo`, `GP_TeamRecruit`, `InvitUIPath`, `IsCaptain`, `IsFull`, `IsGlobalScope`, `MainPartyUIPath`, `MemberCount`, `MemberIconURLList`, `Members`, `MemberUIDList`, `OnForwardClicked`, `ReceiveBeginPlay`, `ReceiveEndPlay`, `RecruitID`, `RecruitmentUIPath`, `RuleUIPath`, `ScreeningUIPath`, `SetData`, `TargetIndex`, `TeamDeclaration`, `TeamDeclarations`, `TeamPlayers`, `TeamTarget`, `TeamTargets`, `true`, `UGC_PartyTemplate_Invitation_UIBP`, `UGC_PartyTemplate_Recruitment_UIBP`, `UGC_PartyTemplate_Rule_UIBP`, `UGC_PartyTemplate_TeamScreening_UIBP`, `UGC_PartyTemplate_TeamUp_UIBP`, `UGCGameSystem.GetLocalPlayerController`, `UGCMultiMode.RequestMatch`, `UGCPartyComponent`, `UI.UISlot.MainUISlot_High`
+
+# 组队招募
+
+该模板提供和平精英局内组队大厅能力，包含招募列表、发布招募、申请入队、我的队伍管理、入队邀请与队伍语音联动，可供其他开发者下载导入使用，接入到具体的玩法当中，使用方法见下文。
+
+## 功能详解
+
+### 流程
+
+```lua
+ 1  PC->>CMPT: ReceiveBeginPlay()
+ 2  CMPT->>CMPT: 注册 UGCTeamSystem 队伍委托
+ 3  CMPT->>Backend: GetGamePartPlayerComponent("TeamRecruit")
+ 4  Backend-->>CMPT: 返回招募组件
+ 5  CMPT->>Backend: 注册招募委托（查询结果/发布成功/撤回过期）
+
+ 6  Note over PC: 玩家打开组队大厅
+ 7  PC->>CMPT: Open()
+ 8  CMPT->>UI: CreateWidgetAsync(TeamUp_UIBP) + AddToSlot(MainUISlot_High, 10)
+ 9  CMPT->>Backend: QueryRecruitList(范围, 目标)
+10  Backend-->>CMPT: OnQueryRecruitListResultDelegate(招募列表)
+11  CMPT->>CMPT: 转换数据 + 过滤自己的队伍 + 失效暂留
+12  CMPT->>UI: RefreshTeamList(teams)
+13  CMPT->>UI: SetMyTeam(myTeamData)
+
+14  Note over UI: 玩家点击发布招募
+15  UI->>CMPT: PublishRecruit(宣言, 目标, 范围)
+16  CMPT->>Backend: TeamRecruit.PublishRecruit()
+17  Backend-->>CMPT: OnPublishRecruitSuccessDelegate
+18  CMPT->>UI: OnRecruitmentPublished()
+
+19  Note over UI: 玩家申请加入某队伍
+20  UI->>CMPT: JoinRecruitedTeam(RecruitID)
+21  CMPT->>Backend: TeamRecruit.JoinRecruitedTeam()
+22  Backend-->>CMPT: OnTeamIDChangedDelegate
+23  CMPT->>CMPT: 轮询等待队伍同步稳定
+24  CMPT->>UI: SetMyTeam()
+25  CMPT->>CMPT: 单人变有队友 → Close() 关闭大厅
+```
+
+### 模版结构
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/x6f5timage.png)
+
+**A. 说明按钮**
+展示组队功能的规则说明，已经有默认展示文案
+**B. 队伍筛选按钮**
+按钮常驻展示当前生效筛选条件，展示格式：【队伍发布范围】-【队伍目标】
+点击后弹出筛选弹窗
+**C. 刷新按钮**
+点击立即触发队伍列表刷新
+以匹配触发瞬间的队伍人数为第一优先级排序，排序优先级：三人缺一人队伍 ＞ 二人缺二人队伍 ＞ 单人队伍
+当队伍人数相同时，按照招募发布时间进行排序，招募发布时间越接近匹配触发时间的队伍，展示优先级越高
+**D. 队伍信息展示**
+【发布范围】：展示队伍的招募范围
+【队伍目标】：展示队伍的队伍目标
+【队伍宣言】：展示队伍的招募宣言
+**E. 队伍成员展示**
+展示队伍内玩家头像
+玩法接入玩家档案模版时，点击玩家头像，弹出玩家档案弹窗
+**F. 申请入队按钮**
+点击后触发申请入队流程
+**G. 发布招募按钮**
+点击后弹出发布招募弹窗
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/96fp4image.png)
+
+**B1. 发布范围 勾选项**
+提供本局、全局两个互斥勾选项，默认选中【本局】
+**B2. 队伍目标 勾选项**
+界面最多展示6个可勾选文案选项，选项互斥，默认选中首条内容
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/UDQGBimage.png)
+
+**G1. 发布范围 勾选项**
+同B1，提供本局、全局两个互斥勾选项，默认选中【本局】
+**G2. 队伍目标 勾选项**
+界面最多展示6个可勾选文案选项，选项互斥，默认选中首条内容
+**G3. 队伍宣言 勾选项**
+界面最多展示6个可勾选文案选项，选项互斥，默认选中首条内容
+**G4. 发布招募按钮**
+点击后发布招募
+
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/rMbiximage.png)
+
+**H. 我的队伍-队伍信息展示**
+【发布范围】：展示队伍的招募范围
+【队伍目标】：展示队伍的队伍目标
+【队伍宣言】：展示队伍的招募宣言
+**I. 我的队伍-队伍成员展示**
+展示队伍内玩家头像
+玩法接入玩家档案模版时，点击玩家头像，弹出玩家档案弹窗
+**J. 我的队伍-退队按钮**
+点击后退出当前小队
+**K. 撤回招募按钮**
+点击后撤回当前招募
+
+## 功能使用
+
+**1. 下载并导入模板**
+打开 UGC 编辑器资源商店，找到组队模板，点击下载导入工程。
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/N9XrKimage.png)
+
+**2. 添加组件到 PlayerController**
+`UGCPartyComponent` 是一个 Actor 组件，**必须挂载在 UGCPlayerController 蓝图上**（组件内部通过 `GetOwner()` 获取 PC 并区分端）。
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/RFvnAimage.png)
+>挂载错误（如挂到 GameState / Pawn）会导致功能完全不可用。
+
+**3. 配置组件的 UI 路径**
+在组件的细节面板配置 5 个路径属性，详见下方「组件属性配置」章节。
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/HBkKZimage.png)
+
+**4. 添加 TeamRecruit 的 GamePart**
+在玩法的 GamePart 配置中启用 `GP_TeamRecruit`。
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/79SCfimage.png)
+为确保组件可用，还需在 GamePart 的 Config 蓝图中手动将 `BP_TeamRecruit_PlayerComponent` 挂载到 PlayerController 上，并勾选属性复制（Replicates）。
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/p83wtimage.png)
+招募功能还需要满足以下运行条件：
+- `bEnableRecruit` 配置为 `true`。
+- `TeamPlayers` 配置为 2、3 或 4。（需关闭阶段匹配）
+- `TeamDeclarations` 配置队伍宣言，最多 6 条，每条最多 6 个中文字符。
+- `TeamTargets` 配置队伍目标，最多 6 条，每条最多 4 个中文字符。
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/TKjPXimage.png)
+
+>未启用时招募功能整体不可用，日志会打印 获取失败 (GP_TeamRecruit 可能未配置?)。
+
+**5. 配置招募文案**
+在 `GP_TeamRecruit` 配置中填写：
+|配置项|说明|
+|-|-|
+|`bEnableRecruit`|是否启用招募|
+|`TeamTargets`|队伍目标文案，最多 6 条|
+|`TeamDeclarations`|队伍目标文案，最多 6 条|
+
+文案数量决定 UI 上显示的选项数量，未配置的选项会自动隐藏。序号从 1 开始。
+
+**6. 启动游戏测试**
+启动游戏后调用 `UGCPartyComponent:Open()` 即可打开组队大厅。
+
+```lua
+local PC = UGCGameSystem.GetLocalPlayerController()
+local PartyComp = PC and PC:GetComponentByClass(UGCPartyComponent)
+if PartyComp then PartyComp:Open() end
+```
+>PS：在 UGC PIE 测试环境中可能无法获取完整队伍数据，建议接入具体玩法后多人实测。
+
+**7. 实现「前往」按钮**
+模板未实现满员后的「前往」逻辑（`OnForwardClicked` 为 TODO），需按自己玩法补充，详见下方「注意事项」第 5 条。
+
+### 组件属性配置
+
+组件 `UGCPartyComponent` 的细节面板属性，5 个路径全部必填，缺省则对应界面打不开。
+
+|属性|指向的蓝图|缺省后果|
+|-|-|-|
+|`MainPartyUIPath`|`UGC_PartyTemplate_TeamUp_UIBP`|组队大厅打不开|
+|`ScreeningUIPath`|`UGC_PartyTemplate_TeamScreening_UIBP`|筛选弹窗打不开|
+|`RecruitmentUIPath`|`UGC_PartyTemplate_Recruitment_UIBP`|招募弹窗打不开|
+|`RuleUIPath`|`UGC_PartyTemplate_Rule_UIBP`|规则弹窗打不开|
+|`InvitUIPath`|`UGC_PartyTemplate_Invitation_UIBP`|收到邀请无弹窗|
+
+#### UI 挂载方式
+
+所有界面统一挂到和平 UI 挂点槽位 `UI.UISlot.MainUISlot_High`，移除用 `RemoveFromParent()`。
+
+|界面|ZOrder|
+|-|-|
+|组队大厅主界面|10|
+|筛选 招募 规则弹窗|15|
+|入队邀请弹窗|20|
+
+### 数据结构说明
+
+#### 我的队伍数据
+
+组件通过 `SetMyTeam(myTeamData)` 下发给主界面。
+
+|字段|类型|说明|
+|-|-|-|
+|`Members`|table[]|成员列表，队长在前|
+|`MemberCount`|number|当前成员数|
+|`IsCaptain`|boolean|本地玩家是否队长|
+|`IsFull`|boolean|是否已满员|
+|`IsGlobalScope`|boolean|招募范围（仅已发布招募时携带）|
+|`TargetIndex`|number|队伍目标文案序号（仅已发布时携带）|
+|`DeclarationIndex`|number|队伍宣言文案序号（仅已发布时携带）|
+
+`Members` 成员结构：`{ UID, PicUrl, IsCaptain }`
+
+#### 招募队伍数据
+
+组件通过 `RefreshTeamList(teamDataList)` 下发给主界面。
+
+|字段|类型|说明|
+|-|-|-|
+|`RecruitID`|string|招募 ID，申请入队时使用|
+|`IsGlobalScope`|boolean|招募范围|
+|`TargetIndex`|number|队伍目标序号|
+|`DeclarationIndex`|number|队伍宣言序号|
+|`Members`|table[]|成员列表，首位为队长|
+|`MemberCount`|number|成员数|
+
+#### 招募信息（内核原始结构）
+
+GamePart 返回的 `FRecruitInfo`，组件内部会转换为上表的招募队伍数据。
+
+|字段|类型|说明|
+|-|-|-|
+|`RecruitID`|string|招募 ID|
+|`MemberUIDList`|number[]|成员 UID 列表|
+|`MemberIconURLList`|string[]|成员头像 URL 列表|
+|`TeamTarget`|string|队伍目标文案|
+|`TeamDeclaration`|string|队伍宣言文案|
+|`IsGlobalScope`|boolean|招募范围|
+
+### 组件接口
+
+#### 界面控制
+
+|函数|说明|
+|-|-|
+|`Open()`|打开组队大厅，复用已有实例并触发 5 秒刷新冷却|
+|`Close()`|关闭大厅（隐藏不销毁），并关闭筛选/招募弹窗|
+|`OpenFilter()`|打开筛选弹窗（与大厅共用刷新冷却）|
+|`CloseFilter()`|关闭筛选弹窗并销毁|
+|`OpenRecruitment()`|打开发布招募弹窗（复用单例，保留冷却状态）|
+|`CloseRecruitment()`|关闭招募弹窗（隐藏不销毁，保留冷却）|
+|`OpenRule()`|打开规则说明弹窗|
+|`OpenPlayerProfile(UID)`|打开玩家档案（需接入 PlayerProfileManager GamePart，点击自己会被拦截）|
+
+#### 招募与队伍操作
+
+|函数|返回值|说明|
+|-|-|-|
+|`PublishRecruit(DeclarationIndex, TargetIndex, IsGlobalScope)`|-|发布招募，序号 1~6，30 秒冷却|
+|`RevokeRecruitment()`|-|撤回招募|
+|`JoinRecruitedTeam(RecruitID)`|-|申请加入队伍，**5 秒冷却**|
+|`RequestRefreshTeamList(filter)`|-|查询招募列表，**5 秒冷却**。`filter={IsGlobalScope, TargetIndex}`，传 nil 沿用上次条件|
+|`IsRecruiting()`|boolean, goalIdx, declIdx, isGlobal|查询是否处于招募状态|
+|`ExitTeam()`|-|退出队伍，会先复位招募按钮再轮询确认|
+|`GetMaxTeamSize()`|number|获取玩法队伍人数上限，获取失败回退 4|
+
+#### 冷却查询
+
+|函数|返回值|说明|
+|-|-|-|
+|`CanPublishRecruit()`|number|发布冷却剩余秒数，0 表示可发布|
+|`CanRefreshList()`|number|刷新冷却剩余秒数，0 表示可刷新|
+|`CanJoinTeam()`|number|申请冷却剩余秒数，0 表示可申请|
+|`GetRefreshCooldownRemain()`|number|同 `CanRefreshList()`|
+|`GetPublishCooldownRemain()`|number|同 `CanPublishRecruit()`|
+|`IsRefreshCooling()`|boolean|是否刷新冷却中|
+|`IsApplyCooling()`|boolean|是否申请冷却中|
+
+>冷却时长由服务端控制（发布 30 秒、刷新 5 秒、申请 5 秒），Lua 层只能查询，**无法修改**。组件采用每秒轮询内核的方式同步倒计时。
+
+#### 文案读取
+
+|函数|返回值|说明|
+|-|-|-|
+|`GetGoalText(idx)`|string|读取队伍目标文案（从 GP 配置，带缓存）|
+|`GetDeclText(idx)`|string|读取队伍宣言文案（从 GP 配置，带缓存）|
+|`GetScopeText(isGlobalScope)`|string|返回「全局」/「本局」|
+
+#### UI 回调接口
+
+UI回调接口整合
+
+|函数|调用时机|
+|-|-|
+|`SetMyTeam(myTeamData)`|我的队伍数据刷新|
+|`RefreshTeamList(teamDataList)`|招募列表查询完成|
+|`SetFilterLabel(isGlobalScope, goalIdx)`|筛选条件变化|
+|`SetRefreshCooldown(remain)`|刷新按钮冷却变化|
+|`OnMemberJoined(memberData)`|新成员加入|
+|`OnMemberAvatarUpdated(UID, PicUrl)`|头像兜底补拉成功|
+|`OnRecruitmentPublished(scopeIdx, goalIdx, declIdx)`|发布招募成功|
+|`OnRecruitmentRevoked()`|招募被撤回或过期|
+|`ResetRecruitState()`|重置招募按钮状态|
+
+筛选弹窗需实现 `SetPartyComponent(component)`、`SetConfirmCooldown(remain)`；招募弹窗需实现 `SetPartyComponent(component)`、`OnPublishCooldownTick(remain)`。
+
+### 界面功能说明
+
+#### 组队大厅主界面
+
+顶部为「我的队伍」区域（永远显示，每人初始都有局内队伍，含最多 4 个成员头像）；下方为可加入的招募队伍列表，最多展示 5 条，按成员数降序排列，无队伍时显示空状态提示。
+
+底部按钮区为状态机，**仅队长可见**，队员整体隐藏：
+|条件|显示按钮|
+|-|-|
+|队伍已满员|前往|
+|已发布招募|撤回招募|
+|其他|发布招募|
+
+另有刷新（带冷却倒计时）、筛选、规则说明、退出队伍按钮。
+
+#### 筛选弹窗
+
+可筛选「发布范围」（本局/全局）与「队伍目标」，两组各自互斥且必选一项。支持筛选记忆，重开弹窗自动恢复上次勾选。确定按钮与大厅刷新共用同一冷却。
+
+#### 招募弹窗
+
+可勾选「发布范围」「队伍目标」「队伍宣言」三组，各自互斥必选，默认勾选每组首项。发布按钮带 30 秒冷却倒计时，冷却中置灰。
+
+#### 邀请弹窗
+
+收到入队邀请时自动弹出，展示邀请者头像与昵称，可同意或拒绝。
+
+
+## 注意事项
+
+**1. 阶段匹配与队伍人数（重要限制）**
+组队模板目前仅适用于「未开启阶段匹配」的玩法，请不要开启阶段匹配
+![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/nXKTkimage.png)
+
+|玩法配置|表现|
+|-|-|
+|未开启阶段匹配|人数上限正确，招募与满员判定正常|
+|开启阶段匹配，各阶段人数**不同**|满员判定错误。例如实际匹配进 2 人阶段，模板仍按 4 人判定未满员，导致队伍已满却仍显示「发布招募」；反之则会提前误判满员而显示「前往」，招募流程走不下去|
+
+建议：
+- 若玩法不需要阶段匹配，保持关闭即可，模板开箱可用。
+- 若必须开启阶段匹配且各阶段人数不同，需要自行扩展模板：在匹配成功后依据实际开局人数动态确定上限，而不是依赖 `GetTeamPlayersNumber()`。
+
+**2. 局内邀请额外前置**
+
+- 邀请同 DS 玩家：需开启聊天 + 开启本局频道或私聊频道
+- 邀请大厅好友：需开启聊天 + 开启好友频道
+
+**3. 组件为纯客户端组件**
+服务端实例在 `ReceiveBeginPlay` 中直接返回，不做任何注册。所有 UI 与招募方法仅在客户端有效，请勿在服务端调用。
+
+**4.「前往」按钮需自行实现**
+模板的 `OnForwardClicked` 为 TODO 空实现，需按玩法自行补充（发起匹配、传送、开始玩法等）。
+>若使用 `UGCMultiMode.RequestMatch`，注意第一个参数是 **SubModeID** 而非大厅 ModeID；服务器会校验发起者身份，非队长或队伍状态不符会返回 `not-leader`，客户端提示「你当前不是队长，不能点击匹配」。
+
+**5. 邀请弹窗的数据时序**
+`CreateWidgetAsync` 异步创建，`SetData` 可能先于 `Construct` 执行导致昵称被蓝图默认值覆盖。模板通过 `Construct` 后重新应用数据修复。重构该界面时**必须保留**此机制。
+
+## 常见问题解答
+
+**Q：招募列表一直为空？**
+依次排查：① 日志是否出现 `GP_TeamRecruit` 可能未配置，是则检查 GamePart；② 是否配置了 `TeamTargets`/`TeamDeclarations` 文案；③ 是否真的没人发布招募（建议双客户端实测）；④ 是否被「自己的队伍」过滤（日志会打印 **过滤自己的队伍**）。
+
+**Q：点击发布招募没反应？**
+检查是否处于 30 秒发布冷却（`CanPublishRecruit() > 0`），以及是否配置了宣言/目标文案。
+
+**Q：队伍只有我一个人却显示满员？**
+见下方「注意事项」第 2 条，多为 `GetTeamPlayersNumber()` 返回值与配置不符，搜日志 `[ModeCheck]` 确认。
+
+**Q：界面打不开？**
+检查组件的 5 个 UI 路径属性是否全部配置，以及组件是否挂在 PlayerController 上。日志会打印对应路径为空的提示。
+
+**Q：队员看不到队长发布的招募？**
+队长视角用本地发布缓存，队员视角用内核 `IsRecruiting()` 查询。若队员看不到，说明内核侧招募状态尚未同步。
+
+**Q：头像显示不出来？**
+跨 DS 加入的成员需等待 PlayerState 生成，模板有快速重试与持续兜底补拉。日志关键字：**头像兜底补拉成功**。
+
+**Q：切 DS 后功能异常？**
+模板有自愈机制，检查日志是否出现 **获取成功**、**已加载**，**补注册**。若自定义扩展过组件，检查是否遗漏 `ReceiveEndPlay` 清理。
+
+**Q：我的队伍成员头像只有 4 个槽位，能改吗？**
+主界面提供 4 个头像槽位。若玩法队伍人数上限超过 4，需自行扩展 UI 槽位与头像刷新逻辑。
+
+## 日志关键字速查
+
+组件日志 TAG 为 `[UGCPartyComponent]`，界面为 `[TeamUp_UIBP]` 等。
+
+|关键字|含义|
+|-|-|
+|`[ModeCheck] ModeID=x, GetTeamPlayersNumber=y`|模式 ID 与队伍人数，调试人数上限用|
+|`获取失败 (GP_TeamRecruit 可能未配置?)`|GamePart 未启用|
+|`GetGamePartConfig('TeamRecruit').TeamTargets 不可用`|招募文案未配置|
+|`!!! 招募组件不可用，xxx失败`|招募组件获取失败|
+|`过滤自己的队伍 RecruitID=xxx`|自己的队伍被过滤（正常）|
+|`筛选条件变化，丢弃旧缓存`|切换筛选，缓存清空（正常）|
+|`头像兜底补拉成功 UID=xxx`|跨 DS 头像补拉成功|
+|`OnForwardClicked (TODO)`|前往按钮未实现，需自行补充|
+|`not-leader`|服务器拒绝匹配请求（非队长或队伍状态不符）|
 
 ---
 

@@ -1,4 +1,4 @@
-# 绿洲编辑器基础内容/UGCAskQ MCP
+# 绿洲编辑器基础内容/外部AI接入
 
 > 官方知识库同步分类，共 2 篇文章
 
@@ -6,11 +6,11 @@
 
 ## UGCAskQ MCP 使用说明
 
-> 文档路径: 绿洲编辑器基础内容 > UGCAskQ MCP > UGCAskQ MCP 使用说明
+> 文档路径: 绿洲编辑器基础内容 > 外部AI接入 > UGCAskQ MCP 使用说明
 
 > 文档ID: 20414 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20414)
 
-> 新增: 2026-07-10 15:09:27 | 更新: 2026-09-15 14:13:28
+> 新增: 2026-07-10 15:09:27 | 更新: 2026-10-23 19:09:54
 
 **涉及API/标识符:** `MCP_YYYYMMDD.log`, `Observe`
 
@@ -341,11 +341,11 @@ A: 可以。AI 会感知到你当前选中的 Actor 或打开的编辑器，可�
 
 ## 通过UGC-AskQ制作编辑器工具
 
-> 文档路径: 绿洲编辑器基础内容 > UGCAskQ MCP > 通过UGC-AskQ制作编辑器工具
+> 文档路径: 绿洲编辑器基础内容 > 外部AI接入 > 通过UGC-AskQ制作编辑器工具
 
 > 文档ID: 20464 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20464)
 
-> 新增: 2026-09-15 16:43:34
+> 新增: 2026-09-15 16:43:34 | 更新: 2026-10-23 19:09:54
 
 **涉及API/标识符:** `Icon`, `Item`, `Item_001`, `Item_010`, `ItemDetail`, `ItemID`, `ItemName`, `ItemQuality`, `MaxCount`, `MCPTool`, `server.js`, `UGCmap`, `UnitWeight`
 
