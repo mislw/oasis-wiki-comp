@@ -84,7 +84,25 @@ Default to normal mode. Use teaching mode only when the user explicitly asks for
 18. Unexpected project artifact gate: whenever a project check, Git inspection, pre-commit review, release check, or editor validation finds files that the UGC editor does not consume or that appear generated accidentally, such as `__pycache__/`, `*.pyc`, temporary scripts, prompts, manifests, contact sheets, or unexpected Markdown files, stop before deleting, committing, reverting, or pushing. Inspect the file and its Git state, explain what the file type is and what this exact file appears to do, then ask whether the user wants it removed and optionally ignored. Markdown is not automatically junk: preserve known project documentation and inspect unexpected `.md` files by path and content. If the file was committed or pushed, report the commit and remote state and ask whether to create a cleanup commit that deletes it. Never amend, reset, revert a push, force-push, or rewrite published history without separate explicit authorization; if the user asks to withdraw the pushed history, explain the risk and confirm the exact branch and commits first. Tracked files rewritten by the editor with only line-ending, whitespace, or re-save churn are the inverse case: inspect the diff, restore the noise before staging, and keep it out of feature commits. Follow `references/pitfalls.md` for the full classification flow.
 19. Feature evidence-first rule: before explaining, planning, or implementing a gameplay or UI feature, resolve the configured primary predecessor from private local instructions and search same-type implementations authored by the primary predecessor only by default. Search the current project first, then the available `RedCliff`, `StarMon`, and `StealItem` repositories. Search the bundled knowledge base in the same pass. Use the secondary predecessor only when the user explicitly requests a broader predecessor search; other authors are relevant only for exact-block ownership, compatibility, and current-project foundation checks. Validate every candidate against the current project's runtime/data ownership. When a relevant code or knowledge-base document is confirmed, the user-facing answer must include the exact standalone sentence `已查到相关实现` before the evidence-backed plan. Report code evidence as project, file, function/table, and commit; report documentation evidence as knowledge-base file and section/article. If neither source has a relevant result, say so without inventing a precedent. Never reveal the configured identities.
 20. Knowledge-first feature change gate: Before modifying or adding a gameplay or UI feature, configuration-backed behavior, editor workflow, or other UGC capability, search the bundled knowledge base in `references/wiki/*.md` before the first edit. Search with the feature name, system name, class/API names, and likely synonyms; inspect any related official implementation or usage guidance before choosing the change. A confirmed knowledge-base hit uses the same `已查到相关实现` acknowledgement and documentation evidence format as rule 19. Before a third implementation attempt, when two consecutive edit-and-verify attempts have not succeeded, stop editing and search the bundled knowledge base again using the observed symptom and exact error text, then reconcile the result with the current project and same-type predecessor implementation before trying another change.
-21. Official Wiki link rule: When a confirmed relevant implementation or usage guide comes from a synchronized official Wiki article, the user-facing evidence must include a clickable Markdown link to that exact official article, for example `官方 Wiki：[文章标题](https://developer.gp.qq.com/wikieditor/#/catalog/<文档ID>)`. Copy the URL from the matched article's own `官网原文` metadata; do not guess a URL from its title or category. If several official articles materially support the answer, link each cited article. This applies in addition to reporting the local knowledge-base file and section/article. Distilled local references are not official Wiki articles and must not be presented as official links. For an official API hit, use the exact API URL already present in the matched entry when available; otherwise link only the official API root and state that no exact deep link was confirmed.
+21. Official Wiki link rule: When a confirmed relevant implementation or usage guide comes from a synchronized official Wiki article, the user-facing evidence must include a clickable Markdown link to that exact official article, for example `官方 Wiki：[文章标题](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=<path_hash>)`. The official wiki moved from `wikieditor/#/catalog/<文档ID>` to `oasiswikiweb/#/index?path_hash=<path_hash>` in 2026-11; the bundled snapshot is already relinked, and `scripts/sync_official_wiki.py --relink-only` rewrites any remaining old links. Leftover `wikieditor` links point to articles the official site already deleted. Copy the URL from the matched article's own `官网原文` metadata; do not guess a URL from its title or category. If several official articles materially support the answer, link each cited article. This applies in addition to reporting the local knowledge-base file and section/article. Distilled local references are not official Wiki articles and must not be presented as official links. For an official API hit, use the exact API URL already present in the matched entry when available; otherwise link only the official API root and state that no exact deep link was confirmed.
+
+## Context Budget
+
+Hard limits apply to every task and override convenience reads:
+
+- Never `Read` a whole file under `references/wiki/`; locate content with `rg -n` first. One `Read` is capped at 200 lines, and all wiki content read in one task is capped at 600 lines.
+- Never read `references/wiki/术语表.md`, `API参考索引.md`, or `代码示例库.md` in full; use `rg` and read only the matching line ranges.
+- Keep MCP and tool output small: table reads at most 20 rows and 3 sample rows, `__askq_result` at most 4 KB, log reads tail at most 200 lines, and `widget_inspect` only the target subtree.
+- Read the core checklist or section index of a large reference first, then only the matching section; stop reading once the answer is supported.
+
+### Session And Prompt-Cache Hygiene
+
+The provider only keeps the prompt cache warm for a few minutes; every cold start or expired entry is re-billed as full-price input. Keep the session structure cheap:
+
+- Start a fresh session for a new task. Resume an old session only when its context is genuinely needed: a resume replays the whole history uncached, and resuming a huge conversation costs more than many fresh sessions. If work must continue the next day, run `/compact` before leaving so the replay is small.
+- Before leaving a long session idle for more than about five minutes, run `/compact` while the cache is still warm; otherwise the first request after the break re-reads the entire context at full price.
+- Keep one session per task and avoid many parallel short sessions: every new session pays the fixed cold-start prefix (about 50k tokens on this machine, mostly MCP tool schemas).
+- Do not change MCP servers, skills, or `CLAUDE.md` in the middle of a session; any prefix change invalidates the cache for all following requests. Turn off MCP servers that the current task does not need at session start, not mid-way.
 
 ## Search
 
@@ -98,11 +116,13 @@ rg --line-number --smart-case --glob "*.md" "角色复活" .\references\wiki
 Helper scripts are also included:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\search-oasis-wiki.ps1 -Query "UGCGameSystem" -MaxResults 20
-powershell -ExecutionPolicy Bypass -File .\scripts\search-oasis-wiki.ps1 -Query "角色复活" -Context 2
-node .\scripts\search-oasis-wiki.mjs "UGCGameSystem" --max 20
-node .\scripts\search-oasis-wiki.mjs "角色复活" --context 2
+powershell -ExecutionPolicy Bypass -File .\scripts\search-oasis-wiki.ps1 -Query "UGCGameSystem" -MaxResults 10 -Context 1
+powershell -ExecutionPolicy Bypass -File .\scripts\search-oasis-wiki.ps1 -Query "角色复活" -LocationsOnly
+node .\scripts\search-oasis-wiki.mjs "UGCGameSystem" --max 10 --context 1
+node .\scripts\search-oasis-wiki.mjs "角色复活" --locations-only
 ```
+
+Use `-LocationsOnly` / `--locations-only` for file:line results without text, then read only the needed line range.
 
 If running from outside the skill directory, pass an absolute path to the script or set the working directory to the skill folder first.
 
@@ -143,4 +163,5 @@ Additional distilled references:
 - `references/cowart-ui/psd-to-umg.md`: structured PSD group/layer parsing, manifest normalization, UMG control mapping, review gates, and the reusable invocation prompt for importing PSD hierarchy into WidgetBlueprint controls.
 - `references/cowart-ui/usage-guide.md`: user-facing entry phrases, stage-by-stage next actions, component reuse expectations, and the boundary between documentation updates and authorized editor delivery.
 - `references/wiki/官方宣讲会回顾.md`: hand-maintained briefing archive for official 宣讲会/绿洲工坊 material, recording only the feature/template/platform details the synchronized official wiki snapshot does not cover yet.
+- `references/wiki/全服存档机制_UGCModeArchiveSystem.md`: hand-maintained distillation of the official gray-release UGCModeArchiveSystem doc (1.39 全服存档) — full-server shared numeric save, its server-only async API, error codes, quotas, PIE simulation, and open points, since the synchronized wiki has no article and the API manual has no entry for it.
 - `scripts/refresh_api_structs.py`: idempotent refresh of the `FUGC*` / `FPE*` struct section and header statistics in `references/wiki/官方API参考手册.md`, read from the official API site's static JSON.

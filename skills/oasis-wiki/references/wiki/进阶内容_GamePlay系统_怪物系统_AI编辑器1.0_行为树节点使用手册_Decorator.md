@@ -8,7 +8,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > AI编辑器1.0 > 行为树节点使用手册 > Decorator > 和平
 
-> 文档ID: 256 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/256)
+> 文档ID: 256 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Hn3Q-Njj)
 
 > 更新: 2025-07-02 18:54:11
 
@@ -50,7 +50,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > AI编辑器1.0 > 行为树节点使用手册 > Decorator > 引擎
 
-> 文档ID: 255 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/255)
+> 文档ID: 255 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=ALHD0TaF)
 
 > 更新: 2025-07-02 18:54:11
 

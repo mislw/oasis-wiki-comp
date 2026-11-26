@@ -8,7 +8,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > Buff编辑器1.0 > Buff简介
 
-> 文档ID: 195 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/195)
+> 文档ID: 195 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=PcGbuB6N)
 
 > 更新: 2025-06-19 11:33:40
 
@@ -117,7 +117,7 @@ AddBuff:fun(BuffName:FName,BuffCauser:AController,LayerCount:int32,BuffApplierAc
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > Buff编辑器1.0 > 自定义自己的BuffAction
 
-> 文档ID: 196 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/196)
+> 文档ID: 196 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=FdPjZrJ-)
 
 > 更新: 2025-06-19 11:33:40
 

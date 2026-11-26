@@ -122,6 +122,45 @@ Check:
 - Remove listeners in `Destruct`, close, or end-play paths.
 - Avoid creating the same singleton UI repeatedly without checking existing instance.
 
+## Button Hidden In WBP Reappears At Runtime
+
+Symptoms:
+
+- A button or entry set to hidden in the Widget Designer still shows in PIE, or shows again after any UI refresh.
+- Editing the Lua hide logic is undesirable because the refresh path is shared or in code you should not touch.
+
+Check:
+
+- Search Lua for the refresh path that enumerates controls and calls `SetVisibility(...Visible)`; a page or state updater can re-apply visibility every refresh and override a Designer-only hide.
+- Collapse the smallest dedicated parent container that wraps only the target control (a `SizeBox` or slot with no other children) instead of hiding the control itself. Refresh code usually walks named controls, not wrapper slots, so the hide survives with no Lua edit and cannot be overwritten.
+- A running PIE keeps the old widget tree and an open Designer tab keeps the old property view; verify after restarting PIE, and close/reopen the asset tab to see the change in the Designer.
+
+## Removing A Dead Button
+
+Symptoms:
+
+- A top-level button opens nothing, prints an open-UI error, or points to a feature that no longer exists.
+
+Check:
+
+- Confirm it is actually dead before touching it: the target WidgetBlueprint or resource does not exist in the project and the UI is not registered in UIManager, so a click can only error.
+- Remove the whole Designer subtree that exists only for the button (its wrapper slot included), compile, and save. Then verify the generated class no longer exposes the button and its child widgets.
+- Clean the Lua side in one pass: the `Construct` binding, the `Destruct` clear, the click callback, and any generated class-field comments for the removed controls.
+- Restart PIE for runtime and reopen the asset tab for Designer preview; either one alone is not evidence the widget is gone.
+
+## World-Following UI Animation Drifts Or Jitters
+
+Symptoms:
+
+- A full-screen intro animation meant to appear near a world actor (boss arrival, elite spawn) jitters, lags behind the camera, or lands off-screen.
+- The UI recomputes its viewport position every tick from an actor world location (`FindBossActor`, `SetPositionInViewport`, `SetAlignmentInViewport`).
+
+Check:
+
+- Prefer a fixed viewport presentation: anchor the animation at viewport alignment `(0.5, 0.5)` plus a small fixed offset, and play a pre-sampled frame sequence at a fixed frame rate from one timer. Presentation then ignores camera and actor movement.
+- Keep the play trigger contract (who plays it, which id it logs) separate from the positioning code, so the positioning can be deleted later without touching callers.
+- Verify after restarting PIE, not in an open Designer tab; viewport-position behavior only exists at runtime.
+
 ## Reconnect State Missing
 
 Symptoms:
@@ -146,6 +185,33 @@ Check:
 - Move item IDs, durations, skill cooldowns, text, and icon paths into `GlobalConfig.lua` or focused config files.
 - Keep Actions focused on flow, not giant data tables.
 
+## Duplicate Config Source After Merge
+
+Symptoms:
+
+- Two tables or fields can configure the same unlock level, cost, or rule; one was added locally while the other already existed on the latest origin branch.
+- A merge conflict exposes parallel implementations, or one field becomes silently unused.
+
+Check:
+
+- Before adding a per-level list or mapping, search the entity's own table and the latest origin branch for a per-entity field that already controls it (for example an unlock level on the entity row).
+- Prefer the per-entity field as the single source; keep level/aggregate tables for conditions, descriptions, and display-only text.
+- If a duplicate must stay temporarily, mark it deprecated in its tooltip and do not leave it editable without a warning; remove it once the editor/MCP can rewrite the struct.
+- After resolving a merge, grep for the losing field name. If no consumer remains, it is dead config, not a fallback.
+
+## One Attribute Key, Two Numeric Semantics
+
+Symptoms:
+
+- A shared attribute dictionary stores one `ValueType` (absolute vs percent) per key, but the same key is delivered as absolute in one table and as percent in another.
+- Nobody can say which source wins, and the dictionary values contradict the delivery rows.
+
+Check:
+
+- Numeric semantics belong to the delivery row (a gem row's own `ValueType`, equipment breakthrough fixed percent), not to a single dictionary flag; never consume the dictionary copy in logic.
+- Before "fixing" one side to match the other, grep every consumer of both fields. If the dictionary field has no real reader, remove or downgrade it rather than inventing a truth it cannot express.
+- Removing the duplicate follows the normal struct-field removal flow: edit the struct, resave the table data, and keep `ue_struct_custom.lua` in sync with the struct change.
+
 ## Table Or Struct Change Not Visible At Runtime
 
 Symptoms:
@@ -160,6 +226,19 @@ Check:
 - Start a new PIE session after the table or struct change, then read the runtime value directly in client/DS Lua before judging the data.
 - Confirm the disk asset is the committed version and the editor is not holding an unsaved override.
 - Separate "not synchronized" from "bad data": after a fresh PIE confirms the new values, inspect the row content itself (for example a delimiter-separated count list with one missing value) before blaming the loading pipeline.
+
+## Table-Driven Probability Change Unverified
+
+Symptoms:
+
+- A break/success/drop rate was moved into a table (often keyed by player count or level), but only the config was checked.
+- Runtime cadence is unproven: how often the roll runs, when the first roll happens, and how many rolls fit in the designed window.
+
+Check:
+
+- Verify in PIE logs with the effective values printed from the runtime code: the rate actually read for the current row, the judgment interval, the first-judgment delay, and the judgment index that triggered the event.
+- Start with the zero/smallest row as a baseline, then sample at least one populated row; a single-tier pass does not prove the table lookup.
+- When the design defines a safe window or an expected judgment count, compute it from interval and first-roll delay and compare with the log, not just the final success/failure.
 
 ## Transform Buff Stuck Or Model Misplaced
 
@@ -190,6 +269,7 @@ Check:
 - Inspect the diff before staging: `git diff --stat`, `git diff --ignore-cr-at-eol`, and a normal diff of the suspicious file. If only line endings or formatting changed, restore it and keep it out of feature commits.
 - Restore only files that are clearly editor-generated noise. Never restore a teammate's or the user's real edits to make the worktree look clean.
 - When many unrelated editor-resaved files exist, group commits by feature and keep editor churn in a separate commit or stash only after the owner confirms; do not mix them into a feature commit silently.
+- After an editor version upgrade, a large batch of tracked assets can change automatically and cannot be byte-restored. Commit that churn as its own clearly labeled commit (for example "editor upgrade auto-changes") instead of mixing it into feature work; never hand-restore binary assets you cannot reconstruct.
 - After push, compare the remote tree for the changed paths so a concurrent merge by another author is not mistaken for a lost change.
 
 ## Config Source Owned Outside The Repository

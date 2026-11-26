@@ -376,6 +376,17 @@ When writing Chinese text to DataTable rows through MCP:
 3. Save the asset package.
 4. Re-read the same rows and verify the real string using `value.encode('unicode_escape').decode('ascii')`.
 
+## Context And Output Budget
+
+Keep every MCP and log read small; token blowups come from full dumps, not from the actual work.
+
+- `__askq_result`, JSON output, and `print` batches: keep each result under 4 KB. Return counts, names, matching IDs, and only the changed fields; do not dump whole tables, widget trees, or asset lists.
+- `widget_inspect`: inspect only the target widget subtree or the specific controls needed (pass the widget name when the API supports it). Do not dump the entire WidgetTree for a large UI.
+- Logs: search first (`rg` or `Select-String`), then read only the matching tail; a single log read is capped at 200 lines. Never `Read` a full Clientlog/DSlog/LuaLog.
+- DataTable: follow the low-token protocol in `mcp-datatable.md` (at most 20 candidate assets, 10 row-name previews, 3 sample rows, and 20 fields per row).
+- PIE state: use `resources/read` for `ugc://pie/session/current` instead of dumping the log.
+- Stop reading once the answer is supported; do not collect extra confirmation material.
+
 ## Evidence Pattern
 
 For a complete answer after MCP work, include:

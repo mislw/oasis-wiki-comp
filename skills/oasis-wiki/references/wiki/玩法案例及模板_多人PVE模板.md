@@ -8,7 +8,7 @@
 
 > 文档路径: 玩法案例及模板 > 多人PVE模板 > 关卡管理
 
-> 文档ID: 20196 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20196)
+> 文档ID: 20196 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=4ZBI1TAt)
 
 > 更新: 2025-07-25 19:44:29
 
@@ -421,7 +421,7 @@ return PortalDoor
 
 > 文档路径: 玩法案例及模板 > 多人PVE模板 > 天赋系统
 
-> 文档ID: 20371 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20371)
+> 文档ID: 20371 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=VJyKlRPz)
 
 > 新增: 2026-05-14 15:45:27
 
@@ -475,7 +475,7 @@ return PortalDoor
 
 > 文档路径: 玩法案例及模板 > 多人PVE模板 > 怪物刷新
 
-> 文档ID: 20193 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20193)
+> 文档ID: 20193 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=GXQ4WUlp)
 
 > 新增: 2026-05-14 15:44:28
 
@@ -543,7 +543,7 @@ return PortalDoor
 
 > 文档路径: 玩法案例及模板 > 多人PVE模板 > 怪物配置
 
-> 文档ID: 20375 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20375)
+> 文档ID: 20375 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0jZqfxgj)
 
 > 新增: 2026-05-14 15:45:37
 
@@ -590,7 +590,7 @@ return PortalDoor
 
 > 文档路径: 玩法案例及模板 > 多人PVE模板 > 战斗内商店
 
-> 文档ID: 20195 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20195)
+> 文档ID: 20195 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=k1NGL_ei)
 
 > 新增: 2026-05-14 15:45:24
 
@@ -691,7 +691,7 @@ ShopAfterLevel ：关底商店刷新方案数组，图中表示前三关的刷�
 
 > 文档路径: 玩法案例及模板 > 多人PVE模板 > 概览
 
-> 文档ID: 20190 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20190)
+> 文档ID: 20190 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T1rHRv6V)
 
 > 新增: 2026-05-14 15:44:10 | 更新: 2026-05-20 10:18:07
 
@@ -760,7 +760,7 @@ ShopAfterLevel ：关底商店刷新方案数组，图中表示前三关的刷�
 
 > 文档路径: 玩法案例及模板 > 多人PVE模板 > 模式配置（单人PVE模式）
 
-> 文档ID: 20191 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20191)
+> 文档ID: 20191 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=wgzl7Xbo)
 
 > 更新: 2025-07-25 19:44:30
 
@@ -853,7 +853,7 @@ ShopAfterLevel ：关底商店刷新方案数组，图中表示前三关的刷�
 
 > 文档路径: 玩法案例及模板 > 多人PVE模板 > 模式配置（多人PVE模式）
 
-> 文档ID: 20192 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20192)
+> 文档ID: 20192 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=2we5xBj5)
 
 > 更新: 2025-09-04 21:06:42
 
@@ -998,7 +998,7 @@ ShopAfterLevel ：关底商店刷新方案数组，图中表示前三关的刷�
 
 > 文档路径: 玩法案例及模板 > 多人PVE模板 > 游戏大厅系统
 
-> 文档ID: 20197 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20197)
+> 文档ID: 20197 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=xb-4oGBS)
 
 > 新增: 2026-05-14 15:44:16
 
@@ -1093,7 +1093,7 @@ ShopAfterLevel ：关底商店刷新方案数组，图中表示前三关的刷�
 
 ### 天赋点获取
 
-每升一等级获得配置的天赋点数，可参考角色 [等级系统](https://developer.gp.qq.com/wikieditor/#/catalog/20198?autoJump=%E7%AD%89%E7%BA%A7%E7%B3%BB%E7%BB%9F) 的配置说明。
+每升一等级获得配置的天赋点数，可参考角色 [等级系统](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=qHfzd1-N&autoJump=%E7%AD%89%E7%BA%A7%E7%B3%BB%E7%BB%9F) 的配置说明。
 
 <br>
 
@@ -1219,7 +1219,7 @@ ShopAfterLevel ：关底商店刷新方案数组，图中表示前三关的刷�
 
 > 文档路径: 玩法案例及模板 > 多人PVE模板 > 物品刷新
 
-> 文档ID: 20194 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20194)
+> 文档ID: 20194 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=s2rSsx2h)
 
 > 新增: 2026-05-14 15:44:30
 
@@ -1327,7 +1327,7 @@ ShopAfterLevel ：关底商店刷新方案数组，图中表示前三关的刷�
 
 > 文档路径: 玩法案例及模板 > 多人PVE模板 > 装备随机词条
 
-> 文档ID: 20372 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20372)
+> 文档ID: 20372 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=_ocQ5LU7)
 
 > 新增: 2026-05-14 15:45:35 | 更新: 2026-07-27 13:42:31
 
@@ -1396,7 +1396,7 @@ RandomAffixes中存在4个数组，随机顺序为从上往下按顺序进行随
 
 > 文档路径: 玩法案例及模板 > 多人PVE模板 > 角色系统
 
-> 文档ID: 20198 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20198)
+> 文档ID: 20198 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=qHfzd1-N)
 
 > 新增: 2026-05-14 15:44:21
 

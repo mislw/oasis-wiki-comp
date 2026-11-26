@@ -8,13 +8,13 @@
 
 > 文档路径: 进阶内容 > UI系统 > 和平控件查询 > 和平主界面控件
 
-> 文档ID: 250 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/250)
+> 文档ID: 250 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=zaxaIsgR)
 
 > 更新: 2025-06-19 11:33:40
 
 # 和平主界面控件查询
 
-对于和平主界面的常用控件设置，例如开火、站/蹲/趴、状态栏等，请优先采用 [WidgetLayout](https://developer.gp.qq.com/wikieditor/#/catalog/20019) 方案处理。
+对于和平主界面的常用控件设置，例如开火、站/蹲/趴、状态栏等，请优先采用 [WidgetLayout](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=LCS3nimG) 方案处理。
 
 ![1.74143083[1].png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/1.74143083%5B1%5D.png)
 
@@ -138,7 +138,7 @@
 
 > 文档路径: 进阶内容 > UI系统 > 和平控件查询 > 和平全局观战界面控件
 
-> 文档ID: 251 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/251)
+> 文档ID: 251 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=dtwhoUfM)
 
 > 更新: 2025-06-19 11:33:40
 

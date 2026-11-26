@@ -18,6 +18,12 @@ from typing import Iterable
 
 
 DEFAULT_BASE_URL = "https://developer.gp.qq.com/wikieditor"
+NEW_WIKI_URL = "https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash="
+NEW_WIKI_TREE_API = "https://developer.gp.qq.com/user/docssvr/GetTree"
+OLD_WIKI_LINK_RE = re.compile(
+    r"https://developer\.gp\.qq\.com/wikieditor/(?:\?timeStamp=\d+)?#/catalog/(\d+)"
+    r"(?:\?autoJump=([^)\s\"'>&:]*))?\??(?::~:text=[^)\s\"'>]*)?"
+)
 SHANGHAI = timezone(timedelta(hours=8))
 UPDATE_CUTOFF = datetime(2026, 7, 15, tzinfo=SHANGHAI)
 PRESERVED_WIKI_FILES = {
@@ -63,6 +69,66 @@ def flatten_catalog(nodes: Iterable[dict], parents: tuple[str, ...] = ()) -> lis
         children = node.get("children") or []
         articles.extend(flatten_catalog(children, (*parents, label)))
     return articles
+
+
+def _path_key(path: str) -> str:
+    return re.sub(r"[\s/_]", "", path)
+
+
+def flatten_new_tree(nodes: Iterable[dict]) -> dict[str, str]:
+    paths: dict[str, str] = {}
+    for node in nodes:
+        if node.get("type") == "file" and node.get("path_hash"):
+            path = str(node.get("path", "")).removeprefix("wiki/").removesuffix(".md")
+            paths[path.strip()] = str(node["path_hash"])
+        paths.update(flatten_new_tree(node.get("children") or []))
+    return paths
+
+
+def map_article_hashes(
+    articles: list[CatalogArticle], new_paths: dict[str, str]
+) -> dict[int, str]:
+    """Match old numeric article IDs to the new site's path_hash by catalog path."""
+    by_key = {_path_key(path): hash_ for path, hash_ in new_paths.items()}
+    mapping: dict[int, str] = {}
+    pending: list[CatalogArticle] = []
+    for article in articles:
+        hash_ = by_key.get(_path_key(article.path))
+        if hash_:
+            mapping[article.id] = hash_
+        else:
+            pending.append(article)
+    used = set(mapping.values())
+    for article in pending:
+        top = _path_key(article.path.split("/", 1)[0])
+        leaf = _path_key(article.title)
+        candidates = [
+            hash_
+            for key, hash_ in by_key.items()
+            if hash_ not in used and key.startswith(top) and key.endswith(leaf)
+        ]
+        if len(candidates) == 1:
+            mapping[article.id] = candidates[0]
+            used.add(candidates[0])
+    return mapping
+
+
+def article_url(article_id: int, hashes: dict[int, str], anchor: str = "") -> str:
+    hash_ = hashes.get(article_id)
+    if not hash_:
+        suffix = f"?autoJump={anchor}" if anchor else ""
+        return f"{DEFAULT_BASE_URL}/#/catalog/{article_id}{suffix}"
+    return f"{NEW_WIKI_URL}{hash_}" + (f"&autoJump={anchor}" if anchor else "")
+
+
+def rewrite_wiki_links(text: str, hashes: dict[int, str]) -> str:
+    def replace(match: re.Match) -> str:
+        article_id = int(match.group(1))
+        if article_id not in hashes:
+            return match.group(0)
+        return article_url(article_id, hashes, match.group(2) or "")
+
+    return OLD_WIKI_LINK_RE.sub(replace, text)
 
 
 def category_filename(category: str) -> str:
@@ -314,6 +380,7 @@ def build_artifacts(
     catalog_version: int,
     catalog_updated_at: int,
     generated_at: datetime,
+    article_hashes: dict[int, str] | None = None,
 ) -> dict[str, str]:
     articles = flatten_catalog(catalog)
     ids = [article.id for article in articles]
@@ -398,6 +465,11 @@ def build_artifacts(
         articles, article_rows, catalog_version
     )
     artifacts["绿洲启元Wiki目录.txt"] = _render_directory(catalog)
+    if article_hashes:
+        artifacts = {
+            name: rewrite_wiki_links(content, article_hashes)
+            for name, content in artifacts.items()
+        }
     return artifacts
 
 
@@ -467,6 +539,36 @@ def fetch_official_snapshot(base_url: str, workers: int) -> tuple[list[dict], di
     return catalog, article_rows, category_row
 
 
+def fetch_new_wiki_paths() -> dict[str, str]:
+    request = urllib.request.Request(
+        NEW_WIKI_TREE_API,
+        data=json.dumps({"category": "wiki"}).encode("utf-8"),
+        headers={"User-Agent": "oasis-wiki-sync/1", "Content-Type": "application/json"},
+        method="POST",
+    )
+    with urllib.request.urlopen(request, timeout=30) as response:
+        payload = json.load(response)
+    if payload.get("code") != 0:
+        raise RuntimeError(f"Invalid new wiki tree response: {payload.get('msg')}")
+    return flatten_new_tree(payload["data"]["items"])
+
+
+def relink_files(skill_path: Path, hashes: dict[int, str], *, write: bool) -> dict[str, int]:
+    """Rewrite old wikieditor catalog links in place; returns changed link counts per file."""
+    changed: dict[str, int] = {}
+    for path in sorted(skill_path.rglob("*")):
+        if path.suffix not in {".md", ".txt"} or "__pycache__" in path.parts:
+            continue
+        text = path.read_text(encoding="utf-8")
+        updated = rewrite_wiki_links(text, hashes)
+        if updated != text:
+            count = len(OLD_WIKI_LINK_RE.findall(text)) - len(OLD_WIKI_LINK_RE.findall(updated))
+            changed[str(path.relative_to(skill_path))] = count
+            if write:
+                path.write_text(updated, encoding="utf-8", newline="\n")
+    return changed
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -478,6 +580,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL)
     parser.add_argument("--workers", type=int, default=12)
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument(
+        "--relink-only",
+        action="store_true",
+        help="Only rewrite old wikieditor links to the new oasiswikiweb path_hash links",
+    )
     return parser.parse_args()
 
 
@@ -485,9 +592,25 @@ def main() -> int:
     args = parse_args()
     skill_path = args.skill_path.resolve()
     wiki_dir = skill_path / "references" / "wiki"
+    if args.relink_only:
+        category = fetch_json(f"{args.base_url.rstrip('/')}/_api/look-Category")
+        articles = flatten_catalog(json.loads(category["data"][0]["Body"]))
+        hashes = map_article_hashes(articles, fetch_new_wiki_paths())
+        changed = relink_files(skill_path, hashes, write=not args.dry_run)
+        print(json.dumps({
+            "status": "validated" if args.dry_run else "relinked",
+            "articles": len(articles),
+            "mapped": len(hashes),
+            "unmapped": sorted(a.id for a in articles if a.id not in hashes),
+            "files": len(changed),
+            "links": sum(changed.values()),
+        }, ensure_ascii=False, indent=2))
+        return 0
     catalog, article_rows, category_row = fetch_official_snapshot(
         args.base_url, max(1, args.workers)
     )
+    articles = flatten_catalog(catalog)
+    article_hashes = map_article_hashes(articles, fetch_new_wiki_paths())
     generated_at = datetime.now(tz=SHANGHAI)
     artifacts = build_artifacts(
         catalog=catalog,
@@ -495,6 +618,7 @@ def main() -> int:
         catalog_version=int(category_row.get("Version") or 0),
         catalog_updated_at=int(category_row.get("UpdateTime") or 0),
         generated_at=generated_at,
+        article_hashes=article_hashes,
     )
     if not args.dry_run:
         write_artifacts(

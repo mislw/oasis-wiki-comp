@@ -8,7 +8,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > 角色系统 > 修改主角属性
 
-> 文档ID: 153 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/153)
+> 文档ID: 153 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=pEl94JLX)
 
 > 更新: 2025-06-19 11:33:39
 
@@ -148,7 +148,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 角色系统 > 物品掉落与保留
 
-> 文档ID: 20148 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20148)
+> 文档ID: 20148 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=dsy45nk6)
 
 > 更新: 2025-06-25 18:10:05
 
@@ -190,7 +190,7 @@ end
 
 ## 配置物品掉落属性
 
-各类物品模板属性的 [V2背包配置](https://developer.gp.qq.com/wikieditor/#/catalog/20101?autoJump=V2%E8%83%8C%E5%8C%85%E9%85%8D%E7%BD%AE) 类目中都具有 ``死亡物品掉落配置`` 属性，该属性决定了此类型的物品能否掉落或者保留，结合死亡掉落类型的组合配置可以实现不同的掉落与保留效果。
+各类物品模板属性的 [V2背包配置](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6&autoJump=V2%E8%83%8C%E5%8C%85%E9%85%8D%E7%BD%AE) 类目中都具有 ``死亡物品掉落配置`` 属性，该属性决定了此类型的物品能否掉落或者保留，结合死亡掉落类型的组合配置可以实现不同的掉落与保留效果。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/u1MRvimage.png)
 
@@ -204,7 +204,7 @@ end
 
 ## 注意事项
 
-- 以上配置方式仅适用于 [物品编辑器](https://developer.gp.qq.com/wikieditor/#/catalog/20101) 创建的物品，且需要启用新的 [背包系统](https://developer.gp.qq.com/wikieditor/#/catalog/20104)；对于使用和平原生物品及经典背包的场景，仅支持控制是否生成死亡盒子，通过覆写 **UGCPlayerPawn** 的 ``IsSkipSpawnDeadTombBox`` 函数实现：
+- 以上配置方式仅适用于 [物品编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6) 创建的物品，且需要启用新的 [背包系统](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x)；对于使用和平原生物品及经典背包的场景，仅支持控制是否生成死亡盒子，通过覆写 **UGCPlayerPawn** 的 ``IsSkipSpawnDeadTombBox`` 函数实现：
 	```lua
 	function UGCPlayerPawn:IsSkipSpawnDeadTombBox(EventInstigater)
     		return true
@@ -218,7 +218,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 角色系统 > 组队招募
 
-> 文档ID: 20485 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20485)
+> 文档ID: 20485 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=DBCEhcbv)
 
 > 新增: 2026-10-20 10:05:16
 
@@ -611,7 +611,7 @@ UI回调接口整合
 
 > 文档路径: 进阶内容 > GamePlay系统 > 角色系统 > 角色AI托管
 
-> 文档ID: 20466 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20466)
+> 文档ID: 20466 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=51b6RpIa)
 
 > 新增: 2026-09-15 14:31:59
 
@@ -621,7 +621,7 @@ UI回调接口整合
 
 ## 概述
 
-游戏中常见的自动战斗、自动寻路相关功能，会使得玩家操作的角色临时处于托管状态，并按一定预设好的行为逻辑自动行动，在这个过程中，玩家如果进行了任何操作，就又会恢复手动操作。在绿洲编辑器下，欲实现这样一套功能，可以使用新提供的 `UGCPlayerAIHostComponent` 来解决。角色AI托管依赖导航网格系统作为前提，具体配置方式请参考[导航网格](https://developer.gp.qq.com/wikieditor/#/catalog/20266)。
+游戏中常见的自动战斗、自动寻路相关功能，会使得玩家操作的角色临时处于托管状态，并按一定预设好的行为逻辑自动行动，在这个过程中，玩家如果进行了任何操作，就又会恢复手动操作。在绿洲编辑器下，欲实现这样一套功能，可以使用新提供的 `UGCPlayerAIHostComponent` 来解决。角色AI托管依赖导航网格系统作为前提，具体配置方式请参考[导航网格](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=3cTqxkya)。
 
 ## 添加UGCPlayerAIHostComponent组件
 
@@ -655,7 +655,7 @@ UI回调接口整合
 
 ## 通过技能开/关托管功能
 
-在**技能编辑器**中的 自动战斗 模板下创建托管技能模板，并将创建好的[技能添加](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%B7%BB%E5%8A%A0%E6%8A%80%E8%83%BD)到 `UGCPlayerPawn` 蓝图上。
+在**技能编辑器**中的 自动战斗 模板下创建托管技能模板，并将创建好的[技能添加](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%B7%BB%E5%8A%A0%E6%8A%80%E8%83%BD)到 `UGCPlayerPawn` 蓝图上。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/2prA0image.png)
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/JaTXgimage.png)
@@ -731,7 +731,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 角色系统 > 角色Avatar复制
 
-> 文档ID: 20228 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20228)
+> 文档ID: 20228 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=ZyYxc29N)
 
 > 新增: 2026-10-16 10:26:02
 
@@ -883,7 +883,7 @@ Avatar展示Actor显示Avatar后，点击“PlayAnim”按键，该Actor会循�
 
 > 文档路径: 进阶内容 > GamePlay系统 > 角色系统 > 角色出生点
 
-> 文档ID: 362 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/362)
+> 文档ID: 362 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a1flPIuv)
 
 > 更新: 2025-06-19 11:33:39
 
@@ -1025,7 +1025,7 @@ return MyStartManager;
 
 > 文档路径: 进阶内容 > GamePlay系统 > 角色系统 > 队伍与阵营
 
-> 文档ID: 20095 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20095)
+> 文档ID: 20095 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Q2VYiY6l)
 
 > 更新: 2026-03-13 10:25:36
 
@@ -1035,13 +1035,13 @@ return MyStartManager;
 
 ## 队伍系统
 
-和平精英内置了一套完整的队伍系统，玩法可以按需求设置匹配时的队伍构成，也允许对处于局内的玩家重新分队，同队伍的玩家头顶会显示带有队内编号的UI，大 [小地图](https://developer.gp.qq.com/wikieditor/#/catalog/152) 上也会显示同队玩家的实时位置，如果 [启用了组队面板](https://developer.gp.qq.com/wikieditor/#/catalog/239) 还会显示同队玩家的状态。
+和平精英内置了一套完整的队伍系统，玩法可以按需求设置匹配时的队伍构成，也允许对处于局内的玩家重新分队，同队伍的玩家头顶会显示带有队内编号的UI，大 [小地图](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=4faLXiTG) 上也会显示同队玩家的实时位置，如果 [启用了组队面板](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=CkjGBXLk) 还会显示同队玩家的状态。
 
 ![企业微信截图_17441867608036.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/l1lRW%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_17441867608036.png)
 
 ### 设置队伍
 
-玩法可以设置匹配时的队伍数及每队人数，匹配系统将优先参考设置将满足人数条件的玩家拉入对局，具体设置可参考 [队伍设置](https://developer.gp.qq.com/wikieditor/#/catalog/127?autoJump=1.1+%E9%98%9F%E4%BC%8D%E8%AE%BE%E7%BD%AE:~:text=1.1-,%E9%98%9F%E4%BC%8D%E8%AE%BE%E7%BD%AE,-%E3%80%90%E9%98%9F%E4%BC%8D%E6%95%B0%E9%87%8F%E3%80%91%EF%BC%9A%E6%8C%87) 部分内容。
+玩法可以设置匹配时的队伍数及每队人数，匹配系统将优先参考设置将满足人数条件的玩家拉入对局，具体设置可参考 [队伍设置](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=lv9ijB7m&autoJump=1.1+%E9%98%9F%E4%BC%8D%E8%AE%BE%E7%BD%AE) 部分内容。
 > 和平大厅组队人数最多4人，如果匹配设置单队人数过多，会导致拉入对局的玩家队伍组成存在不稳定的情况
 
 ---
@@ -1067,7 +1067,7 @@ end
 
 和平大厅的组队与玩法队伍系统是两套独立的队伍关系，队伍系统中的分队是临时性的队伍关系，当该对局结束时即结束队伍关系；和平大厅的队伍关系仅作为匹配成局时的分队参考，不影响玩法内的重新分队，且分队后也不影响和平大厅的队伍组成关系，即从玩法返回大厅时队伍关系仍然保留。
 
-> [二次匹配](https://developer.gp.qq.com/wikieditor/#/catalog/376) 功能扩展了大厅队伍关系的能力，支持加入大厅队伍和同进同出子模式
+> [二次匹配](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=LvdxQwxp) 功能扩展了大厅队伍关系的能力，支持加入大厅队伍和同进同出子模式
 
 ![613b8712bfa4d139ca688a2280aa54ba.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/7yjVw613b8712bfa4d139ca688a2280aa54ba.png)
 
@@ -1077,7 +1077,7 @@ end
 
 队伍系统虽然满足了组队需求，但是分配机制和角色定位较为固定，不同队伍之间固定为敌对关系，缺乏竞技对抗的深度，为此额外构建了阵营系统。
 
-新的阵营系统提供了更灵活的敌对关系配置，同时配合新的 [怪物系统](https://developer.gp.qq.com/wikieditor/#/catalog/20144) 同步支持怪物的阵营分配，开发者仅需通过蓝图参数设置即可实现阵营的分配，也支持通过 [UGCCampSystem](https://developer.gp.qq.com/api/#/searchContent/UGCCampSystem?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E7%A4%BE%E4%BA%A4%E7%B3%BB%E7%BB%9F%2FUGCCampSystem.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCCampSystem) 提供的接口动态调整阵营。
+新的阵营系统提供了更灵活的敌对关系配置，同时配合新的 [怪物系统](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=JKHitxoV) 同步支持怪物的阵营分配，开发者仅需通过蓝图参数设置即可实现阵营的分配，也支持通过 [UGCCampSystem](https://developer.gp.qq.com/api/#/searchContent/UGCCampSystem?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E7%A4%BE%E4%BA%A4%E7%B3%BB%E7%BB%9F%2FUGCCampSystem.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCCampSystem) 提供的接口动态调整阵营。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/J8Lx3image.png)
 
@@ -1105,7 +1105,7 @@ end
 |属性名|属性说明|
 |-|-|
 |阵营设置|Camp ID：阵营的唯一ID<br>Camp Name：阵营的名称|
-|阵营出生方式配置|支持按阵营设置出生点的逻辑，数组结构为 ``阵营id + 出生配置``的形式，其中0为占位阵营无法变更设置<br>- 阵营出生方式：指定出生点或者指定位置坐标<br>- 指定PlayerStartID：当 ``阵营出生方式``选为“指定PlayerStartID”时有效，对应 [``PlayerBornPointID``](https://developer.gp.qq.com/wikieditor/#/catalog/362?autoJump=%E9%85%8D%E7%BD%AE%E5%87%BA%E7%94%9F%E8%A7%84%E5%88%99)<br>- 当有多个PlayerStartID时是否随机选择：当 ``阵营出生方式``选为“指定PlayerStartID”时有效，如果关卡中放置了多个出生点，则会从这些出生点里随机选择一个<br>- 指定世界坐标：当 ``阵营出生方式``选为“指定世界坐标”时有效，填写具体的坐标值|
+|阵营出生方式配置|支持按阵营设置出生点的逻辑，数组结构为 ``阵营id + 出生配置``的形式，其中0为占位阵营无法变更设置<br>- 阵营出生方式：指定出生点或者指定位置坐标<br>- 指定PlayerStartID：当 ``阵营出生方式``选为“指定PlayerStartID”时有效，对应 [``PlayerBornPointID``](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a1flPIuv&autoJump=%E9%85%8D%E7%BD%AE%E5%87%BA%E7%94%9F%E8%A7%84%E5%88%99)<br>- 当有多个PlayerStartID时是否随机选择：当 ``阵营出生方式``选为“指定PlayerStartID”时有效，如果关卡中放置了多个出生点，则会从这些出生点里随机选择一个<br>- 指定世界坐标：当 ``阵营出生方式``选为“指定世界坐标”时有效，填写具体的坐标值|
 |阵营关系|Camp A/B ID：建立关系的阵营ID<br>Releation：具体阵营关系<br>- Same：同阵营（友方）<br>- Enemy：敌人<br>- Neutral：中立|
 |默认阵营关系|所有配置的阵营，若未指定阵营关系，将使用此默认关系|
 |不同队伍属于不同阵营|针对玩家角色的选项，如果勾选，则优先按队伍ID设置阵营，确保每个玩家都有初始阵营，但不保证阵营ID值一定等于队伍ID；否则，阵营ID默认全为1|
@@ -1120,7 +1120,7 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/IwZvuimage.png)
 
-如果使用了 [怪物刷新器](https://developer.gp.qq.com/wikieditor/#/catalog/20156) 生成怪物，会以 [怪物组表](https://developer.gp.qq.com/wikieditor/#/catalog/20156?autoJump=%E6%80%AA%E7%89%A9%E7%BB%84%E8%A1%A8) 里配置的阵营ID为准。
+如果使用了 [怪物刷新器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=5HITc-Cv) 生成怪物，会以 [怪物组表](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=5HITc-Cv&autoJump=%E6%80%AA%E7%89%A9%E7%BB%84%E8%A1%A8) 里配置的阵营ID为准。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/COOJbimage.png)
 

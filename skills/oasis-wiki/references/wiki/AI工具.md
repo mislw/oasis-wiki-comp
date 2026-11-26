@@ -8,7 +8,7 @@
 
 > 文档路径: AI工具 > AI生成图片
 
-> 文档ID: 20395 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20395)
+> 文档ID: 20395 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=yCxrBnYo)
 
 > 新增: 2026-05-21 14:29:14
 
@@ -41,7 +41,7 @@ ps：若找不到合适的参考图，纯文字提示词也是能生成的
 
 > 文档路径: AI工具 > AI生成角色
 
-> 文档ID: 20453 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20453)
+> 文档ID: 20453 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=lyiw5KKq)
 
 > 新增: 2026-09-10 17:23:58
 
@@ -134,7 +134,7 @@ end
 
 > 文档路径: AI工具 > AI资源检索
 
-> 文档ID: 20292 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20292)
+> 文档ID: 20292 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Rv1bmOsi)
 
 > 新增: 2026-07-10 15:11:31
 
@@ -224,7 +224,7 @@ AI检索功能允许开发者通过输入关键词，快速查找相关联的资
 
 > 文档路径: AI工具 > 视频生成3D动画
 
-> 文档ID: 20207 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20207)
+> 文档ID: 20207 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=4AvY6NvS)
 
 > 更新: 2025-10-13 15:06:23
 

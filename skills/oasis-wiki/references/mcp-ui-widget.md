@@ -60,6 +60,48 @@ Check:
 - slots show expected position/size;
 - Lua creates the UI through the existing UIManager or project pattern.
 
+Token budget: pass a widget name to `widget_inspect` when possible and inspect only the subtree or controls needed. For a large screen, read the root child names first, then drill into the target branch instead of dumping the whole WidgetTree.
+
+## Read Default Text And Style From A WidgetBlueprint
+
+`widget_inspect` proves hierarchy and slots, not `Text`, `ColorAndOpacity`, or `Font`. To see what the designer actually left in the asset, load the WBP and walk the tree:
+
+```python
+wbp = ue.find_asset('/Project/Asset/UI/Foo/Foo.Foo')
+root = wbp.WidgetTree.RootWidget
+
+def walk(w, depth=0):
+    if depth > 40:
+        return
+    d = w.as_dict()
+    if 'Text' in d:
+        color = d.get('ColorAndOpacity')
+        print(w.get_name(), d.get('Text'),
+              color.as_dict() if color else None)
+    for slot in (d.get('Slots') or []):
+        content = slot.as_dict().get('Content')
+        if content is not None:
+            walk(content, depth + 1)
+    content = d.get('Content')
+    if content is not None and not isinstance(content, str):
+        walk(content, depth + 1)
+
+walk(root)
+```
+
+- `ColorAndOpacity.as_dict()` gives the exact `SpecifiedColor`; `Font.Size` and `Font.FontObject` live under `Font`.
+- Designers often leave placeholder copy (`99`, `10`, duplicated rows) and static colors. Before binding dynamic text, decide whether to preserve the original Font/Color and replace only `Text`, or to restyle deliberately.
+- Collapse duplicate or hidden placeholder rows that have no data source; do not leave two identical rows visible.
+- Runtime TextBlock color uses a SlateColor table, not a bare LinearColor:
+
+```lua
+local tbColor = {
+    SpecifiedColor = KismetMathLibrary.MakeColor(0.078, 0.314, 0.095, 1),
+    ColorUseRule = 0,
+}
+self.TextBlock_Condition:SetColorAndOpacity(tbColor)
+```
+
 ## Create WidgetBlueprint Correctly
 
 Do not assume `ue.create_blueprint(UserWidget, path)` creates editable UMG. It can create a plain `Blueprint`, then `widget_add` fails with:

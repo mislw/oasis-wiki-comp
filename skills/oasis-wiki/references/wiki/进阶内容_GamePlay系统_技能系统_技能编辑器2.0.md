@@ -8,7 +8,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > 技能编辑器2.0 > 技能Condition查询手册
 
-> 文档ID: 20111 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20111)
+> 文档ID: 20111 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=dw1F7KKc)
 
 > 更新: 2026-01-23 10:55:23
 
@@ -29,7 +29,7 @@
 
 ## 状态比较器
 
-检查角色身上是否带有指定状态，状态判定遵循 [Tag匹配规则](https://developer.gp.qq.com/wikieditor/#/catalog/20102?autoJump=GameplayTag%E5%8C%B9%E9%85%8D)，若携带则结果为True，反之为False。
+检查角色身上是否带有指定状态，状态判定遵循 [Tag匹配规则](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH&autoJump=GameplayTag%E5%8C%B9%E9%85%8D)，若携带则结果为True，反之为False。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/wkQPximage.png)
 
@@ -41,7 +41,7 @@
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/DRXzUimage.png)
 
-数值比较公式：``左值属性 【比较符】 右值系数 * 右值属性``，右值系数支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)。
+数值比较公式：``左值属性 【比较符】 右值系数 * 右值属性``，右值系数支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)。
 > 属性绑定数据类型：float
 
 <br>
@@ -52,10 +52,10 @@
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/WCpr5image.png)
 
-- 物品ID：需要检测的物品ID，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
+- 物品ID：需要检测的物品ID，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)
 > 属性绑定数据类型：int
 - 操作符：常用的比较运算符
-- 比较值：比对的目标值，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
+- 比较值：比对的目标值，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)
 > 属性绑定数据类型：int
 
 <br>
@@ -126,7 +126,7 @@ end
 
 ## 是否有合法目标
 
-仅适用于主动技能，且需配合 [技能Task-阶段跳转](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-PESkillTask_StateBranch) 使用的条件组件，判断当前技能是否具有合法的释放目标。
+仅适用于主动技能，且需配合 [技能Task-阶段跳转](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-PESkillTask_StateBranch) 使用的条件组件，判断当前技能是否具有合法的释放目标。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/mk5knimage.png)
 
@@ -134,7 +134,7 @@ end
 
 ## 是否有合法选点
 
-仅适用于主动技能，且需配合 [技能Task-阶段跳转](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-PESkillTask_StateBranch) 使用的条件组件，判断当前技能是否具有合法的释放点位。
+仅适用于主动技能，且需配合 [技能Task-阶段跳转](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-PESkillTask_StateBranch) 使用的条件组件，判断当前技能是否具有合法的释放点位。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/MoX5Rimage.png)
 
@@ -163,7 +163,7 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/gXJWsimage.png)
 
-- 事件类型：进行比较的 [Event事件](https://developer.gp.qq.com/wikieditor/#/catalog/20112)
+- 事件类型：进行比较的 [Event事件](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=YDs0hD-g)
 - 累计判断时间：进行比较的数值
 - 比较操作符：比较运算符
 
@@ -183,7 +183,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > 技能编辑器2.0 > 技能Event查询手册
 
-> 文档ID: 20112 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20112)
+> 文档ID: 20112 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=YDs0hD-g)
 
 > 新增: 2026-09-02 17:27:13
 
@@ -197,7 +197,7 @@ end
 
 ### 延迟触发事件
 
-当角色获得技能时，延迟若干秒后触发一次该事件，再次触发需要重新添加技能，延迟时间支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)。
+当角色获得技能时，延迟若干秒后触发一次该事件，再次触发需要重新添加技能，延迟时间支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/d1pRRimage.png)
 
@@ -208,7 +208,7 @@ end
 
 ### 输入事件
 
-该事件只针对主动技能，通过 [技能Task-阶段跳转](https://developer.gp.qq.com/wikieditor/#/catalog/20094:~:text=%E8%A1%A8%E7%8E%B0%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98-,%E6%8A%80%E8%83%BDTask%2D%E9%98%B6%E6%AE%B5%E8%B7%B3%E8%BD%AC,-%E5%9C%A8task%E6%89%A7%E8%A1%8C) 配置监听，当该Task开始的时候，才开始监听按下事件，检测技能按钮的交互输入以决定事件的触发，仅检测当前技能绑定的按钮。
+该事件只针对主动技能，通过 [技能Task-阶段跳转](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7) 配置监听，当该Task开始的时候，才开始监听按下事件，检测技能按钮的交互输入以决定事件的触发，仅检测当前技能绑定的按钮。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/uVZNlimage.png)
 
@@ -219,7 +219,7 @@ end
 	- 长按：非点击/按下情况下，按钮按住时间大于长按时间时触发
 		- Long Press Type：支持 ``持续检测`` 和 ``抬起时检测``，``持续检测`` 代表按住时间满足 ``长按时间`` 要求时立即触发该事件；``抬起时检测`` 只在按钮抬起时才检测是否满足 ``长按时间`` 要求
 		- 长按时间：长按的时间阈值
-- 按键时长：事件触发时通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出按钮按住的累计时间
+- 按键时长：事件触发时通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出按钮按住的累计时间
 > 属性绑定数据类型：float
 
 ---
@@ -244,7 +244,7 @@ end
 
 - 清空时间：伤害值在多少时间内未达成累计量自动清空累计值，当<=0时不进行自动清空
 - 触发阈值：需要达成的累计量，当累计受到伤害值超过该值时，触发该事件并执行清空
-- 累计伤害值：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出当前累计受到的伤害值
+- 累计伤害值：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出当前累计受到的伤害值
 > 属性绑定数据类型：float
 
 ---
@@ -257,7 +257,7 @@ end
 
 - 清空时间：伤害值在多少时间内未达成累计量自动清空累计值，当<=0时不进行自动清空
 - 触发阈值：需要达成的累计量，当累计产生伤害值超过该值时，触发该事件并执行清空
-- 累计伤害值：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出当前累计产生的伤害值
+- 累计伤害值：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出当前累计产生的伤害值
 > 属性绑定数据类型：float
 
 ---
@@ -285,8 +285,8 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/jPWZdimage.png)
 
-- 监听的属性：具体监听的角色属性，支持 [自定义角色属性](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
-- 变化量：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出属性的变化量
+- 监听的属性：具体监听的角色属性，支持 [自定义角色属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
+- 变化量：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出属性的变化量
 > 属性绑定数据类型：float
 
 ---
@@ -294,12 +294,12 @@ end
 ### 背包事件
 
 当背包内某物品或某类物品产生预置的操作时触发该事件。
-> 该事件仅支持 [新背包系统](https://developer.gp.qq.com/wikieditor/#/catalog/20104)
+> 该事件仅支持 [新背包系统](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x)
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/wRJcfimage.png)
 
 - 监控类型：支持指定物品或者通过标签筛选一类物品
-	- 物品ID：目标物品ID，适用于单类物品，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
+	- 物品ID：目标物品ID，适用于单类物品，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)
 	- 物品Tags：[物品标记Tag](https://developer.gp.qq.com/wikieditor/#/catalog/20124?autoJump=V2%E8%83%8C%E5%8C%85%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE)，适用于同类型的多个物品
 - 操作：需要监听的背包操作行为，包含拾取、丢弃、使用和销毁，支持多选
 > 属性绑定数据类型：int
@@ -316,9 +316,9 @@ end
 - 伤害Tag：配置一组具体的伤害Tag，只有致死伤害携带了这些Tag，才能触发事件
 - 伤害部位：只有对指定部位造成的伤害导致的死亡，才能触发事件，支持头部和身体的部位伤害
 - 伤害阵营选择：只有该阵营造成的伤害导致的死亡，才能触发事件
-- 击杀来源：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出击杀者
+- 击杀来源：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出击杀者
 > 属性绑定数据类型：Actor
-- 击中部位：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出命中的部位
+- 击中部位：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出命中的部位
 > 属性绑定数据类型：float
 
 ---
@@ -345,7 +345,7 @@ end
 - 伤害Tag：配置一组具体的伤害Tag，基于Tags条件决定是否允许触发事件
 - 伤害部位：只有对指定部位造成的伤害，才能触发事件，支持头部和身体的部位伤害
 - 伤害来源阵营选择：只有该阵营造成的伤害才能触发事件
-- 伤害：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出本次受到的伤害值
+- 伤害：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出本次受到的伤害值
 > 属性绑定数据类型：float
 
 ---
@@ -364,7 +364,7 @@ end
 - 伤害Tag：配置一组具体的伤害Tag，基于Tags条件决定是否允许触发事件
 - 伤害部位：只有对指定部位造成的伤害，才能触发事件，支持头部和身体的部位伤害
 - 伤害来源阵营选择：只有对指定的阵营对象造成的伤害才能触发事件
-- 伤害：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出本次受到的伤害值
+- 伤害：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出本次受到的伤害值
 > 属性绑定数据类型：float
 
 ---
@@ -379,9 +379,9 @@ end
 	- 过滤要求：触发条件的判定规则
 		- 全部满足：所有的过滤器条件均符合才允许触发事件
 		- 满足任意一个：任意一个过滤器条件符合即可触发事件
-	- 过滤器：[命中过滤器](https://developer.gp.qq.com/wikieditor/#/catalog/20165?autoJump=%E6%8A%9B%E4%BD%93%E5%91%BD%E4%B8%AD%E8%BF%87%E6%BB%A4%E5%99%A8) 组件，可配置多组过滤器
+	- 过滤器：[命中过滤器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=nkZpo6CT&autoJump=%E6%8A%9B%E4%BD%93%E5%91%BD%E4%B8%AD%E8%BF%87%E6%BB%A4%E5%99%A8) 组件，可配置多组过滤器
 - Nav地面检测：是否碰撞地面时触发该事件
-- 碰撞到的：碰撞事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出本次检测到的碰撞Actor列表
+- 碰撞到的：碰撞事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出本次检测到的碰撞Actor列表
 > 属性绑定数据类型：Actor
 
 ---
@@ -396,9 +396,9 @@ end
 - 伤害Tag：配置一组具体的伤害Tag，只有伤害携带了这些Tag导致的击杀，才能触发事件
 - 伤害部位：只有对指定部位造成的伤害导致的击杀，才能触发事件，支持头部和身体的部位伤害
 - 击杀目标阵营选择：只有击杀指定的阵营对象才能触发事件
-- 击杀目标：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出击杀的目标
+- 击杀目标：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出击杀的目标
 > 属性绑定数据类型：Actor
-- 击中部位：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出击中的部位
+- 击中部位：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出击中的部位
 > 属性绑定数据类型：float
 
 ---
@@ -414,13 +414,13 @@ end
 	- 所有Tags必须满足：全部Tag同时匹配时才允许触发事件
 	- 任一Tag满足即可：匹配任意一个Tag即可触发事件
 - 治疗Tag：要求治疗行为携带的Tag标签
-- 治疗值：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出本次的治疗值
+- 治疗值：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出本次的治疗值
 > 属性绑定数据类型：float
-- 治疗发起者Actor：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出本次的治疗来源Owner
+- 治疗发起者Actor：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出本次的治疗来源Owner
 > 属性绑定数据类型：Actor
-- 治疗来源Actor：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出本次的治疗来源
+- 治疗来源Actor：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出本次的治疗来源
 > 属性绑定数据类型：Actor
-- 治疗目标Actor：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出本次的治疗目标
+- 治疗目标Actor：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出本次的治疗目标
 > 属性绑定数据类型：Actor
 
 ---
@@ -436,13 +436,13 @@ end
 	- 所有Tags必须满足：全部Tag同时匹配时才允许触发事件
 	- 任一Tag满足即可：匹配任意一个Tag即可触发事件
 - 治疗Tag：要求治疗行为携带的Tag标签
-- 治疗值：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出本次的治疗值
+- 治疗值：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出本次的治疗值
 > 属性绑定数据类型：float
-- 治疗发起者Actor：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出本次的治疗来源Owner
+- 治疗发起者Actor：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出本次的治疗来源Owner
 > 属性绑定数据类型：Actor
-- 治疗来源Actor：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出本次的治疗来源
+- 治疗来源Actor：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出本次的治疗来源
 > 属性绑定数据类型：Actor
-- 治疗目标Actor：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出本次的治疗目标
+- 治疗目标Actor：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出本次的治疗目标
 > 属性绑定数据类型：Actor
 
 ---
@@ -453,7 +453,7 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/Lc6y8image.png)
 
-- 监听Tag：具体监听的 [角色状态Tag](https://developer.gp.qq.com/wikieditor/#/catalog/20106?autoJump=%E5%92%8C%E5%B9%B3%E8%A7%92%E8%89%B2%E7%8A%B6%E6%80%81)
+- 监听Tag：具体监听的 [角色状态Tag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=NkytpdRS&autoJump=%E5%92%8C%E5%B9%B3%E8%A7%92%E8%89%B2%E7%8A%B6%E6%80%81)
 
 <br>
 
@@ -461,7 +461,7 @@ end
 
 ### 阶段Sequence事件
 
-该事件只针对主动技能，通过 [技能Task-阶段跳转](https://developer.gp.qq.com/wikieditor/#/catalog/20094:~:text=%E8%A1%A8%E7%8E%B0%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98-,%E6%8A%80%E8%83%BDTask%2D%E9%98%B6%E6%AE%B5%E8%B7%B3%E8%BD%AC,-%E5%9C%A8task%E6%89%A7%E8%A1%8C) 配置监听，当阶段的Sequence执行完毕后才会触发该事件。
+该事件只针对主动技能，通过 [技能Task-阶段跳转](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7) 配置监听，当阶段的Sequence执行完毕后才会触发该事件。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/8z1UQimage.png)
 
@@ -489,7 +489,7 @@ end
 	- 完成：完成整个技能流程时触发
 	- 中断：技能被外部强制打断时触发
 	- 激活：技能开始释放时触发
-- 技能对象：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出触发的对应技能实例
+- 技能对象：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出触发的对应技能实例
 > 属性绑定数据类型：Actor
 
 ---
@@ -501,7 +501,7 @@ end
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/croifimage.png)
 
 - 抛体Tag：带有该Tag的抛体被发射时才触发；否则，所有抛体发射时都会触发该事件
-- 发射的抛体：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出对应的抛体实例
+- 发射的抛体：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出对应的抛体实例
 > 属性绑定数据类型：AUniversalProjectileCore
 
 ---
@@ -528,7 +528,7 @@ end
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/nibUQimage.png)
 
 - 武器Tag：指定Tag类型的武器开火时才触发事件
-- 最新武器：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出该武器实例
+- 最新武器：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出该武器实例
 > 属性绑定数据类型：Actor
 
 ---
@@ -542,13 +542,13 @@ end
 - 计数器类型：
 	- 重复执行：计数器达标后自动重置，可循环触发。
 	- 执行一次：计数器达标后即停止计数，仅生效一次。
-- 目标值：需要累计命中的次数，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
+- 目标值：需要累计命中的次数，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)
 - 武器Tag：指定Tag类型的武器开火命中时才计数
 - 伤害部位：仅命中对应部位时才会进行计数
 - 命中目标阵营过滤：命中对应阵营目标才会进行计数
-- 命中来源：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出命中的角色实例
+- 命中来源：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出命中的角色实例
 > 属性绑定数据类型：Actor
-- 命中部位：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出命中的部位类型输出击中的部位
+- 命中部位：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出命中的部位类型输出击中的部位
 > 属性绑定数据类型：float
 
 ---
@@ -560,7 +560,7 @@ end
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/PpsVWimage.png)
 
 - 武器Tag：指定Tag类型的武器换弹时才触发事件
-- 最新武器：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出该武器实例
+- 最新武器：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出该武器实例
 > 属性绑定数据类型：Actor
 
 ---
@@ -573,7 +573,7 @@ end
 
 - 监听开镜：True为监听开镜事件，False监听关镜事件
 - 武器Tag：指定Tag类型的武器开/关镜时才触发事件
-- 最新武器：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出该武器实例
+- 最新武器：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出该武器实例
 > 属性绑定数据类型：Actor
 
 ---
@@ -585,7 +585,7 @@ end
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/4JjVZimage.png)
 
 - 武器Tag：指定Tag类型的武器停火时才触发事件
-- 最新武器：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出该武器实例
+- 最新武器：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出该武器实例
 > 属性绑定数据类型：Actor
 
 ---
@@ -598,7 +598,7 @@ end
 
 - 触发方式：指定武器装备或者卸下时触发事件
 - 武器Tag：指定Tag类型的武器切枪时才触发事件
-- 最新武器：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 输出该武器实例
+- 最新武器：该事件触发时，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 输出该武器实例
 > 属性绑定数据类型：Actor
 
 ---
@@ -607,7 +607,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > 技能编辑器2.0 > 技能Task查询手册
 
-> 文档ID: 20094 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20094)
+> 文档ID: 20094 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7)
 
 > 新增: 2026-05-22 11:30:54 | 更新: 2026-09-23 09:47:10
 
@@ -706,11 +706,11 @@ end
 	- start Time：位移效果在时间轴上所对应的起始时间点
 	- End Time: 位移效果在时间轴上所对应的结束时间点
 	- Target Type：位移的目标位置类型
-		- Anim3DTransformWarpingTargetType_SelectTarget：取决于技能编辑器中 [选择目标Task](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E9%80%89%E6%8B%A9%E7%9B%AE%E6%A0%87:~:text=%E7%9A%84%E6%9C%80%E8%BF%9C%E8%B7%9D%E7%A6%BB%E3%80%82-,%E6%8A%80%E8%83%BDTask%2D%E9%80%89%E6%8B%A9%E7%9B%AE%E6%A0%87,-%E4%BB%A5%E6%8C%87%E5%AE%9A%E5%BD%A2%E7%8A%B6) 所选取对象的位置
-		- Anim3DTransformWarpingTargetType_SelectTransform：取决于技能编辑器中 [选择点Task](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E9%80%89%E6%8B%A9%E7%82%B9:~:text=%E9%80%89%E5%8F%96-,%E6%8A%80%E8%83%BDTask%2D%E9%80%89%E6%8B%A9%E7%82%B9,-%E8%BF%90%E8%A1%8C%E6%97%B6%E6%A0%B9%E6%8D%AE) 选取的选点位置
+		- Anim3DTransformWarpingTargetType_SelectTarget：取决于技能编辑器中 [选择目标Task](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E9%80%89%E6%8B%A9%E7%9B%AE%E6%A0%87) 所选取对象的位置
+		- Anim3DTransformWarpingTargetType_SelectTransform：取决于技能编辑器中 [选择点Task](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E9%80%89%E6%8B%A9%E7%82%B9) 选取的选点位置
 		- Anim3DTransformWarpingTargetType_Custom：自定义位置
 	- Target Offset：目标位置的偏移量，仅针对 ``Anim3DTransformWarpingTargetType_SelectTarget`` 和 ``Anim3DTransformWarpingTargetType_SelectTransform`` 生效
-	- Transform Getter：基于 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 变量值决定目标位置，仅针对 ``Anim3DTransformWarpingTargetType_Custom`` 生效
+	- Transform Getter：基于 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 变量值决定目标位置，仅针对 ``Anim3DTransformWarpingTargetType_Custom`` 生效
 		- Value：目标位置偏移量
 		- PropertyName：变量名称，属性绑定数据类型：FTransform
 	- Max Translation：最大位移位置上限，达到这个上限将停止位移
@@ -728,13 +728,13 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/GIGanimage.png)
 
-- Buff类型：需要添加的 [Buff蓝图](https://developer.gp.qq.com/wikieditor/#/catalog/20087)
+- Buff类型：需要添加的 [Buff蓝图](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0Y0pURs-)
 - 添加的层数：要添加几层Buff
    - Property：常量
-   - Attribute：具体参考[属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20098)
+   - Attribute：具体参考[属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg)
 - 覆写生效时长：Buff持续时间，-1代表不覆盖该Buff蓝图配置的生效时长
    - Property：常量
-   - Attribute：具体参考[属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20098)
+   - Attribute：具体参考[属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg)
 - 目标类型：
 	- 技能施法者：给施法者加Buff
 	- 全部技能Target：给技能选中的目标添加Buff，依赖前置 **``目标选择``** 类型Task的选取结果
@@ -750,10 +750,10 @@ end
 - 移除方式：
 	- 指定类型：根据配置的Buff基类移除匹配的Buff
 	- 拥有任意Tag：当移除目标身上的Buff实例携带的类型Tag拥有配置的任一tag时，则移除对应的Buff实例
-- Buff类型：要移除的 [Buff蓝图](https://developer.gp.qq.com/wikieditor/#/catalog/20087)
+- Buff类型：要移除的 [Buff蓝图](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0Y0pURs-)
 - 移除的层数：移除的Buff层数，如果移除后为0将销毁Buff
    - Property：常量
-   - Attribute：具体参考[属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20098)
+   - Attribute：具体参考[属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg)
 - 目标类型：
 	- 技能施法者：施法者自身
 	- 全部技能Target：给技能选中的目标添加Buff，依赖前置 **``目标选择``** 类型Task的选取结果
@@ -788,7 +788,7 @@ end
   - SprintSpeedType_Scalar：整段位移速度维持在一个常数不变
   - SprintSpeedType_Curve：冲刺速度是一条随时间变化的曲线
   	- 冲刺速度曲线：配置曲线资产
-- 冲刺速度：位移速度的常数值，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108?autoJump=%E4%BD%BF%E7%94%A8%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9A)
+- 冲刺速度：位移速度的常数值，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi&autoJump=%E4%BD%BF%E7%94%A8%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9A)
 - 初始方向：进行冲刺时的初始方向，非“瞄准方向/角色前向”类型依赖前置 **``目标选择``** 类型Task的选取结果
   - 朝视角方向：沿当前瞄准方向进行冲刺
   - 朝选中方向：沿技能选定的方向进行冲刺
@@ -803,9 +803,9 @@ end
 - 角色朝向：
    - Dash Direction：冲刺过程中角色会朝向冲刺速度方向。
    - View Direction：冲刺过程中角色会始终面向视角方向。
-- 转向速度：每秒能够旋转的角度（°/s），若目标位置距离较远，角色将以恒定转向速度持续调整朝向，直至对准转向方向，针对 ``View Direction`` 或者 ``JoyStick Direction`` 模式有效，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108?autoJump=%E4%BD%BF%E7%94%A8%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9A)
+- 转向速度：每秒能够旋转的角度（°/s），若目标位置距离较远，角色将以恒定转向速度持续调整朝向，直至对准转向方向，针对 ``View Direction`` 或者 ``JoyStick Direction`` 模式有效，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi&autoJump=%E4%BD%BF%E7%94%A8%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9A)
 - 重力倍率：冲刺过程中施法者受到的重力系数是多少
-- 碰撞阵营配置：勾选将忽略阵营对象的碰撞检测，释放者能够穿透该实体单位，阵营的说明可参考 [队伍与阵营](https://developer.gp.qq.com/wikieditor/#/catalog/20095)
+- 碰撞阵营配置：勾选将忽略阵营对象的碰撞检测，释放者能够穿透该实体单位，阵营的说明可参考 [队伍与阵营](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Q2VYiY6l)
 - 忽略Pawn碰撞：无论是否勾选此选项，碰撞事件都会正常触发。勾选后，在冲刺时将可以穿过其他玩家角色
 - 结束清除速度：冲刺结束是否清除速度
 - 结束恢复移动状态：释放结束是否恢复移动状态，否则转变为Falling或Walking
@@ -824,12 +824,12 @@ end
 - TargetType：接收伤害的目标类型
 	- 技能施法者：对施法者自身造成伤害
 	- 全部技能Target：对技能选中的全部目标造成伤害，依赖前置 **``目标选择``** 类型Task的选取结果
-- 伤害类型Tag列表：支持为伤害添加Tag，通过 [GameplayTag](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20102) 创建
+- 伤害类型Tag列表：支持为伤害添加Tag，通过 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 创建
 - 伤害数值：支持绑定常数、基于自定义属性的 [计算公式](https://developer.gp.qq.com/wikieditor/#/catalog/20135?autoJump=%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F) 或者 [指定Lua函数](https://developer.gp.qq.com/wikieditor/#/catalog/20135?autoJump=%E6%8C%87%E5%AE%9ALua%E5%87%BD%E6%95%B0) 的返回值
 - 伤害数值属性来源：若 ``伤害数值`` 设定为计算公式，则该项决定公式中所使用的属性的取值来源
 	- Causer：属性取值源自施法者
 	- Target：属性取值源自选取的技能目标，若选中多个目标，则分别取各目标的属性独立计算，依赖前置 **``目标选择``** 类型Task的选取结果
-- On Hurt Effect Asset：可配置 [受击资产](https://developer.gp.qq.com/wikieditor/#/catalog/20169)，启用后伤害目标具备受击效果
+- On Hurt Effect Asset：可配置 [受击资产](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Qa3L9Rpf)，启用后伤害目标具备受击效果
 
 ---
 
@@ -843,12 +843,12 @@ end
    - 选中目标：施法者会朝选中目标执行吸附行为。仅该情况下吸附功能同时支持方向吸附和位移吸附
    - 选中方向：施法者的朝向向选中方向进行吸附，依赖前置 **``选择方向``** 类型Task的选取结果
    - 选中点方向：施法者会向选中点方向进行，依赖前置 **``选点``** 类型Task的选取结果
-- 最大吸附角度：能够进行吸附的最大角度，当目标所在位置的方向与当前施法者朝向的角度小于该角度时，才会发生吸附，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108?autoJump=%E4%BD%BF%E7%94%A8%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9A)
-- 角度吸附速度：朝向吸附的追踪修正速度，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108?autoJump=%E4%BD%BF%E7%94%A8%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9A)
-- 最小吸附距离：能够进行吸附的最小距离范围，只有当目标所在位置和当前施法者位置的距离大于该距离时，才会发生吸附，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108?autoJump=%E4%BD%BF%E7%94%A8%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9A)
-- 最大吸附距离：能够进行吸附的最大距离范围，只有当目标所在位置和当前施法者位置的距离小于该距离时，才会发生吸附，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108?autoJump=%E4%BD%BF%E7%94%A8%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9A)
+- 最大吸附角度：能够进行吸附的最大角度，当目标所在位置的方向与当前施法者朝向的角度小于该角度时，才会发生吸附，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi&autoJump=%E4%BD%BF%E7%94%A8%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9A)
+- 角度吸附速度：朝向吸附的追踪修正速度，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi&autoJump=%E4%BD%BF%E7%94%A8%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9A)
+- 最小吸附距离：能够进行吸附的最小距离范围，只有当目标所在位置和当前施法者位置的距离大于该距离时，才会发生吸附，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi&autoJump=%E4%BD%BF%E7%94%A8%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9A)
+- 最大吸附距离：能够进行吸附的最大距离范围，只有当目标所在位置和当前施法者位置的距离小于该距离时，才会发生吸附，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi&autoJump=%E4%BD%BF%E7%94%A8%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9A)
 - Trace Distance Ignore ZAxis：吸附是否忽略Z轴
-- 位移吸附速度：位移吸附的追踪修正速度，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108?autoJump=%E4%BD%BF%E7%94%A8%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9A)
+- 位移吸附速度：位移吸附的追踪修正速度，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi&autoJump=%E4%BD%BF%E7%94%A8%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9A)
 
 > 属性绑定数据类型：float
 
@@ -864,7 +864,7 @@ end
 	- 技能施法者：对施法者自身造成伤害
 	- 全部技能Target：对技能选中的全部目标造成伤害，依赖前置 **``目标选择``** 类型Task的选取结果
 - 修改值：支持绑定常数、基于自定义属性的 [计算公式](https://developer.gp.qq.com/wikieditor/#/catalog/20135?autoJump=%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F) 或者 [指定Lua函数](https://developer.gp.qq.com/wikieditor/#/catalog/20135?autoJump=%E6%8C%87%E5%AE%9ALua%E5%87%BD%E6%95%B0) 的返回值
-- 恢复血量Tags：支持为治疗行为添加Tag，通过 [GameplayTag](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20102) 创建
+- 恢复血量Tags：支持为治疗行为添加Tag，通过 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 创建
 
 ---
 
@@ -885,7 +885,7 @@ end
    - PullSpeedType_Curve：速度曲线
 - 拉取速度：拉取的速度大小，支持属性绑定
 - 是否强制面向拉取目标位置：在拉取过程中，是否强制目标始终面向目标位置。
-- 阵营碰撞关系：勾选将忽略阵营对象的碰撞检测，释放者能够穿透该实体单位，阵营的说明可参考 [队伍与阵营](https://developer.gp.qq.com/wikieditor/#/catalog/20095)
+- 阵营碰撞关系：勾选将忽略阵营对象的碰撞检测，释放者能够穿透该实体单位，阵营的说明可参考 [队伍与阵营](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Q2VYiY6l)
 
 > 属性绑定数据类型：float
 
@@ -970,7 +970,7 @@ end
 
 ### 技能Task-播放预设动画
 
-为怪物共享动画功能预留的功能Task，通常怪物的攻击行为通过技能表示，为了优化怪物攻击时的表现性能，允许 [共享动画](https://developer.gp.qq.com/wikieditor/#/catalog/20251?autoJump=%E5%85%B1%E4%BA%AB%E5%8A%A8%E7%94%BB%E6%A8%A1%E5%BC%8F) 实例以进行合批提升性能，此Task即是播放指定的共享攻击动画。
+为怪物共享动画功能预留的功能Task，通常怪物的攻击行为通过技能表示，为了优化怪物攻击时的表现性能，允许 [共享动画](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=gIO86AU4&autoJump=%E5%85%B1%E4%BA%AB%E5%8A%A8%E7%94%BB%E6%A8%A1%E5%BC%8F) 实例以进行合批提升性能，此Task即是播放指定的共享攻击动画。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/smZ33image.png)
 
@@ -1135,7 +1135,7 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/hLl03image.png)
 
-- 法术场类：目标 [法术场](https://developer.gp.qq.com/wikieditor/#/catalog/20217) 蓝图类
+- 法术场类：目标 [法术场](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=qq3UwYWQ) 蓝图类
 - 生成目标：法术场生成位置的类型
 	- 技能施法者：以施法者为中心位置生成
  	- 全部技能Target：以技能选中的全部目标为中心生成，依赖前置 **``目标选择``** 类型Task的选取结果
@@ -1229,8 +1229,8 @@ end
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/TYdeWimage.png)
 
 - Operator Type：背包操作类型。支持添加、销毁、使用、丢弃。
-- 物品ID：进行操作的物品ID，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
-- 数量：进行操作的物品数量，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
+- 物品ID：进行操作的物品ID，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)
+- 数量：进行操作的物品数量，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)
 - 是否弹Tips：进行该背包操作时，是否会弹tips
 - 是否强制操作：进行该背包操作时，是否强制执行，可能会中断当前的常规背包操作行为
 
@@ -1244,7 +1244,7 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/5Jh4Bimage.png)
 
-- 技能槽位：[虚拟技能槽](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE)，将触发该槽位上绑定的技能
+- 技能槽位：[虚拟技能槽](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE)，将触发该槽位上绑定的技能
 
 ---
 
@@ -1269,11 +1269,11 @@ end
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/cnZMcimage.png)
 
 - 执行CD：是否执行技能CD
-- 每次/每秒消耗能量百分比：配置小于0的值时，依据 [技能基础属性](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) 中配置的CD/能量消耗执行；否则按覆盖的百分比进行消耗
+- 每次/每秒消耗能量百分比：配置小于0的值时，依据 [技能基础属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) 中配置的CD/能量消耗执行；否则按覆盖的百分比进行消耗
 - 能量类型CDTask执行期间持续消耗：仅对能量CD类型的技能有效，勾选后，在该Task执行期间持续进行消耗；否则为一次性消耗
 - 执行消耗：是否执行属性消耗和物品消耗
-- 消耗属性列表：如果不配置，则以 [技能基础属性](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) 中配置的消耗属性进行消耗；否则以覆盖的配置消耗
-- 消耗物品列表：如果不配置，则以 [技能基础属性](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) 中配置的消耗物品进行消耗；否则以覆盖的配置消耗
+- 消耗属性列表：如果不配置，则以 [技能基础属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) 中配置的消耗属性进行消耗；否则以覆盖的配置消耗
+- 消耗物品列表：如果不配置，则以 [技能基础属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) 中配置的消耗物品进行消耗；否则以覆盖的配置消耗
 
 ---
 
@@ -1298,13 +1298,13 @@ end
 - Melee Attack Track Type：近战攻击的检测方式
 	- 离线曲线：采用动画离线曲线导出，最终的检测盒轨迹是稳定不变的，默认推荐使用此方式
 	- 实时检测：近战攻击的检测轨迹基于绑定插槽（socket）的实时位置进行检测，因此检测盒的轨迹是动态变化的，适用于单阶段多种攻击类型动画的场景
-- 伤害类型Tag列表：当检测到当前攻击能够造成伤害时，为该伤害添加指定的 [GameplayTag标签](https://developer.gp.qq.com/wikieditor/#/catalog/20102)
+- 伤害类型Tag列表：当检测到当前攻击能够造成伤害时，为该伤害添加指定的 [GameplayTag标签](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH)
 - DamageValue：支持绑定常数、基于自定义属性的 [计算公式](https://developer.gp.qq.com/wikieditor/#/catalog/20135?autoJump=%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F) 或者 [指定Lua函数](https://developer.gp.qq.com/wikieditor/#/catalog/20135?autoJump=%E6%8C%87%E5%AE%9ALua%E5%87%BD%E6%95%B0) 的返回值
 - 伤害校验配置：用于作为反外挂作用的服务器校验相关配置项，如无特定需求，保持默认即可
 	- 是否进行敌我双方的障碍物检测：是否需要校验敌我双方不被障碍物阻挡才合法
 	- 每次伤害的距离校验偏移值：伤害检测判定到位置和实际位置的有效容差值
 	- 每次伤害的有效期：每次伤害实际发生和检测发生时间的有效容差值
-- 是否启用受击效果：是否启用受击效果，如果启用需要配置 [受击数据](https://developer.gp.qq.com/wikieditor/#/catalog/20169)，造成伤害时会对目标执行对应的受击效果
+- 是否启用受击效果：是否启用受击效果，如果启用需要配置 [受击数据](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Qa3L9Rpf)，造成伤害时会对目标执行对应的受击效果
 - 受击效果资产：受击效果的数据资产蓝图
 - 顿帧：近战攻击命中生效的顿帧效果，即命中后将使得自身的技能动画速率变慢持续一段时间以模拟命中的卡肉效果
 	- PlayRate：顿帧的动画播放速率
@@ -1320,9 +1320,9 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/fszjnimage.png)
 
-- 事件：要监听的 [事件](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20112)，多组事件之间为“或”的关系
-- 条件：如果监听事件触发，跳转还需满足的 [条件](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20111)，事件与条件之间为“且”的关系
-- StateName：跳转的目标 [阶段](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20091?autoJump=%E6%8A%80%E8%83%BD%E9%98%B6%E6%AE%B5%E9%85%8D%E7%BD%AE)
+- 事件：要监听的 [事件](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=YDs0hD-g)，多组事件之间为“或”的关系
+- 条件：如果监听事件触发，跳转还需满足的 [条件](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=dw1F7KKc)，事件与条件之间为“且”的关系
+- StateName：跳转的目标 [阶段](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%8A%80%E8%83%BD%E9%98%B6%E6%AE%B5%E9%85%8D%E7%BD%AE)
 
 <br>
 
@@ -1369,7 +1369,7 @@ end
 
 ### 技能Task-动态状态变化
 
-执行该Task时，将为施法者附加基于 [状态互斥](https://developer.gp.qq.com/wikieditor/#/catalog/20106) 规则的约束效果。
+执行该Task时，将为施法者附加基于 [状态互斥](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=NkytpdRS) 规则的约束效果。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/fL6Y8image.png)
 
@@ -1402,7 +1402,7 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/GJ5rUimage.png)
 
-- 输入映射：要缓存的输入指令，基于 [GameplayTag](https://developer.gp.qq.com/wikieditor/#/catalog/20099) 表示，例如 ``Input.Skill.Slot0`` 代表触发 ``Slot0`` 虚拟技能槽位的输入指令
+- 输入映射：要缓存的输入指令，基于 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=gu0cVbhR) 表示，例如 ``Input.Skill.Slot0`` 代表触发 ``Slot0`` 虚拟技能槽位的输入指令
 - 优先级：缓存指令的执行优先级，值越大优先级越高
 - 缓存有效时间：输入指令的有效缓存时间
 
@@ -1437,12 +1437,12 @@ end
 	- 客户端枪口位置：以主控端枪口的位置作为抛体发射起点
 - 偏移量：最终发射位置相对起点位置的偏移
 - 覆写抛体速度及重力系数：若勾选，可设置速度与重力系数的覆盖值；否则，使用抛体蓝图的属性值
-	- Speed：技能发射抛体的初速度，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
-	- 抛体重力系数：技能发射抛体的重力系数，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
+	- Speed：技能发射抛体的初速度，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)
+	- 抛体重力系数：技能发射抛体的重力系数，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)
 - 覆写抛体伤害：若勾选，可设置伤害相关的覆盖值；否则，使用抛体蓝图的属性值
 	- 伤害值：支持绑定常数、基于自定义属性的 [计算公式](https://developer.gp.qq.com/wikieditor/#/catalog/20135?autoJump=%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F) 或者 [指定Lua函数](https://developer.gp.qq.com/wikieditor/#/catalog/20135?autoJump=%E6%8C%87%E5%AE%9ALua%E5%87%BD%E6%95%B0) 的返回值
-	- 伤害类型Tag列表：支持为抛体命中伤害设置多种Tag，通过 [GameplayTag](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20102) 创建
-- 抛体数量：发射抛体的数量，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
+	- 伤害类型Tag列表：支持为抛体命中伤害设置多种Tag，通过 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 创建
+- 抛体数量：发射抛体的数量，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)
 - 移动方向发射角度限制：发射抛体允许随机偏移的最大角度
 - 生成位置随机范围：发射抛体的随机起点偏移角度
 
@@ -1468,9 +1468,9 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/HDRjKimage.png)
 
-- 抛体列表：通过 [属性求值器](https://developer.gp.qq.com/wikieditor/#/catalog/20108?autoJump=%E4%BD%BF%E7%94%A8%E5%B1%9E%E6%80%A7%E6%B1%82%E5%80%BC%E5%99%A8) 绑定的抛体蓝图变量，数据类型为 ``AUniversalProjectileCore``
+- 抛体列表：通过 [属性求值器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi&autoJump=%E4%BD%BF%E7%94%A8%E5%B1%9E%E6%80%A7%E6%B1%82%E5%80%BC%E5%99%A8) 绑定的抛体蓝图变量，数据类型为 ``AUniversalProjectileCore``
 	![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/QGb9Limage.png)
-- 修改器列表：等效于一组 [抛体修改器](https://developer.gp.qq.com/wikieditor/#/catalog/20165?autoJump=%E6%8A%9B%E4%BD%93%E4%BF%AE%E6%94%B9%E5%99%A8)
+- 修改器列表：等效于一组 [抛体修改器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=nkZpo6CT&autoJump=%E6%8A%9B%E4%BD%93%E4%BF%AE%E6%94%B9%E5%99%A8)
 
 <br>
 
@@ -1478,7 +1478,7 @@ end
 
 ### 技能Task-角色修改属性
 
-修改施法者自身的指定属性值，遵循 [属性修改器](https://developer.gp.qq.com/wikieditor/#/catalog/20153) 的计算方式。
+修改施法者自身的指定属性值，遵循 [属性修改器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=y24mx0rF) 的计算方式。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/PLwp8image.png)
 
@@ -1486,8 +1486,8 @@ end
 	- 技能施法者：施法者自身
 	- 全部技能Target：给技能选中的目标修改属性，依赖前置 **``目标选择``** 类型Task的选取结果
 - 修改方式：临时修改/永久修改/持续修改
-- 要修改的属性：预置血量、能量、信号等和平角色的基础属性，也支持绑定 [自定义属性](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
-- 修改符：基于属性修改器的 [修改运算符](https://developer.gp.qq.com/wikieditor/#/catalog/20153?autoJump=%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9%E7%AC%A6)
+- 要修改的属性：预置血量、能量、信号等和平角色的基础属性，也支持绑定 [自定义属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
+- 修改符：基于属性修改器的 [修改运算符](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=y24mx0rF&autoJump=%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9%E7%AC%A6)
 - 修改值：支持绑定常数、基于自定义属性的 [计算公式](https://developer.gp.qq.com/wikieditor/#/catalog/20135?autoJump=%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F) 或者 [指定Lua函数](https://developer.gp.qq.com/wikieditor/#/catalog/20135?autoJump=%E6%8C%87%E5%AE%9ALua%E5%87%BD%E6%95%B0) 的返回值
 - 修改值属性来源：若 ``修改值`` 设定为计算公式，则该项决定公式中所使用的属性的取值来源
 	- Causer：属性取值源自施法者
@@ -1500,13 +1500,13 @@ end
 
 ### 技能Task-下一次<伤害>属性修改
 
-基于 [属性修改器](https://developer.gp.qq.com/wikieditor/#/catalog/20153) 的属性修改行为，临时修改施法者自身的指定属性值，当下一次受到任意伤害时（触发 [伤害公式](https://developer.gp.qq.com/wikieditor/#/catalog/20099)），自动移除相关修改。
+基于 [属性修改器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=y24mx0rF) 的属性修改行为，临时修改施法者自身的指定属性值，当下一次受到任意伤害时（触发 [伤害公式](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=gu0cVbhR)），自动移除相关修改。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/VAgKIimage.png)
 
 - 修改方式：临时修改/永久修改/持续修改
-- 要修改的属性：支持和平角色与枪械的基础属性，也支持绑定 [自定义属性](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
-- 修改符：基于属性修改器的 [修改运算符](https://developer.gp.qq.com/wikieditor/#/catalog/20153?autoJump=%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9%E7%AC%A6)
+- 要修改的属性：支持和平角色与枪械的基础属性，也支持绑定 [自定义属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
+- 修改符：基于属性修改器的 [修改运算符](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=y24mx0rF&autoJump=%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9%E7%AC%A6)
 - 修改值：支持绑定常数、基于自定义属性的 [计算公式](https://developer.gp.qq.com/wikieditor/#/catalog/20135?autoJump=%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F) 或者 [指定Lua函数](https://developer.gp.qq.com/wikieditor/#/catalog/20135?autoJump=%E6%8C%87%E5%AE%9ALua%E5%87%BD%E6%95%B0) 的返回值
 - 修改值属性来源：若 ``修改值`` 设定为计算公式，则该项决定公式中所使用的属性的取值来源
 	- Causer：属性取值源自施法者
@@ -1521,13 +1521,13 @@ end
 
 ### 技能Task-下一次<治疗>属性修改
 
-基于 [属性修改器](https://developer.gp.qq.com/wikieditor/#/catalog/20153) 的属性修改行为，临时修改施法者自身的指定属性值，当下一次受到治疗时（触发 [治疗公式]()），自动移除相关修改。
+基于 [属性修改器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=y24mx0rF) 的属性修改行为，临时修改施法者自身的指定属性值，当下一次受到治疗时（触发 [治疗公式]()），自动移除相关修改。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/0NhBrimage.png)
 
 - 修改方式：临时修改/永久修改/持续修改
-- 要修改的属性：支持和平角色与枪械的基础属性，也支持绑定 [自定义属性](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
-- 修改符：基于属性修改器的 [修改运算符](https://developer.gp.qq.com/wikieditor/#/catalog/20153?autoJump=%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9%E7%AC%A6)
+- 要修改的属性：支持和平角色与枪械的基础属性，也支持绑定 [自定义属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
+- 修改符：基于属性修改器的 [修改运算符](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=y24mx0rF&autoJump=%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9%E7%AC%A6)
 - 修改值：支持绑定常数、基于自定义属性的 [计算公式](https://developer.gp.qq.com/wikieditor/#/catalog/20135?autoJump=%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F) 或者 [指定Lua函数](https://developer.gp.qq.com/wikieditor/#/catalog/20135?autoJump=%E6%8C%87%E5%AE%9ALua%E5%87%BD%E6%95%B0) 的返回值
 - 修改值属性来源：若 ``修改值`` 设定为计算公式，则该项决定公式中所使用的属性的取值来源
 	- Causer：属性取值源自施法者
@@ -1542,7 +1542,7 @@ end
 
 ### 技能Task-武器属性修改
 
-修改施法者自身武器的指定属性值，遵循 [属性修改器](https://developer.gp.qq.com/wikieditor/#/catalog/20153) 的计算方式。
+修改施法者自身武器的指定属性值，遵循 [属性修改器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=y24mx0rF) 的计算方式。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/SmFqLimage.png)
 
@@ -1550,8 +1550,8 @@ end
 	- 技能施法者：施法者自身
 	- 全部技能Target：给技能选中的目标修改属性，依赖前置 **``目标选择``** 类型Task的选取结果
 - 修改方式：临时修改/永久修改/持续修改
-- 要修改的属性：预置和平枪械的基础属性，也支持绑定 [自定义属性](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
-- 修改符：基于属性修改器的 [修改运算符](https://developer.gp.qq.com/wikieditor/#/catalog/20153?autoJump=%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9%E7%AC%A6)
+- 要修改的属性：预置和平枪械的基础属性，也支持绑定 [自定义属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
+- 修改符：基于属性修改器的 [修改运算符](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=y24mx0rF&autoJump=%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9%E7%AC%A6)
 - 修改值：支持绑定常数、基于自定义属性的 [计算公式](https://developer.gp.qq.com/wikieditor/#/catalog/20135?autoJump=%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F) 或者 [指定Lua函数](https://developer.gp.qq.com/wikieditor/#/catalog/20135?autoJump=%E6%8C%87%E5%AE%9ALua%E5%87%BD%E6%95%B0) 的返回值
 - 修改值属性来源：若 ``修改值`` 设定为计算公式，则该项决定公式中所使用的属性的取值来源
 	- Causer：属性取值源自施法者
@@ -1595,7 +1595,7 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/pbYgIimage.png)
 
-- UISlot Name：按 [和平控件锚点](https://developer.gp.qq.com/wikieditor/#/catalog/20097) 挂载UI的位置
+- UISlot Name：按 [和平控件锚点](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Z1hBqDCI) 挂载UI的位置
 - ZOrder：渲染所选控件时的顺序优先级，值越大，渲染越晚，最晚的显示在顶部；反之亦然
 - Anchor Data：控件的 [布局数据](https://dev.epicgames.com/documentation/zh-cn/unreal-engine/umg-slots-in-unreal-engine?application_version=5.5)
 - UI类：指定的控件蓝图
@@ -1615,7 +1615,7 @@ end
 - Duration：进度条的持续总时长
 - 描述文本：当选择 ``倒计时样式`` 时生效，为倒计时圈中心的描述文本
 - UISlot：该进度条UI的挂点位置配置
-	- UISlot Name：按 [和平控件锚点](https://developer.gp.qq.com/wikieditor/#/catalog/20097) 挂载UI的位置
+	- UISlot Name：按 [和平控件锚点](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Z1hBqDCI) 挂载UI的位置
 	- ZOrder：渲染所选控件时的顺序优先级，值越大，渲染越晚，最晚的显示在顶部；反之亦然
 	- Anchor Data：控件的 [布局数据](https://dev.epicgames.com/documentation/zh-cn/unreal-engine/umg-slots-in-unreal-engine?application_version=5.5)
 - CustomUserWidgetPath：在显示对应的UI实例时，会使用该控件蓝图进行创建（当启用自定义样式时，需要额外配置一个UI控件蓝图）
@@ -1655,8 +1655,8 @@ end
    		- 选取器半径：圆形半径
  	- 骨骼Mesh/静态Mesh：使用选取的骨骼/静态Mesh为区域选择形状
    		- MeshScale：Mesh的缩放比例
-- Overlap检测实体类型：指定允许重叠检测的 [实体类型](https://developer.gp.qq.com/wikieditor/#/catalog/20298)，当不忽略重叠时生效
-- 碰撞检测Actor过滤器：支持 [过滤器](https://developer.gp.qq.com/wikieditor/#/catalog/20218) 的方式筛选重叠阻挡目标，当不忽略重叠时生效
+- Overlap检测实体类型：指定允许重叠检测的 [实体类型](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=h5u0-aDY)，当不忽略重叠时生效
+- 碰撞检测Actor过滤器：支持 [过滤器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=g7gKrHOs) 的方式筛选重叠阻挡目标，当不忽略重叠时生效
 - 最大坡度限制：若目标位置坡度超过设定值，则点位选取无效
 
 ---
@@ -1678,14 +1678,14 @@ end
 - 最小选取数量：随机选取点位数量的最小值
 - 最大选取数量：随机选取点位数量的最大值
 - 是否忽略重叠：若选取的点位位于阻挡物上，则被视为非法点，无法选择，若启用忽略重叠选项后，系统将忽略重叠类型的碰撞；否则，指定过滤器的方式决定可阻挡目标
-- 碰撞检测Actor过滤器：支持 [过滤器](https://developer.gp.qq.com/wikieditor/#/catalog/20218) 的方式筛选重叠阻挡目标，当不忽略重叠时生效
+- 碰撞检测Actor过滤器：支持 [过滤器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=g7gKrHOs) 的方式筛选重叠阻挡目标，当不忽略重叠时生效
 - 是否显示选取范围：仅PIE生效。是否需要在PIE下看到选取范围的指示器框
 - 胶囊半径：用于选点时检测碰撞判定的范围，同时也是圆形指示器的绘制半径
 - 是否检查和中心阻挡性：若启用，选取的点位必须与中心点之间无遮挡，才会被视为合法点
 - 目标点平面的最大检测高度：选到点所处平面的最大坡度限制，超出则被认为是非法点
 - 目标点平面的最大倾斜角度：该命中点位所处位置的最大坡度限制，超过该坡度时，选取点位非法
 - 是否自动吸附至Navmesh：选点将根据配置的目标点位吸附至最近的NavMesh表面。若目标点位超出预设吸附半径范围，系统将保持原始坐标位置，但仍可正常完成点位选取操作。
->若勾选，则必须配置 [导航网格](https://developer.gp.qq.com/wikieditor/#/catalog/177?autoJump=%E5%AE%9E%E6%88%98)，否则将无法进行选点
+>若勾选，则必须配置 [导航网格](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=HlxMXwqs&autoJump=%E5%AE%9E%E6%88%98)，否则将无法进行选点
 - 吸附Navmesh半径：吸附Navmesh的检查半径
 - 选取最大尝试次数：选点进行尝试选取的最大尝试次数
 - 颜色：该选点指示器的颜色，指示器将绘制在最终选出的点位上，例如若选出5个点位，则会在每个点位上分别绘制一个圆形指示器
@@ -1706,12 +1706,12 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/a2BKdimage.png)
 
-- JoyStickRangeRadius：摇杆选取区域大小，选到的点位和施法者的最大距离，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
+- JoyStickRangeRadius：摇杆选取区域大小，选到的点位和施法者的最大距离，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)
 - Rotate to Joystick：在选取过程中，角色的朝向是否始终朝向摇杆所选位置
 - IgnoreOverlap：若选取的点位位于阻挡物上，则被视为非法点，无法选择，若启用忽略重叠选项后，系统将忽略重叠类型的碰撞；否则，指定过滤器的方式决定可阻挡目标
 - Target Area Type：绘制的指示器区域类型
 	- 圆形区域：默认以圆形绘制
-   		- Radius：选取目标位置半径区域大小。对应摇杆选取位置特效的半径大小，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
+   		- Radius：选取目标位置半径区域大小。对应摇杆选取位置特效的半径大小，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)
  	- 骨骼Mesh/静态Mesh：使用选取的骨骼/静态Mesh为区域选择形状
    		- MeshScale：Mesh的缩放比例
 - MaxSlopeAngle：若目标位置坡度超过设定值，则点位选取无效
@@ -1780,12 +1780,12 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/cjw4Rimage.png)
 
-- JoyStickRangeRadius：摇杆选取区域大小，选到的点位和施法者的最大距离，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
+- JoyStickRangeRadius：摇杆选取区域大小，选到的点位和施法者的最大距离，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)
 - DirectionType：指示器样式
 	- 箭头方向：以箭头形状绘制选取区域
-		- Width：箭头指示器的宽度，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
+		- Width：箭头指示器的宽度，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)
 	- 扇形方向：以扇形形状绘制选取区域
-		- Half Angle：扇形指示器的半角角度，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
+		- Half Angle：扇形指示器的半角角度，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)
 - Rotate to Joystick：在选取过程中，角色的朝向是否始终朝向摇杆所选位置
 
 <br>
@@ -1809,7 +1809,7 @@ end
 	- 距离排序：根据目标与施法者之间的距离排序，距离越近的目标越靠前
 	- 角度排序：根据目标与施法者之间的角度排序，角度越小的目标越靠前
 	- 自定义：可以额外配一个绑定的LuaFunction根据LuaFunction来定义优先级
-- 阵营过滤器：选中指定阵营关系的目标，支持多选，阵营的概念可参考 [队伍与阵营](https://developer.gp.qq.com/wikieditor/#/catalog/20095)
+- 阵营过滤器：选中指定阵营关系的目标，支持多选，阵营的概念可参考 [队伍与阵营](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Q2VYiY6l)
 	- 相同：友方
 	- 敌人：敌方
 	- 中立：中立
@@ -1851,7 +1851,7 @@ end
 	- 距离排序：根据目标与施法者之间的距离排序，距离越近的目标越靠前
 	- 角度排序：根据目标与施法者之间的角度排序，角度越小的目标越靠前
 	- 自定义：可以额外配一个绑定的LuaFunction根据LuaFunction来定义优先级
-- 阵营过滤器：选中指定阵营关系的目标，支持多选，阵营的概念可参考 [队伍与阵营](https://developer.gp.qq.com/wikieditor/#/catalog/20095)
+- 阵营过滤器：选中指定阵营关系的目标，支持多选，阵营的概念可参考 [队伍与阵营](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Q2VYiY6l)
 	- 相同：友方
 	- 敌人：敌方
 	- 中立：中立
@@ -1892,7 +1892,7 @@ end
 	- 距离排序：根据目标与施法者之间的距离排序，距离越近的目标越靠前
 	- 角度排序：根据目标与施法者之间的角度排序，角度越小的目标越靠前
 	- 自定义：可以额外配一个绑定的LuaFunction根据LuaFunction来定义优先级
-- 阵营过滤器：选中指定阵营关系的目标，支持多选，阵营的概念可参考 [队伍与阵营](https://developer.gp.qq.com/wikieditor/#/catalog/20095)
+- 阵营过滤器：选中指定阵营关系的目标，支持多选，阵营的概念可参考 [队伍与阵营](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Q2VYiY6l)
 	- 相同：友方
 	- 敌人：敌方
 	- 中立：中立
@@ -1928,9 +1928,9 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/yPYxgimage.png)
 
-- 操纵杆范围半径：摇杆选取区域大小，选到的点位和施法者的最大距离，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
-- 范围半径：选取目标位置半径区域大小，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
-- 范围高度：选取到的游戏实例和最终落点的最大高度差，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
+- 操纵杆范围半径：摇杆选取区域大小，选到的点位和施法者的最大距离，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)
+- 范围半径：选取目标位置半径区域大小，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)
+- 范围高度：选取到的游戏实例和最终落点的最大高度差，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)
 - 旋转至操纵杆：在选取过程中，角色的朝向是否始终朝向摇杆所选位置
 - 最大数量：至多能选取到多少个目标，-1代表无限制
 - 选取目标排列类型:
@@ -1955,7 +1955,7 @@ function MySkill:MyCustomFunction(FirstGoal, SecondGoal)
     return false --如果小于则让第二个目标优先被选中
 end
 ```
-- 阵营过滤器：选中指定阵营关系的目标，支持多选，阵营的概念可参考 [队伍与阵营](https://developer.gp.qq.com/wikieditor/#/catalog/20095)
+- 阵营过滤器：选中指定阵营关系的目标，支持多选，阵营的概念可参考 [队伍与阵营](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Q2VYiY6l)
 	- 相同：友方
 	- 敌人：敌方
 	- 中立：中立
@@ -1982,7 +1982,7 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/wrSTrimage.png)
 
-- 检测距离：射线检测的最大有效距离，支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
+- 检测距离：射线检测的最大有效距离，支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)
 - 扫描球半径：检测射线的体积半径大小，射线路径上在此半径范围内的所有物体均会被视为命中
 - 最大数量：至多能选取到多少个目标，-1代表无限制
 - 选取目标排列类型:
@@ -2008,7 +2008,7 @@ function MySkill:MyCustomFunction(FirstGoal, SecondGoal)
 end
 ```
 
-- 阵营过滤：选中指定阵营关系的目标，支持多选，阵营的概念可参考 [队伍与阵营](https://developer.gp.qq.com/wikieditor/#/catalog/20095)
+- 阵营过滤：选中指定阵营关系的目标，支持多选，阵营的概念可参考 [队伍与阵营](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Q2VYiY6l)
 	- Same：友方
 	- Enemy：敌方
 	- Neutral：中立
@@ -2041,7 +2041,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > 技能编辑器2.0 > 技能抛体
 
-> 文档ID: 20075 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20075)
+> 文档ID: 20075 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=WixkIgLC)
 
 > 更新: 2025-09-04 20:32:19
 
@@ -2049,11 +2049,11 @@ end
 
 # 技能抛体
 
-> 此抛体基类为旧版本过渡使用，建议统一切换至 [通用抛体](https://developer.gp.qq.com/wikieditor/#/catalog/20165) 实现功能
+> 此抛体基类为旧版本过渡使用，建议统一切换至 [通用抛体](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=nkZpo6CT) 实现功能
 
-抛体是指通过物理模拟的方式实现带有飞行轨迹的动态对象，通常应用于投掷物、远程攻击等场景，例如手雷、远程导弹甚至法术飞弹等都可以通过抛体的形式来表现。[技能编辑器](https://developer.gp.qq.com/wikieditor/#/catalog/20091) 内置了抛体模块，允许开发者通过蓝图的方式配置抛体并经由 ``发射抛体`` 节点挂载至任意技能上。
+抛体是指通过物理模拟的方式实现带有飞行轨迹的动态对象，通常应用于投掷物、远程攻击等场景，例如手雷、远程导弹甚至法术飞弹等都可以通过抛体的形式来表现。[技能编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y) 内置了抛体模块，允许开发者通过蓝图的方式配置抛体并经由 ``发射抛体`` 节点挂载至任意技能上。
 
-> 当前抛体只适用于技能中，通过 [技能Task-发射抛体](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E5%8F%91%E5%B0%84%E6%8A%9B%E4%BD%93) 关联引用，暂不支持作为 [投掷物物资](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/188) 的抛体类使用
+> 当前抛体只适用于技能中，通过 [技能Task-发射抛体](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E5%8F%91%E5%B0%84%E6%8A%9B%E4%BD%93) 关联引用，暂不支持作为 [投掷物物资](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=IxgHRFqe) 的抛体类使用
 
 ![ezgif.com-video-to-gif-converter (1).gif](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/vwVBPezgif.com-video-to-gif-converter%20(1).gif)
 
@@ -2079,7 +2079,7 @@ end
 
 ## 抛体蓝图结构
 
-打开编辑器菜单栏中的 [技能编辑器](https://developer.gp.qq.com/wikieditor/#/catalog/20091)，选中 ``抛体`` 类目，【Template】窗口显示预设的抛体模板，以任意模板创建的抛体蓝图将自动添加到 ```Asset/Blueprint/Prefabs/Projectiles``` 目录下。
+打开编辑器菜单栏中的 [技能编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y)，选中 ``抛体`` 类目，【Template】窗口显示预设的抛体模板，以任意模板创建的抛体蓝图将自动添加到 ```Asset/Blueprint/Prefabs/Projectiles``` 目录下。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/CBRoMimage.png)
 
@@ -2123,15 +2123,15 @@ end
 - 启用特效缩放：是否启用击中特效的缩放设置
 	- 击中特效大小缩放：特效的缩放系数
 - 击中特效跟随击中物体：命中特效跟随击中目标，且跟随目标根节点；如果命中对象为Pawn，则跟随位置为骨盆
-- 击中添加的BuffClass：可为命中对象添加指定 [Buff](https://developer.gp.qq.com/wikieditor/#/catalog/20087)
+- 击中添加的BuffClass：可为命中对象添加指定 [Buff](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0Y0pURs-)
 - 击中生成的Actor：可为命中点生成指定的Actor类对象，生成位置为命中点的贴地位置
-- 碰撞忽略的阵营：抛体不会与指定 [阵营](https://developer.gp.qq.com/wikieditor/#/catalog/20095?autoJump=%E9%98%B5%E8%90%A5%E7%B3%BB%E7%BB%9F) 的对象发生碰撞，默认忽略Same阵营
+- 碰撞忽略的阵营：抛体不会与指定 [阵营](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Q2VYiY6l&autoJump=%E9%98%B5%E8%90%A5%E7%B3%BB%E7%BB%9F) 的对象发生碰撞，默认忽略Same阵营
 
 ---
 
 ### 目标追踪
 
-``Track Config`` 配置抛体追踪目标的方式，当启用追踪后，抛体将以指定的速度按朝向直线追踪目标，目标受 [技能Task-选择目标](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E9%80%89%E6%8B%A9%E7%9B%AE%E6%A0%87) 配置效果影响。
+``Track Config`` 配置抛体追踪目标的方式，当启用追踪后，抛体将以指定的速度按朝向直线追踪目标，目标受 [技能Task-选择目标](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E9%80%89%E6%8B%A9%E7%9B%AE%E6%A0%87) 配置效果影响。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/tDKwcimage.png)
 
@@ -2153,10 +2153,10 @@ end
 	- 弹射后开始计时延迟爆炸：抛体命中触发弹射后开始计时并延迟执行爆炸
 	- 命中Pawn后开始计时延迟爆炸：抛体命中Pawn后开始计时并延迟执行爆炸
 - 爆炸延迟：爆炸的延迟时间，选择带有“计时延迟”类型的触发方式时才生效
-- 爆炸伤害：爆炸造成的伤害，常数数值或者基于 [自定义属性](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7) 的公式化配置
-- 爆炸添加的BuffClass：为爆炸范围内影响的目标添加指定 [Buff](https://developer.gp.qq.com/wikieditor/#/catalog/20087)
+- 爆炸伤害：爆炸造成的伤害，常数数值或者基于 [自定义属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7) 的公式化配置
+- 爆炸添加的BuffClass：为爆炸范围内影响的目标添加指定 [Buff](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0Y0pURs-)
 - 爆炸半径：爆炸的影响范围，涉及伤害计算
-- 爆炸筛选器：指定的对象将不受爆炸伤害影响，可以指定类对象，也可以按 [阵营](https://developer.gp.qq.com/wikieditor/#/catalog/20095?autoJump=%E9%98%B5%E8%90%A5%E7%B3%BB%E7%BB%9F) /队友身份过滤
+- 爆炸筛选器：指定的对象将不受爆炸伤害影响，可以指定类对象，也可以按 [阵营](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Q2VYiY6l&autoJump=%E9%98%B5%E8%90%A5%E7%B3%BB%E7%BB%9F) /队友身份过滤
 - 爆炸特效：发生爆炸时的效果
 - 启用自定义爆炸特效缩放：是否启用爆炸特效的缩放设置
 	- 爆炸特效缩放：特效的缩放系数
@@ -2224,7 +2224,7 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/MvAjLimage.png)
 
-将 ```NewSkill``` [技能赋予角色](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E9%80%9A%E8%BF%87%E8%93%9D%E5%9B%BE%E9%85%8D%E7%BD%AE%E6%8A%80%E8%83%BD)，启动Debug调试验证技能释放效果。
+将 ```NewSkill``` [技能赋予角色](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E9%80%9A%E8%BF%87%E8%93%9D%E5%9B%BE%E9%85%8D%E7%BD%AE%E6%8A%80%E8%83%BD)，启动Debug调试验证技能释放效果。
 
 ![ezgif.com-video-to-gif-converter (2).gif](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/2FXSiezgif.com-video-to-gif-converter%20(2).gif)
 
@@ -2234,7 +2234,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > 技能编辑器2.0 > 技能状态图
 
-> 文档ID: 20152 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20152)
+> 文档ID: 20152 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=ZbVeL7AG)
 
 > 新增: 2026-07-07 14:54:23
 
@@ -2279,8 +2279,8 @@ End阶段是技能状态机的终止节点，当执行至该节点时，整个�
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/m2hIwimage.png)
 
 - Event Name：节点名称
-- 事件：需要监听的 [技能事件](https://developer.gp.qq.com/wikieditor/#/catalog/20112)
-- 条件：如果触发监听事件，跳转还需满足的 [技能条件](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20111)，事件与条件之间为“且”的关系
+- 事件：需要监听的 [技能事件](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=YDs0hD-g)
+- 条件：如果触发监听事件，跳转还需满足的 [技能条件](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=dw1F7KKc)，事件与条件之间为“且”的关系
 - 技能启动前初始化：
     - 勾选：获得技能后即开始监听事件，若事件触发且条件满足，则执行后续跳转；仅可连接 ``动作列表节点``
     - 不勾选：激活技能后即开始监听事件，若事件触发且条件满足，则执行后续跳转；可连接 ``动作列表节点`` 和 ``技能阶段节点``
@@ -2296,7 +2296,7 @@ End阶段是技能状态机的终止节点，当执行至该节点时，整个�
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/vZF5cimage.png)
 
 - 动作组名称：节点名称
-- 动作列表：可配置多个 [技能Task](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20094)，在节点激活时依次触发
+- 动作列表：可配置多个 [技能Task](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7)，在节点激活时依次触发
 
 >该节点不可作为技能的End节点使用。如需在某一阶段后立即执行其动作，则前一节点必须在跳转至该动作节点的同时，额外连接一个后续节点，以便动作执行完毕后能反激活进行跳转，否则将导致技能流程阻塞。
 
@@ -2325,7 +2325,7 @@ End阶段是技能状态机的终止节点，当执行至该节点时，整个�
 
 ## 创建状态图
 
-技能状态图是基于技能逻辑阶段的可视化状态机，访问技能状态图需先在技能编辑器中创建技能，参考[技能编辑器](https://developer.gp.qq.com/wikieditor/#/catalog/20091)创建冲刺技能，在技能预览窗口中选中目标技能后，点击``Skill Flow Graph``选项即可进入技能状态图编辑界面。
+技能状态图是基于技能逻辑阶段的可视化状态机，访问技能状态图需先在技能编辑器中创建技能，参考[技能编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y)创建冲刺技能，在技能预览窗口中选中目标技能后，点击``Skill Flow Graph``选项即可进入技能状态图编辑界面。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/QJj3Uimage.png)
 
@@ -2389,9 +2389,9 @@ Entry节点仅支持按条件跳转，当技能被激活且满足指定的条件
 - 优先级：跳转的优先级，若同一帧内某阶段存在多个满足条件的跳转路径，则优先执行优先级最高的跳转
 - 事件型跳转：当指定的事件触发时可执行跳转操作，多个事件之间为“或”的逻辑关系
 	- Event Name：跳转名称
-	- 事件：指定的 [技能Event](https://developer.gp.qq.com/wikieditor/#/catalog/20112?autoJump=%E9%80%9A%E7%94%A8%E7%B1%BB%E4%BA%8B%E4%BB%B6) 事件类型
-	- 条件：可为事件触发添加额外的约束条件，指定 [技能Condition](https://developer.gp.qq.com/wikieditor/#/catalog/20111?autoJump=%E6%A6%82%E7%8E%87%E6%AF%94%E8%BE%83%E5%99%A8) 条件组件
-- 条件型跳转：定义 [技能Condition](https://developer.gp.qq.com/wikieditor/#/catalog/20111?autoJump=%E6%A6%82%E7%8E%87%E6%AF%94%E8%BE%83%E5%99%A8) 条件规则，系统将在每帧Tick时持续监测该条件，一旦条件符合则触发跳转行为，多个条件之间为“或”的逻辑关系
+	- 事件：指定的 [技能Event](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=YDs0hD-g&autoJump=%E9%80%9A%E7%94%A8%E7%B1%BB%E4%BA%8B%E4%BB%B6) 事件类型
+	- 条件：可为事件触发添加额外的约束条件，指定 [技能Condition](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=dw1F7KKc&autoJump=%E6%A6%82%E7%8E%87%E6%AF%94%E8%BE%83%E5%99%A8) 条件组件
+- 条件型跳转：定义 [技能Condition](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=dw1F7KKc&autoJump=%E6%A6%82%E7%8E%87%E6%AF%94%E8%BE%83%E5%99%A8) 条件规则，系统将在每帧Tick时持续监测该条件，一旦条件符合则触发跳转行为，多个条件之间为“或”的逻辑关系
 
 
 <br>
@@ -2400,7 +2400,7 @@ Entry节点仅支持按条件跳转，当技能被激活且满足指定的条件
 
 蓄力机制通过多条件筛选与优先级判定，实现精准的跳转控制。我们将以技能践踏模板践为例，讲解践踏技能阶段实现的总体思路。
 
-继承蓄力创建一个技能,创建技能具体可以参考[技能编辑器](https://developer.gp.qq.com/wikieditor/#/catalog/20091)点击在技能预览窗口中选中目标技能后，点击``Skill Flow Graph``选项进入状态图页面：
+继承蓄力创建一个技能,创建技能具体可以参考[技能编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y)点击在技能预览窗口中选中目标技能后，点击``Skill Flow Graph``选项进入状态图页面：
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/kotkbimage.png)
 
@@ -2458,11 +2458,11 @@ Entry跳转至下一阶段时，默认由技能激活事件触发，因此无需
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/HTzRrimage.png)
 
-选中新建的状态节点，通过添加Task来实现该技能阶段的核心功能逻辑，在空技能模板中没有提供角色技能轨道，需要我们手动创建，Task不能放在动画轨道上，否则将不生效，具体创建方法[技能编辑器](https://developer.gp.qq.com/wikieditor/#/catalog/20091)。
+选中新建的状态节点，通过添加Task来实现该技能阶段的核心功能逻辑，在空技能模板中没有提供角色技能轨道，需要我们手动创建，Task不能放在动画轨道上，否则将不生效，具体创建方法[技能编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y)。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/WUzxoimage.png)
 
-首先实现基础光环效果，创建生成粒子Task并绑定预设粒子模板，完成第一个光环效果的实现，Task可参考[技能Task查询手册](https://developer.gp.qq.com/wikieditor/#/catalog/20094)
+首先实现基础光环效果，创建生成粒子Task并绑定预设粒子模板，完成第一个光环效果的实现，Task可参考[技能Task查询手册](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7)
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/zeQP8image.png)
 
@@ -2498,7 +2498,7 @@ Entry跳转至下一阶段时，默认由技能激活事件触发，因此无需
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > 技能编辑器2.0 > 技能组件
 
-> 文档ID: 20441 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20441)
+> 文档ID: 20441 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=5FHL_yZ5)
 
 > 新增: 2026-08-14 17:28:27
 
@@ -2524,8 +2524,8 @@ Entry跳转至下一阶段时，默认由技能激活事件触发，因此无需
 	![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/QKQ8Oimage.png)
 	![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/MD5o3image.png)
 	> 该表里可以配置一组状态互斥的规则，可以看作一组状态互斥的集合，所有配置的状态互斥规则均会生效
-- Tag RelationShip Override：可以在组件上添加的任意多项的状态互斥的覆盖规则，覆盖状态互斥预设表里的 [状态互斥](https://developer.gp.qq.com/wikieditor/#/catalog/20106) 规则，可以视为是对状态互斥规则表的一种补充。比如：状态互斥预设表里定义的状态A可以打断状态ABC；而这里配置了状态A可以打断状态AB，则最终在角色上生效的互斥规则以这里为准（状态A打断状态AB）
-- InputActionSkillSlotPairs：技能和 [输入Action的映射表](https://developer.gp.qq.com/wikieditor/#/catalog/20290?autoJump=%E8%BE%93%E5%85%A5%E6%98%A0%E5%B0%84%E8%A1%A8:~:text=%E8%BE%93%E5%85%A5%E6%A6%82%E8%BF%B0-,%E8%BE%93%E5%85%A5%E6%98%A0%E5%B0%84%E8%A1%A8,-%E9%85%8D%E7%BD%AE%E8%BE%93%E5%85%A5%E6%98%A0%E5%B0%84)
+- Tag RelationShip Override：可以在组件上添加的任意多项的状态互斥的覆盖规则，覆盖状态互斥预设表里的 [状态互斥](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=NkytpdRS) 规则，可以视为是对状态互斥规则表的一种补充。比如：状态互斥预设表里定义的状态A可以打断状态ABC；而这里配置了状态A可以打断状态AB，则最终在角色上生效的互斥规则以这里为准（状态A打断状态AB）
+- InputActionSkillSlotPairs：技能和 [输入Action的映射表](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Axqr6hIo&autoJump=%E8%BE%93%E5%85%A5%E6%98%A0%E5%B0%84%E8%A1%A8)
 	- Input Action：技能激活事件对应的Input Tag，该Input Tag的输入被激活时，触发该技能slot上技能的激活事件
 	- Input Cancel：技能取消事件对应的Input Tag，该Input Tag的输入被激活时，触发该技能slot上技能的取消事件
 	- Input Direction X：技能右摇杆X轴的输入值对应的Input Tag，该技能slot上技能使用右摇杆进行选取的时候，摇杆的X轴输入值来源于该Input Tag的值
@@ -2538,7 +2538,7 @@ Entry跳转至下一阶段时，默认由技能激活事件触发，因此无需
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > 技能编辑器2.0 > 技能编辑器
 
-> 文档ID: 20091 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20091)
+> 文档ID: 20091 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y)
 
 > 新增: 2026-07-17 12:32:50 | 更新: 2026-09-02 13:56:44
 
@@ -2632,11 +2632,11 @@ Entry跳转至下一阶段时，默认由技能激活事件触发，因此无需
 
 **D. 蓝图变量**
 
-可以在蓝图上创建变量，供脚本和属性绑定使用，具体可参考 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 部分内容。
+可以在蓝图上创建变量，供脚本和属性绑定使用，具体可参考 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 部分内容。
 
 **E. 状态列表**
 
-技能配置的所有阶段，每个阶段可以创建对应的序列播放器，搭配 [技能状态图](https://developer.gp.qq.com/wikieditor/#/catalog/20152) 使用，同时具备阶段预览功能。
+技能配置的所有阶段，每个阶段可以创建对应的序列播放器，搭配 [技能状态图](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=ZbVeL7AG) 使用，同时具备阶段预览功能。
 
 **F. 技能预览窗口**
 
@@ -2652,7 +2652,7 @@ Entry跳转至下一阶段时，默认由技能激活事件触发，因此无需
 
 **I. Task参数面板**
 
-编辑器提供了丰富的技能Task供开发者使用，每一类Task具有相应的属性配置项，具体可参考 [Task查询手册](https://developer.gp.qq.com/wikieditor/#/catalog/20094)。
+编辑器提供了丰富的技能Task供开发者使用，每一类Task具有相应的属性配置项，具体可参考 [Task查询手册](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7)。
 
 **J. 轨道参数面板**
 
@@ -2660,13 +2660,13 @@ Entry跳转至下一阶段时，默认由技能激活事件触发，因此无需
 
 **K. 序列播放器**
 
-通过时间轴的方式编排此阶段要执行的一系列动作，如 [生成特效](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E7%94%9F%E6%88%90%E7%89%B9%E6%95%88)，[生成actor](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E7%94%9F%E6%88%90Actor) 等等，时间轴的长度代表当前阶段持续总时长。
+通过时间轴的方式编排此阶段要执行的一系列动作，如 [生成特效](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E7%94%9F%E6%88%90%E7%89%B9%E6%95%88)，[生成actor](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E7%94%9F%E6%88%90Actor) 等等，时间轴的长度代表当前阶段持续总时长。
 
 <br>
 
 ## 技能模板
 
-技能编辑器内置了四类技能模板和多个主动/被动技能示例，开发者可参考技能示例的实现，其中被动技能示例可以参考 [被动技能](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20110) 文档。
+技能编辑器内置了四类技能模板和多个主动/被动技能示例，开发者可参考技能示例的实现，其中被动技能示例可以参考 [被动技能](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=-t4AjHuW) 文档。
 
 **蓄力技能模板**
 
@@ -2688,7 +2688,7 @@ Entry跳转至下一阶段时，默认由技能激活事件触发，因此无需
 
 **空技能模板**
 
-空技能模板不具有任何预设阶段，需要开发者自行添加技能阶段，利用 [技能状态图](https://developer.gp.qq.com/wikieditor/#/catalog/20152) 或者脚本逻辑控制技能的执行流程。
+空技能模板不具有任何预设阶段，需要开发者自行添加技能阶段，利用 [技能状态图](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=ZbVeL7AG) 或者脚本逻辑控制技能的执行流程。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/DF3zeimage.png)
 
@@ -2731,7 +2731,7 @@ Entry跳转至下一阶段时，默认由技能激活事件触发，因此无需
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/Rlxrmimage.png)
 
 - 生效时长：技能的生命周期，自技能挂载起开始计时，达到时间后强制卸载技能资源，设置<0的值代表无限时长
-- 类型Tags：通过 [GameplayTag](https://developer.gp.qq.com/wikieditor/#/catalog/20102) 标记的技能类型，适用于筛选和分类场景，遵循 [GameplayTag匹配规则](https://developer.gp.qq.com/wikieditor/#/catalog/20102?autoJump=GameplayTag%E5%8C%B9%E9%85%8D)，例如 [``GetSkillsByTag``](https://developer.gp.qq.com/api/#/searchContent/UGCPersistEffectSystem?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E6%8A%80%E8%83%BD%E7%B3%BB%E7%BB%9F%2FUGCPersistEffectSystem.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCPersistEffectSystem&autoJump=GetSkillsByTag:~:text=UPersistEffectSkill%5B%5D-,GetSkillsByTag,-(AActorTargetActor)) 利用标签过滤获取角色身上的技能
+- 类型Tags：通过 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 标记的技能类型，适用于筛选和分类场景，遵循 [GameplayTag匹配规则](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH&autoJump=GameplayTag%E5%8C%B9%E9%85%8D)，例如 [``GetSkillsByTag``](https://developer.gp.qq.com/api/#/searchContent/UGCPersistEffectSystem?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E6%8A%80%E8%83%BD%E7%B3%BB%E7%BB%9F%2FUGCPersistEffectSystem.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCPersistEffectSystem&autoJump=GetSkillsByTag:~:text=UPersistEffectSkill%5B%5D-,GetSkillsByTag,-(AActorTargetActor)) 利用标签过滤获取角色身上的技能
 
 【3C设置】
 
@@ -2812,7 +2812,7 @@ SkillInstance:SetMaxSkillLevel(10)
 	<img src="https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/hOLzMimage.png">
 </div>
 
-虚拟技能槽通过 [GameplayTag](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20102) 的形式表达，技能编辑器已预置了6个虚拟槽位的标签，开发者可以自行扩展和修改，但顶层标签必须保证为 **``Slot``**。每个主动技能都需要设置一个默认的槽位，如果多个技能配置同一个槽位，则该槽位只对最新配置的技能生效。
+虚拟技能槽通过 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 的形式表达，技能编辑器已预置了6个虚拟槽位的标签，开发者可以自行扩展和修改，但顶层标签必须保证为 **``Slot``**。每个主动技能都需要设置一个默认的槽位，如果多个技能配置同一个槽位，则该槽位只对最新配置的技能生效。
 > 技能组件上的 **初始化技能槽位** 优先级大于预设槽位
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/TK0TMimage.png)
@@ -2825,30 +2825,30 @@ SkillInstance:SetMaxSkillLevel(10)
 
 |属性名|属性说明|
 |-|-|
-|初始挂载技能槽位|允许为每个技能分配组别，方便设置技能组合，通过 [GameplayTag](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20102) 标识技能组|
+|初始挂载技能槽位|允许为每个技能分配组别，方便设置技能组合，通过 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 标识技能组|
 |技能CD类型|- 空：可无限制地使用该技能<br>- 计时：技能释放后，需要等待指定的时间后才能再次施放<br>- 能量：技能释放后，需要等待能量恢复到一定程度才能再次释放|
 |CD/能量充能时间|技能CD的时长，两种CD类型含义不同：<br>- 计时：下一次可以使用技能的间隔时间<br>- 能量：从0能量充能到100%能量需要的时间|
 |技能激活期间恢复CD/技能能量|技能激活生效的期间，是否允许计时/恢复能量，决定启动CD的时间点|
 |最大充能次数|每当CD计时完成/能量恢复结束时，会为技能存储一次使用次数，该属性影响技能存储使用次数的上限，即最多允许几段释放|
 |每次/每秒消耗能量百分比|【针对能量CD类型的技能】<br>扣除时机为激活/结束：每次释放技能消耗的能量百分比<br>扣除时机为激活期间/自定义：每秒执行一次能量消耗的百分比|
 |能开始消耗能量的最小百分比|【针对能量CD类型的技能】<br>允许释放该技能的最低能量值|
-|CD/能量和消耗扣除时机|技能启动CD的时机或技能的消耗实际被执行的时机<br>- 激活时：在技能激活时执行<br>- 结束时：技能完成释放后执行<br>- 自定义：需要手动在技能的时间轴上配置 [技能Task-消耗](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E6%B6%88%E8%80%97)，否则不会执行|
+|CD/能量和消耗扣除时机|技能启动CD的时机或技能的消耗实际被执行的时机<br>- 激活时：在技能激活时执行<br>- 结束时：技能完成释放后执行<br>- 自定义：需要手动在技能的时间轴上配置 [技能Task-消耗](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E6%B6%88%E8%80%97)，否则不会执行|
 
 【技能消耗】
 
 除了技能自身的能量消耗，还允许为技能释放设置额外的属性/物品消耗。
-> 物品消耗兼容 [物资编辑器](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/185) 与 [物品编辑器](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20101)
+> 物品消耗兼容 [物资编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=3TykdpoS) 与 [物品编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6)
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/8MXJrimage.png)
 
 |属性名|属性说明|
 |-|-|
-|消耗属性|- 要修改的属性：预置血量、能量、信号等和平角色的基础属性，也支持绑定 [自定义属性](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)<br>- 消耗的数值：要扣除的属性值，固定为 **减法运算**|
+|消耗属性|- 要修改的属性：预置血量、能量、信号等和平角色的基础属性，也支持绑定 [自定义属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)<br>- 消耗的数值：要扣除的属性值，固定为 **减法运算**|
 |消耗物品|物品ID：消耗的物品ID<br>物品数量：消耗的物品数量|
 
 【激活条件】
 
-支持添加技能激活的条件组，当满足触发要求的条件时才允许激活技能，各类型条件的说明及参数详细信息可参见 [技能Condition查询手册](https://developer.gp.qq.com/wikieditor/#/catalog/20111)。
+支持添加技能激活的条件组，当满足触发要求的条件时才允许激活技能，各类型条件的说明及参数详细信息可参见 [技能Condition查询手册](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=dw1F7KKc)。
 
 - 全部满足：所有的条件全部判定成功才允许触发
 - 满足任意一个：任意一个条件判定成功即可触发
@@ -2868,7 +2868,7 @@ SkillInstance:SetMaxSkillLevel(10)
 |图标|技能的icon图标|
 |是否使用技能预设UI槽位|是否使用预设的UI槽位，否则开发者需要自行实现UI关联技能的逻辑|
 |默认技能UI|技能编辑器内置了一个名为 ``PESkill_UIBP`` 的控件蓝图，开发者也可以自行实现技能UI和触发技能的逻辑<br>![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/fOo9yimage.png)|
-|预设技能UI槽|技能放置在哪个UI插槽上，编辑器预设了3个固定位置的技能UI插槽可选，通过 [GameplayTag](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20102) 绑定<br>![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/5q1S9image.png)|
+|预设技能UI槽|技能放置在哪个UI插槽上，编辑器预设了3个固定位置的技能UI插槽可选，通过 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 绑定<br>![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/5q1S9image.png)|
 
 【技能操作与激活】
 
@@ -2877,7 +2877,7 @@ SkillInstance:SetMaxSkillLevel(10)
 - 技能操作类型：触发技能的方式
 	- 点按：按下技能按钮时立即触发
 	- 按下抬起：按下技能按钮时激活，持续按住保持激活状态，抬起后技能取消
-- 技能组：该属性已废弃，如需控制技能激活的互斥效果，请使用 [状态互斥](https://developer.gp.qq.com/wikieditor/#/catalog/20106) 实现
+- 技能组：该属性已废弃，如需控制技能激活的互斥效果，请使用 [状态互斥](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=NkytpdRS) 实现
 - 默认是否可用：技能是否被装配后就可以使用，否则需要在脚本中调用 [``EnableSkill``](https://developer.gp.qq.com/api/#/searchContent/UPersistEffectSkill?classDetailShow=true&path=class%2Fdetail%2FOthers%2FUPersistEffectSkill.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UPersistEffectSkill&autoJump=EnableSkill) 先激活该技能才能使用
 
 【技能时长与类型】
@@ -2899,7 +2899,7 @@ SkillInstance:SetMaxSkillLevel(10)
 </div>
 <br>
 
-各阶段具有状态属性和对应序列播放器的播放属性，默认 ``Normal`` 阶段初始不带有序列播放器，当添加过序列播放器后即会启用播放属性；状态属性及阶段的跳转均通过 [技能状态图](https://developer.gp.qq.com/wikieditor/#/catalog/20152) 来配置。
+各阶段具有状态属性和对应序列播放器的播放属性，默认 ``Normal`` 阶段初始不带有序列播放器，当添加过序列播放器后即会启用播放属性；状态属性及阶段的跳转均通过 [技能状态图](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=ZbVeL7AG) 来配置。
 
 ![QQ2025626-195735-HD-ezgif.com-video-to-gif-converter.gif](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/Q6BrTQQ2025626-195735-HD-ezgif.com-video-to-gif-converter.gif)
 
@@ -2923,7 +2923,7 @@ SkillInstance:SetMaxSkillLevel(10)
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/crCX1image.png)
 
-每条轨道右侧的“+”可以为轨道添加具体的动作，例如添加一个 [技能Task-相机](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E7%9B%B8%E6%9C%BA) ，即会在右侧时间轴对应的轨道上添加该动作，按住该动作左右拖拽可以调整该动作执行的时间位置。
+每条轨道右侧的“+”可以为轨道添加具体的动作，例如添加一个 [技能Task-相机](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E7%9B%B8%E6%9C%BA) ，即会在右侧时间轴对应的轨道上添加该动作，按住该动作左右拖拽可以调整该动作执行的时间位置。
 > 时间轴上各Task遵照从上至下，从左至右的顺序执行
 
 ![QQ202541-15811-HD.gif](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/CIqwYQQ202541-15811-HD.gif)
@@ -2938,7 +2938,7 @@ SkillInstance:SetMaxSkillLevel(10)
 
 **技能轨道**
 
-技能轨道用于编排各类行为逻辑与特效效果，也即所有的 [技能Task](https://developer.gp.qq.com/wikieditor/#/catalog/20094) 都在此类轨道上编辑，点击【+轨迹】按钮可以选择需要添加的Task。
+技能轨道用于编排各类行为逻辑与特效效果，也即所有的 [技能Task](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7) 都在此类轨道上编辑，点击【+轨迹】按钮可以选择需要添加的Task。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/1emedimage.png)
 
@@ -2949,7 +2949,7 @@ SkillInstance:SetMaxSkillLevel(10)
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/n38uwimage.png)
 
 - 基础动画轨道：该类型的动画Task具备播放速率、播放槽位和混出时间等基础属性，适用于简单的动画配置，不支持轨道激活条件设置
-- 技能动画轨道：在基础动画轨道上进行了功能扩展，支持更复杂的动画槽位与轨道激活条件配置，具体的属性说明可参见 [技能动画Task](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BD%E5%8A%A8%E7%94%BBTask:~:text=%E6%B7%B7%E5%87%BA%E6%97%B6%E9%97%B4-,%E6%8A%80%E8%83%BD%E5%8A%A8%E7%94%BBTask,-%E4%BD%BF%E7%94%A8%20%E6%8A%80%E8%83%BD%E5%8A%A8%E7%94%BB)
+- 技能动画轨道：在基础动画轨道上进行了功能扩展，支持更复杂的动画槽位与轨道激活条件配置，具体的属性说明可参见 [技能动画Task](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BD%E5%8A%A8%E7%94%BBTask)
 
 **Actor轨道**
 
@@ -2993,7 +2993,7 @@ Actor轨道，即可以在技能里添加一个其他的Actor进行控制，并�
 |属性名|属性说明|
 |-|-|
 |轨道条件检测类型|- CheckOnce：单次检测，在该轨道激活时进行一次性检测，如果不满足条件，则该轨道上的Task不会执行<br>- CheckPerFrame：每帧检测，在该轨道随时间轴运行过程中逐帧检测，如果条件持续满足，则会持续执行Task；当条件在某一帧不再满足时，则后续不再执行Task|
-|激活条件列表|支持配置多组 [技能Condition](https://developer.gp.qq.com/wikieditor/#/catalog/20111) 条件|
+|激活条件列表|支持配置多组 [技能Condition](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=dw1F7KKc) 条件|
 |显示名称|可自定义轨道的名称，动画轨道默认显示“动画”，技能轨道默认显示“Tasks”|
 
 <br>
@@ -3004,13 +3004,13 @@ Actor轨道，即可以在技能里添加一个其他的Actor进行控制，并�
 
 ![QQ202541-153252-HD.gif](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/rjzpmQQ202541-153252-HD.gif)
 
-可使用的技能Task类型及各Task的属性详细信息可参见 [技能Task查询手册](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20094)。
+可使用的技能Task类型及各Task的属性详细信息可参见 [技能Task查询手册](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7)。
 
 <br>
 
 #### 状态列表
 
-状态列表显示技能通过 [状态图](https://developer.gp.qq.com/wikieditor/#/catalog/20152) 配置的所有阶段节点，点击阶段名显示对应的序列播放器面板，且状态图将自动定位到该节点上，点击右侧【播放】按钮可预览该序列播放器的执行效果。
+状态列表显示技能通过 [状态图](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=ZbVeL7AG) 配置的所有阶段节点，点击阶段名显示对应的序列播放器面板，且状态图将自动定位到该节点上，点击右侧【播放】按钮可预览该序列播放器的执行效果。
 
 ![QQ20251112-171240-HD-ezgif.com-video-to-gif-converter.gif](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/L0oXQQQ20251112-171240-HD-ezgif.com-video-to-gif-converter.gif)
 
@@ -3018,7 +3018,7 @@ Actor轨道，即可以在技能里添加一个其他的Actor进行控制，并�
 
 ![QQ20251112-172637-HD-ezgif.com-video-to-gif-converter.gif](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/yVqDeQQ20251112-172637-HD-ezgif.com-video-to-gif-converter.gif)
 
-> 预览的播放速率取决于状态图阶段节点的 [播放设置](https://developer.gp.qq.com/wikieditor/#/catalog/20152?autoJump=%E7%8A%B6%E6%80%81%E5%9B%BE%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE)
+> 预览的播放速率取决于状态图阶段节点的 [播放设置](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=ZbVeL7AG&autoJump=%E7%8A%B6%E6%80%81%E5%9B%BE%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE)
 
 <br>
 
@@ -3033,7 +3033,7 @@ Actor轨道，即可以在技能里添加一个其他的Actor进行控制，并�
 |Actor类型|预览的技能释放主体，支持玩家/怪物/法术场|
 |玩家蒙皮|当施法者为玩家时，需要指定正确的人物骨骼模型才能保证技能动画预览效果一致，仅针对 ``Actor类型`` 为“玩家”时生效<br>![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/BM84vimage.png)|
 |怪物蒙皮|当施法者为怪物时，需要指定正确的怪物骨骼模型才能保证技能动画预览效果一致，仅针对 ``Actor类型`` 为“怪物”时生效<br>![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/R9MtLimage.png)|
-|法术场类型|当施法者为法术场时，指定对应的 [法术场](https://developer.gp.qq.com/wikieditor/#/catalog/20217) 蓝图类，仅针对 ``Actor类型`` 为“法术场”时生效<br>![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/I8mf8image.png)|
+|法术场类型|当施法者为法术场时，指定对应的 [法术场](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=qq3UwYWQ) 蓝图类，仅针对 ``Actor类型`` 为“法术场”时生效<br>![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/I8mf8image.png)|
 |武器蓝图|支持为施法者附加武器类（枪械/近战武器）物品，添加后施法者将自动持有武器，仅针对 ``Actor类型`` 为“玩家”时生效<br>![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/dPknfimage.png)|
 |施法目标蓝图|切换施法目标的蓝图类，以预览技能对不同目标施放的效果，仅针对 ``Actor类型`` 为“玩家”时生效<br>![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/aAck6image.png)|
 |选中位置|调整选中位置的偏移量，必须依靠选择目标和选点来实现<br>![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/jlpGDimage.png)|
@@ -3049,7 +3049,7 @@ Actor轨道，即可以在技能里添加一个其他的Actor进行控制，并�
 
 #### 自定义蓝图变量
 
-在“我的蓝图”页签里可以创建自定义的蓝图变量，设置好变量的类型和默认值后，通过 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 功能可以由该技能蓝图下的其他事件或者行为引用，方便管理运行时的动态数据。
+在“我的蓝图”页签里可以创建自定义的蓝图变量，设置好变量的类型和默认值后，通过 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 功能可以由该技能蓝图下的其他事件或者行为引用，方便管理运行时的动态数据。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/UAyZfimage.png)
 
@@ -3120,7 +3120,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > 技能编辑器2.0 > 技能调试工具
 
-> 文档ID: 20114 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20114)
+> 文档ID: 20114 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=AUTLh_C3)
 
 > 更新: 2026-03-06 17:16:13
 
@@ -3136,7 +3136,7 @@ end
 
 ## 启用调试工具
 
-技能调试工具功能通过 [通用GM面板](https://developer.gp.qq.com/wikieditor/#/catalog/20109) 提供，启动编辑器 [Debug调试](https://developer.gp.qq.com/wikieditor/#/catalog/307)，找到右上角GM入口并点击。
+技能调试工具功能通过 [通用GM面板](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=WAAx3xC1) 提供，启动编辑器 [Debug调试](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Er6BqPSe)，找到右上角GM入口并点击。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/clc4Simage.png)
 
@@ -3168,7 +3168,7 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/ipS64image.png)
 
-通过 [技能编辑器](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%96%B0%E5%BB%BA%E6%8A%80%E8%83%BD%E8%93%9D%E5%9B%BE) 创建的技能蓝图将出现在下拉列表中，“挂载Slot”为 [预设技能UI槽位](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE)。
+通过 [技能编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%96%B0%E5%BB%BA%E6%8A%80%E8%83%BD%E8%93%9D%E5%9B%BE) 创建的技能蓝图将出现在下拉列表中，“挂载Slot”为 [预设技能UI槽位](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE)。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/6sW6Aimage.png)
 
@@ -3214,7 +3214,7 @@ Buff调试面板默认显示当前玩家角色的Buff状态，如果需要调试
 
 #### 添加Buff
 
-点击【添加Buff】按钮，在弹出窗口中需要填写要添加的目标Buff、Buff来源（Causer）、Buff层数和持续时间，通过 [Buff编辑器](https://developer.gp.qq.com/wikieditor/#/catalog/20087?autoJump=%E6%96%B0%E5%BB%BABuff%E8%93%9D%E5%9B%BE) 创建的Buff蓝图会出现在可选列表中。
+点击【添加Buff】按钮，在弹出窗口中需要填写要添加的目标Buff、Buff来源（Causer）、Buff层数和持续时间，通过 [Buff编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0Y0pURs-&autoJump=%E6%96%B0%E5%BB%BABuff%E8%93%9D%E5%9B%BE) 创建的Buff蓝图会出现在可选列表中。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/1TGjPimage.png)
 
@@ -3262,7 +3262,7 @@ Buff调试面板默认显示当前玩家角色的Buff状态，如果需要调试
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > 技能编辑器2.0 > 被动技能
 
-> 文档ID: 20110 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20110)
+> 文档ID: 20110 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=-t4AjHuW)
 
 > 更新: 2025-06-26 22:40:22
 
@@ -3319,7 +3319,7 @@ Buff调试面板默认显示当前玩家角色的Buff状态，如果需要调试
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/m3zloimage.png)
 
-技能编辑器内置了 [技能Event](https://developer.gp.qq.com/wikieditor/#/catalog/20112) 和 [技能Condition](https://developer.gp.qq.com/wikieditor/#/catalog/20111) 组件供开发者通过蓝图配置被动技能的触发机制，行为复用 [技能Task](https://developer.gp.qq.com/wikieditor/#/catalog/20094) 实现具体的被动效果。
+技能编辑器内置了 [技能Event](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=YDs0hD-g) 和 [技能Condition](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=dw1F7KKc) 组件供开发者通过蓝图配置被动技能的触发机制，行为复用 [技能Task](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7) 实现具体的被动效果。
 
 <br>
 
@@ -3369,13 +3369,13 @@ Buff调试面板默认显示当前玩家角色的Buff状态，如果需要调试
 
 ### 新建被动技能蓝图
 
-创建被动技能蓝图的步骤与主动技能一致，可参考 [新建技能蓝图](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%96%B0%E5%BB%BA%E6%8A%80%E8%83%BD%E8%93%9D%E5%9B%BE) 相关指引。
+创建被动技能蓝图的步骤与主动技能一致，可参考 [新建技能蓝图](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%96%B0%E5%BB%BA%E6%8A%80%E8%83%BD%E8%93%9D%E5%9B%BE) 相关指引。
 
 ---
 
 ### 配置被动技能蓝图
 
-被动技能通过 [技能Event](https://developer.gp.qq.com/wikieditor/#/catalog/20112) 和 [技能Condition](https://developer.gp.qq.com/wikieditor/#/catalog/20111) 决定触发时机，因此配置形式上不具有 [技能阶段](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%8A%80%E8%83%BD%E9%98%B6%E6%AE%B5%E9%85%8D%E7%BD%AE) 和 [序列播放器](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E5%BA%8F%E5%88%97%E6%92%AD%E6%94%BE%E5%99%A8%E9%85%8D%E7%BD%AE) 的概念，但是与主动技能一样需要通过 [技能Task](https://developer.gp.qq.com/wikieditor/#/catalog/20094) 实现行为逻辑。
+被动技能通过 [技能Event](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=YDs0hD-g) 和 [技能Condition](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=dw1F7KKc) 决定触发时机，因此配置形式上不具有 [技能阶段](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%8A%80%E8%83%BD%E9%98%B6%E6%AE%B5%E9%85%8D%E7%BD%AE) 和 [序列播放器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E5%BA%8F%E5%88%97%E6%92%AD%E6%94%BE%E5%99%A8%E9%85%8D%E7%BD%AE) 的概念，但是与主动技能一样需要通过 [技能Task](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7) 实现行为逻辑。
 
 被动技能的配置项主要包含 ``ECA配置`` 和 ``技能基础配置``。
 
@@ -3397,7 +3397,7 @@ ECA的核心配置包含 ``被动类型``、``行为列表``、``合并条件``�
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/MOiSBimage.png)
 
-添加后选中该事件，在【配置细节】面板出现事件的参数项，用于指定精确的事件触发时机，部分属性支持 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108)。
+添加后选中该事件，在【配置细节】面板出现事件的参数项，用于指定精确的事件触发时机，部分属性支持 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/w7dfIimage.png)
 
@@ -3405,7 +3405,7 @@ ECA的核心配置包含 ``被动类型``、``行为列表``、``合并条件``�
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/wmYBwimage.png)
 
-各类型事件的说明及参数详细信息可参见 [技能Event查询手册](https://developer.gp.qq.com/wikieditor/#/catalog/20112)。
+各类型事件的说明及参数详细信息可参见 [技能Event查询手册](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=YDs0hD-g)。
 
 【状态触发被动】
 
@@ -3415,7 +3415,7 @@ ECA的核心配置包含 ``被动类型``、``行为列表``、``合并条件``�
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/Es9dZimage.png)
 
-各类型条件的说明及参数详细信息可参见 [技能Condition查询手册](https://developer.gp.qq.com/wikieditor/#/catalog/20112)。
+各类型条件的说明及参数详细信息可参见 [技能Condition查询手册](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=YDs0hD-g)。
 
 ---
 
@@ -3427,7 +3427,7 @@ ECA的核心配置包含 ``被动类型``、``行为列表``、``合并条件``�
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/X2XTwimage.png)
 
-各类型Task的说明及参数详细信息可参见 [技能Task查询手册](https://developer.gp.qq.com/wikieditor/#/catalog/20094)。
+各类型Task的说明及参数详细信息可参见 [技能Task查询手册](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7)。
 
 ---
 
@@ -3456,7 +3456,7 @@ ECA的核心配置包含 ``被动类型``、``行为列表``、``合并条件``�
 
 决定被动技能是否在状态栏显示以及如何显示，状态栏UI位置固定。
 
-> 仅支持 [状态触发](https://developer.gp.qq.com/wikieditor/#/catalog/20110?autoJump=%E7%8A%B6%E6%80%81%E8%A7%A6%E5%8F%91) 类型被动技能
+> 仅支持 [状态触发](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=-t4AjHuW&autoJump=%E7%8A%B6%E6%80%81%E8%A7%A6%E5%8F%91) 类型被动技能
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/qELM3image.png)
 
@@ -3469,13 +3469,13 @@ ECA的核心配置包含 ``被动类型``、``行为列表``、``合并条件``�
 
 #### 技能基础配置
 
-被动技能也能够设置 ``技能预设槽位``、``CD/能量消耗`` 等属性，与 [主动技能基础配置](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) 完全一致，可参考相关文档进行配置。
+被动技能也能够设置 ``技能预设槽位``、``CD/能量消耗`` 等属性，与 [主动技能基础配置](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) 完全一致，可参考相关文档进行配置。
 
 <br>
 
 ## 添加被动技能
 
-被动技能也需要主动添加给角色Pawn才能触发生效，同样支持蓝图配置和脚本动态添加的方式，可参见 [添加技能](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%B7%BB%E5%8A%A0%E6%8A%80%E8%83%BD) 部分内容进行配置。
+被动技能也需要主动添加给角色Pawn才能触发生效，同样支持蓝图配置和脚本动态添加的方式，可参见 [添加技能](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%B7%BB%E5%8A%A0%E6%8A%80%E8%83%BD) 部分内容进行配置。
 
 <br>
 

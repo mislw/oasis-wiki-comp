@@ -8,7 +8,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > Buff编辑器2.0 > BuffAction查询手册
 
-> 文档ID: 20117 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20117)
+> 文档ID: 20117 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=n3YhMmZ_)
 
 > 新增: 2026-04-20 16:22:19
 
@@ -31,14 +31,14 @@
 
 ## 修改人物属性
 
-修改Buff目标的指定角色属性，遵循 [属性修改器](https://developer.gp.qq.com/wikieditor/#/catalog/20153) 的计算方式。
+修改Buff目标的指定角色属性，遵循 [属性修改器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=y24mx0rF) 的计算方式。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/EBiK3image.png)
 
 - 修改方式：临时修改/永久修改/持续修改
-- 要修改的属性：预置血量、能量、信号等和平角色的基础属性，也支持绑定 [自定义属性](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
+- 要修改的属性：预置血量、能量、信号等和平角色的基础属性，也支持绑定 [自定义属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
 - 修改符：基于属性修改器的 [修改运算符](https://developer.gp.qq.com/wikieditor/#/catalog/20176?autoJump=%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9%E7%AC%A6)
-- 修改值：支持绑定常数、基于 [自定义属性](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7) 的计算公式或者指定Lua函数的返回值
+- 修改值：支持绑定常数、基于 [自定义属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7) 的计算公式或者指定Lua函数的返回值
 - 修改值属性来源：若 ``修改值`` 设定为计算公式，则该项决定公式中所使用的属性的取值来源
 	- Causer：属性取值源自施法者
 	- Target：属性取值源自Buff目标
@@ -54,8 +54,8 @@
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/6aSoeimage.png)
 
-- 伤害类型Tag列表：可以为伤害添加额外的 [Tag标签](https://developer.gp.qq.com/wikieditor/#/catalog/20102?autoJump=GameplayTag%E6%A6%82%E8%BF%B0)
-- 伤害数值：支持绑定常数、基于 [自定义属性](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7) 的计算公式或者指定Lua函数的返回值
+- 伤害类型Tag列表：可以为伤害添加额外的 [Tag标签](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH&autoJump=GameplayTag%E6%A6%82%E8%BF%B0)
+- 伤害数值：支持绑定常数、基于 [自定义属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7) 的计算公式或者指定Lua函数的返回值
 - 修改值属性来源：若 ``伤害数值`` 设定为计算公式，则该项决定公式中所使用的属性的取值来源
 	- Causer：属性取值源自施法者
 	- Target：属性取值源自Buff目标
@@ -96,8 +96,8 @@
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/4gzNyimage.png)
 
-- 恢复数值：支持绑定常数、基于 [自定义属性](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7) 的计算公式或者指定Lua函数的返回值
-- 恢复血量Tags：支持为治疗行为添加Tag，通过 [GameplayTag](https://developer.gp.qq.com/wikieditor/#/catalog/20102?autoJump=GameplayTag%E6%A6%82%E8%BF%B0) 创建
+- 恢复数值：支持绑定常数、基于 [自定义属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7) 的计算公式或者指定Lua函数的返回值
+- 恢复血量Tags：支持为治疗行为添加Tag，通过 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH&autoJump=GameplayTag%E6%A6%82%E8%BF%B0) 创建
 
 <br>
 
@@ -133,14 +133,14 @@
 
 ## 下一次伤害属性修改
 
-基于 [属性修改器](https://developer.gp.qq.com/wikieditor/#/catalog/20153) 的属性修改行为，临时修改Buff目标的指定属性值，当下一次受到任意伤害时（触发 [伤害公式](https://developer.gp.qq.com/wikieditor/#/catalog/20099)），自动移除相关修改。
+基于 [属性修改器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=y24mx0rF) 的属性修改行为，临时修改Buff目标的指定属性值，当下一次受到任意伤害时（触发 [伤害公式](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=gu0cVbhR)），自动移除相关修改。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/UjehBimage.png)
 
 - 修改方式：临时修改/永久修改/持续修改
-- 要修改的属性：支持和平角色与枪械的基础属性，也支持绑定 [自定义属性](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
+- 要修改的属性：支持和平角色与枪械的基础属性，也支持绑定 [自定义属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
 - 修改符：基于属性修改器的 [修改运算符](https://developer.gp.qq.com/wikieditor/#/catalog/20176?autoJump=%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9%E7%AC%A6)
-- 修改值：支持绑定常数、基于 [自定义属性](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7) 的计算公式或者指定Lua函数的返回值
+- 修改值：支持绑定常数、基于 [自定义属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7) 的计算公式或者指定Lua函数的返回值
 - 修改值属性来源：若 ``修改值`` 设定为计算公式，则该项决定公式中所使用的属性的取值来源
 	- Causer：属性取值源自施法者
 	- Target：属性取值源自Buff目标
@@ -153,14 +153,14 @@
 
 ## 修改武器属性
 
-修改Buff目标的指定武器属性，遵循 [属性修改器](https://developer.gp.qq.com/wikieditor/#/catalog/20153) 的计算方式。
+修改Buff目标的指定武器属性，遵循 [属性修改器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=y24mx0rF) 的计算方式。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/kUKsuimage.png)
 
 - 修改方式：临时修改/永久修改/持续修改
-- 要修改的属性：预置和平枪械的基础属性，也支持绑定 [自定义属性](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
+- 要修改的属性：预置和平枪械的基础属性，也支持绑定 [自定义属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
 - 修改符：基于属性修改器的 [修改运算符](https://developer.gp.qq.com/wikieditor/#/catalog/20176?autoJump=%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9%E7%AC%A6)
-- 修改值：支持绑定常数、基于 [自定义属性](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7) 的计算公式或者指定Lua函数的返回值
+- 修改值：支持绑定常数、基于 [自定义属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7) 的计算公式或者指定Lua函数的返回值
 - 修改值属性来源：若 ``修改值`` 设定为计算公式，则该项决定公式中所使用的属性的取值来源
 	- Causer：属性取值源自施法者
 	- Target：属性取值源自Buff目标
@@ -172,7 +172,7 @@
 
 ## 屏幕特效
 
-屏幕特效的设置与 [技能Task-屏幕特效](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E5%B1%8F%E5%B9%95%E7%89%B9%E6%95%88) 相同，可参考相关说明。
+屏幕特效的设置与 [技能Task-屏幕特效](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E5%B1%8F%E5%B9%95%E7%89%B9%E6%95%88) 相同，可参考相关说明。
 
 <br>
 
@@ -199,7 +199,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > Buff编辑器2.0 > BuffListUI
 
-> 文档ID: 20444 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20444)
+> 文档ID: 20444 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=9YlA9SEA)
 
 > 新增: 2026-08-12 10:15:59
 
@@ -209,7 +209,7 @@
 
 ## 功能概述
 
-支持玩家屏幕的 [Buff](https://developer.gp.qq.com/wikieditor/#/catalog/20087) 和 [被动技能](https://developer.gp.qq.com/wikieditor/#/catalog/20110) 列表 UI，支持展开/收起、动态增删、多行自动排版。
+支持玩家屏幕的 [Buff](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0Y0pURs-) 和 [被动技能](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=-t4AjHuW) 列表 UI，支持展开/收起、动态增删、多行自动排版。
 
 |功能|说明|
 |-|-|
@@ -489,7 +489,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > Buff编辑器2.0 > Buff编辑器
 
-> 文档ID: 20087 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20087)
+> 文档ID: 20087 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0Y0pURs-)
 
 > 更新: 2026-02-12 10:47:02
 
@@ -565,7 +565,7 @@ Buff的核心属性配置区域，包括Buff的UI展示信息、合并行为、�
 
 ## Buff模板
 
-Buff编辑器预置了伤害型、异常状态、增益效果三大类型的Buff模板，各类型下提供了具体的Buff蓝图示例，开发者可以基于示例模板创建Buff蓝图进行二次定制；另外，提供了部分特化的 [功能型Buff](https://developer.gp.qq.com/wikieditor/#/catalog/20253) 供开发者直接使用，开发者也能够使用空模板制作全新的Buff效果。
+Buff编辑器预置了伤害型、异常状态、增益效果三大类型的Buff模板，各类型下提供了具体的Buff蓝图示例，开发者可以基于示例模板创建Buff蓝图进行二次定制；另外，提供了部分特化的 [功能型Buff](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=9CMHwnrg) 供开发者直接使用，开发者也能够使用空模板制作全新的Buff效果。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/ZUaJ9image.png)
 
@@ -670,7 +670,7 @@ Buff编辑器为主界面额外提供了Buff栏控件，当Buff生效时将在Bu
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/ukvl1image.png)
 
 - 生效时长：单层Buff的默认持续时间，设置<0的值代表永久生效，Buff实际时长受合并效果影响
-- 类型Tags：通过 [GameplayTag](https://developer.gp.qq.com/wikieditor/#/catalog/20102) 标记的Buff类型，适用于筛选和分类场景，遵循 [GameplayTag匹配规则](https://developer.gp.qq.com/wikieditor/#/catalog/20102?autoJump=GameplayTag%E5%8C%B9%E9%85%8D)
+- 类型Tags：通过 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 标记的Buff类型，适用于筛选和分类场景，遵循 [GameplayTag匹配规则](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH&autoJump=GameplayTag%E5%8C%B9%E9%85%8D)
 
 ---
 
@@ -706,7 +706,7 @@ Buff编辑器通过状态组的配置形式，将预设的互斥关系应用在�
 - 打断Tag：当Buff添加到对象身上时，如果对象拥有这些状态Tag，则这些Tag及其关联的技能或Buff都将被移除
 - 禁用Tag：当Buff添加到对象身上时，如果对象拥有这些状态Tag，则这些Tag及其关联的技能或Buff都将被移除，且拥有这些Tag的技能或Buff无法再次施加给对象
 
-> 更多关于角色状态的概念及互斥逻辑关系可参考 [状态互斥](https://developer.gp.qq.com/wikieditor/#/catalog/20106) 文档
+> 更多关于角色状态的概念及互斥逻辑关系可参考 [状态互斥](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=NkytpdRS) 文档
 
 ---
 
@@ -762,7 +762,7 @@ Buff编辑器将堆叠特性分解为 ``合并条件`` 与 ``合并行为`` 的�
 
 【触发动作】
 
-Buff编辑器预置了一批动作Action，各动作配置属性不同，可参考 [BuffAction查询手册](https://developer.gp.qq.com/wikieditor/#/catalog/20117) 部分内容。
+Buff编辑器预置了一批动作Action，各动作配置属性不同，可参考 [BuffAction查询手册](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=n3YhMmZ_) 部分内容。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/zfM5Timage.png)
 
@@ -774,7 +774,7 @@ Buff可以随技能触发激活，也可以在脚本中调用API动态给对象�
 
 ### 通过技能激活Buff
 
-技能编辑器提供了 [``添加Buff``](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E6%B7%BB%E5%8A%A0Buff) 和 [``移除Buff``](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E7%A7%BB%E9%99%A4Buff) 的技能节点，配置在时间轴上，施放该技能时将在指定的时间点执行添加/移除Buff。
+技能编辑器提供了 [``添加Buff``](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E6%B7%BB%E5%8A%A0Buff) 和 [``移除Buff``](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E7%A7%BB%E9%99%A4Buff) 的技能节点，配置在时间轴上，施放该技能时将在指定的时间点执行添加/移除Buff。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/B4WFvimage.png)
 
@@ -798,7 +798,7 @@ UGCPersistEffectSystem.AddBuffByClass(BuffTarget, BuffClass)
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > Buff编辑器2.0 > 变参Buff模板
 
-> 文档ID: 20253 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20253)
+> 文档ID: 20253 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=9CMHwnrg)
 
 > 新增: 2026-04-20 16:22:28 | 更新: 2026-09-08 18:58:51
 
@@ -885,7 +885,7 @@ Buff编辑器提供了部分特化制作的功能型Buff模板，通过参数的
 |变身模型和动画类型|目前支持静态模型（Static）、主角骨骼模型（Pawn）和怪物骨骼（Preset）三种<br>变身为静态模型时，会自动隐藏携带在身上的头、包、甲、武器等外显模型|
 |骨骼模型|变身的目标骨骼模型，模型的骨骼必须为 ``主角骨骼``|
 |Transform Scale|变身后骨骼模型的缩放大小，包括碰撞体和胶囊体等|
-|主角动画列表|变身后需要替换的 [姿态动画](https://developer.gp.qq.com/wikieditor/#/catalog/20251) 列表|
+|主角动画列表|变身后需要替换的 [姿态动画](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=gIO86AU4) 列表|
 |获取的武器ID|变身后获得的武器物品ID|
 |Fade in Speed|变身过程中相机变化淡入淡出的速度|
 |Offset|相机跟随目标点的偏移|

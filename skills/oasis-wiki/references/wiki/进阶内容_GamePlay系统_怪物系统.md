@@ -8,7 +8,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 丧尸法师案例
 
-> 文档ID: 20323 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20323)
+> 文档ID: 20323 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=4mOVHCW5)
 
 > 新增: 2026-05-14 15:37:59
 
@@ -359,7 +359,7 @@
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/H7HPmimage.png)
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/9hyx7image.png)
 
-槽位Slot0，Slot1，Slot2是用来给技能组使用的，Main为普通技能火球术，Slot3是召唤仆从，Slot4是传送，Slot5是转阶段技能，在二阶段时候Slot5中的技能会替换为二阶段特有的被动技能。开发者可以根据自身需求 [创建技能](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%8A%80%E8%83%BD%E5%88%9B%E5%BB%BA%E6%B5%81%E7%A8%8B) 并添加技能 。
+槽位Slot0，Slot1，Slot2是用来给技能组使用的，Main为普通技能火球术，Slot3是召唤仆从，Slot4是传送，Slot5是转阶段技能，在二阶段时候Slot5中的技能会替换为二阶段特有的被动技能。开发者可以根据自身需求 [创建技能](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%8A%80%E8%83%BD%E5%88%9B%E5%BB%BA%E6%B5%81%E7%A8%8B) 并添加技能 。
 
 >开发者可以自行添加技能slot和tag，但必须遵循特定格式如"Skill.Slot.xxx"。
 
@@ -554,7 +554,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 任务节点查询手册
 
-> 文档ID: 20179 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20179)
+> 文档ID: 20179 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=R_58zAex)
 
 > 新增: 2026-08-14 20:03:17 | 更新: 2026-09-02 13:49:51
 
@@ -824,7 +824,7 @@ Sequence（退出战斗）
 
 ## [Generic]记录时间
 
-将当前的游戏运行时长记录到指定的黑板键中，通常配合 [[Generic]时间](https://developer.gp.qq.com/wikieditor/#/catalog/20178?autoJump=[Generic]%E6%97%B6%E9%97%B4) 装饰器节点一起使用。
+将当前的游戏运行时长记录到指定的黑板键中，通常配合 [[Generic]时间](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0_ILwHld&autoJump=[Generic]%E6%97%B6%E9%97%B4) 装饰器节点一起使用。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/jEceCimage.png)
 
@@ -856,7 +856,7 @@ Sequence（退出战斗）
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/sNt7mimage.png)
 
-- 技能GameplayTag：[虚拟技能槽](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E9%80%9A%E8%BF%87%E8%93%9D%E5%9B%BE%E9%85%8D%E7%BD%AE%E6%8A%80%E8%83%BD) 对应绑定的技能
+- 技能GameplayTag：[虚拟技能槽](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E9%80%9A%E8%BF%87%E8%93%9D%E5%9B%BE%E9%85%8D%E7%BD%AE%E6%8A%80%E8%83%BD) 对应绑定的技能
 - 技能目标：指定的Actor对象或者目标位置，绑定 ``Actor`` 或者 ``Vector`` 类型的黑板变量
 - 无目标是否能释放技能：如果没有有效的目标对象，是否允许施放技能
 
@@ -910,7 +910,7 @@ Sequence（退出战斗）
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/ropUSimage.png)
 
-- 技能GameplayTag：指定的 [虚拟技能槽位](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) Tag
+- 技能GameplayTag：指定的 [虚拟技能槽位](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) Tag
 - 技能：替换的目标技能蓝图，若不配置则代表清空该槽位的技能
 
 <br>
@@ -925,7 +925,7 @@ Sequence（退出战斗）
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/Op2Y0image.png)
 
-- GameplayTag：[虚拟技能槽位](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) Tag
+- GameplayTag：[虚拟技能槽位](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) Tag
 - 技能目标：技能的释放目标，绑定 ``Actor`` 或者 ``Vector`` 类型的黑板变量
 - 权重：该技能在技能组中的权重
 	- 原始值：固定值，``取值方式`` 选为"原始值"时生效
@@ -975,7 +975,7 @@ Sequence（退出战斗）
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 修改怪物模型
 
-> 文档ID: 20255 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20255)
+> 文档ID: 20255 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=fx8RmNfy)
 
 > 更新: 2026-04-03 14:10:52
 
@@ -1065,7 +1065,7 @@ Sequence（退出战斗）
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 刷怪点模板与改造使用
 
-> 文档ID: 20452 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20452)
+> 文档ID: 20452 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=16D-5QE1)
 
 > 新增: 2026-09-14 13:51:02
 
@@ -1099,11 +1099,11 @@ Sequence（退出战斗）
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/PjOCPimage.png)
 |属性名|属性说明|
 |-|-|
-|刷出的怪物阵营|默认为-1表示使用 [怪物蓝图中配置的阵营](https://developer.gp.qq.com/wikieditor/#/catalog/20095?autoJump=%E8%AE%BE%E7%BD%AE%E6%80%AA%E7%89%A9%E9%98%B5%E8%90%A5) ，若大于-1则会将此数据覆盖到刷出的怪物上|
+|刷出的怪物阵营|默认为-1表示使用 [怪物蓝图中配置的阵营](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Q2VYiY6l&autoJump=%E8%AE%BE%E7%BD%AE%E6%80%AA%E7%89%A9%E9%98%B5%E8%90%A5) ，若大于-1则会将此数据覆盖到刷出的怪物上|
 |刷怪器控制模式|- 管理器控制：需要使用**刷怪管理器**引用这个刷怪点才可以让其刷怪<br>- 最大数量控制：刷怪点自动刷怪，仅当场上怪物数量 < ``最大存活数量`` 时才继续刷怪，同时刷怪总量仍然受最大/最小生成数量约束<br>- 无控制：刷怪点自动刷怪，且不受其他条件控制|
 |最大存活数量|仅对 ``刷怪器控制模式`` 为“最大数量控制”时生效，通常该设定值建议小于最小生成数量；例如设置为1，则代表怪物死亡一个再补充一个，直到刷出怪物的总量为最大刷怪数量为止|
 |怪物配置模式|支持蓝图配置，怪物组表，自定义三种模式<br>- 蓝图配置：``怪物蓝图`` 属性可配，指定怪物蓝图类，刷固定种类的怪物<br>- 怪物组表：``怪物组ID`` 属性可配，指定使用的刷怪策略<br>- 自定义参数：``自定义参数`` 属性可配，可添加任意组KV结构的元素，通过 ``自定义刷新规则`` 实现怪物的生成|
-|使用NavMesh找随机点|是否优先在被 [导航网格](https://developer.gp.qq.com/wikieditor/#/catalog/20266) 覆盖的范围内刷怪|
+|使用NavMesh找随机点|是否优先在被 [导航网格](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=3cTqxkya) 覆盖的范围内刷怪|
 |随机朝向|怪物生成后的初始朝向，默认使用刷新点蓝图箭头组件的方向，否则随机朝向|
 |生成范围|刷新器以自身为中心的圆柱范围内寻找合适位置，生成范围为圆柱的半径（单位：厘米）|
 |生成高度范围|刷新器以自身为中心的圆柱范围内寻找合适位置，生成高度范围为圆柱的高度（单位：厘米）|
@@ -1410,7 +1410,7 @@ return KeepAliveSpawner
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 动态更新导航网格
 
-> 文档ID: 20274 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20274)
+> 文档ID: 20274 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0HqSUbKY)
 
 > 更新: 2026-02-12 12:02:12
 
@@ -1418,13 +1418,13 @@ return KeepAliveSpawner
 
 # 动态更新导航网格
 
-怪物的移动范围取决于 [导航网格](https://developer.gp.qq.com/wikieditor/#/catalog/20266) 的覆盖面积，通常是在编辑器视口中静态构建，如果希望在游戏运行时能够动态改变怪物的可移动范围，需要遵循指定的配置并调用相应的API来改变导航网格数据。
+怪物的移动范围取决于 [导航网格](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=3cTqxkya) 的覆盖面积，通常是在编辑器视口中静态构建，如果希望在游戏运行时能够动态改变怪物的可移动范围，需要遵循指定的配置并调用相应的API来改变导航网格数据。
 
 <br>
 
 ## 添加导航网格体
 
-更新导航网格数据的前置条件是场景中存在导航网格体组件，可以参考 [创建导航网格体](https://developer.gp.qq.com/wikieditor/#/catalog/20266?autoJump=%E5%88%9B%E5%BB%BA%E5%AF%BC%E8%88%AA%E7%BD%91%E6%A0%BC%E4%BD%93) 的方式在关卡场景中添加 ``Nav Mesh Bounds Volume`` 组件。
+更新导航网格数据的前置条件是场景中存在导航网格体组件，可以参考 [创建导航网格体](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=3cTqxkya&autoJump=%E5%88%9B%E5%BB%BA%E5%AF%BC%E8%88%AA%E7%BD%91%E6%A0%BC%E4%BD%93) 的方式在关卡场景中添加 ``Nav Mesh Bounds Volume`` 组件。
 
 > 导航网格体的覆盖范围需要包含待动态更新的区域，否则无法正常生成
 
@@ -1538,7 +1538,7 @@ FinishedDelegate:Add(self.OnFinishGeneration, self)
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 宠物模板
 
-> 文档ID: 20454 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20454)
+> 文档ID: 20454 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=VGbIcYkO)
 
 > 新增: 2026-09-10 17:24:18
 
@@ -1606,7 +1606,7 @@ FinishedDelegate:Add(self.OnFinishGeneration, self)
 
 ### 血条样式配置
 
-血条样式在蓝图侧配置，在运行时按玩家与宠物的阵营关系自动切换。首先创建[怪物血条](https://developer.gp.qq.com/wikieditor/#/catalog/20412?autoJump=%E5%88%9B%E5%BB%BA%E6%80%AA%E7%89%A9%E8%A1%80%E6%9D%A1)，细节面板中可以找到两个样式字典：Progress Bar HP Style — 主血条样式；Progress Bar Less Blood VFX Style — 虚条（预扣除伤害）样式。
+血条样式在蓝图侧配置，在运行时按玩家与宠物的阵营关系自动切换。首先创建[怪物血条](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=iPeGprSV&autoJump=%E5%88%9B%E5%BB%BA%E6%80%AA%E7%89%A9%E8%A1%80%E6%9D%A1)，细节面板中可以找到两个样式字典：Progress Bar HP Style — 主血条样式；Progress Bar Less Blood VFX Style — 虚条（预扣除伤害）样式。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/OrKhzimage.png)
 
@@ -1764,7 +1764,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 导航网格
 
-> 文档ID: 20266 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20266)
+> 文档ID: 20266 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=3cTqxkya)
 
 > 新增: 2026-07-16 16:35:55
 
@@ -1857,7 +1857,7 @@ AIWorldVolume体积组件用于识别场景中的游戏对象，筛选怪物行�
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 怪物刷新器
 
-> 文档ID: 20156 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20156)
+> 文档ID: 20156 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=5HITc-Cv)
 
 > 新增: 2026-07-16 16:18:35
 
@@ -1898,8 +1898,8 @@ AIWorldVolume体积组件用于识别场景中的游戏对象，筛选怪物行�
 |属性名|属性说明|
 |-|-|
 |怪物组ID|每组生成规则的唯一ID，被刷新点引用|
-|怪物阵营|怪物所属的 [阵营](https://developer.gp.qq.com/wikieditor/#/catalog/20095?autoJump=%E9%98%B5%E8%90%A5%E7%B3%BB%E7%BB%9F)|
-|怪物类型|基于实体编辑器创建的 [怪物蓝图](https://developer.gp.qq.com/wikieditor/#/catalog/20144?autoJump=%E5%88%9B%E5%BB%BA%E6%80%AA%E7%89%A9%E8%93%9D%E5%9B%BE)|
+|怪物阵营|怪物所属的 [阵营](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Q2VYiY6l&autoJump=%E9%98%B5%E8%90%A5%E7%B3%BB%E7%BB%9F)|
+|怪物类型|基于实体编辑器创建的 [怪物蓝图](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=JKHitxoV&autoJump=%E5%88%9B%E5%BB%BA%E6%80%AA%E7%89%A9%E8%93%9D%E5%9B%BE)|
 |怪物权重|该怪物的生成权重，当列表配置了多种怪物时，该怪物的刷出概率为其 ``怪物权重/权重之和``，权重的形式保证每次必定有一个怪物能被生成|
 |出生属性|支持为怪物设置初始属性值|
 
@@ -1925,11 +1925,11 @@ AIWorldVolume体积组件用于识别场景中的游戏对象，筛选怪物行�
 
 |属性名|属性说明|
 |-|-|
-|刷出的怪物阵营|默认为-1表示使用 [怪物蓝图中配置的阵营](https://developer.gp.qq.com/wikieditor/#/catalog/20095?autoJump=%E8%AE%BE%E7%BD%AE%E6%80%AA%E7%89%A9%E9%98%B5%E8%90%A5) ，若大于-1则会将此数据覆盖到刷出的怪物上|
+|刷出的怪物阵营|默认为-1表示使用 [怪物蓝图中配置的阵营](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Q2VYiY6l&autoJump=%E8%AE%BE%E7%BD%AE%E6%80%AA%E7%89%A9%E9%98%B5%E8%90%A5) ，若大于-1则会将此数据覆盖到刷出的怪物上|
 |刷怪器控制模式|- 管理器控制：需要使用**刷怪管理器**引用这个刷怪点才可以让其刷怪<br>- 最大数量控制：刷怪点自动刷怪，仅当场上怪物数量 < ``最大存活数量`` 时才继续刷怪，同时刷怪总量仍然受最大/最小生成数量约束<br>- 无控制：刷怪点自动刷怪，且不受其他条件控制|
 |最大存活数量|仅对 ``刷怪器控制模式`` 为“最大数量控制”时生效，通常该设定值建议小于最小生成数量；例如设置为1，则代表怪物死亡一个再补充一个，直到刷出怪物的总量为最大刷怪数量为止|
 |怪物配置模式|支持蓝图配置，怪物组表，自定义三种模式<br>- 蓝图配置：``怪物蓝图`` 属性可配，指定怪物蓝图类，刷固定种类的怪物<br>- 怪物组表：``怪物组ID`` 属性可配，指定使用的刷怪策略<br>- 自定义参数：``自定义参数`` 属性可配，可添加任意组KV结构的元素，通过 ``自定义刷新规则`` 实现怪物的生成|
-|使用NavMesh找随机点|是否优先在被 [导航网格](https://developer.gp.qq.com/wikieditor/#/catalog/20266) 覆盖的范围内刷怪|
+|使用NavMesh找随机点|是否优先在被 [导航网格](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=3cTqxkya) 覆盖的范围内刷怪|
 |随机朝向|怪物生成后的初始朝向，默认使用刷新点蓝图箭头组件的方向，否则随机朝向|
 |生成范围|刷新器以自身为中心的圆柱范围内寻找合适位置，生成范围为圆柱的半径（单位：厘米）|
 |生成高度范围|刷新器以自身为中心的圆柱范围内寻找合适位置，生成高度范围为圆柱的高度（单位：厘米）|
@@ -2114,7 +2114,7 @@ end
 |属性名|属性说明|
 |-|-|
 |刷怪管理器启动方式|支持关卡加载、事件触发和手动调用三种方式<br>- 关卡加载：当管理器所属的关卡加载后自动启动刷怪流程<br>- 事件触发：当接收到 ``事件名`` 属性中填写的指定GMP事件时触发启动刷怪流程<br>- 手动调用：管理器无法自动启动，需要在脚本中调用 [``StartSpawnerManager``](https://developer.gp.qq.com/api/#/searchContent/AUGCItemSpawnerManager?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E7%89%A9%E5%93%81%E4%B8%8E%E8%83%8C%E5%8C%85%2FAUGCItemSpawnerManager.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=AUGCItemSpawnerManager&autoJump=StartSpawnerManager) 触发|
-|事件名|启动方式为“事件触发”时，绑定的指定 [GMP事件](https://developer.gp.qq.com/wikieditor/#/catalog/20163)|
+|事件名|启动方式为“事件触发”时，绑定的指定 [GMP事件](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=73v9VPYQ)|
 |每帧刷怪上限|每一帧执行怪物生成的数量限制，防止游戏卡顿|
 |存活怪物检查间隔|检查怪物存活状态的时间间隔，``波次开始条件``设置为“All Mob Die”时会实时检测刷出的怪物是否已死亡，理论上间隔越大性能消耗越小，但时间误差也相对越大|
 |刷怪点|该波次执行的刷新点，可手动选择蓝图类，也可以通过吸管工具吸取关卡中的刷新点实例对象<br>![QQ202571-12644-HD-ezgif.com-video-to-gif-converter.gif](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/7MWv7QQ202571-12644-HD-ezgif.com-video-to-gif-converter.gif)|
@@ -2138,7 +2138,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 怪物动画
 
-> 文档ID: 20251 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20251)
+> 文档ID: 20251 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=gIO86AU4)
 
 > 更新: 2025-11-17 21:45:32
 
@@ -2265,9 +2265,9 @@ end
 |空中动画|GenericCharacterAnim.General.Air.Falling|动画序列|
 |落地动画|GenericCharacterAnim.General.Air.Landing|动画序列|
 
-> - 击退动画的触发，取决于对怪物造成的伤害是否配置了 [受击数据](https://developer.gp.qq.com/wikieditor/#/catalog/20169)，且具备击退的水平/垂直方向上的速度
+> - 击退动画的触发，取决于对怪物造成的伤害是否配置了 [受击数据](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Qa3L9Rpf)，且具备击退的水平/垂直方向上的速度
 > - 落地动画播放时，怪物会被强制在原地不动以避免出现滑步问题
-> - 由于怪物的攻击行为由技能触发，因此攻击动画需要通过技能编辑器的 [动画轨道](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E5%8A%A8%E7%94%BB%E8%A1%A8%E7%8E%B0) 配置
+> - 由于怪物的攻击行为由技能触发，因此攻击动画需要通过技能编辑器的 [动画轨道](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E5%8A%A8%E7%94%BB%E8%A1%A8%E7%8E%B0) 配置
 
 此外该模式提供了部分特化的动画参数供自定义调整：
 
@@ -2295,7 +2295,7 @@ end
 |受击|GenericCharacterAnim.SubAnimType.Hurt|动画序列|
 |死亡|GenericCharacterAnim.SubAnimType.Dead|动画序列|
 
-> 共享动画模式提供了攻击姿态动画配置，技能编辑器中通过 [技能Task-播放预设动画](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E6%92%AD%E6%94%BE%E9%A2%84%E8%AE%BE%E5%8A%A8%E7%94%BB) 进行关联引用
+> 共享动画模式提供了攻击姿态动画配置，技能编辑器中通过 [技能Task-播放预设动画](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E6%92%AD%E6%94%BE%E9%A2%84%E8%AE%BE%E5%8A%A8%E7%94%BB) 进行关联引用
 
 <br>
 
@@ -2313,7 +2313,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 怪物动画蓝图复用功能
 
-> 文档ID: 20017 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20017)
+> 文档ID: 20017 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=_-Gi4J5u)
 
 > 更新: 2025-07-02 18:54:11
 
@@ -2384,7 +2384,7 @@ end
 
 ### 测试效果
 
-将法师怪放置在场景中，[启动PIE调试](https://developer.gp.qq.com/wikieditor/?timeStamp=1718884727319#/catalog/307)，可以看到待机动画已关联至砍刀怪的动画表现，意味着动画蓝图复用成功。
+将法师怪放置在场景中，[启动PIE调试](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Er6BqPSe)，可以看到待机动画已关联至砍刀怪的动画表现，意味着动画蓝图复用成功。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/KOgVximage.png)
 
@@ -2429,7 +2429,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 怪物受击
 
-> 文档ID: 20252 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20252)
+> 文档ID: 20252 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=SXljA3nr)
 
 > 更新: 2026-03-04 13:07:20
 
@@ -2573,7 +2573,7 @@ end
 |属性名称|说明|
 |:-:|-|
 |是否隐藏子弹受击特效|勾选后，怪物被子弹命中时将会隐藏特效，仅对枪械的射线子弹生效|-|
-|AI受击特效|选择用于配置受击独立表现的数据资产，配置说明详见 [受击数据资产](https://developer.gp.qq.com/wikieditor/#/catalog/20169)<br>![特效.gif](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/iamT1%E7%89%B9%E6%95%88.gif)|
+|AI受击特效|选择用于配置受击独立表现的数据资产，配置说明详见 [受击数据资产](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Qa3L9Rpf)<br>![特效.gif](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/iamT1%E7%89%B9%E6%95%88.gif)|
 |伤害冒字|控制受击时是否显示飘字伤害数值<br>![冒字.gif](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/N7CN9%E5%86%92%E5%AD%97.gif)|
 |延迟隐藏尸体|设定怪物死亡后尸体在场景中保留的显示时间，单位：秒<br>![延迟死亡.gif](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/Y9Oki%E5%BB%B6%E8%BF%9F%E6%AD%BB%E4%BA%A1.gif)|
 |启用延迟销毁LifeSpan|是否开启尸体隐藏后延迟销毁的机制，开启后需设置下方延迟时间|-|
@@ -2599,7 +2599,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 怪物快速配置指南
 
-> 文档ID: 20144 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20144)
+> 文档ID: 20144 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=JKHitxoV)
 
 > 新增: 2026-08-04 15:54:07
 
@@ -2613,7 +2613,7 @@ end
 
 ## 配置依赖
 
-怪物的移动行为依赖寻路系统，通过导航网格生成可移动区域，同时 ``AIWorldVolume`` 赋予识别交互对象的能力等，因此需要完成前置的配置事项，可参考 [导航网格配置](https://developer.gp.qq.com/wikieditor/#/catalog/20266)。
+怪物的移动行为依赖寻路系统，通过导航网格生成可移动区域，同时 ``AIWorldVolume`` 赋予识别交互对象的能力等，因此需要完成前置的配置事项，可参考 [导航网格配置](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=3cTqxkya)。
 
 <br>
 
@@ -2639,19 +2639,19 @@ end
 
 ### 基础信息
 
-怪物蓝图中的【细节】面板可以设置 [怪物血条](https://developer.gp.qq.com/wikieditor/#/catalog/20412)、怪物名称和阵营等基础信息。
+怪物蓝图中的【细节】面板可以设置 [怪物血条](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=iPeGprSV)、怪物名称和阵营等基础信息。
 
 在怪物蓝图中将 ``Character Name`` 属性改为“弓箭手”，血条保持默认显示效果。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/dxrk6image.png)
 
-> 如果调试时怪物无法被攻击，需要确认怪物与玩家的阵营关系是否正确，可以参考 [配置阵营](https://developer.gp.qq.com/wikieditor/#/catalog/20095?autoJump=%E9%85%8D%E7%BD%AE%E9%98%B5%E8%90%A5)
+> 如果调试时怪物无法被攻击，需要确认怪物与玩家的阵营关系是否正确，可以参考 [配置阵营](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Q2VYiY6l&autoJump=%E9%85%8D%E7%BD%AE%E9%98%B5%E8%90%A5)
 
 ---
 
 ### 实体类型
 
-可以为各类怪物设置自定义的实体类型标签，例如精灵、机械兽、龙族等，实体类型标签也是一类基于 [GameplayTag](https://developer.gp.qq.com/wikieditor/#/catalog/20102) 定义的概念性标签，怪物基类提供了 ``SetEntityTypeTag`` 与 ``GetEntityTypeTag`` 函数用于运行时动态设置/查询实体类型标签。
+可以为各类怪物设置自定义的实体类型标签，例如精灵、机械兽、龙族等，实体类型标签也是一类基于 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 定义的概念性标签，怪物基类提供了 ``SetEntityTypeTag`` 与 ``GetEntityTypeTag`` 函数用于运行时动态设置/查询实体类型标签。
 
 示例代码：
 
@@ -2677,7 +2677,7 @@ ugcprint(string.format("Monster Entity Type: %s", TagInfo.TagName))
 
 ### 逻辑管理组件
 
-[逻辑管理组件](https://developer.gp.qq.com/wikieditor/#/catalog/20162) ``LogicPartManagerComp`` 在行为树模板的基础上抽象封装了一套逻辑模块组件，在不修改行为树的前提下仅通过蓝图配置实现不同行为模式的怪物。
+[逻辑管理组件](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=3vZ13iCD) ``LogicPartManagerComp`` 在行为树模板的基础上抽象封装了一套逻辑模块组件，在不修改行为树的前提下仅通过蓝图配置实现不同行为模式的怪物。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/l4v1Aimage.png)
 
@@ -2685,7 +2685,7 @@ ugcprint(string.format("Monster Entity Type: %s", TagInfo.TagName))
 
 ### 怪物动画
 
-怪物蓝图的动画列表组件支持自定义修改怪物动画，默认提供了受击、死亡、休闲移动、战斗移动、休闲Idle和战斗Idle等六种状态动画，同时也支持 [怪物动画蓝图复用功能](https://developer.gp.qq.com/wikieditor/#/catalog/20017) 用于怪物“换皮”。
+怪物蓝图的动画列表组件支持自定义修改怪物动画，默认提供了受击、死亡、休闲移动、战斗移动、休闲Idle和战斗Idle等六种状态动画，同时也支持 [怪物动画蓝图复用功能](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=_-Gi4J5u) 用于怪物“换皮”。
 
 > 需要确保替换的动画资源的骨骼与怪物骨骼类型一致
 
@@ -2696,7 +2696,7 @@ ugcprint(string.format("Monster Entity Type: %s", TagInfo.TagName))
 
 ### 修改初始属性
 
-怪物蓝图的属性修改组件提供基于 [属性管理器](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E5%B1%9E%E6%80%A7%E7%AE%A1%E7%90%86%E5%99%A8) 的属性初始值修改能力。
+怪物蓝图的属性修改组件提供基于 [属性管理器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E5%B1%9E%E6%80%A7%E7%AE%A1%E7%90%86%E5%99%A8) 的属性初始值修改能力。
 
 在怪物蓝图的 ``AttrModifyComp`` 组件中为“属性初始值配置”添加 ``血量`` 和 ``最大血量`` 两项修改，初始值均设置为300。
 
@@ -2708,7 +2708,7 @@ ugcprint(string.format("Monster Entity Type: %s", TagInfo.TagName))
 
 ### 添加怪物技能
 
-怪物释放技能的行为由行为树的逻辑驱动，[释放技能](https://developer.gp.qq.com/wikieditor/#/catalog/20179?autoJump=[Generic]%E6%96%BD%E6%94%BE%E6%8A%80%E8%83%BD) 任务节点提供 [虚拟技能槽](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) 的参数配置，该节点的执行将触发对应槽位的技能。
+怪物释放技能的行为由行为树的逻辑驱动，[释放技能](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=R_58zAex&autoJump=[Generic]%E6%96%BD%E6%94%BE%E6%8A%80%E8%83%BD) 任务节点提供 [虚拟技能槽](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) 的参数配置，该节点的执行将触发对应槽位的技能。
 
 怪物蓝图的 ```PersistBaseComponent``` 组件关联虚拟技能槽与技能蓝图，将 ``Skill.Slot.Main`` 槽位绑定的技能改为 ``PESkill_Monster_Claw``。
 
@@ -2720,7 +2720,7 @@ ugcprint(string.format("Monster Entity Type: %s", TagInfo.TagName))
 
 ### 添加死亡掉落
 
-怪物的死亡固定会触发掉落行为，通过 [掉落组件](https://developer.gp.qq.com/wikieditor/#/catalog/20142) 可以配置需要掉落的物品信息。
+怪物的死亡固定会触发掉落行为，通过 [掉落组件](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=hix8TNXf) 可以配置需要掉落的物品信息。
 
 在怪物蓝图的 ```UGCPresetCommonDropItemComponent``` 组件中通过 ``蓝图配置`` 的方式掉落 ``Item ID`` 为831101003的物品，数量为1，掉落物类型选择为“Wrapper”，掉落效果为立即掉出1份该物品。
 
@@ -2739,7 +2739,7 @@ ugcprint(string.format("Monster Entity Type: %s", TagInfo.TagName))
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/hXLmAimage.png)
 
-> 如果调试时没有正确显示飘字效果，可参考 [通用伤害飘字](https://developer.gp.qq.com/wikieditor/#/catalog/20160) 的属性说明进行检查
+> 如果调试时没有正确显示飘字效果，可参考 [通用伤害飘字](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=DGCt9_7U) 的属性说明进行检查
 
 <br>
 
@@ -2750,13 +2750,13 @@ ugcprint(string.format("Monster Entity Type: %s", TagInfo.TagName))
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/ei7TQimage.png)
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/57SUlimage.png)
 
-选中怪物蓝图放置到关卡场景的可移动区域范围内，启动 [Debug调试](https://developer.gp.qq.com/wikieditor/#/catalog/307) 观察怪物的行为。
+选中怪物蓝图放置到关卡场景的可移动区域范围内，启动 [Debug调试](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Er6BqPSe) 观察怪物的行为。
 
 ![QQ202571-16030-HD-ezgif.com-video-to-gif-converter.gif](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/KS69pQQ202571-16030-HD-ezgif.com-video-to-gif-converter.gif)。
 
 怪物默认处于巡逻状态，玩家靠近且在视野范围内时开始追击，当到达 ``追击距离`` 且处于 ``攻击距离`` 范围内时触发攻击行为，由于将怪物的技能替换为近战怪的攻击技能，因此怪物在进入远程攻击范围内时即开始攻击。
 
-如果希望观察怪物实时的行为数据，可以通过 [怪物调试工具](https://developer.gp.qq.com/wikieditor/#/catalog/20161) 进行进一步的调试。
+如果希望观察怪物实时的行为数据，可以通过 [怪物调试工具](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=13u2GCrs) 进行进一步的调试。
 
 > ``追击距离`` 执行优先级高于 ``攻击距离``，如果未到达 ``追击距离`` 但满足 ``攻击距离`` 条件，此时并不会打断追击行为，仍会继续移动
 
@@ -2766,7 +2766,7 @@ ugcprint(string.format("Monster Entity Type: %s", TagInfo.TagName))
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 怪物血条
 
-> 文档ID: 20412 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20412)
+> 文档ID: 20412 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=iPeGprSV)
 
 > 新增: 2026-07-16 16:20:37
 
@@ -2812,7 +2812,7 @@ Boss怪血条样式：
 
 |属性名|属性说明|
 |-|-|
-|Is Show Name|是否显示怪物的名字，怪物的名字文本由 [怪物蓝图](https://developer.gp.qq.com/wikieditor/#/catalog/20144?autoJump=%E5%88%9B%E5%BB%BA%E6%80%AA%E7%89%A9%E8%93%9D%E5%9B%BE) 配置的 ``Character Name`` 属性决定<br>![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/0nc7Timage.png)|
+|Is Show Name|是否显示怪物的名字，怪物的名字文本由 [怪物蓝图](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=JKHitxoV&autoJump=%E5%88%9B%E5%BB%BA%E6%80%AA%E7%89%A9%E8%93%9D%E5%9B%BE) 配置的 ``Character Name`` 属性决定<br>![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/0nc7Timage.png)|
 |Is Show Blood Num|是否显示血条数值，样式为“当前值/最大值”<br>![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/CNmk9image.png)|
 |Blood Fill Image|一组血量百分比及显示颜色的映射关系，表示当前血量<=此百分比时血条显示的颜色，例如血量低于或等于50%时血条颜色为鲜红色：<br>![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/NM4qjimage.png)|
 |Background Image|血条背景图样式<br> ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/yfpNzimage.png) <br> ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/Qj36Aimage.png)
@@ -2829,7 +2829,7 @@ Boss怪血条样式：
 
 ### 为怪物添加血条
 
-通过实体编辑器 [创建一个怪物蓝图](https://developer.gp.qq.com/wikieditor/#/catalog/20144?autoJump=%E5%88%9B%E5%BB%BA%E6%80%AA%E7%89%A9%E8%93%9D%E5%9B%BE)，在怪物蓝图【细节】面板的“Health Bar”类别下，将血条组件配置到 ``控件蓝图路径`` 属性上即为怪物赋予了血条功能。
+通过实体编辑器 [创建一个怪物蓝图](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=JKHitxoV&autoJump=%E5%88%9B%E5%BB%BA%E6%80%AA%E7%89%A9%E8%93%9D%E5%9B%BE)，在怪物蓝图【细节】面板的“Health Bar”类别下，将血条组件配置到 ``控件蓝图路径`` 属性上即为怪物赋予了血条功能。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/2ulmwimage.png)
 
@@ -2859,7 +2859,7 @@ Boss怪血条样式：
 |被瞄准时显示|若勾选，怪物被玩家瞄准时会显示血条，若不勾选，怪物被瞄准后不会因此显示血条，不影响其他显示规则|
 |条件显示最大距离CM|勾选了 ``被瞄准时显示`` 时生效，触发被瞄准显示的最大距离（单位：厘米），超过这个距离后玩家瞄准怪物不会显示怪物血条<br>![ezgif.com-crop.gif](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/FH3qJezgif.com-crop.gif)|
 |显示时间|不满足血条显示的条件时，多长时间内血条消失（单位：秒），包括：怪物未受击、怪物不再锁定玩家、怪物不再被瞄准（包括超出被瞄准时最大显示距离）|
-|营地过滤器|基于 [阵营](https://developer.gp.qq.com/wikieditor/#/catalog/20095?autoJump=%E9%98%B5%E8%90%A5%E7%B3%BB%E7%BB%9F) 的过滤器，怪物与玩家之间的阵营关系匹配该条件时才会显示血条|
+|营地过滤器|基于 [阵营](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Q2VYiY6l&autoJump=%E9%98%B5%E8%90%A5%E7%B3%BB%E7%BB%9F) 的过滤器，怪物与玩家之间的阵营关系匹配该条件时才会显示血条|
 |受伤显示类型|血条可见性目标的范围<br>- 仅伤害来源显示：血条只会对伤害来源的目标显示<br>- 伤害来源同阵营均显示：血条会对伤害来源的同阵营中的所有目标显示|
 
 血条显示的逻辑流程图如下：
@@ -3069,7 +3069,7 @@ Preconstruct 时绑定两个消息：
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 怪物行为控制组件
 
-> 文档ID: 20250 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20250)
+> 文档ID: 20250 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=hPUUBzFo)
 
 > 更新: 2025-11-17 21:44:10
 
@@ -3184,7 +3184,7 @@ Preconstruct 时绑定两个消息：
 
 |属性名|属性说明|
 |-|-|
-|平滑转向角度阈值|执行平滑转向的角度阈值，可参见 [[Generic]转向](https://developer.gp.qq.com/wikieditor/#/catalog/20179?autoJump=[Generic]%E8%BD%AC%E5%90%91)|
+|平滑转向角度阈值|执行平滑转向的角度阈值，可参见 [[Generic]转向](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=R_58zAex&autoJump=[Generic]%E8%BD%AC%E5%90%91)|
 
 ---
 
@@ -3192,13 +3192,13 @@ Preconstruct 时绑定两个消息：
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 怪物调试工具
 
-> 文档ID: 20161 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20161)
+> 文档ID: 20161 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=13u2GCrs)
 
 > 新增: 2026-10-19 17:10:20 | 更新: 2026-10-26 10:09:21
 
 # 怪物调试工具
 
-游戏中怪物的行为依赖于 [行为树](https://developer.gp.qq.com/wikieditor/#/catalog/20265) 和 [怪物逻辑管理组件](https://developer.gp.qq.com/wikieditor/#/catalog/20162) 的运行，怪物的状态也在动态发生变化，为了方便开发者调试和优化怪物的行为，提供了适用于运行时的怪物调试工具。该工具允许开发者直观地查看游戏运行时怪物行为树的执行状态，包括节点信息、黑板变量值、装饰器打断判定等，帮助开发者快速定位问题并调整AI行为。
+游戏中怪物的行为依赖于 [行为树](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=3sWJbxiD) 和 [怪物逻辑管理组件](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=3vZ13iCD) 的运行，怪物的状态也在动态发生变化，为了方便开发者调试和优化怪物的行为，提供了适用于运行时的怪物调试工具。该工具允许开发者直观地查看游戏运行时怪物行为树的执行状态，包括节点信息、黑板变量值、装饰器打断判定等，帮助开发者快速定位问题并调整AI行为。
 
 ![企业微信截图_17496351338454.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/Mka7l%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_17496351338454.png)
 
@@ -3206,7 +3206,7 @@ Preconstruct 时绑定两个消息：
 
 ## 启用调试工具
 
-怪物调试工具功能通过 [通用GM面板](https://developer.gp.qq.com/wikieditor/#/catalog/20109) 提供，启动编辑器 [Debug调试](https://developer.gp.qq.com/wikieditor/#/catalog/307)，找到右上角GM入口并点击。
+怪物调试工具功能通过 [通用GM面板](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=WAAx3xC1) 提供，启动编辑器 [Debug调试](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Er6BqPSe)，找到右上角GM入口并点击。
 
 ![企业微信截图_17496325493795.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/yUhTg%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_17496325493795.png)
 
@@ -3291,7 +3291,7 @@ Preconstruct 时绑定两个消息：
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 怪物逻辑管理组件
 
-> 文档ID: 20162 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20162)
+> 文档ID: 20162 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=3vZ13iCD)
 
 > 更新: 2026-01-23 11:00:47
 
@@ -3335,7 +3335,7 @@ Preconstruct 时绑定两个消息：
 
 寻找目标逻辑模块 ``Choose Enemy Part`` 用于按指定的任务寻找敌方目标，模块支持多任务组合，各任务之间为 ``或`` 的逻辑关系，即只要其中一个任务执行成功则结束并返回目标结果，类似复合节点中的 [选择器](https://dev.epicgames.com/documentation/zh-cn/unreal-engine/unreal-engine-behavior-tree-node-reference-composites?application_version=5.4#%E9%80%89%E6%8B%A9%E5%99%A8)。
 
-该模块依赖 [[Generic]寻敌](https://developer.gp.qq.com/wikieditor/#/catalog/20174?autoJump=[Generic]%E5%AF%BB%E6%95%8C) 服务节点的运行，每次执行寻敌服务节点时，按照配置的子任务顺序 ``从上至下`` 逐一执行，任意子任务查找到有效目标则终止执行，返回该目标，寻敌服务节点执行结束。
+该模块依赖 [[Generic]寻敌](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Ft5b-keP&autoJump=[Generic]%E5%AF%BB%E6%95%8C) 服务节点的运行，每次执行寻敌服务节点时，按照配置的子任务顺序 ``从上至下`` 逐一执行，任意子任务查找到有效目标则终止执行，返回该目标，寻敌服务节点执行结束。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/8yZvTimage.png)
 
@@ -3351,8 +3351,8 @@ Preconstruct 时绑定两个消息：
 
 |属性名|属性说明|
 |-|-|
-|Filter Camp Relations|查找所属指定 [阵营](https://developer.gp.qq.com/wikieditor/#/catalog/20095?autoJump=%E9%98%B5%E8%90%A5%E5%85%B3%E7%B3%BB%E9%85%8D%E7%BD%AE) 的目标|
-|Filter Entity Type Tags|查找带有指定 [实体类型标签](https://developer.gp.qq.com/wikieditor/#/catalog/20144?autoJump=%E5%AE%9E%E4%BD%93%E7%B1%BB%E5%9E%8B) 的目标|
+|Filter Camp Relations|查找所属指定 [阵营](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Q2VYiY6l&autoJump=%E9%98%B5%E8%90%A5%E5%85%B3%E7%B3%BB%E9%85%8D%E7%BD%AE) 的目标|
+|Filter Entity Type Tags|查找带有指定 [实体类型标签](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=JKHitxoV&autoJump=%E5%AE%9E%E4%BD%93%E7%B1%BB%E5%9E%8B) 的目标|
 |Filter Include Tags|查找带有指定状态标签的目标|
 |Filter Exclude Tags|带有指定状态标签的目标不会被查找到|
 
@@ -3493,7 +3493,7 @@ Preconstruct 时绑定两个消息：
 |-|-|
 |Call for Help Intervel|每隔多久进行一次呼叫支援，从第一次受到伤害开始以固定的频率执行前置伤害判定，周期内接收过伤害才会触发呼叫支援<br>受伤害的频率可能比较高，此属性主要用来限制呼叫频率（单位：秒）|
 |Call for Help Range|能接收到呼叫支援消息的半径范围（单位：厘米）|
-|Ally Entity Type Tags|拥有指定 [实体类型标签](https://developer.gp.qq.com/wikieditor/#/catalog/20144?autoJump=%E5%AE%9E%E4%BD%93%E7%B1%BB%E5%9E%8B) 的怪物能接收到呼叫支援消息|
+|Ally Entity Type Tags|拥有指定 [实体类型标签](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=JKHitxoV&autoJump=%E5%AE%9E%E4%BD%93%E7%B1%BB%E5%9E%8B) 的怪物能接收到呼叫支援消息|
 |Call for Help from Damage Causer|是否以伤害来源为中心进行呼叫，否则以怪物自身为中心|
 
 该逻辑模块的执行流程如下：
@@ -3530,7 +3530,7 @@ Preconstruct 时绑定两个消息：
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 无骨骼怪物模板
 
-> 文档ID: 20285 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20285)
+> 文档ID: 20285 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=wgyjr9nj)
 
 > 更新: 2026-01-23 11:00:09
 
@@ -3583,7 +3583,7 @@ UGCGenericCharacterSystem.SpawnGenericCharacter(self, MonsterClass, {X = 1000, Y
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 服务节点查询手册
 
-> 文档ID: 20174 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20174)
+> 文档ID: 20174 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Ft5b-keP)
 
 > 更新: 2025-07-02 17:10:19
 
@@ -3609,9 +3609,9 @@ UGCGenericCharacterSystem.SpawnGenericCharacter(self, MonsterClass, {X = 1000, Y
 
 ## [Generic]寻敌
 
-寻敌是怪物最基础的行为之一，通常基于距离、仇恨值、感知系统等多维度综合选择出最终目标，由于寻敌模式的通用性，实体编辑器将各要素抽象成不同的逻辑组件，并通过 [怪物逻辑管理组件](https://developer.gp.qq.com/wikieditor/#/catalog/20162) 提供参数化配置，开发者无需关注此服务节点的 ``寻敌策略`` 配置。
+寻敌是怪物最基础的行为之一，通常基于距离、仇恨值、感知系统等多维度综合选择出最终目标，由于寻敌模式的通用性，实体编辑器将各要素抽象成不同的逻辑组件，并通过 [怪物逻辑管理组件](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=3vZ13iCD) 提供参数化配置，开发者无需关注此服务节点的 ``寻敌策略`` 配置。
 
-> 行为树如果使用了该节点，则必须配套为怪物蓝图 [添加逻辑管理组件](https://developer.gp.qq.com/wikieditor/#/catalog/20162?autoJump=%E6%B7%BB%E5%8A%A0%E9%80%BB%E8%BE%91%E7%AE%A1%E7%90%86%E7%BB%84%E4%BB%B6)
+> 行为树如果使用了该节点，则必须配套为怪物蓝图 [添加逻辑管理组件](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=3vZ13iCD&autoJump=%E6%B7%BB%E5%8A%A0%E9%80%BB%E8%BE%91%E7%AE%A1%E7%90%86%E7%BB%84%E4%BB%B6)
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/JbJdzimage.png)
 
@@ -3641,7 +3641,7 @@ UGCGenericCharacterSystem.SpawnGenericCharacter(self, MonsterClass, {X = 1000, Y
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 移动与避障
 
-> 文档ID: 20168 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20168)
+> 文档ID: 20168 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=v7n3arYU)
 
 > 更新: 2026-01-23 10:58:55
 
@@ -3667,7 +3667,7 @@ UGCGenericCharacterSystem.SpawnGenericCharacter(self, MonsterClass, {X = 1000, Y
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/tgh2bimage.png)
 
-- Move Tag：当怪物移动时添加的Tag，基于 [GameplayTag](https://developer.gp.qq.com/wikieditor/#/catalog/20102) 定义的状态标签
+- Move Tag：当怪物移动时添加的Tag，基于 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 定义的状态标签
 - Move Strategy：使用的移动策略
 - Smooth Class Type：移动组件类，默认值不建议修改
 
@@ -3728,7 +3728,7 @@ UGCGenericCharacterSystem.SpawnGenericCharacter(self, MonsterClass, {X = 1000, Y
 
 ### 静态物件避障
 
-对于场景中的静态物体，当 [构建导航网格](https://developer.gp.qq.com/wikieditor/#/catalog/20144?autoJump=%E7%94%9F%E6%88%90%E5%8F%AF%E7%A7%BB%E5%8A%A8%E5%8C%BA%E5%9F%9F) 时会将静态物体的形状和范围参与寻路路径计算，构建结果会自动避开障碍物的区域，怪物的移动范围也将排除这些区域。
+对于场景中的静态物体，当 [构建导航网格](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=JKHitxoV&autoJump=%E7%94%9F%E6%88%90%E5%8F%AF%E7%A7%BB%E5%8A%A8%E5%8C%BA%E5%9F%9F) 时会将静态物体的形状和范围参与寻路路径计算，构建结果会自动避开障碍物的区域，怪物的移动范围也将排除这些区域。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/z2DZuimage.png)
 
@@ -3841,7 +3841,7 @@ UGCGenericCharacterSystem.SpawnGenericCharacter(self, MonsterClass, {X = 1000, Y
 
 ## 怪物转向
 
-[[Generic]转向](https://developer.gp.qq.com/wikieditor/#/catalog/20179?autoJump=[Generic]%E8%BD%AC%E5%90%91) 任务节点能够让怪物执行转向动作以面对指定方向或者目标，通常转向属性在任务节点中配置，移动控制组件中该部分属性为默认初始值。
+[[Generic]转向](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=R_58zAex&autoJump=[Generic]%E8%BD%AC%E5%90%91) 任务节点能够让怪物执行转向动作以面对指定方向或者目标，通常转向属性在任务节点中配置，移动控制组件中该部分属性为默认初始值。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/bHHvgimage.png)
 
@@ -3857,7 +3857,7 @@ UGCGenericCharacterSystem.SpawnGenericCharacter(self, MonsterClass, {X = 1000, Y
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 行为树
 
-> 文档ID: 20265 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20265)
+> 文档ID: 20265 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=3sWJbxiD)
 
 > 更新: 2026-01-05 16:58:17
 
@@ -4200,7 +4200,7 @@ UGCGenericCharacterSystem.SpawnGenericCharacter(self, MonsterClass, {X = 1000, Y
 
 ### 关联行为树
 
-在编辑完成行为树之后，通过怪物行为控制组件配置行为树和管理反射的黑板键，详情可见 [基础行为树反射键](https://developer.gp.qq.com/wikieditor/#/catalog/20250?autoJump=%E5%9F%BA%E7%A1%80%E8%A1%8C%E4%B8%BA%E6%A0%91%E5%8F%8D%E5%B0%84%E9%94%AE)。
+在编辑完成行为树之后，通过怪物行为控制组件配置行为树和管理反射的黑板键，详情可见 [基础行为树反射键](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=hPUUBzFo&autoJump=%E5%9F%BA%E7%A1%80%E8%A1%8C%E4%B8%BA%E6%A0%91%E5%8F%8D%E5%B0%84%E9%94%AE)。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/2MbDFimage.png)
 
@@ -4313,7 +4313,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 装饰器节点查询手册
 
-> 文档ID: 20178 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20178)
+> 文档ID: 20178 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0_ILwHld)
 
 > 更新: 2026-03-06 17:28:19
 
@@ -4444,9 +4444,9 @@ end
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/R5wZnimage.png)
 
 - BBKey Target Actor：指定的Actor，绑定 ``Actor`` 类型的黑板变量
-- Target Dynamic State：目标状态，基于 [GameplayTag](https://developer.gp.qq.com/wikieditor/#/catalog/20102) 定义
+- Target Dynamic State：目标状态，基于 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 定义
 - OP：匹配条件
-	- 允许：指定的状态是否可以和目标对象身上的所有状态共存，即不能和任何一个状态存在 [互斥关系](https://developer.gp.qq.com/wikieditor/#/catalog/20106?autoJump=%E7%8A%B6%E6%80%81%E4%BA%92%E6%96%A5%E5%AE%9A%E4%B9%89)
+	- 允许：指定的状态是否可以和目标对象身上的所有状态共存，即不能和任何一个状态存在 [互斥关系](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=NkytpdRS&autoJump=%E7%8A%B6%E6%80%81%E4%BA%92%E6%96%A5%E5%AE%9A%E4%B9%89)
 	- 含有：目标对象是否存在指定的状态，即 [``HasTag``](https://developer.gp.qq.com/api/#/searchContent/UGCGameplayTagSystem?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E5%B7%A5%E5%85%B7%E5%BA%93%2FUGCGameplayTagSystem.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCGameplayTagSystem&autoJump=HasTag) 的匹配方式
 
 <br>
@@ -4480,7 +4480,7 @@ end
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/QXIsNimage.png)
 
 - 观察对象：目标Actor，绑定 ``Actor`` 类型的黑板变量
-- 属性：目标对象要比对的属性，支持 [自定义属性](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
+- 属性：目标对象要比对的属性，支持 [自定义属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
 - 操作：比较运算符
 - 比较值：比对的条件值
 	- 原始值：固定值，``取值方式`` 选为“原始值”时生效
@@ -4518,7 +4518,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > 路点移动
 
-> 文档ID: 20254 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20254)
+> 文档ID: 20254 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=6NV7N6x1)
 
 > 新增: 2026-09-08 18:57:15
 
@@ -4553,7 +4553,7 @@ end
 
 ## 配置怪物寻路路线
 
-怪物寻路路线在 [怪物刷新点](https://developer.gp.qq.com/wikieditor/#/catalog/20156?autoJump=%E6%80%AA%E7%89%A9%E5%88%B7%E6%96%B0%E7%82%B9:~:text=%E6%80%AA%E7%89%A9%E7%BB%84%E8%A1%A8-,%E6%80%AA%E7%89%A9%E5%88%B7%E6%96%B0%E7%82%B9,-%E9%85%8D%E7%BD%AE%E5%88%B7%E6%96%B0%E7%82%B9) 中配置，在模式窗口中，搜索 "BP_UGCMobSpawner"，将怪物刷新点拖放到场景中。
+怪物寻路路线在 [怪物刷新点](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=5HITc-Cv&autoJump=%E6%80%AA%E7%89%A9%E5%88%B7%E6%96%B0%E7%82%B9) 中配置，在模式窗口中，搜索 "BP_UGCMobSpawner"，将怪物刷新点拖放到场景中。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/DvClUimage.png)
 
@@ -4586,7 +4586,7 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/hzHvmimage.png)
 
-如果怪物没有移动，需要检查一下行为树中是否启用 ``巡逻`` 属性，以及是否配置导航网格，详情参见[怪物快速配置指南](https://developer.gp.qq.com/wikieditor/#/catalog/20144:~:text=%E6%80%AA%E7%89%A9%E7%B3%BB%E7%BB%9F-,%E6%80%AA%E7%89%A9%E5%BF%AB%E9%80%9F%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97,-%E6%80%AA%E7%89%A9%E8%A1%80%E6%9D%A1)。
+如果怪物没有移动，需要检查一下行为树中是否启用 ``巡逻`` 属性，以及是否配置导航网格，详情参见[怪物快速配置指南](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=JKHitxoV)。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/BWeNkimage.png)
 

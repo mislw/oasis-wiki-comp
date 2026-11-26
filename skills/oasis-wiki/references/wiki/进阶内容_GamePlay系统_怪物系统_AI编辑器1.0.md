@@ -8,7 +8,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > AI编辑器1.0 > 使用导航网格NavMesh
 
-> 文档ID: 177 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/177)
+> 文档ID: 177 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=HlxMXwqs)
 
 > 更新: 2025-07-02 18:54:11
 
@@ -80,7 +80,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > AI编辑器1.0 > 利用和平的角色拓展玩法内容
 
-> 文档ID: 179 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/179)
+> 文档ID: 179 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Qb9Jwip4)
 
 > 更新: 2025-07-02 18:54:11
 
@@ -197,7 +197,7 @@ UGCFakePlayerSystem.SpawnFakePlayer(AIPlayerKey)
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > AI编辑器1.0 > 自定义节点
 
-> 文档ID: 358 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/358)
+> 文档ID: 358 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=i_PCLHnf)
 
 > 更新: 2025-07-02 18:54:11
 
@@ -294,7 +294,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > AI编辑器1.0 > 行为树基本概念
 
-> 文档ID: 175 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/175)
+> 文档ID: 175 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=u-qMW1T2)
 
 > 更新: 2025-07-02 18:54:11
 

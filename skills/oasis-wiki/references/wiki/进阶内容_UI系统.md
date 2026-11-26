@@ -8,7 +8,7 @@
 
 > 文档路径: 进阶内容 > UI系统 > Moba技能按钮模板
 
-> 文档ID: 20478 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20478)
+> 文档ID: 20478 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=ZZU-RnHo)
 
 > 新增: 2026-10-09 17:19:29
 
@@ -75,13 +75,13 @@
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/jLJZrimage.png)
 
-+ 技能等级的属性配置参照 [技能等级配置](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) 进行配置。
++ 技能等级的属性配置参照 [技能等级配置](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%8A%80%E8%83%BD%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) 进行配置。
 
 ---
 
 ### 技能与元件蓝图的绑定
 
-参照 [技能创建流程](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%8A%80%E8%83%BD%E5%88%9B%E5%BB%BA%E6%B5%81%E7%A8%8B) 创建技能。
+参照 [技能创建流程](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%8A%80%E8%83%BD%E5%88%9B%E5%BB%BA%E6%B5%81%E7%A8%8B) 创建技能。
 
 点击【技能编辑器】->技能->创建好的技能->默认技能UI，更改为创建好的“Moba技能按钮蓝图”。
 
@@ -91,7 +91,7 @@
 
 ### 技能的挂载
 
-参照 [添加技能](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%B7%BB%E5%8A%A0%E6%8A%80%E8%83%BD) 技能添加成功后，即可使用Moba技能按钮。
+参照 [添加技能](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%B7%BB%E5%8A%A0%E6%8A%80%E8%83%BD) 技能添加成功后，即可使用Moba技能按钮。
 
 ![QQ20260924151535-ezgif.com-video-to-gif-converter.gif](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/T876UQQ20260924151535-ezgif.com-video-to-gif-converter.gif)
 
@@ -101,7 +101,7 @@
 
 > 文档路径: 进阶内容 > UI系统 > Tips系统
 
-> 文档ID: 20445 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20445)
+> 文档ID: 20445 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=SAiHUAJA)
 
 > 新增: 2026-09-02 13:56:10
 
@@ -306,7 +306,7 @@ end
 
 > 文档路径: 进阶内容 > UI系统 > UI自适应屏幕
 
-> 文档ID: 20269 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20269)
+> 文档ID: 20269 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Bzoa9-Zi)
 
 > 更新: 2025-12-30 18:05:48
 
@@ -320,7 +320,7 @@ end
 
 ## 设置层次结构
 
-创建并进入【控件蓝图】界面（具体操作可参考 [UI系统快速入门](https://developer.gp.qq.com/wikieditor/#/catalog/347)），将屏幕分辨率设定为1920*1080（16：9）或点击 ``设计师 -> 屏幕尺寸`` 设定为“Apple iPhone 6+(Landscape)”。
+创建并进入【控件蓝图】界面（具体操作可参考 [UI系统快速入门](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=KgSe4MYW)），将屏幕分辨率设定为1920*1080（16：9）或点击 ``设计师 -> 屏幕尺寸`` 设定为“Apple iPhone 6+(Landscape)”。
 
 ![image.5.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/6JNVWimage.5.png)
 
@@ -388,7 +388,7 @@ end
 
 > 文档路径: 进阶内容 > UI系统 > UMG Lua的结构
 
-> 文档ID: 199 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/199)
+> 文档ID: 199 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=qX_upRap)
 
 > 更新: 2025-06-19 11:33:40
 
@@ -438,7 +438,7 @@ end
 
 > 文档路径: 进阶内容 > UI系统 > 创建3D UI
 
-> 文档ID: 201 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/201)
+> 文档ID: 201 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=MTT6ggmv)
 
 > 更新: 2025-06-19 11:33:40
 
@@ -487,7 +487,7 @@ end
 
 > 文档路径: 进阶内容 > UI系统 > 和平主界面控件布局
 
-> 文档ID: 20019 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20019)
+> 文档ID: 20019 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=LCS3nimG)
 
 > 新增: 2026-09-10 17:24:38 | 更新: 2026-09-11 14:41:28
 
@@ -495,7 +495,7 @@ end
 
 # 和平主界面控件布局
 
-和平精英基于经典“大逃杀”与不断衍生的玩法模式，构建了一系列丰富的 [控件库](https://developer.gp.qq.com/wikieditor/#/catalog/250)，方便玩家根据操作习惯与喜好进行个性化设置；而绿洲启元因游戏特性与规则的多样化，开发者常常需要定制UI界面，以适配玩法的操作交互，为了方便开发者对和平控件的控制与布局设置，使用WidgetLayout中间件的方案来提供支持。
+和平精英基于经典“大逃杀”与不断衍生的玩法模式，构建了一系列丰富的 [控件库](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=zaxaIsgR)，方便玩家根据操作习惯与喜好进行个性化设置；而绿洲启元因游戏特性与规则的多样化，开发者常常需要定制UI界面，以适配玩法的操作交互，为了方便开发者对和平控件的控制与布局设置，使用WidgetLayout中间件的方案来提供支持。
 
 <br>
 
@@ -581,7 +581,7 @@ end
 
 ### 自定义控件布局
 
-WidgetLayout支持添加自定义的控件并设置控件挂载的 [UISlot锚点](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20097?autoJump=UISlot%E9%94%9A%E7%82%B9)，方便开发者以可视化的方式控制自定义控件的层级。
+WidgetLayout支持添加自定义的控件并设置控件挂载的 [UISlot锚点](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Z1hBqDCI&autoJump=UISlot%E9%94%9A%E7%82%B9)，方便开发者以可视化的方式控制自定义控件的层级。
 
 从控件面板选择目标控件添加至UI结构树下，在控件蓝图根节点的【详细】面板中设置 ``Custom User Widget Layout`` 属性，该属性关联了自定义控件与锚点的映射，以键值对的形式配置，Key为自定义控件的名称，Value为指定的层级锚点，运行时将参照层级和控件的布局数据进行挂载。
 
@@ -599,7 +599,7 @@ WidgetLayout支持添加自定义的控件并设置控件挂载的 [UISlot锚点
 
 ## 案例演示
 
-为了更直观的展示功能，在此使用widget控件蓝图 [新建一个用户界面](https://developer.gp.qq.com/wikieditor/#/catalog/347)，并添加两个按钮，一个按钮用于加载 ``WidgetLayout`` ，一个按钮用于卸载 ```WidgetLayout```：
+为了更直观的展示功能，在此使用widget控件蓝图 [新建一个用户界面](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=KgSe4MYW)，并添加两个按钮，一个按钮用于加载 ``WidgetLayout`` ，一个按钮用于卸载 ```WidgetLayout```：
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/Hp8UBimage.png)
 
@@ -653,7 +653,7 @@ end
 
 > 文档路径: 进阶内容 > UI系统 > 和平控件锚点
 
-> 文档ID: 20097 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20097)
+> 文档ID: 20097 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Z1hBqDCI)
 
 > 更新: 2026-02-12 10:20:18
 
@@ -800,7 +800,7 @@ end)
 
 > 文档路径: 进阶内容 > UI系统 > 基础UI元件
 
-> 文档ID: 20149 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20149)
+> 文档ID: 20149 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=ubxqZjQd)
 
 > 新增: 2026-05-19 20:13:51 | 更新: 2026-05-20 10:35:48
 
@@ -889,9 +889,9 @@ UI元件是基于基础控件封装的一组实现特定显示效果的UI元素�
 2.打开刚创建```widgetLayout```，在控制板处搜索创建好的血条蓝图，将其拖入画布
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/EZPDpimage.png)
 3.配置主角血条
-调整好血条UI位置，配置完各项参数后需编译并保存，具体配置方法可参考[创建和配置主角血条](https://developer.gp.qq.com/wikieditor/#/catalog/20149?autoJump=%E5%88%9B%E5%BB%BA%E4%B8%8E%E9%85%8D%E7%BD%AE%E8%A1%80%E6%9D%A1)
+调整好血条UI位置，配置完各项参数后需编译并保存，具体配置方法可参考[创建和配置主角血条](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=ubxqZjQd&autoJump=%E5%88%9B%E5%BB%BA%E4%B8%8E%E9%85%8D%E7%BD%AE%E8%A1%80%E6%9D%A1)
 4.动态加载```widgetLayout```
-在有需要的时机可以动态加载出刚创建的```widgetLayout```，动态加载方法可参考[加载与卸载WidgetLayout](https://developer.gp.qq.com/wikieditor/#/catalog/20019?autoJump=%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%8D%B8%E8%BD%BDWidgetLayout)
+在有需要的时机可以动态加载出刚创建的```widgetLayout```，动态加载方法可参考[加载与卸载WidgetLayout](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=LCS3nimG&autoJump=%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%8D%B8%E8%BD%BDWidgetLayout)
 以下为在UGCGameState中ReceiveBeginPlay时机调用主角血条UI的示例：
 ```
 function UGCGameState:ReceiveBeginPlay()
@@ -961,7 +961,7 @@ end
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/gm9MMimage.png)
 3.调整新手引导组件大小和位置，配置好各项参数后编译并保存
 4.动态加载```widgetLayout```
-在有需要的时机可以动态加载出刚创建的```widgetLayout```，动态加载方法可参考[加载与卸载WidgetLayout](https://developer.gp.qq.com/wikieditor/#/catalog/20019?autoJump=%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%8D%B8%E8%BD%BDWidgetLayout)
+在有需要的时机可以动态加载出刚创建的```widgetLayout```，动态加载方法可参考[加载与卸载WidgetLayout](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=LCS3nimG&autoJump=%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%8D%B8%E8%BD%BDWidgetLayout)
 以下为在UGCGameState中ReceiveBeginPlay时机调用新手引导UI的示例：
 ```
 function UGCGameState:ReceiveBeginPlay()
@@ -1009,8 +1009,8 @@ end
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/marROimage.png)
 	**参数说明：**
 - **Max Display Count**：最大显示个数，即最大显示多少个队友的信息，小于0表示不限制，当前只能支持最多8人
-- **Health Fill Image** ：血量值百分比与颜色的映射，配置方法参考[主角血条](https://developer.gp.qq.com/wikieditor/#/catalog/20149?autoJump=%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)组件
-- **Game Attribute Fill Image Map**：属性值百分比/颜色映射，配置方法参考[主角血条](https://developer.gp.qq.com/wikieditor/#/catalog/20149?autoJump=%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)组件
+- **Health Fill Image** ：血量值百分比与颜色的映射，配置方法参考[主角血条](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=ubxqZjQd&autoJump=%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)组件
+- **Game Attribute Fill Image Map**：属性值百分比/颜色映射，配置方法参考[主角血条](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=ubxqZjQd&autoJump=%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)组件
 **注意：这里要让额外的属性条显示生效，必须在PlayerState中设置好，具体在使用前置可见；额外属性条的多少开发者可自行决定，过多的属性条会占用更多的屏幕空间**
 - **Sort Order**：队伍排序方式，这里提供了两种排序方式：
 	DefaultSorting：和平默认规则
@@ -1027,7 +1027,7 @@ end
 
 > 文档路径: 进阶内容 > UI系统 > 头像框组件
 
-> 文档ID: 20365 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20365)
+> 文档ID: 20365 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=fJh5j4C5)
 
 > 新增: 2026-05-19 20:14:11 | 更新: 2026-05-20 10:17:21
 
@@ -1070,7 +1070,7 @@ end
 
 > 文档路径: 进阶内容 > UI系统 > 富文本框
 
-> 文档ID: 202 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/202)
+> 文档ID: 202 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=KZfb8ekO)
 
 > 更新: 2025-06-19 11:33:40
 
@@ -1182,7 +1182,7 @@ end
 
 > 文档路径: 进阶内容 > UI系统 > 异形屏适配
 
-> 文档ID: 357 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/357)
+> 文档ID: 357 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T28Vep8v)
 
 > 更新: 2025-06-19 11:33:40
 
@@ -1233,7 +1233,7 @@ end
 
 > 文档路径: 进阶内容 > UI系统 > 强引导组件
 
-> 文档ID: 20383 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20383)
+> 文档ID: 20383 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=soD9I6W5)
 
 > 新增: 2026-06-03 14:31:15
 
@@ -1418,7 +1418,7 @@ return Button
 
 > 文档路径: 进阶内容 > UI系统 > 快速入门
 
-> 文档ID: 347 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/347)
+> 文档ID: 347 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=KgSe4MYW)
 
 > 更新: 2025-06-19 11:33:40
 
@@ -1566,7 +1566,7 @@ return UGCGameState;
 
 > 文档路径: 进阶内容 > UI系统 > 技能元件
 
-> 文档ID: 20325 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20325)
+> 文档ID: 20325 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=m8wPDXXZ)
 
 > 新增: 2026-05-06 10:30:55 | 更新: 2026-05-29 17:12:27
 
@@ -1687,7 +1687,7 @@ end
 
 ## 技能与元件蓝图的绑定
 
-参照[新建技能蓝图](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%96%B0%E5%BB%BA%E6%8A%80%E8%83%BD%E8%93%9D%E5%9B%BE)，进行技能的创建。
+参照[新建技能蓝图](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%96%B0%E5%BB%BA%E6%8A%80%E8%83%BD%E8%93%9D%E5%9B%BE)，进行技能的创建。
 点击【技能编辑器】->`技能`->创建好的技能->`默认技能UI`，更改为创建好的“技能元件蓝图”。
 
 ![numbered-image-1772442661037.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/fFWUdnumbered-image-1772442661037.png)
@@ -1710,8 +1710,8 @@ end
 
 ![ScreenShot_2026-04-14_095200_746.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/CF5KwScreenShot_2026-04-14_095200_746.png)
 
-若复用和平按钮槽不能满足需求，可参照[自定义控件布局](https://developer.gp.qq.com/wikieditor/#/catalog/20019?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6%E5%B8%83%E5%B1%80)和[贴边型控件](https://developer.gp.qq.com/wikieditor/#/catalog/20269?autoJump=%E8%B4%B4%E8%BE%B9%E5%9E%8B%E6%8E%A7%E4%BB%B6)创建自定义锚点并做好适配。
-参照[添加技能](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%B7%BB%E5%8A%A0%E6%8A%80%E8%83%BD)，在`PlayerPawn`蓝图中， 通过`PersistClientStateComponent `技能组件为角色蓝图默认挂载该技能组件。技能UI锚点位置可参照[和平控件锚点](https://developer.gp.qq.com/wikieditor/#/catalog/20097?autoJump=%E6%8A%80%E8%83%BDUI%E9%94%9A%E7%82%B9)。
+若复用和平按钮槽不能满足需求，可参照[自定义控件布局](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=LCS3nimG&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6%E5%B8%83%E5%B1%80)和[贴边型控件](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Bzoa9-Zi&autoJump=%E8%B4%B4%E8%BE%B9%E5%9E%8B%E6%8E%A7%E4%BB%B6)创建自定义锚点并做好适配。
+参照[添加技能](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%B7%BB%E5%8A%A0%E6%8A%80%E8%83%BD)，在`PlayerPawn`蓝图中， 通过`PersistClientStateComponent `技能组件为角色蓝图默认挂载该技能组件。技能UI锚点位置可参照[和平控件锚点](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Z1hBqDCI&autoJump=%E6%8A%80%E8%83%BDUI%E9%94%9A%E7%82%B9)。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/ILloMimage.png)
 
@@ -1738,7 +1738,7 @@ end
 
 > 文档路径: 进阶内容 > UI系统 > 背包Tips系统
 
-> 文档ID: 20463 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20463)
+> 文档ID: 20463 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=-Di0_E_S)
 
 > 新增: 2026-09-08 18:58:08
 
@@ -1764,7 +1764,7 @@ end
 + 是否可以被同等级顶替：如果两条Tips优先级一样，勾选该选项时，可以被优先级一致的Tips顶替。
 + 持续时间：tips的持续时间，优先级低于Tips调用接口。
 + 默认文本：该Tips的默认文本，可以使用富文本。
-+ TipsUI蓝图：显示Tips的UI蓝图。支持在工程内使用[TipsUI模板](https://developer.gp.qq.com/wikieditor/#/catalog/20463?autoJump=TipsUI%E6%A8%A1%E7%89%88)创建自定义的Tips覆盖默认Tips蓝图。
++ TipsUI蓝图：显示Tips的UI蓝图。支持在工程内使用[TipsUI模板](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=-Di0_E_S&autoJump=TipsUI%E6%A8%A1%E7%89%88)创建自定义的Tips覆盖默认Tips蓝图。
 
 <br>
 
@@ -1778,7 +1778,7 @@ end
 
 ## 背包Tips系统的配置
 
-点击【玩法通用设置】按钮，[启用背包系统](https://developer.gp.qq.com/wikieditor/#/catalog/20104?autoJump=%E5%90%AF%E7%94%A8%E8%83%8C%E5%8C%85%E7%B3%BB%E7%BB%9F)，添加“GP_BackpackV2”模块，创建并打开`背包组件（BP_BackpackComponentV2）`。
+点击【玩法通用设置】按钮，[启用背包系统](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x&autoJump=%E5%90%AF%E7%94%A8%E8%83%8C%E5%8C%85%E7%B3%BB%E7%BB%9F)，添加“GP_BackpackV2”模块，创建并打开`背包组件（BP_BackpackComponentV2）`。
 
 ![ScreenShot_2026-08-17_151147_588.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/IZEqtScreenShot_2026-08-17_151147_588.png)
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/zfXknimage.png)
@@ -1843,7 +1843,7 @@ function UGCBackpackSystemV2.GetBackpackTipsConfig(Player, Key) end
 
 > 文档路径: 进阶内容 > UI系统 > 通用屏幕指示器
 
-> 文档ID: 20295 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20295)
+> 文档ID: 20295 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=G1sTAwSu)
 
 > 更新: 2026-02-12 10:24:44
 
@@ -1945,7 +1945,7 @@ SetStateWidgetPanel:fun(InScreenPanel:UWidget,OutScreenPanel:UWidget,InArrowWidg
 
 > 文档路径: 进阶内容 > UI系统 > 通用进度条UI
 
-> 文档ID: 20392 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20392)
+> 文档ID: 20392 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=flWGOfyH)
 
 > 新增: 2026-06-02 16:50:29
 

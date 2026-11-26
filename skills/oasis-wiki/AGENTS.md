@@ -86,12 +86,29 @@ If a path, current workspace, or uploaded filename contains a known project name
 - `references/cowart-ui/transparent-asset-extraction.md`: Mother-background composition, visual-text extraction, child-icon separation, transparency decisions, and validation gates.
 - `references/cowart-ui/component-extractor.md`: extraction-plan schema and local command-line tools.
 
+## Context Budget
+
+- Never `Read` a whole `references/wiki/*.md`; use `rg -n` first. One read is capped at 200 lines, and all wiki content read in one task is capped at 600 lines.
+- Never read `术语表.md`, `API参考索引.md`, or `代码示例库.md` in full.
+- Keep tool output small: tables at most 20 rows, `__askq_result` at most 4 KB, log tail at most 200 lines, and `widget_inspect` only the target subtree.
+
+### Session And Prompt-Cache Hygiene
+
+The provider only keeps the prompt cache warm for a few minutes; every cold start or expired entry is re-billed as full-price input.
+
+- Start a fresh session for a new task; resume an old session only when its context is genuinely needed (a resume replays the whole history uncached). If work continues the next day, `/compact` before leaving.
+- Before a break longer than about five minutes in a long session, `/compact` while the cache is warm; otherwise the first request after the break re-reads the whole context.
+- Keep one session per task; every new session pays the fixed cold-start prefix (about 50k tokens on this machine, mostly MCP tool schemas).
+- Do not change MCP servers, skills, or `CLAUDE.md` mid-session; a prefix change invalidates the cache for all following requests.
+
 ## Search
 
 ```powershell
 rg --line-number --smart-case --glob "*.md" "UGCGameSystem" references
-powershell -ExecutionPolicy Bypass -File .\scripts\search-oasis-wiki.ps1 -Query "角色复活" -MaxResults 10
-node .\scripts\search-oasis-wiki.mjs "GetAvailableServerRPCs" --max 10
+powershell -ExecutionPolicy Bypass -File .\scripts\search-oasis-wiki.ps1 -Query "角色复活" -MaxResults 10 -Context 1
+powershell -ExecutionPolicy Bypass -File .\scripts\search-oasis-wiki.ps1 -Query "角色复活" -LocationsOnly
+node .\scripts\search-oasis-wiki.mjs "GetAvailableServerRPCs" --max 10 --context 1
+node .\scripts\search-oasis-wiki.mjs "角色复活" --locations-only
 ```
 
 ## Answer Shape For Code Help

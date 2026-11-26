@@ -80,7 +80,7 @@ When importing rules or references from another team's skill repository:
 4. Keep `SKILL.md` lean and link to the reference instead of copying detailed material into it.
 5. Sync portable agent docs if behavior changes for non-Codex agents.
 6. Run a quick search/validation check.
-7. Copy the updated `oasis-wiki` folder into the local Codex skills directory if this machine should use it immediately.
+7. Keep one maintained local copy: `~/.claude/skills/oasis-wiki`. The legacy Codex copy at `~/.codex/skills/oasis-wiki` is frozen on this machine unless the user explicitly asks to restore or use it; do not mirror every update into both locations.
 8. Commit and push when the user wants GitHub updated.
 
 ## Validation Checklist

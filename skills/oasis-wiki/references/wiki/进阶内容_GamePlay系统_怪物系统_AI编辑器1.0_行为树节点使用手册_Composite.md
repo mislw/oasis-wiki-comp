@@ -8,7 +8,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > AI编辑器1.0 > 行为树节点使用手册 > Composite > 引擎
 
-> 文档ID: 252 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/252)
+> 文档ID: 252 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=bGaoUNRv)
 
 > 更新: 2025-07-02 18:54:11
 

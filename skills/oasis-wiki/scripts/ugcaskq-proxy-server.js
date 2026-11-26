@@ -225,7 +225,7 @@ function connectSSE() {
         scheduleReconnect();
       }
     });
-    req.setTimeout(15000, () => req.destroy(new Error('SSE connect timeout')));
+    req.setTimeout(Number(process.env.UGCASKQ_PROXY_SSE_TIMEOUT_MS || 180000), () => req.destroy(new Error('SSE connect timeout')));
   });
 }
 
@@ -255,7 +255,7 @@ function postJson(msg) {
       });
     });
     req.on('error', reject);
-    req.setTimeout(15000, () => req.destroy(new Error('POST timeout')));
+    req.setTimeout(Number(process.env.UGCASKQ_PROXY_POST_TIMEOUT_MS || 180000), () => req.destroy(new Error('POST timeout')));
     req.write(body);
     req.end();
   });

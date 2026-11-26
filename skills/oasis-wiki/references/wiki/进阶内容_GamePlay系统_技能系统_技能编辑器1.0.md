@@ -8,7 +8,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > 技能编辑器1.0 > 快速入门
 
-> 文档ID: 178 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/178)
+> 文档ID: 178 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=VMDCqOMM)
 
 > 更新: 2025-06-19 11:33:39
 
@@ -103,7 +103,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > 技能编辑器1.0 > 技能编辑器节点查询
 
-> 文档ID: 259 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/259)
+> 文档ID: 259 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=JjCmzeMu)
 
 > 更新: 2025-06-19 11:33:39
 
@@ -1491,7 +1491,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > 技能编辑器1.0 > 技能设置，技能阶段设置详解
 
-> 文档ID: 181 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/181)
+> 文档ID: 181 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OmPWKdPx)
 
 > 更新: 2025-06-19 11:33:39
 
@@ -1577,7 +1577,7 @@ SPT_SEQUENCE|顺序执行
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > 技能编辑器1.0 > 新建技能阶段，新建技能Action
 
-> 文档ID: 182 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/182)
+> 文档ID: 182 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=_Z8VLvgR)
 
 > 更新: 2025-06-19 11:33:39
 
@@ -1697,7 +1697,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > 技能编辑器1.0 > 自定义自己的技能Action节点
 
-> 文档ID: 183 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/183)
+> 文档ID: 183 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=iOykH3Xo)
 
 > 更新: 2025-06-19 11:33:39
 

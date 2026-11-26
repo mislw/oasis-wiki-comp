@@ -45,6 +45,8 @@ powershell -ExecutionPolicy Bypass -File "<skill-root>\scripts\remember-oasis-fe
   -Author "luojiawei"
 ```
 
+When recording after a merge or with unrelated worktree changes, the script's auto-captured `Changed Files` / `Git Stat` can describe the merge commit or unrelated binaries instead of the feature. Pass explicit `-SourceFiles`, then correct those two sections to the feature's actual files (or record before merging).
+
 ## Task Memory Contract
 
 Write one task memory only after the feature has a stable outcome and fresh verification evidence. Distill the current conversation into:

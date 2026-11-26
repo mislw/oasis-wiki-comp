@@ -8,7 +8,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > 载具系统 > 普通载具
 
-> 文档ID: 379 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/379)
+> 文档ID: 379 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=RqXsz0_h)
 
 > 更新: 2025-11-18 22:47:32
 
@@ -18,7 +18,7 @@
 
 绿洲启元编辑器提供了一个功能强大且种类丰富的载具系统，覆盖了陆、海、空三大领域，能够满足各种复杂的游戏玩法需求，开发者可以根据需要灵活调整载具的速度、血量等关键参数，提升载具的可玩性和游戏乐趣。
 
-> 该文档为旧载具蓝图操作指南，目前已统一迁移至 [载具编辑器](https://developer.gp.qq.com/wikieditor/#/catalog/20245)，请参考新文档创建载具蓝图
+> 该文档为旧载具蓝图操作指南，目前已统一迁移至 [载具编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0b5iBLe3)，请参考新文档创建载具蓝图
 
 <br>
 
@@ -85,7 +85,7 @@ local carActor = ScriptGameplayStatics.SpawnActor(self, DaciaCarClass, Vector.Ne
 
 > 文档路径: 进阶内容 > GamePlay系统 > 载具系统 > 载具刷新器
 
-> 文档ID: 20291 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20291)
+> 文档ID: 20291 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=oHWAV7wO)
 
 > 更新: 2026-04-02 12:33:51
 
@@ -118,7 +118,7 @@ local carActor = ScriptGameplayStatics.SpawnActor(self, DaciaCarClass, Vector.Ne
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/JcuBPimage.png)
 
 - Vehicle List：一组载具刷新列表
-	- SoftPath：通过 [载具编辑器](https://developer.gp.qq.com/wikieditor/#/catalog/20245) 创建的载具蓝图类
+	- SoftPath：通过 [载具编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0b5iBLe3) 创建的载具蓝图类
 	- Weight：刷新权重值，``刷新概率 = 该载具权重 / 权重总和``
 - Active Begin：游戏启动时是否自动激活刷新点，刷新器默认只会执行一次刷新，再次刷新需要脚本中调用 [``GenerateVehicle``](https://developer.gp.qq.com/api/#/searchContent/BP_UGCVehicleRefresherTool?classDetailShow=true&path=class%2Fdetail%2FOthers%2FBP_UGCVehicleRefresherTool.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=BP_UGCVehicleRefresherTool) 等函数主动触发
 
@@ -159,7 +159,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 载具系统 > 载具编辑器
 
-> 文档ID: 20245 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20245)
+> 文档ID: 20245 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0b5iBLe3)
 
 > 新增: 2026-09-08 18:57:29
 
@@ -244,13 +244,13 @@ end
 
 ### 基础属性配置
 
-载具编辑器为各类型的载具抽象了一批通用的基础属性，例如血量、油耗、爆炸伤害等，并通过固化属性的形式内置在属性管理器中，可基于 [属性系统](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E4%BD%BF%E7%94%A8%E5%B1%9E%E6%80%A7) 使用这部分属性。
+载具编辑器为各类型的载具抽象了一批通用的基础属性，例如血量、油耗、爆炸伤害等，并通过固化属性的形式内置在属性管理器中，可基于 [属性系统](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E4%BD%BF%E7%94%A8%E5%B1%9E%E6%80%A7) 使用这部分属性。
 
-> 载具各项基础属性的说明可参见 [载具属性对照表](https://developer.gp.qq.com/wikieditor/#/catalog/20246)
+> 载具各项基础属性的说明可参见 [载具属性对照表](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=ZH08KZdJ)
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/cVc6Dimage.png)
 
-载具蓝图上挂载了 [属性修改组件](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9%E7%BB%84%E4%BB%B6)，如果希望修改载具的初始属性值，可通过该组件的 ``属性初始值配置`` 进行设置。
+载具蓝图上挂载了 [属性修改组件](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9%E7%BB%84%E4%BB%B6)，如果希望修改载具的初始属性值，可通过该组件的 ``属性初始值配置`` 进行设置。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/GOb9zimage.png)
 
@@ -535,9 +535,9 @@ end
 
 ### 添加载具武器
 
-如果使用的座椅数据资产支持载具武器配置，则可以添加载具武器。点击实体编辑器【载具武器】页签，参考 [新建载具蓝图](https://developer.gp.qq.com/wikieditor/#/catalog/20245?autoJump=%E6%96%B0%E5%BB%BA%E8%BD%BD%E5%85%B7%E8%93%9D%E5%9B%BE) 的方式基于任一载具武器模板创建载具武器蓝图。
+如果使用的座椅数据资产支持载具武器配置，则可以添加载具武器。点击实体编辑器【载具武器】页签，参考 [新建载具蓝图](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0b5iBLe3&autoJump=%E6%96%B0%E5%BB%BA%E8%BD%BD%E5%85%B7%E8%93%9D%E5%9B%BE) 的方式基于任一载具武器模板创建载具武器蓝图。
 
-> 载具武器蓝图的属性配置与普通枪械蓝图相同，可参见 [自定义枪械](https://developer.gp.qq.com/wikieditor/#/catalog/20103)
+> 载具武器蓝图的属性配置与普通枪械蓝图相同，可参见 [自定义枪械](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=GhCebD_C)
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/sDGaLimage.png)
 

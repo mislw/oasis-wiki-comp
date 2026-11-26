@@ -8,7 +8,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > 技能属性绑定
 
-> 文档ID: 20108 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20108)
+> 文档ID: 20108 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi)
 
 > 新增: 2026-07-31 16:02:14
 
@@ -24,7 +24,7 @@
 
 属性绑定提供了一种动态调整技能蓝图属性的途径，可以根据外部脚本逻辑计算得到的结果来更新属性值，让属性不再局限于初始值的设置，变得更加灵活。
 
-例如 [技能Task-发射抛体](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E5%8F%91%E5%B0%84%E6%8A%9B%E4%BD%93) 具有一个 ``发射数量`` 属性，随着角色成长需要提升可发射的抛体数量，按常规做法需要配置多个技能蓝图，各蓝图设置不同的发射数量；当成长体系越发复杂时，需要配置的技能蓝图数量变得越来越多且不可控。如果使用属性绑定，只需将此属性与一个蓝图变量关联，角色成长时修改变量值则相对应发射数量也随之更新，这样在复用同一个技能蓝图的前提下，角色拥有了一个“新的技能”。
+例如 [技能Task-发射抛体](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E5%8F%91%E5%B0%84%E6%8A%9B%E4%BD%93) 具有一个 ``发射数量`` 属性，随着角色成长需要提升可发射的抛体数量，按常规做法需要配置多个技能蓝图，各蓝图设置不同的发射数量；当成长体系越发复杂时，需要配置的技能蓝图数量变得越来越多且不可控。如果使用属性绑定，只需将此属性与一个蓝图变量关联，角色成长时修改变量值则相对应发射数量也随之更新，这样在复用同一个技能蓝图的前提下，角色拥有了一个“新的技能”。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/DXL1aimage.png)
 
@@ -39,7 +39,7 @@
 
 ### 创建蓝图变量
 
-在编辑器菜单栏中选择并打开技能编辑器，双击打开技能蓝图，找到 [```我的蓝图```](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E8%93%9D%E5%9B%BE%E5%8F%98%E9%87%8F) 页签。
+在编辑器菜单栏中选择并打开技能编辑器，双击打开技能蓝图，找到 [```我的蓝图```](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E8%93%9D%E5%9B%BE%E5%8F%98%E9%87%8F) 页签。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/5fCIHimage.png)
 
@@ -63,7 +63,7 @@
 |变量绑定|将属性与相同数据类型的蓝图变量进行绑定，针对“Property”类型生效|![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/ql8SNimage.png)<br>![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/CNnM4image.png)|
 |公式计算|基于 [自定义属性](https://developer.gp.qq.com/wikieditor/#/catalog/20135?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7) 固定为 ``属性值 * A + B`` 的计算公式，计算变量支持常数，针对“Attribute”类型生效|![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/0HWmZimage.png)|
 
-以 ```精确制导``` 技能为例，选中技能的 ``Indicator`` 阶段，在 [序列播放器时间轴](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E5%BA%8F%E5%88%97%E6%92%AD%E6%94%BE%E5%99%A8%E9%85%8D%E7%BD%AE) 上找到并点击打开 ``选择点`` 技能Task的参数面板，找到 ``半径`` 属性，点击右侧加号新建蓝图变量，然后展开右侧下拉列表，选择新建的蓝图变量与该属性绑定，此时输入框被置灰即完成变量绑定。
+以 ```精确制导``` 技能为例，选中技能的 ``Indicator`` 阶段，在 [序列播放器时间轴](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E5%BA%8F%E5%88%97%E6%92%AD%E6%94%BE%E5%99%A8%E9%85%8D%E7%BD%AE) 上找到并点击打开 ``选择点`` 技能Task的参数面板，找到 ``半径`` 属性，点击右侧加号新建蓝图变量，然后展开右侧下拉列表，选择新建的蓝图变量与该属性绑定，此时输入框被置灰即完成变量绑定。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/oG21Jimage.png)
 
@@ -75,11 +75,11 @@
 
 属性设置器 ```Setter``` 能够将事件的输出参数通过蓝图变量存储及传递数据，脚本中可以访问这个变量值，进一步处理业务逻辑或更新属性值。
 
-以 ```精确制导``` 技能为例，在 ```CastSkill``` 阶段添加一个技能Task，类型选择 [阶段跳转](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E9%98%B6%E6%AE%B5%E8%B7%B3%E8%BD%AC)。
+以 ```精确制导``` 技能为例，在 ```CastSkill``` 阶段添加一个技能Task，类型选择 [阶段跳转](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E9%98%B6%E6%AE%B5%E8%B7%B3%E8%BD%AC)。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/2SQajimage.png)
 
-打开 ```阶段跳转``` 的 [Task参数面板](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=Task%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE)，添加一个 [```受到伤害事件```](https://developer.gp.qq.com/wikieditor/#/catalog/20112?autoJump=%E5%8F%97%E5%88%B0%E4%BC%A4%E5%AE%B3%E4%BA%8B%E4%BB%B6)，该事件拥有一个浮点型且名为“伤害”的参数输出类属性。新建一个浮点型蓝图变量DamageValue，通过“伤害”属性的下拉列表选择并绑定该变量，当受到伤害时，DamageValue变量将接收并存储伤害值。
+打开 ```阶段跳转``` 的 [Task参数面板](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=Task%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE)，添加一个 [```受到伤害事件```](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=YDs0hD-g&autoJump=%E5%8F%97%E5%88%B0%E4%BC%A4%E5%AE%B3%E4%BA%8B%E4%BB%B6)，该事件拥有一个浮点型且名为“伤害”的参数输出类属性。新建一个浮点型蓝图变量DamageValue，通过“伤害”属性的下拉列表选择并绑定该变量，当受到伤害时，DamageValue变量将接收并存储伤害值。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/oSTfDimage.png)
 
@@ -105,7 +105,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > 法术场
 
-> 文档ID: 20217 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20217)
+> 文档ID: 20217 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=qq3UwYWQ)
 
 > 新增: 2026-05-29 17:14:40 | 更新: 2026-07-30 19:04:24
 
@@ -255,7 +255,7 @@ end
 
 ### 碰撞过滤器
 
-法术场应用了 [过滤器](https://developer.gp.qq.com/wikieditor/#/catalog/20218) 实现碰撞结果的筛选，符合过滤要求的碰撞单位才会受到法术场的效果影响。
+法术场应用了 [过滤器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=g7gKrHOs) 实现碰撞结果的筛选，符合过滤要求的碰撞单位才会受到法术场的效果影响。
 
 <br>
 
@@ -304,10 +304,10 @@ end
 - buff类型：
 	- 指定类型：根据配置的Buff基类移除匹配的Buff
 	- 拥有任意Tag：当移除目标身上的Buff实例携带的类型Tag拥有配置的任一tag时，则移除对应的Buff实例
-- Buff类型：要移除的 [Buff蓝图](https://developer.gp.qq.com/wikieditor/#/catalog/20087)
+- Buff类型：要移除的 [Buff蓝图](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0Y0pURs-)
 - 移除的层数：移除的Buff层数，如果移除后为0将销毁Buff
 	- Property：常量
-	- Attribute：具体参考 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20098)
+	- Attribute：具体参考 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg)
 
 ---
 
@@ -336,14 +336,14 @@ end
   - 开始事件：当法术场生成时触发
   - 结束事件：当法术场销毁时触发
 - 执行动作：
-  - 释放技能：触发技能列表中已配置的技能,具体可参考[释放技能](https://developer.gp.qq.com/wikieditor/#/catalog/20217?autoJump=%E9%87%8A%E6%94%BE%E6%8A%80%E8%83%BD:~:text=%E7%9B%AE%E6%A0%87%E9%83%BD%E7%94%9F%E6%95%88%E3%80%82-,%E9%87%8A%E6%94%BE%E6%8A%80%E8%83%BD,-%E6%8A%80%E8%83%BDClass%E5%88%97%E8%A1%A8)
+  - 释放技能：触发技能列表中已配置的技能,具体可参考[释放技能](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=qq3UwYWQ&autoJump=%E9%87%8A%E6%94%BE%E6%8A%80%E8%83%BD)
   -  添加buff：添加的buff，具体可参考[添加Buff
-](https://developer.gp.qq.com/wikieditor/#/catalog/20217?autoJump=%E6%B7%BB%E5%8A%A0Buff:~:text=%E7%9B%B8%E5%85%B3%E7%9A%84Task-,%E6%B7%BB%E5%8A%A0Buff,-Buff%E7%B1%BB%E5%9E%8B%EF%BC%9A%E9%9C%80%E8%A6%81)
-  -  调用Lua脚本：触发已配置的Lua脚本，具体可参考[调用Lua脚本](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E8%B0%83%E7%94%A8Lua%E8%84%9A%E6%9C%AC:~:text=%E6%B7%BB%E5%8A%A0%E7%BB%99%E7%9B%AE%E6%A0%87-,%E6%8A%80%E8%83%BDTask%2D%E8%B0%83%E7%94%A8Lua%E8%84%9A%E6%9C%AC,-%E5%9C%A8%E6%8C%87%E5%AE%9A%E7%9A%84)
+](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=qq3UwYWQ&autoJump=%E6%B7%BB%E5%8A%A0Buff)
+  -  调用Lua脚本：触发已配置的Lua脚本，具体可参考[调用Lua脚本](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E8%B0%83%E7%94%A8Lua%E8%84%9A%E6%9C%AC)
   - 无目标激活：是否需要拥有目标才会激活法术场
   - 创建类型：
     - 由技能创建：法术场持有其施法者的信息，可用于追溯施法者
-    - 由自身创建：法术场不携带施法者信息，但需额外配置[阵营](https://developer.gp.qq.com/wikieditor/#/catalog/20095)
+    - 由自身创建：法术场不携带施法者信息，但需额外配置[阵营](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Q2VYiY6l)
 
 
 #### 碰撞事件
@@ -397,12 +397,12 @@ end
 
 当法术场的动作为释放技能时，需要注意以下两点：
 
-1. 法术场为技能的施法者，因此部分技能Task并不适用法术场的技能配置，例如 [自动瞄准](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E8%87%AA%E5%8A%A8%E7%9E%84%E5%87%86) Task，推荐配置技能蓝图时，将 [技能预览设置](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E6%8A%80%E8%83%BD%E9%A2%84%E8%A7%88%E8%AE%BE%E7%BD%AE) 中的 ``Actor类型`` 选为“法术场”，技能轨道会自动过滤不可用的Task。
+1. 法术场为技能的施法者，因此部分技能Task并不适用法术场的技能配置，例如 [自动瞄准](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E8%87%AA%E5%8A%A8%E7%9E%84%E5%87%86) Task，推荐配置技能蓝图时，将 [技能预览设置](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E6%8A%80%E8%83%BD%E9%A2%84%E8%A7%88%E8%AE%BE%E7%BD%AE) 中的 ``Actor类型`` 选为“法术场”，技能轨道会自动过滤不可用的Task。
 
 	![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/ZNA2Zimage.png)
 	![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/EaZKPimage.png)
 
-2. 部分技能Task涉及对Owner对象的依赖，例如 [造成伤害](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E9%80%A0%E6%88%90%E4%BC%A4%E5%AE%B3) Task，当 ``伤害数值`` 设为“公式计算”且 ``伤害数值属性来源`` 设为“Causer”时，依赖于施法者的属性进行伤害计算。此时，如果法术场是由场景放置生成的，则会因为无Owner而导致逻辑异常，因此使用场景放置生成法术场的时候，需要确保技能的逻辑没有对Owner相关的依赖。
+2. 部分技能Task涉及对Owner对象的依赖，例如 [造成伤害](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E9%80%A0%E6%88%90%E4%BC%A4%E5%AE%B3) Task，当 ``伤害数值`` 设为“公式计算”且 ``伤害数值属性来源`` 设为“Causer”时，依赖于施法者的属性进行伤害计算。此时，如果法术场是由场景放置生成的，则会因为无Owner而导致逻辑异常，因此使用场景放置生成法术场的时候，需要确保技能的逻辑没有对Owner相关的依赖。
 
 	![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/Cqz1Wimage.png)
 
@@ -412,7 +412,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 技能系统 > 状态互斥
 
-> 文档ID: 20106 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20106)
+> 文档ID: 20106 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=NkytpdRS)
 
 > 更新: 2026-03-06 17:14:48
 
@@ -430,7 +430,7 @@ end
 
 ### 状态表示
 
-和平精英通过 [GameplayTag](https://developer.gp.qq.com/wikieditor/#/catalog/20102) 的方式表示角色状态，每一种状态都是独立的标签，相较于传统的枚举类型，标签化的优势在于方便动态拓展且能实现树状的查找和父节点匹配，尤其在技能和Buff的复杂状态逻辑判定中更加灵活高效。
+和平精英通过 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 的方式表示角色状态，每一种状态都是独立的标签，相较于传统的枚举类型，标签化的优势在于方便动态拓展且能实现树状的查找和父节点匹配，尤其在技能和Buff的复杂状态逻辑判定中更加灵活高效。
 
 例如：禁用角色移动的场景，移动通常包括行走、游泳、飞行等多种状态，如果使用枚举类型需要实现很多条件判定分支逻辑；而采用GameplayTag，将各种状态定义成具体标签名：Movement.Walk、Movement.Swim、Movement.Fly，只需禁用Movement父节点，根据树形关系所有子节点标签将会自动被禁用。
 
@@ -470,7 +470,7 @@ end
 
 ### 和平角色状态
 
-[GameplayTag](https://developer.gp.qq.com/wikieditor/#/catalog/20102) 已经预设了和平精英人物角色所有的状态标签和部分功能系统扩展的特殊状态标签，开发者可以直接应用于角色执行特定行为前的状态判定，各类状态标签说明可参见 [角色状态标签](https://developer.gp.qq.com/wikieditor/#/catalog/20205?autoJump=%E8%A7%92%E8%89%B2%E7%8A%B6%E6%80%81%E6%A0%87%E7%AD%BE)。
+[GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 已经预设了和平精英人物角色所有的状态标签和部分功能系统扩展的特殊状态标签，开发者可以直接应用于角色执行特定行为前的状态判定，各类状态标签说明可参见 [角色状态标签](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=HImjMlUr&autoJump=%E8%A7%92%E8%89%B2%E7%8A%B6%E6%80%81%E6%A0%87%E7%AD%BE)。
 
 <br>
 
@@ -496,7 +496,7 @@ end
 
 ### 实现状态互斥
 
-如果开发者构建了新的 [状态Tag](https://developer.gp.qq.com/wikieditor/#/catalog/20102?autoJump=%E6%B7%BB%E5%8A%A0%E6%A0%87%E7%AD%BE)，并且希望为该状态赋予互斥关系，或者在预设的和平角色状态互斥规则基础上新增互斥关系，需要在业务逻辑中实现状态被打断的逻辑处理、是否被禁用的前置判定以及主动打断/禁用其他状态。
+如果开发者构建了新的 [状态Tag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH&autoJump=%E6%B7%BB%E5%8A%A0%E6%A0%87%E7%AD%BE)，并且希望为该状态赋予互斥关系，或者在预设的和平角色状态互斥规则基础上新增互斥关系，需要在业务逻辑中实现状态被打断的逻辑处理、是否被禁用的前置判定以及主动打断/禁用其他状态。
 
 **状态是否被禁用**
 
@@ -607,10 +607,10 @@ UGCPersistEffectSystem.SetDynamicStateDisabled(self, "PawnState.Action.HoldWeapo
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/NQDVvimage.png)
 
-以 ``践踏`` 技能蓝图为例，查看蓄力（Charge）阶段配置，此阶段技能轨道上添加了一个 [技能Task-状态变化](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96) 用于设置需要打断和禁用的状态，效果为玩家在施放技能的蓄力阶段无法移动。
+以 ``践踏`` 技能蓝图为例，查看蓄力（Charge）阶段配置，此阶段技能轨道上添加了一个 [技能Task-状态变化](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96) 用于设置需要打断和禁用的状态，效果为玩家在施放技能的蓄力阶段无法移动。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/xEKh2image.png)
 
-更多关于技能中的 [技能Task-状态变化](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96) 和Buff中的 [状态互斥](https://developer.gp.qq.com/wikieditor/#/catalog/20087?autoJump=%E7%8A%B6%E6%80%81%E4%BA%92%E6%96%A5) 设置说明可参阅相应的文档。
+更多关于技能中的 [技能Task-状态变化](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96) 和Buff中的 [状态互斥](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0Y0pURs-&autoJump=%E7%8A%B6%E6%80%81%E4%BA%92%E6%96%A5) 设置说明可参阅相应的文档。
 
 ---

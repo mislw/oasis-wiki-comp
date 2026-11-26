@@ -51,6 +51,8 @@ Token limits unless explicitly asked for more:
 - fields per sample row: max 20;
 - mutation verification: only changed rows and fields.
 
+These caps are part of the global context budget in `mcp-integration.md`; do not raise them without an explicit user request.
+
 ## Find The Real Load Path
 
 Use asset browser APIs and the returned `load_path`:
@@ -185,23 +187,53 @@ After any row, struct, or table change:
 
 ## UserDefinedStruct Schema Changes
 
-For user-defined struct assets, field edits are index-based. Read the field list first, then remove or add by index:
+Load the struct asset directly; `ue.find_struct(name)` only resolves structs already loaded in memory:
 
 ```python
-s = ue.find_asset('/Project/Asset/Data/Table/CoopChallenge/Struct_CoopStage.Struct_CoopStage')
-names_before = [str(getattr(v, 'FriendlyName', '?')) for v in s.struct_get_variables()]
-idx = names_before.index('KillPercentTarget')
-s.struct_remove_variable(idx)
-names_after = [str(getattr(v, 'FriendlyName', '?')) for v in s.struct_get_variables()]
-assert 'KillPercentTarget' not in names_after
-assert len(names_after) == len(names_before) - 1
+s = ue.find_asset('/Project/Asset/Data/Table/Foo/Struct_Foo.Struct_Foo')
+vars_before = s.struct_get_variables()
+```
+
+Each variable description exposes `FriendlyName`, `Category`, `ContainerType`, `DefaultValue`, `ToolTip`, and `VarGuid`.
+
+- `ContainerType`: `0` = single value, `1` = `TArray`, `3` = `TMap` (map fields also carry `PinValueType` and key/value metadata). Confirm map/set details in the editor before writing.
+- Add a field with `UGCStructVariableDescription`:
+
+```python
+d = ue.find_struct('UGCStructVariableDescription')()
+d.VarName = 'ConditionKingLevel'   # clean API name; editor-created fields may carry _N_GUID suffixes
+d.FriendlyName = 'ConditionKingLevel'
+d.Category = 'int'                 # int / string / bool / byte for enums / class / object
+d.ContainerType = 0                # 1 for TArray
+d.DefaultValue = ''
+d.ToolTip = 'Required king level; 0 = no requirement'
+s.struct_add_variable(d)
 s.save_package()
 ```
 
-- Re-read `struct_get_variables()` after the change and assert the expected field list before saving.
-- The struct may be used by several tables and Blueprints; confirm consumers before removing or reordering fields.
-- Re-read a sample row after the schema change to confirm the table still parses, then restart PIE before judging runtime behavior.
-- `struct_add_variable` follows the same read-verify-save pattern; confirm the new field type and default value afterward.
+- Remove or reorder by the variable's `VarGuid`:
+
+```python
+target = next(v for v in s.struct_get_variables() if v.FriendlyName == 'OldName')
+s.struct_remove_variable(target.VarGuid)
+# s.struct_move_variable_up(target.VarGuid) / struct_move_variable_down(target.VarGuid)
+```
+
+In the current build, passing the description object instead of `VarGuid` raises `object is not a FGuid`; if a build accepts an index, re-read the list after every mutation because indices shift.
+
+- Verify from the table, not from the binary: `data_table_as_json()` / `data_table_find_row(...).as_dict()` should show the new field and defaults. An old FName can remain in the `.uasset` name table after removal, so `rg` over the binary is not proof the field still exists.
+- After writing array values with `data_table_modify_row(row, field, [1, 2])`, call the table's `save_package()` and re-read the row.
+- Re-read `struct_get_variables()` after each change and assert the expected field list before saving. The struct may be used by several tables and Blueprints; restart PIE before judging runtime behavior.
+
+## Level And Requirement Table Semantics
+
+Before filling a level/progression table, write down the row contract:
+
+- Prefer "row N describes level N": stats, model, unlock text, and requirements to reach N live on row N.
+- Fields that mean "cost to go from N to N+1" are exceptions; document them in the field tooltip and code comment. The UI/server may read row N for cost but row N+1 for the target level's conditions and unlocks.
+- At current level L, the "next level" panel reads row L+1; the "already unlocked" panel aggregates rows 1..L. A requirement value of 0 or an empty list means "no requirement"; hide the row instead of rendering `0` or blank.
+- Keep one source of truth per behavior. Before adding a per-level list (for example which towers unlock at each level), search the entity table and the latest origin branch for a per-entity field (for example an unlock level on each tower). If it exists, group by it instead of adding a parallel list.
+- A duplicate field that is kept temporarily must be marked deprecated in its tooltip; do not leave it silently editable as if it controlled gameplay.
 
 ## Verify Table-Driven Values End To End
 

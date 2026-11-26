@@ -8,7 +8,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > Gameplay标签
 
-> 文档ID: 20102 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20102)
+> 文档ID: 20102 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH)
 
 > 更新: 2026-03-06 17:14:29
 
@@ -16,7 +16,7 @@
 
 # Gameplay标签
 
-GameplayTag是具备分层含义的标签功能，通过“.”分隔的一串多层级标识符来表达游戏中的具体概念，开发者可以创建任意数量的标签用于对资源、状态、物品等对象进行分类和标记，这种轻量、灵活的方式可以应用在 [技能编辑器](https://developer.gp.qq.com/wikieditor/#/catalog/20091)、[Buff编辑器](https://developer.gp.qq.com/wikieditor/#/catalog/20087) 或者 [物品编辑器](https://developer.gp.qq.com/wikieditor/#/catalog/20101) 等各种系统功能中。
+GameplayTag是具备分层含义的标签功能，通过“.”分隔的一串多层级标识符来表达游戏中的具体概念，开发者可以创建任意数量的标签用于对资源、状态、物品等对象进行分类和标记，这种轻量、灵活的方式可以应用在 [技能编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y)、[Buff编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0Y0pURs-) 或者 [物品编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6) 等各种系统功能中。
 
 <br>
 
@@ -81,7 +81,7 @@ GameplayTag对层级数量没有限制，开发者可根据需要灵活定义分
 
 ### 引用标签
 
-一些系统功能涉及标签的引用配置，例如 [Buff编辑器](https://developer.gp.qq.com/wikieditor/#/catalog/20087?autoJump=%E7%8A%B6%E6%80%81%E4%BA%92%E6%96%A5) 可以通过 ```Tag``` 过滤施放的对象或根据角色状态决定是否可获得Buff。
+一些系统功能涉及标签的引用配置，例如 [Buff编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0Y0pURs-&autoJump=%E7%8A%B6%E6%80%81%E4%BA%92%E6%96%A5) 可以通过 ```Tag``` 过滤施放的对象或根据角色状态决定是否可获得Buff。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/J2N5eimage.png)
 

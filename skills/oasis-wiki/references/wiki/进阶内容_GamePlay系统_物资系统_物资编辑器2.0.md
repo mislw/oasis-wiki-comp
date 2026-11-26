@@ -8,7 +8,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > 物资系统 > 物资编辑器2.0 > 物品与背包槽位
 
-> 文档ID: 20210 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20210)
+> 文档ID: 20210 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=6FOlCQz3)
 
 > 更新: 2026-03-06 17:18:26
 
@@ -28,11 +28,11 @@
 
 |属性名|属性说明|
 |-|-|
-|Slot Name|基于 [GameplayTag](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20102) 定义的槽位名，必须为 ``EquipmentSlot`` 下的子级Tag|
+|Slot Name|基于 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 定义的槽位名，必须为 ``EquipmentSlot`` 下的子级Tag|
 |Display Name|槽位的名称，显示在槽位中的文本|
 |Allow Types|允许装配的物品类型，对应物品的 ``自定义类型`` 属性，与 ``Allow Tags`` 为或的关系|
 |Allow Tags|允许装配带有指定标签的物品，对应物品的 ``物品标记`` 属性，与 ``Allow Types`` 为或的关系|
-|默认启用|该槽位是否默认可用，若不勾选则可设置锁定或者隐藏状态，详细见 [槽位锁定与解锁](https://developer.gp.qq.com/wikieditor/#/catalog/20210?autoJump=%E6%A7%BD%E4%BD%8D%E9%94%81%E5%AE%9A%E4%B8%8E%E8%A7%A3%E9%94%81) 部分内容|
+|默认启用|该槽位是否默认可用，若不勾选则可设置锁定或者隐藏状态，详细见 [槽位锁定与解锁](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=6FOlCQz3&autoJump=%E6%A7%BD%E4%BD%8D%E9%94%81%E5%AE%9A%E4%B8%8E%E8%A7%A3%E9%94%81) 部分内容|
 
 > 特别注意，如果 ``Allow Types`` 和 ``Allow Tags`` 都留空，代表允许装配任意物品，可能出现枪械作为头盔配件而装备上的效果
 
@@ -150,7 +150,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > 物资系统 > 物资编辑器2.0 > 物品实例化数据
 
-> 文档ID: 20433 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20433)
+> 文档ID: 20433 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=5GHskaj9)
 
 > 新增: 2026-08-12 12:35:58 | 更新: 2026-09-23 09:47:28
 
@@ -196,7 +196,7 @@
 
 DataID 是物品实例数据的唯一标识，格式为 "ItemID_Level"：
 
-- ItemID：对应 [物品编辑器2.0](https://developer.gp.qq.com/wikieditor/#/catalog/20101) 中创建物品的物品ID
+- ItemID：对应 [物品编辑器2.0](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6) 中创建物品的物品ID
 - Level：实例编号（如等级、变体序号等）
 
 例如 "8310048_2" 表示物品 8310048 的第 2 号实例变体。
@@ -219,7 +219,7 @@ DataID 是物品实例数据的唯一标识，格式为 "ItemID_Level"：
 
 ### 前置
 
-点击编辑器菜单栏的【玩法通用设置】按钮，在【GamePart】中添加【GP_BackpackV2】模块和【GP_PickUpV2List】，启用 [V2背包](https://developer.gp.qq.com/wikieditor/#/catalog/20104?autoJump=%E5%90%AF%E7%94%A8%E8%83%8C%E5%8C%85%E7%B3%BB%E7%BB%9F:~:text=%E5%A4%A7%E7%BA%B2-,%E5%90%AF%E7%94%A8%E8%83%8C%E5%8C%85%E7%B3%BB%E7%BB%9F,-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%83%8C%E5%8C%85) 和 [自定义拾取组件](https://developer.gp.qq.com/wikieditor/#/catalog/20420)。
+点击编辑器菜单栏的【玩法通用设置】按钮，在【GamePart】中添加【GP_BackpackV2】模块和【GP_PickUpV2List】，启用 [V2背包](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x&autoJump=%E5%90%AF%E7%94%A8%E8%83%8C%E5%8C%85%E7%B3%BB%E7%BB%9F) 和 [自定义拾取组件](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=8NEXiznt)。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/YJediimage.png)
 
@@ -487,7 +487,7 @@ end
 
 **蓝图掉落**
 
-在怪物的 [掉落组件](https://developer.gp.qq.com/wikieditor/#/catalog/20142) 上，选择蓝图掉落方式，填写想要掉落的物品实例化数据索引：
+在怪物的 [掉落组件](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=hix8TNXf) 上，选择蓝图掉落方式，填写想要掉落的物品实例化数据索引：
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/ynEgOimage.png)
 
@@ -501,7 +501,7 @@ end
 
 **读表掉落**
 
-[掉落表](https://developer.gp.qq.com/wikieditor/#/catalog/20058) 新增了物品实例化数据的索引，配置索引之后，在怪物的掉落组件上配置掉落ID：
+[掉落表](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=x7rvzrFb) 新增了物品实例化数据的索引，配置索引之后，在怪物的掉落组件上配置掉落ID：
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/VS3gyimage.png)
 
@@ -580,7 +580,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 物资系统 > 物资编辑器2.0 > 物品编辑器
 
-> 文档ID: 20101 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20101)
+> 文档ID: 20101 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6)
 
 > 新增: 2026-04-29 10:11:44 | 更新: 2026-05-29 17:14:58
 
@@ -588,13 +588,13 @@ end
 
 # 物品编辑器
 
-物品编辑器将和平精英的常用物资模板化，对各类物资的原始属性进行了精简与提炼，开发者可基于模板创建并调整物品的基础属性，同时也支持了对特定物品的扩展能力，例如自定义个性化枪械，为枪械赋予词条属性等等，结合 [背包系统](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20104) 能够为玩法创作带来更强大的功能支持。
+物品编辑器将和平精英的常用物资模板化，对各类物资的原始属性进行了精简与提炼，开发者可基于模板创建并调整物品的基础属性，同时也支持了对特定物品的扩展能力，例如自定义个性化枪械，为枪械赋予词条属性等等，结合 [背包系统](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x) 能够为玩法创作带来更强大的功能支持。
 
 <br>
 
 ## 物品概述
 
-游戏中的物品是指一类玩家可交互的对象，根据存在形态的不同分为 [虚拟物品](https://developer.gp.qq.com/wikieditor/#/catalog/20139) 和实体物品，物品编辑器中的物品特指实体物品，且具有以下特征：
+游戏中的物品是指一类玩家可交互的对象，根据存在形态的不同分为 [虚拟物品](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=SX-rx3E_) 和实体物品，物品编辑器中的物品特指实体物品，且具有以下特征：
 - 在世界场景中能够具象化展示物品的形态，即物品可被看见
 - 玩家可以直接与物品进行交互，例如使用或者装配物品
 - 通过背包/仓库内是否存在物品来表达玩家是否拥有该物品
@@ -619,9 +619,9 @@ end
 
 目前提供了物品、枪械、近战武器和投掷物四类模板：
 - 物品模板用于创建所有已支持类型的物品，该物品能够发放至背包内使用，但无法直接放置在场景中被拾取
-- 枪械模板用于创建枪械实体蓝图，该实体无法进入背包装配使用，但可以关联至通过物品模板创建的枪械物品上，实现枪械的 [自定义改装](https://developer.gp.qq.com/wikieditor/#/catalog/20103)
-- 近战武器模板用于创建近战武器的实体蓝图，该实体无法进入背包装配使用，但可以关联至通过物品模板创建的近战武器物品上，实现近战武器的 [自定义设置](https://developer.gp.qq.com/wikieditor/#/catalog/20158)
-- 投掷物模板用于创建投掷物的实体蓝图，该实体无法进入背包使用，但可以关联至通过物品模板创建的投掷物物品上，实现投掷物的 [自定义设置](https://developer.gp.qq.com/wikieditor/#/catalog/20157)
+- 枪械模板用于创建枪械实体蓝图，该实体无法进入背包装配使用，但可以关联至通过物品模板创建的枪械物品上，实现枪械的 [自定义改装](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=GhCebD_C)
+- 近战武器模板用于创建近战武器的实体蓝图，该实体无法进入背包装配使用，但可以关联至通过物品模板创建的近战武器物品上，实现近战武器的 [自定义设置](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=yXcpzK1N)
+- 投掷物模板用于创建投掷物的实体蓝图，该实体无法进入背包使用，但可以关联至通过物品模板创建的投掷物物品上，实现投掷物的 [自定义设置](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Vm6Z31Qv)
 
 **B. 工程物品资源**
 
@@ -650,7 +650,7 @@ end
 **枪械物品模板**
 
 和平精英常用的各类型枪械均已模板化，包含突击步枪、射手步枪、狙击枪、冲锋枪、手枪、霰弹枪、机枪和特殊武器。
-> 空白枪械物品模板用于创建空参数的枪械物品，方便开发者结合 [自定义枪械](https://developer.gp.qq.com/wikieditor/#/catalog/20103) 的功能从0到1配置一把全新枪械
+> 空白枪械物品模板用于创建空参数的枪械物品，方便开发者结合 [自定义枪械](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=GhCebD_C) 的功能从0到1配置一把全新枪械
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/RACUHimage.png)
 
@@ -668,15 +668,15 @@ end
 
 **装备物品模板**
 
-配合背包系统 [装备栏](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20104?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A3%85%E5%A4%87%E6%A0%8F) 提供的装备物品模板，开发者可以创建类似RPG游戏中的自定义装备，目前暂不包含和平精英的头盔/护甲/背包模板。
+配合背包系统 [装备栏](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A3%85%E5%A4%87%E6%A0%8F) 提供的装备物品模板，开发者可以创建类似RPG游戏中的自定义装备，目前暂不包含和平精英的头盔/护甲/背包模板。
 > 空白装备物品模板用于创建空参数的装备物品，方便开发者从0到1配置一个全新的装备
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/WS95jimage.png)
 
 **投掷物品**
 
-和平精英常用的投掷物均已模板化，支持两种类型：传统的和平投掷物（震爆弹、烟雾弹、燃烧瓶及破片手雷）、基于 [技能抛体](https://developer.gp.qq.com/wikieditor/#/catalog/20075) 实现的投掷物（功能效果与和平投掷物一致）
-> 空白投掷物模板用于创建空参数的投掷物物品，方便开发者结合 [自定义投掷物](https://developer.gp.qq.com/wikieditor/#/catalog/20157) 的功能从0到1配置一个投掷物
+和平精英常用的投掷物均已模板化，支持两种类型：传统的和平投掷物（震爆弹、烟雾弹、燃烧瓶及破片手雷）、基于 [技能抛体](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=WixkIgLC) 实现的投掷物（功能效果与和平投掷物一致）
+> 空白投掷物模板用于创建空参数的投掷物物品，方便开发者结合 [自定义投掷物](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Vm6Z31Qv) 的功能从0到1配置一个投掷物
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/Lw6Mnimage.png)
 
@@ -704,7 +704,7 @@ end
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/zesYLimage.png)
 
 - 空白物品：默认不具备特性属性和功能，可用于创建玩法中类似货币、兑换物等虚拟物品，也能够结合 [背包系统API](https://developer.gp.qq.com/api/#/searchContent/UGCBackpackSystemV2?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E7%89%A9%E5%93%81%E4%B8%8E%E8%83%8C%E5%8C%85%2FUGCBackpackSystemV2.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCBackpackSystemV2) 实现具有特定功能的物品
-- 空白消耗品：默认不具备特性属性和功能，支持使用时添加和触发相应的技能，需自行 [动态添加技能](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E5%8A%A8%E6%80%81%E6%B7%BB%E5%8A%A0%E6%8A%80%E8%83%BD) 逻辑实现
+- 空白消耗品：默认不具备特性属性和功能，支持使用时添加和触发相应的技能，需自行 [动态添加技能](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E5%8A%A8%E6%80%81%E6%B7%BB%E5%8A%A0%E6%8A%80%E8%83%BD) 逻辑实现
 
 <br>
 
@@ -739,7 +739,7 @@ end
 |物品图标|可拾取物和背包内该物品显示的图片样式|
 |物品描述|背包内该物品的描述说明|
 |拾取描述|可拾取物的简要描述|
-|自定义类型|物品如果希望能添加到角色的 [装备栏](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20104?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A3%85%E5%A4%87%E6%A0%8F) 或者其他装备物品的槽位中, 需要确保 ``自定义类型`` 属性与对应装备槽位允许装备的物品类型保持一致|
+|自定义类型|物品如果希望能添加到角色的 [装备栏](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A3%85%E5%A4%87%E6%A0%8F) 或者其他装备物品的槽位中, 需要确保 ``自定义类型`` 属性与对应装备槽位允许装备的物品类型保持一致|
 |拾取物模型|可拾取物在场景中的显示模型|
 |拾取物模型偏移|可拾取物模型的偏移、旋转和缩放|
 
@@ -747,7 +747,7 @@ end
 
 ### 经典背包属性配置
 
-通常物品编辑器需要配合新的 [背包系统](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20104) 使用，但物品编辑器也兼容了经典的和平背包系统，物品在经典背包内也可以正常使用，目前对经典背包的物品属性配置仅有“物品重量”。
+通常物品编辑器需要配合新的 [背包系统](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x) 使用，但物品编辑器也兼容了经典的和平背包系统，物品在经典背包内也可以正常使用，目前对经典背包的物品属性配置仅有“物品重量”。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/eSXiAimage.png)
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/Z2Uakimage.png)
@@ -756,7 +756,7 @@ end
 
 ### V2背包属性配置
 
-该部分属性均为针对启动了 [新背包系统](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20104) 的配置项。
+该部分属性均为针对启动了 [新背包系统](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x) 的配置项。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/7HX2Jimage.png)
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/4UIHCimage.png)
@@ -766,13 +766,13 @@ end
 |是否可使用|物品是否可以从背包内被使用，对消耗品或者空模板创建的物品有效|
 |是否可丢弃|物品是否可以被丢出背包，丢弃后的物品将掉落地面|
 |是否可销毁|物品是否可以从背包内被销毁，销毁后的物品将直接消失|
-|物品标记(Tag)|通过 [GameplayTag](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20102) 创建的物品标记|
-|物品品质|设定物品的品质，有效值0~6，根据品质不同，该物品会显示不同的底色效果<br>【背包格子品质色样式】<br>![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/lDpw7image.png)<br>【[武器槽位](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20104?autoJump=%E6%AD%A6%E5%99%A8%E6%A7%BD%E4%BD%8D) 品质色样式】<br>![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/uzSg4image.png)|
+|物品标记(Tag)|通过 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 创建的物品标记|
+|物品品质|设定物品的品质，有效值0~6，根据品质不同，该物品会显示不同的底色效果<br>【背包格子品质色样式】<br>![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/lDpw7image.png)<br>【[武器槽位](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x&autoJump=%E6%AD%A6%E5%99%A8%E6%A7%BD%E4%BD%8D) 品质色样式】<br>![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/uzSg4image.png)|
 |是否持久化|物品是否能带出局外，勾选后该物品可以跨对局存储|
 |自动尝试装备|影响配件物品的自动装备或是直接进入背包|
-|死亡物品掉落配置|- 留在背包：角色死亡时物品数据保留，不会掉落出去，复活后还原同等数量的物品<br>- 掉落：基于角色 [死亡掉落类型](https://developer.gp.qq.com/wikieditor/#/catalog/20148?autoJump=%E8%AE%BE%E7%BD%AE%E6%AD%BB%E4%BA%A1%E6%8E%89%E8%90%BD%E7%B1%BB%E5%9E%8B) 的设置决定该物品的掉落形式<br>- 直接删除：物品直接被销毁|
+|死亡物品掉落配置|- 留在背包：角色死亡时物品数据保留，不会掉落出去，复活后还原同等数量的物品<br>- 掉落：基于角色 [死亡掉落类型](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=dsy45nk6&autoJump=%E8%AE%BE%E7%BD%AE%E6%AD%BB%E4%BA%A1%E6%8E%89%E8%90%BD%E7%B1%BB%E5%9E%8B) 的设置决定该物品的掉落形式<br>- 直接删除：物品直接被销毁|
 
-部分类型的物品提供了额外的槽位配置项，允许为该物品定义可装配的 [配件槽位](https://developer.gp.qq.com/wikieditor/#/catalog/20210)。
+部分类型的物品提供了额外的槽位配置项，允许为该物品定义可装配的 [配件槽位](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=6FOlCQz3)。
 
 ---
 
@@ -784,7 +784,7 @@ end
 
 【枪械实体蓝图】
 
-枪械物品需要关联枪械实体才能拥有对应的枪械特性，不同的枪械引用的实体蓝图不同，例如P90默认的实体蓝图为 ``BP_UGC_MachineGun_P90``；如果 [自定义枪械](https://developer.gp.qq.com/wikieditor/#/catalog/20103) 则需要修改此处的蓝图引用。
+枪械物品需要关联枪械实体才能拥有对应的枪械特性，不同的枪械引用的实体蓝图不同，例如P90默认的实体蓝图为 ``BP_UGC_MachineGun_P90``；如果 [自定义枪械](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=GhCebD_C) 则需要修改此处的蓝图引用。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/y4CQNimage.png)
 
@@ -818,7 +818,7 @@ end
 |最大射程|子弹的最远射击距离，超出距离子弹被销毁|
 |弹匣容量|枪械弹匣内存储的最大子弹数|
 |一次拉栓子弹装填数量|``one by one`` 换弹方式的枪械一次填弹的数量，例如狙击枪<br>![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/PhJJximage.png)|
-|子弹ID|枪械配备的子弹物品ID，可基于子弹物品模板创建，默认为 [和平精英物品表](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/299?autoJump=4.+%E7%89%A9%E5%93%81) 中的预设ID|
+|子弹ID|枪械配备的子弹物品ID，可基于子弹物品模板创建，默认为 [和平精英物品表](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=9BdsVW5C&autoJump=4.+%E7%89%A9%E5%93%81) 中的预设ID|
 
 【额外子弹配置】
 
@@ -834,7 +834,7 @@ end
 |属性名|属性说明|
 |-|-|
 |自动拾取子弹数|自动拾取该类型子弹的数量上限|
-|额外子弹配置|支持配置多组额外子弹，且各类子弹均可单独配置属性修改和额外抛体<br>- 武器属性修改配置：枪械装载当前ID的子弹时，对武器属性的修改效果，配置方式可参见 [技能Task-武器属性修改](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E6%AD%A6%E5%99%A8%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9)<br>- 抛体配置：枪械射击使用当前ID的子弹时，可启用额外的抛体，配置方式可参见 [技能Task-发射抛体](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E5%8F%91%E5%B0%84%E6%8A%9B%E4%BD%93:~:text=%E5%8A%A8%E6%80%81%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96-,%E6%8A%80%E8%83%BDTask%2D%E5%8F%91%E5%B0%84%E6%8A%9B%E4%BD%93,-%E6%8A%80%E8%83%BDTask%2DLua)<br>- 权重优先级：如果背包中同时存在该枪械支持的多种子弹物品时，会按照该优先级消耗子弹|
+|额外子弹配置|支持配置多组额外子弹，且各类子弹均可单独配置属性修改和额外抛体<br>- 武器属性修改配置：枪械装载当前ID的子弹时，对武器属性的修改效果，配置方式可参见 [技能Task-武器属性修改](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E6%AD%A6%E5%99%A8%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9)<br>- 抛体配置：枪械射击使用当前ID的子弹时，可启用额外的抛体，配置方式可参见 [技能Task-发射抛体](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E5%8F%91%E5%B0%84%E6%8A%9B%E4%BD%93)<br>- 权重优先级：如果背包中同时存在该枪械支持的多种子弹物品时，会按照该优先级消耗子弹|
 
 ---
 
@@ -842,9 +842,9 @@ end
 
 【Attr Modify】
 
-所有类型的配件均支持基于 [属性修改器](https://developer.gp.qq.com/wikieditor/#/catalog/20153) 的角色及武器属性修改，其中“通过武器Tag特殊修改”支持针对指定武器的属性修改生效。
+所有类型的配件均支持基于 [属性修改器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=y24mx0rF) 的角色及武器属性修改，其中“通过武器Tag特殊修改”支持针对指定武器的属性修改生效。
 
-> 武器属性的说明及修改效果可参考 [枪械属性对照表](https://developer.gp.qq.com/wikieditor/#/catalog/20159)
+> 武器属性的说明及修改效果可参考 [枪械属性对照表](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=mjLCHd4n)
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/19MnNimage.png)
 
@@ -860,8 +860,8 @@ end
 
 |属性名|属性说明|
 |-|-|
-|装备附加的技能列表|装备绑定的 [技能](https://developer.gp.qq.com/wikieditor/#/catalog/20091)，允许存在多种主动或者被动技能，[装配到装备栏](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20104?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A3%85%E5%A4%87%E6%A0%8F) 时生效|
-|角色属性修改配置列表|基于 [属性修改器](https://developer.gp.qq.com/wikieditor/#/catalog/20153) 的角色属性修改，[装配到装备栏](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20104?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A3%85%E5%A4%87%E6%A0%8F) 时生效|
+|装备附加的技能列表|装备绑定的 [技能](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y)，允许存在多种主动或者被动技能，[装配到装备栏](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A3%85%E5%A4%87%E6%A0%8F) 时生效|
+|角色属性修改配置列表|基于 [属性修改器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=y24mx0rF) 的角色属性修改，[装配到装备栏](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A3%85%E5%A4%87%E6%A0%8F) 时生效|
 
 ---
 
@@ -875,7 +875,7 @@ end
 
 |属性名|属性说明|
 |-|-|
-|投掷物|投掷物需要关联抛体实体才能拥有对应的抛体特性，如果 [自定义投掷物](https://developer.gp.qq.com/wikieditor/#/catalog/20157) 或将投掷物变更为 [技能抛体](https://developer.gp.qq.com/wikieditor/#/catalog/20075)，则需要修改此处的蓝图引用|
+|投掷物|投掷物需要关联抛体实体才能拥有对应的抛体特性，如果 [自定义投掷物](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Vm6Z31Qv) 或将投掷物变更为 [技能抛体](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=WixkIgLC)，则需要修改此处的蓝图引用|
 |投掷物图标路径|手持投掷物状态下的icon图标|
 |投掷物按下图标路径|进入投掷状态下的icon图标|
 |准备投掷音效|拉栓的音效资源|
@@ -895,9 +895,9 @@ end
 |属性名|属性说明|
 |-|-|
 |使用时间|药品的使用时长，通常表现为动画播放的时长（注意，配置为0会导致药品使用不生效）<br>|
-|恢复项|可设置多种恢复属性及恢复量，多属性同步执行恢复<br>- 回复属性类型：预置血量、能量、信号等和平角色的基础属性，也支持绑定 [自定义属性](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)<br>- 回复值：使用该药品恢复属性的回复量（0~1：按百分比回复，>1：按字面值回复）<br>- 回复上限：属性回复的最大值上限（0~1：按属性满值的百分比计算，>1：字面值）<br> - 血量预回复条：显示预恢复条，实际不执行回复效果，仅针对血量属性生效|
+|恢复项|可设置多种恢复属性及恢复量，多属性同步执行恢复<br>- 回复属性类型：预置血量、能量、信号等和平角色的基础属性，也支持绑定 [自定义属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)<br>- 回复值：使用该药品恢复属性的回复量（0~1：按百分比回复，>1：按字面值回复）<br>- 回复上限：属性回复的最大值上限（0~1：按属性满值的百分比计算，>1：字面值）<br> - 血量预回复条：显示预恢复条，实际不执行回复效果，仅针对血量属性生效|
 |是否连续使用|未达到属性回复上限前，是否允许连续使用药品；如果存在多个回复属性，则任意一个属性未回满都能触发连续使用|
-|后续增益/减益|使用药品时的额外效果，支持设置多个增益/减益效果，触发时机为“使用时间”计时结束后<br>- 后续增益：配置的 [Buff](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20087) 效果<br>- 附加层数：Buff叠加的层数<br>- 持续时间：Buff持续的时间（-1则永久生效）|
+|后续增益/减益|使用药品时的额外效果，支持设置多个增益/减益效果，触发时机为“使用时间”计时结束后<br>- 后续增益：配置的 [Buff](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0Y0pURs-) 效果<br>- 附加层数：Buff叠加的层数<br>- 持续时间：Buff持续的时间（-1则永久生效）|
 
 【进阶设置】
 
@@ -908,7 +908,7 @@ end
 |属性名|属性说明|
 |-|-|
 |使用中减速|使用药品时是否降低角色移动速度，该属性为百分比的加法逻辑，取值范围0~1|
-|使用条件|满足指定条件才触发使用效果，支持设置多种条件，各条件为逻辑与<br>- 进行比较的属性：预置血量、能量、信号等和平角色的基础属性，也支持绑定 [自定义属性](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)<br>- 比较操作符：数值比较运算符<br>- 进行比较的数值：支持常数或基于 [自定义属性](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7) 的计算公式<br>- 是否是百分比：是否以百分比的方式执行比较运算|
+|使用条件|满足指定条件才触发使用效果，支持设置多种条件，各条件为逻辑与<br>- 进行比较的属性：预置血量、能量、信号等和平角色的基础属性，也支持绑定 [自定义属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)<br>- 比较操作符：数值比较运算符<br>- 进行比较的数值：支持常数或基于 [自定义属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7) 的计算公式<br>- 是否是百分比：是否以百分比的方式执行比较运算|
 |手上模型|使用药品时角色手持的物品模型|
 |失败提示|不满足使用条件时的提示信息|
 
@@ -924,8 +924,8 @@ end
 
 |属性名|属性说明|
 |-|-|
-|角色属性修改配置列表|基于 [属性修改器](https://developer.gp.qq.com/wikieditor/#/catalog/20153) 的角色属性修改，[装配到装备栏](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20104?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A3%85%E5%A4%87%E6%A0%8F) 时生效|
-|附加技能列表|装备绑定的 [技能](https://developer.gp.qq.com/wikieditor/#/catalog/20091)，允许存在多种主动或者被动技能，可以配置技能激活的时机，包括：拾取时激活、使用时激活、装备时激活和不自动激活（自行控制激活时机）|
+|角色属性修改配置列表|基于 [属性修改器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=y24mx0rF) 的角色属性修改，[装配到装备栏](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A3%85%E5%A4%87%E6%A0%8F) 时生效|
+|附加技能列表|装备绑定的 [技能](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y)，允许存在多种主动或者被动技能，可以配置技能激活的时机，包括：拾取时激活、使用时激活、装备时激活和不自动激活（自行控制激活时机）|
 
 【属性配置】
 
@@ -967,7 +967,7 @@ end
 
 【近战武器实体蓝图】
 
-近战武器物品需要关联武器实体才能拥有对应的特性，不同的近战武器引用的实体蓝图不同，例如大砍刀默认的实体蓝图为 ``BP_UGC_MeleeWeap_Machete``；如果 [自定义近战武器](https://developer.gp.qq.com/wikieditor/#/catalog/20158) 则需要修改此处的蓝图引用。
+近战武器物品需要关联武器实体才能拥有对应的特性，不同的近战武器引用的实体蓝图不同，例如大砍刀默认的实体蓝图为 ``BP_UGC_MeleeWeap_Machete``；如果 [自定义近战武器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=yXcpzK1N) 则需要修改此处的蓝图引用。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/18Sgkimage.png)
 
@@ -977,7 +977,7 @@ end
 
 基于空白物品/消耗品模板创建的物品，需要结合 [``OnUseItemV2``](https://developer.gp.qq.com/api/#/searchContent/UBackpackComponentV2?classDetailShow=true&path=class%2Fdetail%2FOthers%2FUBackpackComponentV2.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UBackpackComponentV2&autoJump=OnUseItemV2)、[``OnMergeItemV2``](https://developer.gp.qq.com/api/#/searchContent/UBackpackComponentV2?classDetailShow=true&path=class%2Fdetail%2FOthers%2FUBackpackComponentV2.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UBackpackComponentV2&autoJump=OnMergeItemV2) 等物品交互的函数实现相关具体功能效果，以空白消耗品模板为例，实现一个使用物品效果为将使用者变身成光子鸡的物品。
 
-在技能编辑器中，基于Buff模板 [怪物骨骼-光子鸡](https://developer.gp.qq.com/wikieditor/#/catalog/20253?autoJump=%E5%8F%98%E8%BA%AB-%E6%80%AA%E7%89%A9%E9%AA%A8%E9%AA%BC) 创建一个Buff蓝图。
+在技能编辑器中，基于Buff模板 [怪物骨骼-光子鸡](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=9CMHwnrg&autoJump=%E5%8F%98%E8%BA%AB-%E6%80%AA%E7%89%A9%E9%AA%A8%E9%AA%BC) 创建一个Buff蓝图。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/dZWCLimage.png)
 
@@ -1020,7 +1020,7 @@ end
 
 物品编辑器创建的物品无法直接放置在场景中，需要经由 ``UGCPickupWrapper_BP`` 蓝图处理可拾取物的实例化过程。
 
-在 [模式编辑](https://developer.gp.qq.com/wikieditor/#/catalog/124?autoJump=%E6%A8%A1%E5%BC%8F%E7%BC%96%E8%BE%91) 窗口中搜索“UGCPickupWrapper”，将该蓝图拖放至场景中合适的位置。
+在 [模式编辑](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=aQkx7Haf&autoJump=%E6%A8%A1%E5%BC%8F%E7%BC%96%E8%BE%91) 窗口中搜索“UGCPickupWrapper”，将该蓝图拖放至场景中合适的位置。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/i7LOHimage.png)
 
@@ -1035,15 +1035,15 @@ end
 
 脚本中调用发放物品的API可以将物品直接添加到玩家的背包中：
 - 对于和平经典背包调用 [``AddItem``](https://developer.gp.qq.com/api/#/searchContent/UGCBackPackSystem?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E7%89%A9%E5%93%81%E4%B8%8E%E8%83%8C%E5%8C%85%2FUGCBackPackSystem.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCBackPackSystem&autoJump=AddItem)
-- 如果玩法 [启用了新背包系统](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20104?autoJump=%E5%90%AF%E7%94%A8%E8%83%8C%E5%8C%85%E7%B3%BB%E7%BB%9F) 可以调用 [``AddItemV2``](https://developer.gp.qq.com/api/#/searchContent/UGCBackpackSystemV2?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E7%89%A9%E5%93%81%E4%B8%8E%E8%83%8C%E5%8C%85%2FUGCBackpackSystemV2.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCBackpackSystemV2&autoJump=AddItemV2) 或者 [``AddItemByDefineIDV2``](https://developer.gp.qq.com/api/#/searchContent/UGCBackpackSystemV2?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E7%89%A9%E5%93%81%E4%B8%8E%E8%83%8C%E5%8C%85%2FUGCBackpackSystemV2.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCBackpackSystemV2&autoJump=AddItemByDefineIDV2)
+- 如果玩法 [启用了新背包系统](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x&autoJump=%E5%90%AF%E7%94%A8%E8%83%8C%E5%8C%85%E7%B3%BB%E7%BB%9F) 可以调用 [``AddItemV2``](https://developer.gp.qq.com/api/#/searchContent/UGCBackpackSystemV2?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E7%89%A9%E5%93%81%E4%B8%8E%E8%83%8C%E5%8C%85%2FUGCBackpackSystemV2.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCBackpackSystemV2&autoJump=AddItemV2) 或者 [``AddItemByDefineIDV2``](https://developer.gp.qq.com/api/#/searchContent/UGCBackpackSystemV2?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E7%89%A9%E5%93%81%E4%B8%8E%E8%83%8C%E5%8C%85%2FUGCBackpackSystemV2.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCBackpackSystemV2&autoJump=AddItemByDefineIDV2)
 
 <br>
 
 ## 使用物品
 
-不同类型的物品使用交互形式存在差异，例如枪械物品需要装配在 [武器槽位](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20104?autoJump=%E6%AD%A6%E5%99%A8%E6%A7%BD%E4%BD%8D) 上使用，药品可以在背包内直接使用，装备物品需要装配在 [装备槽位](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20104?autoJump=%E6%B7%BB%E5%8A%A0%E6%A7%BD%E4%BD%8D) 上使用，其他类型的物品需要自定义使用条件和使用过程。
+不同类型的物品使用交互形式存在差异，例如枪械物品需要装配在 [武器槽位](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x&autoJump=%E6%AD%A6%E5%99%A8%E6%A7%BD%E4%BD%8D) 上使用，药品可以在背包内直接使用，装备物品需要装配在 [装备槽位](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x&autoJump=%E6%B7%BB%E5%8A%A0%E6%A7%BD%E4%BD%8D) 上使用，其他类型的物品需要自定义使用条件和使用过程。
 
-开发者可以使用 [背包系统](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20104) 提供的丰富API扩展和实现物品的交互逻辑，例如通过 [``ItemCanEquipToSlot``](https://developer.gp.qq.com/api/#/searchContent/UGCBackpackSystemV2?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E7%89%A9%E5%93%81%E4%B8%8E%E8%83%8C%E5%8C%85%2FUGCBackpackSystemV2.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCBackpackSystemV2&autoJump=ItemCanEquipToSlot) 和 [``EquipItemV2``](https://developer.gp.qq.com/api/#/searchContent/UGCBackpackSystemV2?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E7%89%A9%E5%93%81%E4%B8%8E%E8%83%8C%E5%8C%85%2FUGCBackpackSystemV2.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCBackpackSystemV2&autoJump=EquipItemV2) 扩展物品的装配规则和逻辑；通过 [``CanUseItemV2``](https://developer.gp.qq.com/api/#/searchContent/UBackpackComponentV2?classDetailShow=true&path=class%2Fdetail%2FOthers%2FUBackpackComponentV2.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UBackpackComponentV2&autoJump=CanUseItemV2) 和 [``UseItemV2``](https://developer.gp.qq.com/api/#/searchContent/UGCBackpackSystemV2?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E7%89%A9%E5%93%81%E4%B8%8E%E8%83%8C%E5%8C%85%2FUGCBackpackSystemV2.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCBackpackSystemV2&autoJump=UseItemV2) 扩展物品的使用规则和逻辑等。
+开发者可以使用 [背包系统](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x) 提供的丰富API扩展和实现物品的交互逻辑，例如通过 [``ItemCanEquipToSlot``](https://developer.gp.qq.com/api/#/searchContent/UGCBackpackSystemV2?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E7%89%A9%E5%93%81%E4%B8%8E%E8%83%8C%E5%8C%85%2FUGCBackpackSystemV2.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCBackpackSystemV2&autoJump=ItemCanEquipToSlot) 和 [``EquipItemV2``](https://developer.gp.qq.com/api/#/searchContent/UGCBackpackSystemV2?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E7%89%A9%E5%93%81%E4%B8%8E%E8%83%8C%E5%8C%85%2FUGCBackpackSystemV2.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCBackpackSystemV2&autoJump=EquipItemV2) 扩展物品的装配规则和逻辑；通过 [``CanUseItemV2``](https://developer.gp.qq.com/api/#/searchContent/UBackpackComponentV2?classDetailShow=true&path=class%2Fdetail%2FOthers%2FUBackpackComponentV2.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UBackpackComponentV2&autoJump=CanUseItemV2) 和 [``UseItemV2``](https://developer.gp.qq.com/api/#/searchContent/UGCBackpackSystemV2?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E7%89%A9%E5%93%81%E4%B8%8E%E8%83%8C%E5%8C%85%2FUGCBackpackSystemV2.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCBackpackSystemV2&autoJump=UseItemV2) 扩展物品的使用规则和逻辑等。
 
 > 仅新背包系统提供自定义的拓展功能
 
@@ -1053,7 +1053,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 物资系统 > 物资编辑器2.0 > 物资刷新器
 
-> 文档ID: 20155 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20155)
+> 文档ID: 20155 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=jZ-pE810)
 
 > 更新: 2026-03-10 11:38:33
 
@@ -1105,8 +1105,8 @@ end
    * **物资配置模式**：
 
      * **物资ID**：通过物品编辑器中的物资ID指定要刷新的物资。
-     * **掉落表**：使用 [通用掉落](https://developer.gp.qq.com/wikieditor/#/catalog/20058) 指定的 `掉落ID` 。
-     * **掉落组表**：通过 [通用掉落](https://developer.gp.qq.com/wikieditor/#/catalog/20058) 选择 `掉落组ID` 。
+     * **掉落表**：使用 [通用掉落](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=x7rvzrFb) 指定的 `掉落ID` 。
+     * **掉落组表**：通过 [通用掉落](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=x7rvzrFb) 选择 `掉落组ID` 。
      * **自定义**：允许玩家在 Lua 脚本中选择刷新的物资，并提供自定义ID供配置。
    * **是否需要管理器**：确定该刷新点是否可以独立运作，还是必须依赖物资刷新管理器。
    * **是否循环生成**：如果选中该选项，物资在被拾取后会自动刷新。
@@ -1265,7 +1265,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 物资系统 > 物资编辑器2.0 > 背包  >  物品 功能边界
 
-> 文档ID: 20470 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20470)
+> 文档ID: 20470 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=k7AanZsc)
 
 > 新增: 2026-09-02 13:55:03
 
@@ -1357,7 +1357,7 @@ end
 
 ### 4.1 配置项
 
-`物品编辑器`（详见 [物品编辑器](https://developer.gp.qq.com/wikieditor/#/catalog/20101)）中物品的配置项由和平官方对其配置效果负责，原则同 2.1 节。
+`物品编辑器`（详见 [物品编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6)）中物品的配置项由和平官方对其配置效果负责，原则同 2.1 节。
 - 开发者在修改每一项配置时，应充分了解该配置对应的功能效果后再做调整。
 - 和平官方不限制配置项的取值范围；每一项配置都有其合理的值域，超出范围带来的性能或功能问题由开发者自行把控。
 
@@ -1457,7 +1457,7 @@ end
 - 物品实例化数据过于庞大。
 - 生成在地面的拾取物数量过于庞大。
 
-详见 [背包系统 - 自定义背包容量](https://developer.gp.qq.com/wikieditor/#/catalog/20104) 与 [背包系统 - 配置扩容代币](https://developer.gp.qq.com/wikieditor/#/catalog/20104) 关于容量规划的相关说明。
+详见 [背包系统 - 自定义背包容量](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x) 与 [背包系统 - 配置扩容代币](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x) 关于容量规划的相关说明。
 
 <br>
 
@@ -1530,7 +1530,7 @@ end
 
 ### 9.1 堆叠上限
 
-货币或产出数量极大的物品，最大堆叠数也应尽量设置得大，否则易导致背包内物品实例数膨胀，进而引发性能问题（详见 [物品与背包槽位](https://developer.gp.qq.com/wikieditor/#/catalog/20210) 与第七章）。
+货币或产出数量极大的物品，最大堆叠数也应尽量设置得大，否则易导致背包内物品实例数膨胀，进而引发性能问题（详见 [物品与背包槽位](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=6FOlCQz3) 与第七章）。
 
 **事例：** 某玩法"金币"最大堆叠数为 `99`，玩家击杀怪物可一次性掉落成千上万金币。当玩家累计获得 `100` 万金币时，背包内会产生约 `1` 万个金币物品实例。
 
@@ -1655,7 +1655,7 @@ self._cachedItemDefineID = totable(defineID)
 
 > 文档路径: 进阶内容 > GamePlay系统 > 物资系统 > 物资编辑器2.0 > 背包UI开放
 
-> 文档ID: 20475 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20475)
+> 文档ID: 20475 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Wfut09Mv)
 
 > 新增: 2026-09-16 14:27:35 | 更新: 2026-10-10 14:29:23
 
@@ -2308,7 +2308,7 @@ end
 
 #### TipsUI模板
 
-配置UI控件之后，参考 [背包接入UGCTips系统](https://developer.gp.qq.com/wikieditor/#/catalog/20463) 进行配置。
+配置UI控件之后，参考 [背包接入UGCTips系统](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=-Di0_E_S) 进行配置。
 
 **效果**
 
@@ -2370,7 +2370,7 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/zoma4image.png)
 
-5. 在 PlayerController 蓝图中使用接口挂载该UI，同时需要注意调用控件的初始化接口 ``InitConfig()`` ，如果在蓝图中配置了相关参数，这里可不传参，锚点设置可参考 [和平控件锚点](https://developer.gp.qq.com/wikieditor/#/catalog/20097)
+5. 在 PlayerController 蓝图中使用接口挂载该UI，同时需要注意调用控件的初始化接口 ``InitConfig()`` ，如果在蓝图中配置了相关参数，这里可不传参，锚点设置可参考 [和平控件锚点](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Z1hBqDCI)
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/LQZQlimage.png)
 
@@ -2386,7 +2386,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 物资系统 > 物资编辑器2.0 > 背包流程概览
 
-> 文档ID: 20471 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20471)
+> 文档ID: 20471 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=DRFytDXX)
 
 > 新增: 2026-09-02 13:54:56
 
@@ -2402,7 +2402,7 @@ end
 
 ## 一、整体说明
 
-V2 背包是绿洲启元专用背包系统，基于 [GP Backpack V2 Game Part](https://developer.gp.qq.com/wikieditor/#/catalog/20104) 启用。
+V2 背包是绿洲启元专用背包系统，基于 [GP Backpack V2 Game Part](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x) 启用。
 
 
 | 特性 | 说明 |
@@ -2832,7 +2832,7 @@ V2 背包是绿洲启元专用背包系统，基于 [GP Backpack V2 Game Part](h
 
 > 文档路径: 进阶内容 > GamePlay系统 > 物资系统 > 物资编辑器2.0 > 背包系统
 
-> 文档ID: 20104 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20104)
+> 文档ID: 20104 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x)
 
 > 新增: 2026-04-24 15:29:28 | 更新: 2026-09-20 16:19:09
 
@@ -2840,16 +2840,16 @@ V2 背包是绿洲启元专用背包系统，基于 [GP Backpack V2 Game Part](h
 
 # 背包系统
 
-配合 [物品编辑器](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20101) 构建的全新背包系统，区别于和平精英经典背包的单列布局结构，新背包采用网格布局的设计，加入了背包扩容的概念，在继承物品基础操作和可堆叠的功能上，支持持久化存储物品数据的能力，并扩展出装备栏和仓库的独立功能，使得新的背包系统更通用、扩展性更强，为开发者打造多元化的绿洲玩法提供能力支撑。
+配合 [物品编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6) 构建的全新背包系统，区别于和平精英经典背包的单列布局结构，新背包采用网格布局的设计，加入了背包扩容的概念，在继承物品基础操作和可堆叠的功能上，支持持久化存储物品数据的能力，并扩展出装备栏和仓库的独立功能，使得新的背包系统更通用、扩展性更强，为开发者打造多元化的绿洲玩法提供能力支撑。
 
 <br>
 
 ## 启用背包系统
 
-为了兼容经典背包，新的背包系统通过 [GamePart](https://developer.gp.qq.com/wikieditor/#/catalog/20090) 提供模块化的启用方式，玩法默认使用经典背包，启用后被新背包替代。
-> 旧 [物资编辑器](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/185) 的物资功能无法适配新背包，新背包需要与新 [物品编辑器](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20101) 配套使用
+为了兼容经典背包，新的背包系统通过 [GamePart](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Z1O-CCF_) 提供模块化的启用方式，玩法默认使用经典背包，启用后被新背包替代。
+> 旧 [物资编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=3TykdpoS) 的物资功能无法适配新背包，新背包需要与新 [物品编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6) 配套使用
 
-点击编辑器菜单栏的【玩法通用设置】按钮，在弹出的 ``DA_GameModeGeneral`` 数据资产蓝图中的 ``Active Game Part Configs`` 属性下添加“GP_BackpackV2”模块，保存并 [启动调试](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/307) 即可验证是否生效：
+点击编辑器菜单栏的【玩法通用设置】按钮，在弹出的 ``DA_GameModeGeneral`` 数据资产蓝图中的 ``Active Game Part Configs`` 属性下添加“GP_BackpackV2”模块，保存并 [启动调试](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Er6BqPSe) 即可验证是否生效：
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/Jj4BDimage.png)
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/PdoN7image.png)
@@ -2894,7 +2894,7 @@ V2 背包是绿洲启元专用背包系统，基于 [GP Backpack V2 Game Part](h
 
 **B. 背包网格**
 
-存储及操作物品的网格空间，可以设置网格的容量，支持代币解锁格子，每格可堆叠的物品数量受物品 [最大堆叠数量](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20101?autoJump=%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) 的影响；若格子被锁定，会显示解锁需要的代币及数量。
+存储及操作物品的网格空间，可以设置网格的容量，支持代币解锁格子，每格可堆叠的物品数量受物品 [最大堆叠数量](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6&autoJump=%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) 的影响；若格子被锁定，会显示解锁需要的代币及数量。
 
 **C. 物品页签**
 
@@ -2902,7 +2902,7 @@ V2 背包是绿洲启元专用背包系统，基于 [GP Backpack V2 Game Part](h
 
 **D. 物品整理**
 
-物品整理功能固定将同类的物品按 [可堆叠数量上限](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20101?autoJump=%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) 进行合并，减少对网格容量的占用。
+物品整理功能固定将同类的物品按 [可堆叠数量上限](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6&autoJump=%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE) 进行合并，减少对网格容量的占用。
 
 **E. 扩容代币**
 
@@ -2935,7 +2935,7 @@ V2 背包是绿洲启元专用背包系统，基于 [GP Backpack V2 Game Part](h
 
 打开 ``BP_BackpackUIComponentV2_Custom`` 组件蓝图，在【细节】面板 ``Tab Info`` 属性组下添加一个新的页签：
 - TabName：页签的名称
-- Tags：带有指定 [Tag标记](https://developer.gp.qq.com/wikieditor/#/catalog/20101?autoJump=V2%E8%83%8C%E5%8C%85%E9%85%8D%E7%BD%AE) 的物品会被自动分类到该页签下，判定遵循 [GameplayTag匹配](https://developer.gp.qq.com/wikieditor/#/catalog/20102?autoJump=GameplayTag%E5%8C%B9%E9%85%8D) 规则；若留空则代表任意物品都允许进入该页签
+- Tags：带有指定 [Tag标记](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6&autoJump=V2%E8%83%8C%E5%8C%85%E9%85%8D%E7%BD%AE) 的物品会被自动分类到该页签下，判定遵循 [GameplayTag匹配](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH&autoJump=GameplayTag%E5%8C%B9%E9%85%8D) 规则；若留空则代表任意物品都允许进入该页签
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/9NsToimage.png)
 
@@ -2996,8 +2996,8 @@ end
 背包中的物品默认展示物品图标、品质色及物品数量，支持为网格额外叠加UI特效或者自定义的icon图等效果，叠加配置会在仓库格子、背包格子、物品详情和装备栏同时生效。
 
 打开 ``BP_BackpackUIComponentV2_Custom`` 组件蓝图，在【细节】面板 ``Custom Item UIWidgets`` 属性组下设置控件蓝图及筛选规则：
-- ItemTag：UI效果影响带指定 [标记Tag](https://developer.gp.qq.com/wikieditor/#/catalog/20101?autoJump=V2%E8%83%8C%E5%8C%85%E9%85%8D%E7%BD%AE) 的物品
-- Customtypes：UI效果影响指定 [自定义类型](https://developer.gp.qq.com/wikieditor/#/catalog/20101?autoJump=%E7%89%B9%E6%80%A7%E9%85%8D%E7%BD%AE) 的物品
+- ItemTag：UI效果影响带指定 [标记Tag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6&autoJump=V2%E8%83%8C%E5%8C%85%E9%85%8D%E7%BD%AE) 的物品
+- Customtypes：UI效果影响指定 [自定义类型](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6&autoJump=%E7%89%B9%E6%80%A7%E9%85%8D%E7%BD%AE) 的物品
 - WidgetSoftClassPath：引用的控件蓝图（图例中 ``BP_Grid_Tag`` 蓝图为新建的控件蓝图）
 
 > ItemTag和Customtypes为“逻辑或”的关系
@@ -3031,8 +3031,8 @@ end
 背包系统为进入背包的物品提供了扩展详情面板的能力，方便开发者为物品描述添加额外展示信息。
 
 打开 ``BP_BackpackUIComponentV2_Custom`` 组件蓝图，在【细节】面板 ``Custom Details Wights`` 属性组下设置控件蓝图及筛选规则：
-- ItemTag：面板效果影响带指定 [标记Tag](https://developer.gp.qq.com/wikieditor/#/catalog/20101?autoJump=V2%E8%83%8C%E5%8C%85%E9%85%8D%E7%BD%AE) 的物品
-- Customtypes：面板效果影响指定 [自定义类型](https://developer.gp.qq.com/wikieditor/#/catalog/20101?autoJump=%E7%89%B9%E6%80%A7%E9%85%8D%E7%BD%AE) 的物品
+- ItemTag：面板效果影响带指定 [标记Tag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6&autoJump=V2%E8%83%8C%E5%8C%85%E9%85%8D%E7%BD%AE) 的物品
+- Customtypes：面板效果影响指定 [自定义类型](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6&autoJump=%E7%89%B9%E6%80%A7%E9%85%8D%E7%BD%AE) 的物品
 - WidgetSoftClassPath：引用的控件蓝图
 
 > ItemTag和Customtypes为“逻辑或”的关系
@@ -3045,7 +3045,7 @@ end
 
 #### 配置扩容代币
 
-扩容即为解锁背包网格，目前支持解锁的代币类型为物品，因此需要先通过 [物品编辑器](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20101?autoJump=%E5%88%9B%E5%BB%BA%E7%89%A9%E5%93%81) 创建货币物品，再配置到背包组件上。
+扩容即为解锁背包网格，目前支持解锁的代币类型为物品，因此需要先通过 [物品编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6&autoJump=%E5%88%9B%E5%BB%BA%E7%89%A9%E5%93%81) 创建货币物品，再配置到背包组件上。
 
 > 货币物品同样具有 ``最大堆叠数`` 属性，超出堆叠数将在数据上产生分堆、影响性能，建议将该属性值设置为小于21亿的较大值，且玩法中严格控制代币的产出
 
@@ -3134,7 +3134,7 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/8UFiuimage.png)
 
-> ``存入仓库`` 和 ``存入背包`` 按钮需要启用仓库（设置带有仓库的背包模式）和启用 [是否持久化](https://developer.gp.qq.com/wikieditor/#/catalog/20101?autoJump=V2%E8%83%8C%E5%8C%85%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE:~:text=%E8%83%8C%E5%8C%85%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE-,V2%E8%83%8C%E5%8C%85%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE,-%E7%B1%BB%E5%9E%8B%E7%89%B9%E6%80%A7%E9%85%8D%E7%BD%AE) 的物品才会显示
+> ``存入仓库`` 和 ``存入背包`` 按钮需要启用仓库（设置带有仓库的背包模式）和启用 [是否持久化](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6&autoJump=V2%E8%83%8C%E5%8C%85%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE) 的物品才会显示
 
 **按钮列表属性**
 
@@ -3199,7 +3199,7 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/02j8zimage.png)
 
-对应的品质编号，与【[物品编辑器2.0](https://developer.gp.qq.com/wikieditor/#/catalog/20101)】的 ``物品品质`` 属性配置相关联。
+对应的品质编号，与【[物品编辑器2.0](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6)】的 ``物品品质`` 属性配置相关联。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/2ItWcimage.png)
 
@@ -3217,7 +3217,7 @@ end
 
 装备栏的槽位分为武器槽位和装备槽位两部分，其中武器槽位包含2个固定预设的主副武器槽位，除此之外，开发者可以修改和扩展自定义的槽位。
 
-> 有关背包系统所有预设槽位及扩展功能，可参见 [物品与背包槽位](https://developer.gp.qq.com/wikieditor/#/catalog/20210)
+> 有关背包系统所有预设槽位及扩展功能，可参见 [物品与背包槽位](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=6FOlCQz3)
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/k7bE7image.png)
 
@@ -3233,9 +3233,9 @@ end
 
 背包预设了头盔、背包和防弹衣三种常用的槽位，可以在 ``装备槽位配置`` 属性组下添加新的元素以增加新槽位：
 
-- 槽位名称：同属于 [GameplayTag](https://developer.gp.qq.com/wikieditor/#/catalog/20102)，但必须为 ``EquipmentSlot`` 下的子级Tag
+- 槽位名称：同属于 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH)，但必须为 ``EquipmentSlot`` 下的子级Tag
 - 槽位中文名：槽位的名称
-- 槽位类型约束：槽位允许装配的 [物品类型](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20101?autoJump=%E7%89%B9%E6%80%A7%E9%85%8D%E7%BD%AE)，支持多种类型
+- 槽位类型约束：槽位允许装配的 [物品类型](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6&autoJump=%E7%89%B9%E6%80%A7%E9%85%8D%E7%BD%AE)，支持多种类型
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/TpxI0image.png)
 
@@ -3405,7 +3405,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 物资系统 > 物资编辑器2.0 > 自定义投掷物
 
-> 文档ID: 20157 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20157)
+> 文档ID: 20157 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Vm6Z31Qv)
 
 > 更新: 2025-09-04 20:43:05
 
@@ -3445,13 +3445,13 @@ end
 |启用特效缩放|是否启用击中特效的缩放设置|
 |击中特效大小缩放|当启用击中特效缩放时，缩放的比例|
 |击中特效跟随击中物体|击中生成的特效是否跟随角色对象移动|
-|击中添加的BuffClass|击中角色对象时添加的 [Buff蓝图](https://developer.gp.qq.com/wikieditor/#/catalog/20087)|
+|击中添加的BuffClass|击中角色对象时添加的 [Buff蓝图](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0Y0pURs-)|
 |击中生成的Actor|针对投掷物与地面的碰撞，是否在击中点生成指定Actor对象（注意：投掷物落地产生弹射时，每次弹射都会触发生成）|
-|碰撞忽略的阵营|忽略指定 [阵营](https://developer.gp.qq.com/wikieditor/#/catalog/20095?autoJump=%E9%98%B5%E8%90%A5%E7%B3%BB%E7%BB%9F) 的碰撞，忽略后对象可被穿透|
+|碰撞忽略的阵营|忽略指定 [阵营](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Q2VYiY6l&autoJump=%E9%98%B5%E8%90%A5%E7%B3%BB%E7%BB%9F) 的碰撞，忽略后对象可被穿透|
 |初始速度|投掷物的初始发射速度|
 |重力系数|投掷物的重力加速度系数，如果设置为<=-1，则会向上抛射|
-|伤害数值|对击中对象造成的伤害值，支持常数或者基于 [自定义属性](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7) 的计算公式|
-|伤害类型Tag列表|支持为伤害添加Tag，通过 [GameplayTag](https://developer.gp.qq.com/wikieditor/#/catalog/20102) 创建|
+|伤害数值|对击中对象造成的伤害值，支持常数或者基于 [自定义属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7) 的计算公式|
+|伤害类型Tag列表|支持为伤害添加Tag，通过 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 创建|
 
 ---
 
@@ -3465,10 +3465,10 @@ end
 |-|-|
 |爆炸触发方式|- 不发生爆炸：碰撞后立即销毁（击中效果依然生效），没有爆炸效果<br>- 命中立即发生爆炸：碰撞后立即触发爆炸<br>- 停止后开始计时延迟爆炸：投掷物运动停止后，延迟指定时间爆炸<br>- 弹射后开始计时延迟爆炸：投掷物第一次发生弹射时，开始计时并延迟指定时间爆炸<br>- 命中Pawn后开始计时延迟爆炸：击中角色对象时，开始计时并延迟指定时间爆炸<br>- 自定义计时延迟爆炸：即拉栓倒计时，触发拉栓时开始计时并延迟指定时间爆炸|
 |爆炸延迟计时|当 ``爆炸触发方式`` 选为延迟爆炸类型时生效，指定需要延迟的时间|
-|爆炸伤害|爆炸产生的伤害值，支持常数或者基于 [自定义属性](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7) 的计算公式|
-|爆炸添加的BuffClass|爆炸时额外添加的 [Buff蓝图](https://developer.gp.qq.com/wikieditor/#/catalog/20087)|
+|爆炸伤害|爆炸产生的伤害值，支持常数或者基于 [自定义属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7) 的计算公式|
+|爆炸添加的BuffClass|爆炸时额外添加的 [Buff蓝图](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0Y0pURs-)|
 |爆炸半径|爆炸的圆形范围，该范围内的角色对象都会受到定值伤害|
-|爆炸筛选器|支持 [过滤器](https://developer.gp.qq.com/wikieditor/#/catalog/20218) 的方式筛选允许受到伤害的对象|
+|爆炸筛选器|支持 [过滤器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=g7gKrHOs) 的方式筛选允许受到伤害的对象|
 |爆炸特效|发生爆炸时生成的特效资源|
 |启用自定义爆炸特效缩放|是否启用爆炸特效的缩放设置|
 |爆炸特效缩放|当启用爆炸特效缩放时，缩放的比例|
@@ -3535,7 +3535,7 @@ end
 
 ## 绑定投掷物物品
 
-投掷物实体蓝图无法直接进入背包或者实例化为可拾取物，需要绑定投掷物物品才有效，通过物品编辑器 [创建投掷物物品](https://developer.gp.qq.com/wikieditor/#/catalog/20101?autoJump=%E6%96%B0%E5%BB%BA%E7%89%A9%E5%93%81%E8%93%9D%E5%9B%BE)，将 ``投掷物`` 属性设置为该实体蓝图，即得到一个自定义的投掷物。
+投掷物实体蓝图无法直接进入背包或者实例化为可拾取物，需要绑定投掷物物品才有效，通过物品编辑器 [创建投掷物物品](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6&autoJump=%E6%96%B0%E5%BB%BA%E7%89%A9%E5%93%81%E8%93%9D%E5%9B%BE)，将 ``投掷物`` 属性设置为该实体蓝图，即得到一个自定义的投掷物。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/l7Lk8image.png)
 
@@ -3545,7 +3545,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 物资系统 > 物资编辑器2.0 > 自定义拾取组件
 
-> 文档ID: 20420 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20420)
+> 文档ID: 20420 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=8NEXiznt)
 
 > 新增: 2026-07-27 19:03:53 | 更新: 2026-10-08 14:28:18
 
@@ -3559,7 +3559,7 @@ end
 
 ## 启用自定义拾取组件
 
-为了兼容默认拾取规则，新的自定义拾取功能需要在【玩法通用设置】-> 【GamePart】 开启 [背包2.0](https://developer.gp.qq.com/wikieditor/#/catalog/20104:~:text=%E7%89%A9%E5%93%81%E6%8B%BE%E5%8F%96%E8%A7%84%E5%88%99-,%E8%83%8C%E5%8C%85%E7%B3%BB%E7%BB%9F,-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9E%AA%E6%A2%B0) 系统来使用。
+为了兼容默认拾取规则，新的自定义拾取功能需要在【玩法通用设置】-> 【GamePart】 开启 [背包2.0](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=OAv2Lp4x) 系统来使用。
 
 点击编辑器菜单栏的【玩法通用设置】按钮，在【GamePart】中添加【GP_BackpackV2】模块和【GP_PickUpV2List】。
 
@@ -3745,7 +3745,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 物资系统 > 物资编辑器2.0 > 自定义掉落效果
 
-> 文档ID: 20429 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20429)
+> 文档ID: 20429 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=NTsa8VJ0)
 
 > 新增: 2026-08-12 12:32:47
 
@@ -3771,7 +3771,7 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/fUeAYimage.png)
 
-- 启用掉落轨迹特效：启用拖尾特效，物品掉落时会根据 [物品品质](https://developer.gp.qq.com/wikieditor/#/catalog/20101?autoJump=V2%E8%83%8C%E5%8C%85%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE) 显示对应的拖尾效果
+- 启用掉落轨迹特效：启用拖尾特效，物品掉落时会根据 [物品品质](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6&autoJump=V2%E8%83%8C%E5%8C%85%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE) 显示对应的拖尾效果
 - 掉落轨迹特效：掉落轨迹特效的数组
 - 启用地面特效：掉落物停留在地面显示的光柱特效，会根据物品品质显示对应的光柱效果
 - 地面特效：地面特效的数组
@@ -3791,7 +3791,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 物资系统 > 物资编辑器2.0 > 自定义枪械
 
-> 文档ID: 20103 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20103)
+> 文档ID: 20103 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=GhCebD_C)
 
 > 更新: 2026-03-26 19:39:50
 
@@ -3875,7 +3875,7 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/xmH6Dimage.png)
 
-[绑定枪械物品](https://developer.gp.qq.com/wikieditor/#/catalog/20103?autoJump=%E7%BB%91%E5%AE%9A%E6%9E%AA%E6%A2%B0%E7%89%A9%E5%93%81:~:text=%E6%8A%80%E8%83%BD%E9%85%8D%E7%BD%AE-,%E7%BB%91%E5%AE%9A%E6%9E%AA%E6%A2%B0%E7%89%A9%E5%93%81,-%E5%BC%80%E5%8F%91%E5%8A%A9%E6%89%8B) 后，点击调试，给玩家添加该枪械，即可看到效果。
+[绑定枪械物品](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=GhCebD_C&autoJump=%E7%BB%91%E5%AE%9A%E6%9E%AA%E6%A2%B0%E7%89%A9%E5%93%81) 后，点击调试，给玩家添加该枪械，即可看到效果。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/Jrxgmimage.png)
 
@@ -3901,13 +3901,13 @@ end
 |切枪时间影响因子|背负枪械和手持枪械的切换时间倍率|
 |子弹基础伤害|单颗子弹的基础伤害值|
 |子弹最低伤害|子弹在距离衰减/穿透之后的伤害最低值|
-|伤害类型Tag列表|支持为子弹伤害设置多种Tag，通过 [GameplayTag](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20102) 创建|
+|伤害类型Tag列表|支持为子弹伤害设置多种Tag，通过 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 创建|
 
 ---
 
 ### 子弹属性
 
-枪械实体蓝图的【子弹配置】属性类别下可以设置子弹的基础属性，如果想要枪械能够支持装填和发射更多不同类型的子弹或者抛体，详情见 [枪械物品特性](https://developer.gp.qq.com/wikieditor/#/catalog/20101?autoJump=%E6%9E%AA%E6%A2%B0%E7%89%A9%E5%93%81%E7%89%B9%E6%80%A7:~:text=%E7%B1%BB%E5%9E%8B%E7%89%B9%E6%80%A7%E9%85%8D%E7%BD%AE-,%E6%9E%AA%E6%A2%B0%E7%89%A9%E5%93%81%E7%89%B9%E6%80%A7,-%E9%85%8D%E4%BB%B6%E7%89%A9%E5%93%81%E7%89%B9%E6%80%A7) 中的额外子弹配置。
+枪械实体蓝图的【子弹配置】属性类别下可以设置子弹的基础属性，如果想要枪械能够支持装填和发射更多不同类型的子弹或者抛体，详情见 [枪械物品特性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6&autoJump=%E6%9E%AA%E6%A2%B0%E7%89%A9%E5%93%81%E7%89%B9%E6%80%A7) 中的额外子弹配置。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/IP9gOimage.png)
 
@@ -3917,7 +3917,7 @@ end
 |最大射程|子弹的最远射击距离，超出距离子弹被销毁|
 |弹匣容量|枪械弹匣内存储的最大子弹数|
 |一次拉栓子弹装填数量|栓狙枪械一次填弹的数量，例如98K|
-|启用自定义抛体|如果启用，则会按 [通用抛体](https://developer.gp.qq.com/wikieditor/#/catalog/20165) 的设置额外发射抛体|
+|启用自定义抛体|如果启用，则会按 [通用抛体](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=nkZpo6CT) 的设置额外发射抛体|
 |自定义抛体|启用后，设置抛体的蓝图类|
 
 枪械实体蓝图的 ``ShootWeaponEntity`` 组件属性集中，【BulletConfig】控制弹匣初始子弹数和无限弹药的设置。
@@ -3936,7 +3936,7 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/W5E7aimage.png)
 
-- 技能类：通过 [技能编辑器](https://developer.gp.qq.com/wikieditor/#/catalog/20091) 创建的技能
+- 技能类：通过 [技能编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y) 创建的技能
 - 技能赋予条件：何时为角色添加技能
 	- 武器装备激活：当玩家手持该枪械时添加
 	- 武器使用激活：当玩家装配该枪械时添加
@@ -3948,7 +3948,7 @@ end
 
 ## 绑定枪械物品
 
-枪械实体蓝图无法直接进入背包或者实例化为可拾取物，需要绑定枪械物品才有效，通过物品编辑器 [创建枪械物品](https://developer.gp.qq.com/wikieditor/#/catalog/20101?autoJump=%E6%96%B0%E5%BB%BA%E7%89%A9%E5%93%81%E8%93%9D%E5%9B%BE)，将 ``Weapon Class`` 属性设置为该实体蓝图，即得到一把改装后的全新枪械。
+枪械实体蓝图无法直接进入背包或者实例化为可拾取物，需要绑定枪械物品才有效，通过物品编辑器 [创建枪械物品](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6&autoJump=%E6%96%B0%E5%BB%BA%E7%89%A9%E5%93%81%E8%93%9D%E5%9B%BE)，将 ``Weapon Class`` 属性设置为该实体蓝图，即得到一把改装后的全新枪械。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/z9kGtimage.png)
 
@@ -3978,7 +3978,7 @@ end
 
 ### 3. 绑定枪械技能
 
-回到【物品编辑器】AKM枪械的武器蓝图配置面板，将创建的技能赋予给枪械，勾选 ``绑定开火按键`` 使技能能够监听枪械开火的流程，配置详情可参考 [技能配置](https://developer.gp.qq.com/wikieditor/#/catalog/20103?autoJump=%E6%8A%80%E8%83%BD%E9%85%8D%E7%BD%AE:~:text=%E5%AD%90%E5%BC%B9%E5%B1%9E%E6%80%A7-,%E6%8A%80%E8%83%BD%E9%85%8D%E7%BD%AE,-%E7%BB%91%E5%AE%9A%E6%9E%AA%E6%A2%B0) 。
+回到【物品编辑器】AKM枪械的武器蓝图配置面板，将创建的技能赋予给枪械，勾选 ``绑定开火按键`` 使技能能够监听枪械开火的流程，配置详情可参考 [技能配置](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=GhCebD_C&autoJump=%E6%8A%80%E8%83%BD%E9%85%8D%E7%BD%AE) 。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/EWPEHimage.png)
 
@@ -3998,11 +3998,11 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/05CGVimage.png)
 
-点击 "NewEvent_0" 全局事件节点，选择监听 ``输入事件`` 并配置输入事件为 ``抬起``，详情配置可参考 [技能Event](https://developer.gp.qq.com/wikieditor/#/catalog/20112?autoJump=%E9%80%9A%E7%94%A8%E7%B1%BB%E4%BA%8B%E4%BB%B6)。
+点击 "NewEvent_0" 全局事件节点，选择监听 ``输入事件`` 并配置输入事件为 ``抬起``，详情配置可参考 [技能Event](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=YDs0hD-g&autoJump=%E9%80%9A%E7%94%A8%E7%B1%BB%E4%BA%8B%E4%BB%B6)。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/SpkSkimage.png)
 
-在【序列播放器】中添加 ``选择目标`` 和 ``造成伤害`` 的 [技能task](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20094)，详细配置可参考 [序列播放器配置](https://developer.gp.qq.com/wikieditor/#/catalog/20091?autoJump=%E5%BA%8F%E5%88%97%E6%92%AD%E6%94%BE%E5%99%A8%E9%85%8D%E7%BD%AE:~:text=%E6%8A%80%E8%83%BD%E9%98%B6%E6%AE%B5%E9%85%8D%E7%BD%AE-,%E5%BA%8F%E5%88%97%E6%92%AD%E6%94%BE%E5%99%A8%E9%85%8D%E7%BD%AE,-Task%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE)
+在【序列播放器】中添加 ``选择目标`` 和 ``造成伤害`` 的 [技能task](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7)，详细配置可参考 [序列播放器配置](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y&autoJump=%E5%BA%8F%E5%88%97%E6%92%AD%E6%94%BE%E5%99%A8%E9%85%8D%E7%BD%AE)
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/xoSE9image.png)
 
@@ -4023,7 +4023,7 @@ end
 
 ### 5. 调整枪械性能
 
-回到【物品编辑器】枪械蓝图中，调整 [枪械性能](https://developer.gp.qq.com/wikieditor/#/catalog/20103?autoJump=%E6%9E%AA%E6%A2%B0%E6%80%A7%E8%83%BD:~:text=%E7%89%B9%E6%95%88%E5%92%8C%E9%9F%B3%E6%95%88-,%E6%9E%AA%E6%A2%B0%E6%80%A7%E8%83%BD,-%E5%AD%90%E5%BC%B9%E5%B1%9E%E6%80%A7) 参数，此技能枪械伤害是跟随技能传递的，子弹伤害需要配置为0。
+回到【物品编辑器】枪械蓝图中，调整 [枪械性能](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=GhCebD_C&autoJump=%E6%9E%AA%E6%A2%B0%E6%80%A7%E8%83%BD) 参数，此技能枪械伤害是跟随技能传递的，子弹伤害需要配置为0。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/cVbQmimage.png)
 
@@ -4055,7 +4055,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 物资系统 > 物资编辑器2.0 > 自定义物品模型
 
-> 文档ID: 20212 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20212)
+> 文档ID: 20212 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=o70sjljm)
 
 > 更新: 2025-11-17 21:42:12
 
@@ -4202,7 +4202,7 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/tboDhimage.png)
 
-这里的配件Tag配置是枪械槽位的绑定逻辑，详情见 [物品与背包槽位](https://developer.gp.qq.com/wikieditor/#/catalog/20210)
+这里的配件Tag配置是枪械槽位的绑定逻辑，详情见 [物品与背包槽位](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=6FOlCQz3)
 
 > - 由于瞄准镜有特殊的开镜材质，暂时不支持自定义外显模型
 > - 开发者需要根据枪械物品上的槽位，配置配件的物品Tag，否则，该配件不能装配到枪械对应的配件槽位上
@@ -4319,7 +4319,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 物资系统 > 物资编辑器2.0 > 自定义近战武器
 
-> 文档ID: 20158 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20158)
+> 文档ID: 20158 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=yXcpzK1N)
 
 > 更新: 2025-10-11 14:39:26
 
@@ -4360,7 +4360,7 @@ end
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/5Btcrimage.png)
 
-- 技能类：通过 [技能编辑器](https://developer.gp.qq.com/wikieditor/#/catalog/20091) 创建的技能，默认配置了基于 [近战攻击Task](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E8%BF%91%E6%88%98%E6%94%BB%E5%87%BB) 实现的经典近战技能模板
+- 技能类：通过 [技能编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y) 创建的技能，默认配置了基于 [近战攻击Task](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E8%BF%91%E6%88%98%E6%94%BB%E5%87%BB) 实现的经典近战技能模板
 - 技能赋予条件：何时为角色添加技能
 	- 武器装备激活：当玩家手持该枪械时添加
 	- 武器使用激活：当玩家装配该枪械时添加
@@ -4372,7 +4372,7 @@ end
 
 ## 绑定近战武器物品
 
-近战武器实体蓝图无法直接进入背包或者实例化为可拾取物，需要绑定近战武器物品才有效，通过物品编辑器 [创建近战武器物品](https://developer.gp.qq.com/wikieditor/#/catalog/20101?autoJump=%E6%96%B0%E5%BB%BA%E7%89%A9%E5%93%81%E8%93%9D%E5%9B%BE)，将 ``Weapon Class`` 属性设置为该实体蓝图，即得到一把自定义的全新近战武器。
+近战武器实体蓝图无法直接进入背包或者实例化为可拾取物，需要绑定近战武器物品才有效，通过物品编辑器 [创建近战武器物品](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6&autoJump=%E6%96%B0%E5%BB%BA%E7%89%A9%E5%93%81%E8%93%9D%E5%9B%BE)，将 ``Weapon Class`` 属性设置为该实体蓝图，即得到一把自定义的全新近战武器。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/jHJ0aimage.png)
 

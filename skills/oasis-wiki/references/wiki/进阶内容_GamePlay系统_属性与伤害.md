@@ -8,7 +8,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > 属性与伤害 > 全局伤害公式
 
-> 文档ID: 20099 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20099)
+> 文档ID: 20099 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=gu0cVbhR)
 
 > 更新: 2026-03-06 17:12:53
 
@@ -18,11 +18,11 @@
 
 玩法中经常根据特定对象或者伤害源产生的角色/怪物伤害进行二次修改，例如放大对指定部位的伤害、增强特定玩家/物品造成的伤害等等，现有功能体系下实现 [伤害覆写](https://developer.gp.qq.com/api/#/searchContent/ASTExtraBaseCharacter?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E7%B1%BB%E4%BA%8B%E4%BB%B6%2F%E4%B8%BB%E8%A7%92%E7%B1%BB%EF%BC%88PlayerPawn%EF%BC%89%2FASTExtraBaseCharacter.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=ASTExtraBaseCharacter&autoJump=UGC_TakeDamageOverrideEvent) 的逻辑分散在各个类脚本中难以管理。
 
-全局伤害公式提供了统一定制伤害计算逻辑的入口，以中心化的方式管理全局的伤害处理逻辑，支持接入 [属性系统](https://developer.gp.qq.com/wikieditor/?timeStamp=1725589224096#/catalog/20098) 的复杂伤害计算，且相比于伤害覆写，伤害公式的优先级更高，作为伤害结算的最终输出值。
+全局伤害公式提供了统一定制伤害计算逻辑的入口，以中心化的方式管理全局的伤害处理逻辑，支持接入 [属性系统](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg) 的复杂伤害计算，且相比于伤害覆写，伤害公式的优先级更高，作为伤害结算的最终输出值。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/sqjFsimage.png)
 
-> 对于怪物伤害，伤害公式仅支持 [新怪物系统](https://developer.gp.qq.com/wikieditor/#/catalog/20144)
+> 对于怪物伤害，伤害公式仅支持 [新怪物系统](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=JKHitxoV)
 
 <br>
 
@@ -48,20 +48,20 @@
 |参数名|参数描述|数据类型|
 |-|-|-|
 |Context|伤害事件上下文数据|FGameMagnitudeContext|
-|ExtraResult|伤害的额外信息，通过 [GameplayTag](https://developer.gp.qq.com/wikieditor/#/catalog/20102) 表示|FExtraDamageCalculationResult|
+|ExtraResult|伤害的额外信息，通过 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 表示|FExtraDamageCalculationResult|
 
 **返回值**
 
 |数据类型|数据描述|
 |-|-|
 |number|覆写后的伤害，即最终的结算值|
-|FExtraDamageCalculationResult|伤害的额外信息，通过 [GameplayTag](https://developer.gp.qq.com/wikieditor/#/catalog/20102) 表示|
+|FExtraDamageCalculationResult|伤害的额外信息，通过 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 表示|
 
 ### Context
 
 通过 [``UGCAttributeSystem``](https://developer.gp.qq.com/api/#/searchContent/UGCAttributeSystem?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E8%A7%92%E8%89%B2%E7%B3%BB%E7%BB%9F%2FUGCAttributeSystem.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCAttributeSystem) 库提供的函数可以从 ``Context`` 中获取本次伤害的具体情境信息，例如 [``GetVictimFromContext``](https://developer.gp.qq.com/api/#/searchContent/UGCAttributeSystem?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E8%A7%92%E8%89%B2%E7%B3%BB%E7%BB%9F%2FUGCAttributeSystem.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCAttributeSystem&autoJump=GetVictimFromContext) 获取受害者对象、[``GetSourceMagnitudeFromContext``](https://developer.gp.qq.com/api/#/searchContent/UGCAttributeSystem?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E8%A7%92%E8%89%B2%E7%B3%BB%E7%BB%9F%2FUGCAttributeSystem.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCAttributeSystem&autoJump=GetSourceMagnitudeFromContext) 获取原始伤害值等，方便开发者基于特定的条件实现伤害逻辑。
 
-此外部分系统功能支持触发伤害的行为配置，例如技能编辑器提供的 [技能Task-造成伤害](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E9%80%A0%E6%88%90%E4%BC%A4%E5%AE%B3)，Buff编辑器提供的 [造成伤害](https://developer.gp.qq.com/wikieditor/#/catalog/20117?autoJump=%E9%80%A0%E6%88%90%E4%BC%A4%E5%AE%B3) 动作，UGCAttributeSystem库也提供了相应的获取方式 [``GetDamageTypeFromContext``](https://developer.gp.qq.com/api/#/searchContent/UGCAttributeSystem?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E8%A7%92%E8%89%B2%E7%B3%BB%E7%BB%9F%2FUGCAttributeSystem.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCAttributeSystem&autoJump=GetDamageTypeFromContext) 和 [``GetDamageTagsFromContext``](https://developer.gp.qq.com/api/#/searchContent/UGCAttributeSystem?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E8%A7%92%E8%89%B2%E7%B3%BB%E7%BB%9F%2FUGCAttributeSystem.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCAttributeSystem&autoJump=GetDamageTagsFromContext)。
+此外部分系统功能支持触发伤害的行为配置，例如技能编辑器提供的 [技能Task-造成伤害](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E9%80%A0%E6%88%90%E4%BC%A4%E5%AE%B3)，Buff编辑器提供的 [造成伤害](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=n3YhMmZ_&autoJump=%E9%80%A0%E6%88%90%E4%BC%A4%E5%AE%B3) 动作，UGCAttributeSystem库也提供了相应的获取方式 [``GetDamageTypeFromContext``](https://developer.gp.qq.com/api/#/searchContent/UGCAttributeSystem?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E8%A7%92%E8%89%B2%E7%B3%BB%E7%BB%9F%2FUGCAttributeSystem.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCAttributeSystem&autoJump=GetDamageTypeFromContext) 和 [``GetDamageTagsFromContext``](https://developer.gp.qq.com/api/#/searchContent/UGCAttributeSystem?classDetailShow=true&path=class%2Fdetail%2F%E5%92%8C%E5%B9%B3%E5%85%A8%E5%B1%80%E6%8E%A5%E5%8F%A3%2F%E8%A7%92%E8%89%B2%E7%B3%BB%E7%BB%9F%2FUGCAttributeSystem.json&isSelect=1&apiEnc=%5B%22%E7%B1%BB%22%5D&apiLabel=UGCAttributeSystem&autoJump=GetDamageTagsFromContext)。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/uXj7gimage.png)
 
@@ -135,7 +135,7 @@ UGCGenericMessageSystem.ListenObjectMessage(PlayerPawn, UGCGenericMessageSystem.
 
 > 文档路径: 进阶内容 > GamePlay系统 > 属性与伤害 > 全局治疗公式
 
-> 文档ID: 20216 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20216)
+> 文档ID: 20216 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=XotPYsFn)
 
 > 新增: 2026-07-31 17:56:20
 
@@ -143,11 +143,11 @@ UGCGenericMessageSystem.ListenObjectMessage(PlayerPawn, UGCGenericMessageSystem.
 
 # 全局治疗公式
 
-类似于 [全局伤害公式](https://developer.gp.qq.com/wikieditor/#/catalog/20099) 的作用，属性管理器提供了统一定制治疗计算逻辑的入口，以中心化的方式管理全局的治疗处理逻辑，决定所有调用 [``RecoverGenericCharacterHealth``]() 的最终治疗值结果。
+类似于 [全局伤害公式](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=gu0cVbhR) 的作用，属性管理器提供了统一定制治疗计算逻辑的入口，以中心化的方式管理全局的治疗处理逻辑，决定所有调用 [``RecoverGenericCharacterHealth``]() 的最终治疗值结果。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/gMdl4image.png)
 
-> 对于怪物治疗，仅 [新怪物系统](https://developer.gp.qq.com/wikieditor/#/catalog/20144) 支持治疗公式
+> 对于怪物治疗，仅 [新怪物系统](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=JKHitxoV) 支持治疗公式
 
 <br>
 
@@ -173,14 +173,14 @@ UGCGenericMessageSystem.ListenObjectMessage(PlayerPawn, UGCGenericMessageSystem.
 |参数名|参数描述|数据类型|
 |-|-|-|
 |Context|治疗事件上下文数据|FGameMagnitudeContext|
-|ExtraResult|治疗的额外信息，通过 [GameplayTag](https://developer.gp.qq.com/wikieditor/#/catalog/20102) 表示|FExtraDamageCalculationResult|
+|ExtraResult|治疗的额外信息，通过 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 表示|FExtraDamageCalculationResult|
 
 **返回值**
 
 |数据类型|数据描述|
 |-|-|
 |number|覆写后的最终治疗值|
-|FExtraDamageCalculationResult|治疗附带的额外信息，通过 [GameplayTag](https://developer.gp.qq.com/wikieditor/#/catalog/20102) 表示|
+|FExtraDamageCalculationResult|治疗附带的额外信息，通过 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 表示|
 
 ### Context
 
@@ -219,7 +219,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 属性与伤害 > 受击数据资产
 
-> 文档ID: 20169 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20169)
+> 文档ID: 20169 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Qa3L9Rpf)
 
 > 新增: 2026-07-31 17:56:16
 
@@ -266,7 +266,7 @@ end
 
 ## 应用受击数据
 
-所有支持配置受击数据资产蓝图的功能都可以应用受击数据，例如 [技能Task-近战攻击](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E8%BF%91%E6%88%98%E6%94%BB%E5%87%BB) 提供了受击效果的配置项，关联后即会读取受击数据进行对应的效果表现。
+所有支持配置受击数据资产蓝图的功能都可以应用受击数据，例如 [技能Task-近战攻击](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E8%BF%91%E6%88%98%E6%94%BB%E5%87%BB) 提供了受击效果的配置项，关联后即会读取受击数据进行对应的效果表现。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/JZtNzimage.png)
 
@@ -276,7 +276,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 属性与伤害 > 属性修改器
 
-> 文档ID: 20153 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20153)
+> 文档ID: 20153 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=y24mx0rF)
 
 > 更新: 2025-09-05 16:59:30
 
@@ -342,7 +342,7 @@ f(X) = 值覆盖修改器 ? 值覆盖修改器 : (X + 加法修改器1 + 加法�
 
 ## 应用属性修改器
 
-属性修改器的机制被应用在技能、Buff、装备等系统中，以蓝图的形式提供配置使用，例如Buff编辑器中的 [修改武器属性](https://developer.gp.qq.com/wikieditor/#/catalog/20094?autoJump=%E6%8A%80%E8%83%BDTask-%E6%AD%A6%E5%99%A8%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9) Action，底层即是通过属性计算公式将运算符生成的修改器代入运算。
+属性修改器的机制被应用在技能、Buff、装备等系统中，以蓝图的形式提供配置使用，例如Buff编辑器中的 [修改武器属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=32GLEEg7&autoJump=%E6%8A%80%E8%83%BDTask-%E6%AD%A6%E5%99%A8%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9) Action，底层即是通过属性计算公式将运算符生成的修改器代入运算。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/ZDPGEimage.png)
 
@@ -359,7 +359,7 @@ f(X) = 值覆盖修改器 ? 值覆盖修改器 : (X + 加法修改器1 + 加法�
 
 > 文档路径: 进阶内容 > GamePlay系统 > 属性与伤害 > 枪械属性对照表
 
-> 文档ID: 20159 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20159)
+> 文档ID: 20159 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=mjLCHd4n)
 
 > 更新: 2025-06-25 18:11:03
 
@@ -413,7 +413,7 @@ f(X) = 值覆盖修改器 ? 值覆盖修改器 : (X + 加法修改器1 + 加法�
 
 > 文档路径: 进阶内容 > GamePlay系统 > 属性与伤害 > 角色属性与状态
 
-> 文档ID: 20205 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20205)
+> 文档ID: 20205 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=HImjMlUr)
 
 > 新增: 2026-06-23 12:42:41
 
@@ -423,7 +423,7 @@ f(X) = 值覆盖修改器 ? 值覆盖修改器 : (X + 加法修改器1 + 加法�
 
 ## 角色固化属性
 
-[属性管理器](https://developer.gp.qq.com/wikieditor/#/catalog/20098?autoJump=%E5%B1%9E%E6%80%A7%E7%AE%A1%E7%90%86%E5%99%A8) 中内置了部分角色的常用属性作为固化属性，开发者可以直接应用这类属性在玩法逻辑中，无需重复定义。
+[属性管理器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg&autoJump=%E5%B1%9E%E6%80%A7%E7%AE%A1%E7%90%86%E5%99%A8) 中内置了部分角色的常用属性作为固化属性，开发者可以直接应用这类属性在玩法逻辑中，无需重复定义。
 
 |属性名|属性含义|取值范围|
 |-|-|-|
@@ -432,7 +432,7 @@ f(X) = 值覆盖修改器 ? 值覆盖修改器 : (X + 加法修改器1 + 加法�
 |SkillCDRecoverRate|技能CD的恢复速率|[0, 100000000]|
 |SignalHP|角色当前的信号量|[0, +∞)|
 |SignalHPMax|角色的最大信号量|[0, 99999]|
-|voiceCheckDis|角色检测周围声音的最大距离，影响 [小地图可视化音效](https://developer.gp.qq.com/wikieditor/#/catalog/20202) 的图标显示效果|[0.01, 100000000]|
+|voiceCheckDis|角色检测周围声音的最大距离，影响 [小地图可视化音效](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=nI2-Twaj) 的图标显示效果|[0.01, 100000000]|
 |Breath|角色的当前呼吸值|[-100000000, 100000000]|
 |AdditiveSpeedValueWrapper|角色移动时额外叠加的移速倍率，影响走路、冲刺、游泳等所有移动行为<br>``角色最终移动速度 = 基础移动速度 * (UGC移速倍率 + 额外移速倍率)``|[-100000000, 100000000]|
 |EnergyCurrent|角色的当前能量值|[0, +∞)|
@@ -448,7 +448,7 @@ f(X) = 值覆盖修改器 ? 值覆盖修改器 : (X + 加法修改器1 + 加法�
 
 ## 角色状态标签
 
-编辑器为角色预设了一批基于 [GameplayTag](https://developer.gp.qq.com/wikieditor/#/catalog/20102) 的状态标签，用以表示角色当前身处的行为状态，按触发类型可分为被动状态标签与主动状态标签，其中主动状态标签带有功能逻辑，当为角色赋予该类标签时即会按照标签的含义生效其对应的功能；而被动状态标签仅为角色进入对应的行为模式或者状态后被赋予的标签。
+编辑器为角色预设了一批基于 [GameplayTag](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=M2asA-QH) 的状态标签，用以表示角色当前身处的行为状态，按触发类型可分为被动状态标签与主动状态标签，其中主动状态标签带有功能逻辑，当为角色赋予该类标签时即会按照标签的含义生效其对应的功能；而被动状态标签仅为角色进入对应的行为模式或者状态后被赋予的标签。
 
 | 状态名                           | 含义       |   标签类型  |
 |-------------------------------------|--------------|----|
@@ -489,7 +489,7 @@ f(X) = 值覆盖修改器 ? 值覆盖修改器 : (X + 加法修改器1 + 加法�
 
 > 文档路径: 进阶内容 > GamePlay系统 > 属性与伤害 > 载具属性对照表
 
-> 文档ID: 20246 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20246)
+> 文档ID: 20246 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=ZH08KZdJ)
 
 > 更新: 2025-11-17 22:11:01
 
@@ -506,7 +506,7 @@ f(X) = 值覆盖修改器 ? 值覆盖修改器 : (X + 加法修改器1 + 加法�
 |ImpactAbsorptionPassenger|载具受到撞击后，对乘客造成伤害的衰减程度|[0, 100000000]|
 |HitDamagePassengerMaxHP|载具受到撞击后，最多可对乘客造成的伤害上限|[0, 100000000]|
 |ExplosionBaseDamage|载具血量归0后产生爆炸，所造成的基础伤害值|[0, 100000000]|
-|ExplosionMinimumDamage|载具血量归0后产生爆炸，所造成的最小伤害值，爆炸伤害概念可参见载具 [伤害配置](https://developer.gp.qq.com/wikieditor/#/catalog/20245?autoJump=%E4%BC%A4%E5%AE%B3%E9%85%8D%E7%BD%AE)|[0, 100000000]|
+|ExplosionMinimumDamage|载具血量归0后产生爆炸，所造成的最小伤害值，爆炸伤害概念可参见载具 [伤害配置](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0b5iBLe3&autoJump=%E4%BC%A4%E5%AE%B3%E9%85%8D%E7%BD%AE)|[0, 100000000]|
 |FuelConsumptionModifierBoost|加速时额外增加的油耗系数，数值越大，加速时的油耗越大|[0, 100000000]|
 |BoostModifier|加速动力系数，数值越大，加速时的动力越强|[0, 100000000]|
 |LinearDamping|载具移动时的速度衰减系数，影响载具的滑停时间，值越大载具越“沉”，松油门后滑停的距离越短；如果值为0，则只依赖地面的摩擦力减速|[0, 100000000]|
@@ -524,7 +524,7 @@ f(X) = 值覆盖修改器 ? 值覆盖修改器 : (X + 加法修改器1 + 加法�
 
 > 文档路径: 进阶内容 > GamePlay系统 > 属性与伤害 > 通用属性系统
 
-> 文档ID: 20098 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/20098)
+> 文档ID: 20098 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=b4_7IAOg)
 
 > 新增: 2026-05-20 10:17:20
 
@@ -532,7 +532,7 @@ f(X) = 值覆盖修改器 ? 值覆盖修改器 : (X + 加法修改器1 + 加法�
 
 # 通用属性系统
 
-属性系统是一套通用的对象属性管理框架，旨在为开发者提供统一、灵活的访问或修改游戏对象（如角色、枪械等）属性的方式，支持创建属性、动态修改属性及构建属性推导逻辑等，属性可应用于 [技能编辑器](https://developer.gp.qq.com/wikieditor/#/catalog/20091)、[Buff编辑器](https://developer.gp.qq.com/wikieditor/#/catalog/20087)、[物品编辑器](https://developer.gp.qq.com/wikieditor/#/catalog/20101) 等多类系统功能中。
+属性系统是一套通用的对象属性管理框架，旨在为开发者提供统一、灵活的访问或修改游戏对象（如角色、枪械等）属性的方式，支持创建属性、动态修改属性及构建属性推导逻辑等，属性可应用于 [技能编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=Yg3yp6_y)、[Buff编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=0Y0pURs-)、[物品编辑器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=a8WC2li6) 等多类系统功能中。
 
 <br>
 
@@ -552,16 +552,16 @@ f(X) = 值覆盖修改器 ? 值覆盖修改器 : (X + 加法修改器1 + 加法�
 
 ### 属性类别
 
-属性管理器包含多个页签：基础属性、人物属性、武器属性、载具属性、伤害公式与治疗公式，其中 [伤害公式](https://developer.gp.qq.com/wikieditor/#/catalog/20099) 与 [治疗公式](https://developer.gp.qq.com/wikieditor/#/catalog/20216) 可以结合属性定制伤害与治疗的计算逻辑，其他四类属性页签功能用于管理不同的适用对象的属性。
+属性管理器包含多个页签：基础属性、人物属性、武器属性、载具属性、伤害公式与治疗公式，其中 [伤害公式](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=gu0cVbhR) 与 [治疗公式](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=XotPYsFn) 可以结合属性定制伤害与治疗的计算逻辑，其他四类属性页签功能用于管理不同的适用对象的属性。
 
 - 基础属性：适用于创建通用型属性，挂载 ```属性修改组件``` 的实体对象（包括角色、怪物、载具等）都将拥有这些属性
-- 人物属性：此类属性对玩家角色与 [新怪物](https://developer.gp.qq.com/wikieditor/#/catalog/20144) 均生效，适合扩展独有的角色属性
+- 人物属性：此类属性对玩家角色与 [新怪物](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=JKHitxoV) 均生效，适合扩展独有的角色属性
 - 武器属性：针对枪械武器的属性定义
 - 载具属性：针对载具的属性定义
 
 #### 固化属性
 
-人物属性、武器属性和载具属性均预设了各类对象的部分通用属性，该类属性无法在属性管理器和属性蓝图中修改，但仍然受 ``属性修改组件`` 的覆盖影响，各属性具体的含义可参考 [角色固化属性](https://developer.gp.qq.com/wikieditor/#/catalog/20205?autoJump=%E8%A7%92%E8%89%B2%E5%9B%BA%E5%8C%96%E5%B1%9E%E6%80%A7)、[枪械固化属性](https://developer.gp.qq.com/wikieditor/#/catalog/20159) 与 [载具固化属性](https://developer.gp.qq.com/wikieditor/#/catalog/20246)。
+人物属性、武器属性和载具属性均预设了各类对象的部分通用属性，该类属性无法在属性管理器和属性蓝图中修改，但仍然受 ``属性修改组件`` 的覆盖影响，各属性具体的含义可参考 [角色固化属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=HImjMlUr&autoJump=%E8%A7%92%E8%89%B2%E5%9B%BA%E5%8C%96%E5%B1%9E%E6%80%A7)、[枪械固化属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=mjLCHd4n) 与 [载具固化属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=ZH08KZdJ)。
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/AKD0Gimage.png)
 
@@ -625,9 +625,9 @@ f(X) = 值覆盖修改器 ? 值覆盖修改器 : (X + 加法修改器1 + 加法�
 
 ### 属性绑定及修改
 
-涉及属性的系统通常都通过蓝图配置的方式，提供 [属性绑定](https://developer.gp.qq.com/wikieditor/#/catalog/20108) 或基于 [属性修改器](https://developer.gp.qq.com/wikieditor/#/catalog/20153) 的修改属性的功能，例如技能编辑器中的 [角色修改属性](https://developer.gp.qq.com/wikieditor/#/catalog/20117?autoJump=%E4%BF%AE%E6%94%B9%E5%B1%9E%E6%80%A7) Task支持修改技能施法者的指定属性值。
+涉及属性的系统通常都通过蓝图配置的方式，提供 [属性绑定](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=T9DCRcHi) 或基于 [属性修改器](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=y24mx0rF) 的修改属性的功能，例如技能编辑器中的 [角色修改属性](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=n3YhMmZ_&autoJump=%E4%BF%AE%E6%94%B9%E5%B1%9E%E6%80%A7) Task支持修改技能施法者的指定属性值。
 
-> [属性基础值](https://developer.gp.qq.com/wikieditor/#/catalog/20153?autoJump=%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9%E5%99%A8%E6%A6%82%E8%BF%B0) 会受 ``属性修改组件`` 的覆盖影响
+> [属性基础值](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=y24mx0rF&autoJump=%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9%E5%99%A8%E6%A6%82%E8%BF%B0) 会受 ``属性修改组件`` 的覆盖影响
 
 ![image.png](https://cgugc-video-test-1258633575.cos.ap-shanghai.myqcloud.com/wiki_picture/rcYZCimage.png)
 

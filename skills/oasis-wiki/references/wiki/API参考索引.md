@@ -1,6 +1,6 @@
 # 绿洲启元 Lua API 参考索引
 
-> 共收录 1687 个API/类/标识符，来自 335 篇官网文档
+> 共收录 1688 个API/类/标识符，来自 337 篇官网文档
 
 ---
 
@@ -2121,6 +2121,12 @@
 
 - [寻路网格烘焙以及组件配置](id:169) (进阶内容/GamePlay系统/怪物系统/AI编辑器1.0/怪物制作)
 - [导航网格](id:20266) (进阶内容/GamePlay系统/怪物系统)
+
+### `EUGCReturnPlayerStatus`
+
+出现于 1 篇文档：
+
+- [1.39 Release Notes](id:20509) (版本日志)
 
 ### `Event_PickUpWrapperInfoChange`
 

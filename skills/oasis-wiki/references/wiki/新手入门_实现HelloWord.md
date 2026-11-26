@@ -8,7 +8,7 @@
 
 > 文档路径: 新手入门 > 实现HelloWord > 制作HellowWorld工程
 
-> 文档ID: 298 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/298)
+> 文档ID: 298 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=_QrtTscr)
 
 > 更新: 2025-06-19 11:33:38
 

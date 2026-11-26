@@ -10,7 +10,14 @@ import sys
 
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from sync_official_wiki import build_artifacts, flatten_catalog, normalize_body, write_artifacts
+from sync_official_wiki import (
+    build_artifacts,
+    flatten_catalog,
+    map_article_hashes,
+    normalize_body,
+    rewrite_wiki_links,
+    write_artifacts,
+)
 
 
 class OfficialWikiSyncTests(unittest.TestCase):
@@ -101,6 +108,53 @@ class OfficialWikiSyncTests(unittest.TestCase):
         )
         self.assertIn("local ps =", artifacts["代码示例库.md"])
         self.assertIn("Version 40", artifacts["README.md"])
+
+    def test_map_article_hashes_matches_paths_with_renamed_separators(self):
+        articles = flatten_catalog(self.catalog)
+        new_paths = {
+            "版本日志/1.37 Release Notes": "h20418",
+            "绿洲编辑器基础内容/UGCAskQ MCP/UGCAskQ MCP 使用说明": "h20414",
+            "资源商店": "h336",
+        }
+        self.assertEqual(
+            {20418: "h20418", 20414: "h20414", 336: "h336"},
+            map_article_hashes(articles, new_paths),
+        )
+        renamed = flatten_catalog(
+            [{"id": 1, "label": "常用实战教学", "type": 0, "children": [
+                {"id": 2, "label": "技能", "type": 0, "children": [
+                    {"id": 236, "label": "触发范围伤害", "type": 1}]}]}]
+        )
+        self.assertEqual(
+            {236: "hx"}, map_article_hashes(renamed, {"常用实战教学/技能_触发范围伤害": "hx"})
+        )
+
+    def test_rewrite_wiki_links_keeps_anchor_and_unknown_ids(self):
+        text = (
+            "[a](https://developer.gp.qq.com/wikieditor/?timeStamp=1#/catalog/127"
+            "?autoJump=1.1+X:~:text=1.1-,X) "
+            "[b](https://developer.gp.qq.com/wikieditor/#/catalog/20099?) "
+            "[c](https://developer.gp.qq.com/wikieditor/#/catalog/999)"
+        )
+        self.assertEqual(
+            "[a](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=H1&autoJump=1.1+X) "
+            "[b](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=H2) "
+            "[c](https://developer.gp.qq.com/wikieditor/#/catalog/999)",
+            rewrite_wiki_links(text, {127: "H1", 20099: "H2"}),
+        )
+
+    def test_build_artifacts_uses_new_wiki_links_when_hashes_known(self):
+        artifacts = build_artifacts(
+            catalog=self.catalog,
+            article_rows=self.articles,
+            catalog_version=40,
+            catalog_updated_at=600,
+            generated_at=datetime(2026, 8, 27, 12, 0, tzinfo=timezone.utc),
+            article_hashes={20418: "h20418", 20414: "h20414", 336: "h336"},
+        )
+        root = artifacts["根目录.md"]
+        self.assertIn("oasiswikiweb/#/index?path_hash=h336", root)
+        self.assertNotIn("wikieditor", root)
 
     def test_normalize_body_removes_only_line_end_whitespace(self):
         body = "```lua\r\n  local value = 1  \r\n\treturn value\t\r\n```\r\n"

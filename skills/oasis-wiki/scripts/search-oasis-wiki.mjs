@@ -9,7 +9,7 @@ const skillRoot = path.dirname(__dirname);
 const wikiRoot = path.join(skillRoot, "references", "wiki");
 
 function usage() {
-  console.error("Usage: node scripts/search-oasis-wiki.mjs <query> [--max 40] [--context 0]");
+  console.error("Usage: node scripts/search-oasis-wiki.mjs <query> [--max 10] [--context 1] [--locations-only]");
 }
 
 const args = process.argv.slice(2);
@@ -19,8 +19,9 @@ if (args.length === 0 || args.includes("--help") || args.includes("-h")) {
 }
 
 let query = "";
-let max = 40;
-let context = 0;
+let max = 10;
+let context = 1;
+let locationsOnly = false;
 
 for (let i = 0; i < args.length; i += 1) {
   const arg = args[i];
@@ -28,6 +29,8 @@ for (let i = 0; i < args.length; i += 1) {
     max = Number.parseInt(args[++i] ?? "", 10);
   } else if (arg === "--context") {
     context = Number.parseInt(args[++i] ?? "", 10);
+  } else if (arg === "--locations-only") {
+    locationsOnly = true;
   } else if (!query) {
     query = arg;
   } else {
@@ -62,6 +65,13 @@ for (const file of walkMarkdown(wikiRoot)) {
   const lines = text.split(/\r?\n/);
   for (let index = 0; index < lines.length; index += 1) {
     if (!lines[index].toLocaleLowerCase().includes(lowerQuery)) continue;
+
+    if (locationsOnly) {
+      console.log(`${file}:${index + 1}`);
+      printed += 1;
+      if (printed >= max) process.exit(0);
+      continue;
+    }
 
     const start = Math.max(0, index - context);
     const end = Math.min(lines.length - 1, index + context);

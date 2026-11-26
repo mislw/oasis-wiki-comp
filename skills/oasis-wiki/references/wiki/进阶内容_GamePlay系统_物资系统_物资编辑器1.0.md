@@ -8,7 +8,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > 物资系统 > 物资编辑器1.0 > 为玩家添加初始道具
 
-> 文档ID: 193 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/193)
+> 文档ID: 193 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=j3RGevWX)
 
 > 更新: 2025-06-19 11:33:40
 
@@ -105,7 +105,7 @@ UGCBackPackSystem.AddItem(PlayerPawn, ItemID, Num)
 
 > 文档路径: 进阶内容 > GamePlay系统 > 物资系统 > 物资编辑器1.0 > 创建新的药品
 
-> 文档ID: 186 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/186)
+> 文档ID: 186 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=2_5SZLRV)
 
 > 更新: 2025-06-19 11:33:40
 
@@ -269,7 +269,7 @@ UGCBackPackSystem.AddItem(PlayerPawn, ItemID, Num)
 
 > 文档路径: 进阶内容 > GamePlay系统 > 物资系统 > 物资编辑器1.0 > 投掷物物资
 
-> 文档ID: 188 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/188)
+> 文档ID: 188 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=IxgHRFqe)
 
 > 更新: 2025-06-19 11:33:40
 
@@ -421,7 +421,7 @@ end
 
 > 文档路径: 进阶内容 > GamePlay系统 > 物资系统 > 物资编辑器1.0 > 枪械物资
 
-> 文档ID: 187 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/187)
+> 文档ID: 187 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=JGqky23v)
 
 > 更新: 2025-06-19 11:33:40
 
@@ -643,7 +643,7 @@ WeaponHudWidget.HUDOwner:DrawTextureSimple(self.TextureDraw, Canvas.ClipX / 2 - 
 
 > 文档路径: 进阶内容 > GamePlay系统 > 物资系统 > 物资编辑器1.0 > 概述
 
-> 文档ID: 185 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/185)
+> 文档ID: 185 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=3TykdpoS)
 
 > 新增: 2026-05-25 17:27:33
 
@@ -655,7 +655,7 @@ WeaponHudWidget.HUDOwner:DrawTextureSimple(self.TextureDraw, Canvas.ClipX / 2 - 
 
 物资编辑器提供三方面的配置：属性配置，ItemHandle，PickupWrapper。
 
-> 编辑器默认启用物品编辑器（物资编辑器2.0），如需使用旧物资编辑器，可参考 [旧物编入口开启方式](https://developer.gp.qq.com/wikieditor/#/catalog/20175?autoJump=%E5%85%B6%E4%BB%96) 说明
+> 编辑器默认启用物品编辑器（物资编辑器2.0），如需使用旧物资编辑器，可参考 [旧物编入口开启方式](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=khJwcWmI&autoJump=%E5%85%B6%E4%BB%96) 说明
 
 <br>
 
@@ -748,7 +748,7 @@ PickupWrapper用于配置物资在场景中可拾取时的参数和表现，可�
 
 > 文档路径: 进阶内容 > GamePlay系统 > 物资系统 > 物资编辑器1.0 > 物资刷新示例
 
-> 文档ID: 194 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/194)
+> 文档ID: 194 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=59XepHJ9)
 
 > 更新: 2025-06-19 11:33:40
 

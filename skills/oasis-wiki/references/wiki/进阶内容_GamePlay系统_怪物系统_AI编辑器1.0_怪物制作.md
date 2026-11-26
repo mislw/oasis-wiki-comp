@@ -8,7 +8,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > AI编辑器1.0 > 怪物制作 > 寻路网格烘焙以及组件配置
 
-> 文档ID: 169 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/169)
+> 文档ID: 169 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=38maU3IK)
 
 > 更新: 2025-07-02 18:54:11
 
@@ -53,7 +53,7 @@
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > AI编辑器1.0 > 怪物制作 > 常用参数和接口详解
 
-> 文档ID: 173 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/173)
+> 文档ID: 173 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=D5kDpjXz)
 
 > 更新: 2025-07-02 18:54:11
 
@@ -97,7 +97,7 @@ Materials|材质
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > AI编辑器1.0 > 怪物制作 > 新建怪物蓝图并配置动画
 
-> 文档ID: 170 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/170)
+> 文档ID: 170 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=qkh3nYuT)
 
 > 更新: 2025-07-02 18:54:11
 
@@ -153,7 +153,7 @@ Materials|材质
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > AI编辑器1.0 > 怪物制作 > 框架介绍
 
-> 文档ID: 168 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/168)
+> 文档ID: 168 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=hiwBqsMB)
 
 > 更新: 2025-07-02 18:54:11
 
@@ -193,7 +193,7 @@ Materials|材质
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > AI编辑器1.0 > 怪物制作 > 让怪物移动起来
 
-> 文档ID: 171 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/171)
+> 文档ID: 171 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=j2mJw2wm)
 
 > 更新: 2025-07-02 18:54:11
 
@@ -260,7 +260,7 @@ return MyAIC;
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > AI编辑器1.0 > 怪物制作 > 让怪物释放技能进行攻击
 
-> 文档ID: 172 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/172)
+> 文档ID: 172 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=IgBmh89b)
 
 > 更新: 2025-07-02 18:54:11
 
@@ -309,7 +309,7 @@ return MyAIC;
 
 > 文档路径: 进阶内容 > GamePlay系统 > 怪物系统 > AI编辑器1.0 > 怪物制作 > 附件工程
 
-> 文档ID: 174 | [官网原文](https://developer.gp.qq.com/wikieditor/#/catalog/174)
+> 文档ID: 174 | [官网原文](https://developer.gp.qq.com/oasiswikiweb/#/index?path_hash=iTQHbvv2)
 
 > 更新: 2025-07-02 18:54:11
 
